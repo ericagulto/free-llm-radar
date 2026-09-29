@@ -289,6 +289,28 @@ const check = (label, actual, expected, cmp = '==') => {
   check('aria-sort is cleared on inactive columns',
         await page.getAttribute('.sh[data-key="budget"]', 'aria-sort'), 'none');
 
+  // ---- dashboard -> detail page cross-links ----
+  // Every row must point at its own generated page, from both the name and the panel link,
+  // and that page must actually exist on disk. A link to a file that was never generated
+  // is a 404 that only shows up when a reader clicks it.
+  await reset();
+  const links = await page.$$eval('.row', rows => rows.map(r => {
+    const name = r.querySelector('.nm a.nml');
+    const full = r.querySelector('.detbar .full');
+    return {
+      id: r.dataset.id,
+      name: name ? name.getAttribute('href') : null,
+      full: full ? full.getAttribute('href') : null
+    };
+  }));
+  check('every row has a name link to its detail page',
+        links.every(l => l.name === `offers/${l.id}.html`), true);
+  check('every row has a full-guide link in its panel',
+        links.every(l => l.full === `offers/${l.id}.html`), true);
+  check('cross-links cover every rendered row', links.length, EXPECTED);
+  const missing = links.filter(l => !fs.existsSync(path.join(__dirname, 'offers', l.id + '.html')));
+  check('every linked detail page exists on disk', missing.length, 0);
+
   // ---- no runtime errors ----
   check('no page errors', errors.length, 0);
 

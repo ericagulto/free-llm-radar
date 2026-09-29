@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://ericagulto.github.io/free-llm-radar/sitemap.xml

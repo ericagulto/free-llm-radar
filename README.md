@@ -19,17 +19,46 @@ free-llm-radar/
 ├── index.html      Presentation layer. Stable — the daily job does not touch this.
 ├── data.js         Offer data. THE ONLY FILE THE DAILY JOB REWRITES.
 ├── referrals.js    Referral programme data + your own links. Edited by hand.
-├── validate.js     Schema + compliance validator. Run after every edit and every refresh.
-├── test-ui.js      Browser test for the filter chips. Run after touching index.html.
+├── build-pages.js  Static generator. Writes offers/, assets/offer.css, sitemap.xml, robots.txt.
+├── offers/         GENERATED. One standalone page per offer, plus an index. Do not hand-edit.
+├── assets/         GENERATED. offer.css, shared by the offer pages.
+├── validate.js     Schema, generated-output + compliance validator. Run after every edit.
+├── test-ui.js      Browser test for filters, sorting, featured block and cross-links.
+├── test-validate.js Negative test — proves validate.js actually fails on real breakage.
 ├── REFERRALS.md    Programme terms, payout conditions, compliance notes. Read before publishing.
 ├── CHANGELOG.md    Append-only log of every refresh.
 └── archive/        Dated snapshots of data.js, one per refresh.
 ```
 
-The split exists so the daily job has the smallest possible blast radius. It rewrites `data.js`
-and appends to `CHANGELOG.md`. It never regenerates the HTML — a quoting error in a regenerated
-page produces a blank screen, whereas a malformed `data.js` fails loudly and is trivially reverted
-from `archive/`.
+The split exists so the daily job has the smallest possible blast radius. It rewrites `data.js`,
+regenerates `offers/`, and appends to `CHANGELOG.md`. It never regenerates `index.html` — a quoting
+error in a regenerated page produces a blank screen, whereas a malformed `data.js` fails loudly and
+is trivially reverted from `archive/`.
+
+---
+
+## Two layers: dashboard and offer pages
+
+| | Dashboard | Offer pages |
+|---|---|---|
+| File | `index.html` | `offers/<id>.html` |
+| Built by | hand | `build-pages.js` |
+| Rendering | client-side JS | static HTML |
+| Reads data at | runtime, from the data origin | generation time |
+| Purpose | compare everything at once | rank for one provider's search query |
+
+Both are needed, and neither replaces the other. The dashboard is one URL that shows 43 offers, so a
+search engine sees one page and none of the offers rank. The offer pages are real files, so each can
+rank for its own query — "groq free tier", "amd token factory limits" — which is the entire reason
+for generating them.
+
+Because the offer pages are generated at build time, **a data refresh must regenerate them.**
+Publishing new data without regenerating leaves indexed pages stating limits the dashboard no longer
+shows. `deploy/publish.sh` does both in the right order.
+
+The two layers cross-link: every dashboard row's name, and a "Read the full guide" link inside the
+expanded panel, point at that offer's page. `test-ui.js` asserts both, and that the target file
+actually exists.
 
 ---
 
@@ -49,6 +78,8 @@ from `archive/`.
   Expiring ≤7d, Referral-linked, No referral. Combine any number of them.
 - **Search** — provider, sub-label, model IDs, base URL and allowance text
 - **Expandable rows** — mechanics, referral programme block, numbered steps, copy-paste test
+- **Standalone offer pages** — one crawlable page per offer with its own title, meta description,
+  canonical and breadcrumb data, linked from each row. Generated, not hand-written.
 
 ### How the filters combine
 
@@ -123,11 +154,16 @@ Two free GitHub Pages origins, deliberately separate:
 | | URL | Repo |
 |---|---|---|
 | **Dashboard** | https://ericagulto.github.io/free-llm-radar/ | `ericagulto/free-llm-radar` |
+| **Offer pages** | https://ericagulto.github.io/free-llm-radar/offers/ | `ericagulto/free-llm-radar` |
+| **Sitemap** | https://ericagulto.github.io/free-llm-radar/sitemap.xml | `ericagulto/free-llm-radar` |
 | **Data** | https://ericagulto.github.io/free-llm-radar-data/data.js | `ericagulto/free-llm-radar-data` |
 
 **Why split them.** The daily job only needs to change data. If the data lived with the page, every
 refresh would mean redeploying the site and waiting on a build. Split, the job pushes one file to
-the data repo and the site picks it up on the next load — no site deploy, ever.
+the data repo and the site picks it up on the next load.
+
+Note the asymmetry: the dashboard picks up new data without a redeploy, but the **offer pages are
+static**, so they only change when the site is redeployed. That is why the publish command does both.
 
 **How the page finds its data.** `index.html` tries the remote URL first and falls back to the
 local `data.js` next to it. So the same file works published, offline, and straight off the
@@ -151,35 +187,31 @@ cross-origin `<script>` needs. A gist would not do — its raw URLs come back as
 10 minutes to appear. That is fine for a daily job and keeps the site fast. If you need it
 immediate, the loader can be changed to append a cache-busting query string.
 
-### Updating the data
+### Publishing
 
-From the workspace root:
-
-```bash
-bash deploy/sync-data.sh
-```
-
-It copies `free-llm-radar/data.js` into `deploy/data-repo`, commits, and pushes. Exits without
-committing if nothing changed, so it is safe to run unconditionally. **This is the only step needed
-to publish a data refresh — the dashboard never has to be redeployed.**
-
-The daily automation runs this automatically as its final step, after validation passes.
-
-### Redeploying the site
-
-Only needed when `index.html`, `referrals.js` or a doc changes:
+From the workspace root, after editing `data.js`:
 
 ```bash
-cp free-llm-radar/{AGENTS.md,index.html,referrals.js,README.md,REFERRALS.md,CHANGELOG.md,validate.js,test-ui.js} deploy/site-repo/
-cp -r free-llm-radar/archive/. deploy/site-repo/archive/
-git -C deploy/site-repo add -A
-git -C deploy/site-repo commit -m "<what changed>"
-git -C deploy/site-repo push
+bash deploy/publish.sh
 ```
 
-Pages rebuilds automatically. A `.nojekyll` file is present so Jekyll does not process the output.
+That is the normal path. It regenerates the offer pages, validates, pushes the data, pushes the
+site, and verifies the deployed artifact — in that order, so a broken generation never goes live.
+Every step is idempotent and exits without committing when nothing changed.
 
-Credentials: `gh auth setup-git` has been run, so plain `git push` works in these clones.
+The narrower scripts, when you want one half only:
+
+| Script | Does | Use when |
+|---|---|---|
+| `deploy/publish.sh` | regenerate → validate → push data → push site → verify | **normal refresh** |
+| `deploy/sync-data.sh` | pushes `data.js` to the data origin only | emergency data-only fix |
+| `deploy/sync-site.sh` | regenerate → validate → push the site only | you changed `index.html` or a doc |
+
+`sync-site.sh` replaces generated trees wholesale rather than merging them, so a page for an offer
+that was removed cannot linger on the live site.
+
+Credentials: `gh auth setup-git` has been run, so plain `git push` works in these clones. A
+`.nojekyll` file is present so Jekyll does not process the output.
 
 ---
 
@@ -191,8 +223,12 @@ A scheduled task runs the research and updates `data.js`. It:
 2. Re-verifies `end` dates (promotions get extended silently — this is the most common change)
 3. Adds new offers, marks expired ones, updates the rail
 4. Archives the previous `data.js` to `archive/data-YYYY-MM-DD.js`
-5. Appends a dated entry to `CHANGELOG.md`
-6. Validates before finishing — a run that fails validation leaves the previous `data.js` intact
+5. Regenerates the offer pages so the published pages match the new data
+6. Appends a dated entry to `CHANGELOG.md`
+7. Validates before finishing — a run that fails validation leaves the previous `data.js` intact
+
+The daily prompt is a **pointer** to `AGENTS.md`, not a copy of the procedure. Keeping the procedure
+in one place means it cannot drift between the two.
 
 **Idempotency rules the job follows:**
 - Offer `id` values are permanent. Never rename an existing id.
@@ -239,6 +275,19 @@ known, that `end` dates are `YYYY-MM-DD` or null, that every `offerRefs` entry r
 real offer and a real programme, that the disclosure exists and contains the words the FTC test
 requires, and that `index.html` still carries `rel="noopener sponsored"` plus the missing-data guard.
 
+It also validates the **generated output**, because a stale or partial generation is invisible in
+the browser until a reader clicks a link and gets a 404:
+
+- every offer has a page, and every page maps to a real offer (no orphans)
+- no page contains an unrendered `${...}` placeholder — the signature of a generator that failed
+  silently on that offer
+- exactly one `<h1>` and one facts block per page, with the offer name in the `<h1>`
+- a canonical URL and a unique `<title>` per page
+- meta descriptions between 60 and 160 characters — longer ones get truncated by search engines
+- `BreadcrumbList` structured data survives the templating
+- `rel="sponsored"` appears **only** on pages whose offer carries a live referral
+- `sitemap.xml` and `robots.txt` agree with what was actually generated
+
 **A refresh that fails validation must not overwrite `data.js`.** The previous file stays in place
 and the page keeps working.
 
@@ -250,10 +299,30 @@ Only needed after editing `index.html`:
 NODE_PATH="<managed-node-workspace>/node_modules" node free-llm-radar/test-ui.js
 ```
 
-Loads the page in a real Chromium and clicks the chips, asserting the filter semantics in the DOM
-rather than in the source — OR within a dimension, AND across, the complementary pair, the Clear
-affordance, `aria-pressed` state, and that search composes as an AND. 17 assertions. It skips with
-exit 0 if Playwright or Chromium is missing, so it never blocks a data refresh.
+Loads the page in a real Chromium and asserts behaviour in the DOM rather than in the source — the
+filter semantics (OR within a dimension, AND across, the complementary pair, Clear, `aria-pressed`,
+search composing as an AND), the featured block and its label, multi-column sorting including
+nulls-last in both directions, `aria-sort`, and that every row cross-links to a detail page that
+exists on disk. 45 assertions. It skips with exit 0 if Playwright or Chromium is missing, so it
+never blocks a data refresh.
+
+### Negative test
+
+```bash
+node free-llm-radar/test-validate.js
+```
+
+A validator that cannot fail is worthless. This breaks the generated output ten different ways —
+deletes a page, adds an orphan, injects a placeholder, strips a canonical, mislabels an ordinary
+link as sponsored, drops a referral's sponsored mark, removes a sitemap URL, overruns a meta
+description, strips the structured data, adds an offer without generating its page — and asserts
+`validate.js` rejects every one. It asserts a clean copy passes first, because a test whose baseline
+already fails proves nothing. Runs in a throwaway copy; the project is never modified.
+
+Note it runs `validate.js` **in-process** with a stubbed `process.exit` rather than as a child
+process: the sandbox refuses to spawn `node.exe` (it fails `EBUSY`), and a child that never starts
+reports "caught" for every case — which is how this test first appeared to pass 9/9 while doing
+nothing at all.
 
 ---
 
@@ -263,9 +332,15 @@ Append to `RADAR.offers` in `data.js`. Required fields are documented in the hea
 file. The non-obvious ones:
 
 - `budget` — number for sorting, `0` if unmetered or unpublished
-- `unit` — how to read it: `'tokens/day'`, `'tokens one-time'`, `'$300'`
+- `unit` — how to read it: `'tokens/day'`, `'tokens one-time'`, `'$300'`, `'points · not tokens'`
 - `end` — `'YYYY-MM-DD'` or `null` for ongoing
 - `link` — the direct key-creation URL, not the marketing homepage
-- `test` — a command that actually runs, not a placeholder
+- `test` — a command that actually runs. A leading `—` means "not applicable", and the generator
+  drops the whole "Test it" section rather than printing the placeholder
 
-Then add a rail entry and re-run `_check.js`.
+Then add a rail entry, regenerate the offer pages, and re-run `validate.js`:
+
+```bash
+node free-llm-radar/build-pages.js
+node free-llm-radar/validate.js
+```

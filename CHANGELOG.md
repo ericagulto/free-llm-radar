@@ -13,6 +13,72 @@ Format per entry:
 
 ---
 
+## 2026-09-29 (seventh pass — per-offer detail pages)
+
+Presentation layer plus tooling. No offer data changed, so nothing about the numbers moved.
+
+**Why.** The dashboard is one URL showing 43 offers. A search engine sees a single page, so none of
+the individual offers can rank for their own query. The fix is real files, not a client-side detail
+view — a page that renders from a query string is still one URL.
+
+- **ADDED `build-pages.js`** — a deterministic static generator. Reads the validated `data.js` +
+  `referrals.js` and writes `offers/<id>.html` (43), `offers/index.html`, `assets/offer.css`,
+  `sitemap.xml` and `robots.txt`. Same input always produces byte-identical output, so git diffs
+  show only real changes. It deletes stale pages for offers that no longer exist, and exits
+  non-zero if any offer fails to render — a half-built page never ships.
+- **Every page carries** a unique `<title>` and meta description, a canonical URL, Open Graph tags,
+  `BreadcrumbList` structured data, a facts grid, the mechanics table, numbered setup steps, the
+  test command, and derived "Before you commit" warnings. Plus cross-links to same-kind offers.
+- **Every derived statement comes from a field in `data.js`.** The generator invents no filler:
+  where a value is unknown the page says so. `watchOuts()` produces its bullets from data alone —
+  client-bound, card required, deadline ≤14 days, closed, no published figure, credit-converts,
+  serves China.
+- **ADDED cross-links from the dashboard.** Each row's offer name, and a "Read the full guide" link
+  inside the expanded panel, point at that offer's page.
+- **ADDED generated-output validation to `validate.js`** — every offer has a page, no orphans, no
+  unrendered `${...}` placeholders, one `<h1>` and one facts block each, canonical present, meta
+  description within 60–160 chars, breadcrumb data intact, and `rel="sponsored"` only on pages whose
+  offer carries a live referral. Plus sitemap/robots agreement. `offers/` missing is a warning (a
+  data-only edit can still validate); a *missing page for an existing offer* is a failure.
+- **ADDED `test-validate.js`** — a negative test. It breaks the output ten ways and asserts the
+  validator rejects each. It asserts a clean copy passes first.
+- **ADDED `deploy/sync-site.sh` and `deploy/publish.sh`.** `publish.sh` is now the daily entry point:
+  regenerate → validate → push data → push site → verify live.
+- **CHANGED the daily procedure.** Regeneration is now part of a refresh, not a separate chore.
+  Previously "the site never needs redeploying" was true; it no longer is, because the offer pages
+  are static and quote limits and deadlines. Publishing data without regenerating would leave
+  indexed pages stating numbers the dashboard no longer shows.
+
+**Three fixes found while verifying the generated output:**
+
+- **The facts grid used `<dt>`/`<dd>` outside a `<dl>`.** Invalid HTML, and it only looked right by
+  accident. Now `<dl class="facts">`.
+- **21 pages printed a placeholder test command.** The dataset uses a leading `—` to mean "not
+  applicable", so client-bound offers rendered a "Test it" block reading `— client-bound.` The
+  section is now dropped when the value is a placeholder, on both the offer pages and the dashboard.
+- **One page showed escaped markup.** Bedrock's `test` field contained `<b>` tags, which rendered as
+  literal `&lt;b&gt;` inside `<pre>`. Tags are now stripped before the value goes into a code block.
+
+**A test that could not fail.** `test-validate.js` first reported "9/9 breakages caught" while doing
+nothing at all: the sandbox refuses to spawn `node.exe` (the spawn failed `EBUSY`), so every case
+looked like a pass because the child never ran. It now runs `validate.js` in-process with a stubbed
+`process.exit`, and asserts the baseline passes before trusting any result. Lesson recorded in
+`AGENTS.md`: always check the baseline of a negative test.
+
+- **Verified:** all 43 offers render a page with no unrendered placeholders, no console errors and no
+  failed requests, checked in a real Chromium. `test-ui.js` 45/45, `validate.js` exit 0,
+  `test-validate.js` 10/10 with a passing baseline.
+
+**Notes for the next run:**
+- **Regenerate after every data change.** `offers/` is derived output; hand edits are pointless and
+  the validator flags the drift.
+- If you add a `kind`, add a `.tag.<kind>` rule to `build-pages.js`'s CSS **and** to `index.html` —
+  `validate.js` fails without it.
+- `rel="sponsored"` must stay conditional in the generator. The check exists in both the dashboard
+  and the generated pages, because getting it wrong once already mislabelled 42 ordinary links.
+
+---
+
 ## 2026-09-29 (sixth pass — AGENTS.md runbook)
 
 Documentation only. No data change, so no data publish was needed.

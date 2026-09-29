@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%2312100d'/%3E%3Ccircle cx='16' cy='16' r='9.5' fill='none' stroke='%23e8a33d' stroke-width='2.2'/%3E%3Ccircle cx='16' cy='16' r='3' fill='%23e8a33d'/%3E%3Cpath d='M16 16 L25 9' stroke='%23e8a33d' stroke-width='2.2' stroke-linecap='round'/%3E%3C/svg%3E">
+<title>Cerebras free tier — limits, base URL and setup | Free LLM Radar</title>
+<meta name="description" content="Cerebras free tier: Wafer-scale inference · 1M tokens/day · card required. 5–10 req/min · 30K tokens/min · 1M tokens/day · $5 signup credit">
+<link rel="canonical" href="https://ericagulto.github.io/free-llm-radar/offers/cerebras.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Cerebras free tier — limits, base URL and setup">
+<meta property="og:description" content="Cerebras free tier: Wafer-scale inference · 1M tokens/day · card required. 5–10 req/min · 30K tokens/min · 1M tokens/day · $5 signup credit">
+<meta property="og:url" content="https://ericagulto.github.io/free-llm-radar/offers/cerebras.html">
+<meta name="twitter:card" content="summary">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,400;0,500;0,600;0,700;0,800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/offer.css">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Free LLM Radar","item":"https://ericagulto.github.io/free-llm-radar/"},{"@type":"ListItem","position":2,"name":"Offers","item":"https://ericagulto.github.io/free-llm-radar/offers/"},{"@type":"ListItem","position":3,"name":"Cerebras","item":"https://ericagulto.github.io/free-llm-radar/offers/cerebras.html"}]}</script>
+</head>
+<body>
+
+<div class="bar">
+  <a href="../index.html">← Free LLM Radar</a>
+  <span class="sp">Verified 2026-09-29</span>
+</div>
+
+<main>
+  <div class="crumb"><a href="../index.html">Radar</a> / <a href="index.html">Offers</a> / Cerebras</div>
+
+  <h1>Cerebras</h1>
+  <p class="sub">Wafer-scale inference</p>
+  <div class="tags">
+    <span class="tag portable">Portable API key</span>
+    
+    <span class="tag card">Card required</span>
+    
+  </div>
+
+  <dl class="facts">
+    <div><dt>Allowance</dt><dd class="mono">1M tokens/day</dd></div>
+    <div><dt>Metered in</dt><dd class="mono">tokens/day</dd></div>
+    <div><dt>Promotion</dt><dd class="">2026-10-29 — 31 days left</dd></div>
+    <div><dt>Last changed</dt><dd class="mono">2026-09-28</dd></div>
+  </dl>
+
+  <p class="lead">5–10 req/min · 30K tokens/min · 1M tokens/day · <b>$5 signup credit</b></p>
+  <p>You get a real API key you can point any OpenAI-compatible client at.</p>
+
+  <a class="cta" href="https://cloud.cerebras.ai" target="_blank" rel="noopener">Get key →</a>
+
+
+  <div class="callout warn"><div class="h">Watch out</div>This is a <b>finite $5 trial</b>, not a recurring free tier. 5 req/min is genuinely restrictive; the Developer plan from $10 lifts limits roughly tenfold.</div>
+
+
+  <h2>Mechanics</h2>
+  <table>
+    <tr><th>Base URL</th><td class="mono">https://api.cerebras.ai/v1</td></tr>
+    <tr><th>Auth</th><td>Authorization: Bearer</td></tr>
+    <tr><th>Models</th><td class="mono">gpt-oss-120b<br>gemma-4-31b<br>zai-glm-4.7</td></tr>
+  </table>
+
+  <h2>Set it up</h2>
+  <ol>
+    <li>Sign up at <b>cloud.cerebras.ai</b>.</li>
+    <li>$5 of credit is auto-credited to the account.</li>
+    <li>Create an API key.</li>
+  </ol>
+
+  <h2>Test it</h2>
+  <pre>curl https://api.cerebras.ai/v1/chat/completions \ -H &quot;Authorization: Bearer $CEREBRAS_API_KEY&quot; \ -H &quot;Content-Type: application/json&quot; \ -d '{&quot;model&quot;:&quot;gpt-oss-120b&quot;,&quot;messages&quot;:[{&quot;role&quot;:&quot;user&quot;,&quot;content&quot;:&quot;Hello&quot;}]}'</pre>
+
+    <h2>Before you commit</h2>
+    <ul>
+      <li><b>Card required.</b> A payment method is needed to activate. <b>Set a budget alert before you start</b> — these grants convert to pay-as-you-go when they expire.</li>
+    </ul>
+
+    <h2>Other portable API key options</h2>
+    <div class="alts">
+      <a class="alt" href="amd.html">
+        <span class="n">AMD Radeon Cloud</span>
+        <span class="m">Token Factory</span>
+      </a>
+      <a class="alt" href="groq.html">
+        <span class="n">Groq</span>
+        <span class="m">LPU inference</span>
+      </a>
+      <a class="alt" href="gemini.html">
+        <span class="n">Google Gemini</span>
+        <span class="m">Flash / Flash-Lite line</span>
+      </a>
+      <a class="alt" href="openrouter.html">
+        <span class="n">OpenRouter</span>
+        <span class="m">Model aggregator</span>
+      </a>
+    </div>
+</main>
+
+<footer>
+  <p><b>Verified 2026-09-29.</b>
+  Free tiers change without notice — re-check the provider's own page before you build on this.
+  This page was generated from the radar's dataset; the offer <code>id</code> is
+  <code>cerebras</code>.</p>
+  <p><a href="../index.html">← Back to the full radar</a> · <a href="index.html">All offers</a></p>
+</footer>
+
+</body>
+</html>

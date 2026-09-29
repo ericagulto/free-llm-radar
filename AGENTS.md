@@ -12,17 +12,21 @@ manual update, or a one-off fix. `README.md` explains the design; this file tell
 ```bash
 # 1. Re-verify deadlines BEFORE anything else (extensions are the most common change)
 # 2. Research new offers          → see "Where to research"
-# 3. Rewrite ONLY free-llm-radar/data.js   → see "How to update the data"
-# 4. Validate — must exit 0
+# 3. Archive then rewrite ONLY free-llm-radar/data.js   → see "How to update the data"
+# 4. Regenerate the offer pages   → node free-llm-radar/build-pages.js
+# 5. Validate — must exit 0
 node free-llm-radar/validate.js
-# 5. Publish the data (site never needs redeploying)
-bash deploy/sync-data.sh
-# 6. Log it
+# 6. Publish data + site + verify — one command
+bash deploy/publish.sh
+# 7. Log it
 #    prepend a dated entry to free-llm-radar/CHANGELOG.md
 ```
 
 If validation fails, **restore `data.js` from `free-llm-radar/archive/` and report the failure.**
 Never leave broken data in place.
+
+Step 4 is not optional. The offer pages quote limits and deadlines; publishing new data without
+regenerating them leaves indexed pages stating numbers the dashboard no longer shows.
 
 ---
 
@@ -33,9 +37,12 @@ Never leave broken data in place.
 | Workspace root | `C:\Users\Eric\WorkBuddy AI\2026-09-28-23-26-01` |
 | Project | `<root>\free-llm-radar` |
 | Data (the file you rewrite) | `<root>\free-llm-radar\data.js` |
+| Generated offer pages | `<root>\free-llm-radar\offers\` — output, never hand-edit |
+| Page generator | `<root>\free-llm-radar\build-pages.js` |
 | Local data repo clone | `<root>\deploy\data-repo` |
 | Local site repo clone | `<root>\deploy\site-repo` |
 | Live dashboard | https://ericagulto.github.io/free-llm-radar/ |
+| Live offer index | https://ericagulto.github.io/free-llm-radar/offers/ |
 | Live data | https://ericagulto.github.io/free-llm-radar-data/data.js |
 
 ---
@@ -44,13 +51,16 @@ Never leave broken data in place.
 
 1. **Rewrite only `data.js`.** Never regenerate `index.html`. Never edit `referrals.js`,
    `REFERRALS.md`, `validate.js` or `test-ui.js` on an automated run.
-2. **Offer `id` values are permanent.** Never rename one — the referral layer keys off them.
+2. **Offer `id` values are permanent.** Never rename one — the referral layer keys off them, and
+   the generated page filename is derived from it.
 3. **Never delete an offer silently.** Record removals in `RADAR.rail` under the `closed` group
    with chip `dead`, and update the offer's own `status`.
 4. **Vendor primary docs beat aggregators.** Always. See the core principle below.
 5. **A stale-but-correct file beats a fresh-but-wrong one.** If you cannot verify a change, leave
    the existing data alone and say so.
 6. **Report corrections first.** If a previously published deadline moved, lead with that.
+7. **Regenerate after every data change.** `offers/` is derived output. Editing it by hand is
+   pointless — the next run overwrites it, and the validator will flag the drift.
 
 ---
 
@@ -121,6 +131,10 @@ write-up exists.
    midnight. Report the *usable* window, not the claim window.
 8. **Points are not tokens.** WorkBuddy and MiniMax meter in points/credits. Use `budget: 0` and say
    so in `unit`. Inventing a token figure breaks the dataset's honesty.
+9. **Derived output goes stale silently.** The offer pages quote limits and deadlines. Refresh
+   `data.js` without regenerating and the indexed pages keep stating the old numbers, with nothing
+   on screen to suggest they are out of date. Regenerating is part of the refresh, not a separate
+   chore.
 
 ### Corrections already established — do not re-introduce these
 
@@ -135,6 +149,10 @@ write-up exists.
   merge their numbers.
 - **The `.tag.port` CSS bug** — see `CHANGELOG.md`. Lesson: a CSS class that never matches fails
   silently.
+- **A test that cannot fail proves nothing.** `test-validate.js` first "caught" 9/9 breakages while
+  the child process was never starting at all (the sandbox refuses to spawn `node.exe`; the spawn
+  failed `EBUSY` and every case looked like a pass). It now runs `validate.js` in-process with a
+  stubbed `process.exit`, and asserts a **clean copy passes first**. Always check the baseline.
 
 ---
 
@@ -175,6 +193,8 @@ where `c` is one of `new` \| `ext` \| `exp` \| `dead`.
 4. Set `RADAR.verifiedBy` to a short description of what you actually checked.
 5. Prepend a dated entry to `free-llm-radar/CHANGELOG.md` — what changed, what was verified against
    a primary source, what the next run needs to know.
+6. Regenerate the offer pages (`node free-llm-radar/build-pages.js`) so the published detail pages
+   match the data you just wrote.
 
 ### When to stop and ask instead
 
@@ -189,41 +209,74 @@ Leave the data untouched and report, rather than guessing, if:
 
 ---
 
+## The generated offer pages
+
+`offers/` holds one static HTML page per offer, plus an index. They are **generated output** —
+`build-pages.js` writes them from `data.js` + `referrals.js`, and `validate.js` checks them.
+
+**Why static files rather than a client-side detail view.** A single page that renders details from
+a query string is one URL to a search engine, so none of it ranks. Real files mean each offer can
+rank for its own query ("groq free tier", "amd token factory limits").
+
+Rules:
+
+- **Never hand-edit `offers/` or `assets/offer.css`.** Change `data.js` or `build-pages.js` and
+  regenerate. The generator deletes any page whose offer no longer exists.
+- **Every statement on a page is derived from a field in `data.js`.** The generator does not invent
+  filler. If a page looks thin, the fix is more data, not more prose.
+- **The generator exits non-zero if any offer fails to render**, so a half-built page never ships.
+- The `rel="sponsored"` rule applies here too: it appears **only** on pages whose offer carries a
+  live referral link. `validate.js` fails the build if an ordinary provider page is marked
+  sponsored, or if a referral page is not.
+
+To check a change before publishing:
+
+```bash
+node free-llm-radar/build-pages.js     # regenerate
+node free-llm-radar/validate.js        # schema + generated-output checks
+node free-llm-radar/test-validate.js   # proves the validator actually fails on breakage
+```
+
+---
+
 ## Validate, then publish
 
 ```bash
-# Schema, cross-file integrity, and compliance hooks. Must exit 0.
+# Schema, cross-file integrity, generated output, compliance hooks. Must exit 0.
 node free-llm-radar/validate.js
 
 # Only if you changed index.html:
 NODE_PATH="C:/Users/Eric/.workbuddy-ai/binaries/node/workspace/node_modules" \
   node free-llm-radar/test-ui.js
 
-# Publish the data. Idempotent — exits without committing if nothing changed.
-bash deploy/sync-data.sh
+# The daily entry point: regenerates pages, validates, pushes data + site, verifies live.
+bash deploy/publish.sh
 ```
 
-**Publishing is only the data push.** The dashboard reads
-`https://ericagulto.github.io/free-llm-radar-data/data.js` at load time, so a refresh never requires
-redeploying the site.
+`deploy/publish.sh` is the normal path and is safe to re-run. The narrower scripts exist for
+specific jobs:
+
+| Script | Does | Use when |
+|---|---|---|
+| `deploy/publish.sh` | regenerate → validate → push data → push site → verify | **Normal refresh. Use this.** |
+| `deploy/sync-data.sh` | pushes `data.js` to the data origin only | emergency data-only fix, site already current |
+| `deploy/sync-site.sh` | regenerate → validate → push the site only | you changed `index.html` or a doc |
+
+Two origins are in play, and that is deliberate:
+
+- **The site** (`free-llm-radar`) serves the dashboard and the offer pages.
+- **The data** (`free-llm-radar-data`) serves `data.js` cross-origin, so the dashboard can be
+  refreshed without redeploying the site. A GitHub *gist* would not work — it returns
+  `text/plain`, and Pages returns `application/javascript` with `access-control-allow-origin: *`.
 
 Two things to remember:
 
 - **GitHub Pages caches the data file for 10 minutes** (`cache-control: max-age=600`). A successful
   push is not instantly visible. Do not report it as live immediately.
-- **After any deploy to the site**, verify the deployed artifact, not the local file:
-  `node deploy/verify-live.js`. A local suite once passed 17/17 while the live page was
-  mislabelling every link.
-
-Only touch `deploy/site-repo` when `index.html`, `referrals.js` or a doc changed. Push it with:
-
-```bash
-cp free-llm-radar/{index.html,referrals.js,README.md,REFERRALS.md,CHANGELOG.md,validate.js,test-ui.js} deploy/site-repo/
-cp -r free-llm-radar/archive/. deploy/site-repo/archive/
-git -C deploy/site-repo add -A
-git -C deploy/site-repo commit -m "<what changed>"
-git -C deploy/site-repo push
-```
+- **Verify the deployed artifact, not the local file.** `deploy/verify-live.js` does this. A local
+  suite once passed 17/17 while the live page was mislabelling every link as sponsored. Pages also
+  takes 30–60s to build after a push, and CDN propagation can add another minute — a 404 on a file
+  the API reports as present is usually propagation, not a failed deploy.
 
 ---
 
@@ -257,4 +310,6 @@ Compliance constraints that shaped the design — read `REFERRALS.md` before pro
 - Name which offers expire within 7 days.
 - Say plainly whether the publish step succeeded, and note the 10-minute cache.
 - **If nothing changed, say so.** Do not invent changes to look busy.
+- Report the offer count and the generated page count (`validate.js` prints both) so a silent data
+  loss or a partial generation is visible in the report.
 - Keep it under ~250 words unless the user asks for detail.

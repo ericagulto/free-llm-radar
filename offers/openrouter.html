@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%2312100d'/%3E%3Ccircle cx='16' cy='16' r='9.5' fill='none' stroke='%23e8a33d' stroke-width='2.2'/%3E%3Ccircle cx='16' cy='16' r='3' fill='%23e8a33d'/%3E%3Cpath d='M16 16 L25 9' stroke='%23e8a33d' stroke-width='2.2' stroke-linecap='round'/%3E%3C/svg%3E">
+<title>OpenRouter free tier — limits, base URL and setup | Free LLM Radar</title>
+<meta name="description" content="OpenRouter free tier: Model aggregator · no card required. 20 req/min · 50 req/day free → 1,000 req/day after a one-time $10 purchase">
+<link rel="canonical" href="https://ericagulto.github.io/free-llm-radar/offers/openrouter.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="OpenRouter free tier — limits, base URL and setup">
+<meta property="og:description" content="OpenRouter free tier: Model aggregator · no card required. 20 req/min · 50 req/day free → 1,000 req/day after a one-time $10 purchase">
+<meta property="og:url" content="https://ericagulto.github.io/free-llm-radar/offers/openrouter.html">
+<meta name="twitter:card" content="summary">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,400;0,500;0,600;0,700;0,800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/offer.css">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Free LLM Radar","item":"https://ericagulto.github.io/free-llm-radar/"},{"@type":"ListItem","position":2,"name":"Offers","item":"https://ericagulto.github.io/free-llm-radar/offers/"},{"@type":"ListItem","position":3,"name":"OpenRouter","item":"https://ericagulto.github.io/free-llm-radar/offers/openrouter.html"}]}</script>
+</head>
+<body>
+
+<div class="bar">
+  <a href="../index.html">← Free LLM Radar</a>
+  <span class="sp">Verified 2026-09-29</span>
+</div>
+
+<main>
+  <div class="crumb"><a href="../index.html">Radar</a> / <a href="index.html">Offers</a> / OpenRouter</div>
+
+  <h1>OpenRouter</h1>
+  <p class="sub">Model aggregator</p>
+  <div class="tags">
+    <span class="tag portable">Portable API key</span>
+    
+    <span class="tag">No card</span>
+    
+  </div>
+
+  <dl class="facts">
+    <div><dt>Allowance</dt><dd class="mono">—</dd></div>
+    <div><dt>Metered in</dt><dd class="mono">req/day</dd></div>
+    <div><dt>Promotion</dt><dd class="ok">Ongoing — no published end date</dd></div>
+    <div><dt>Last changed</dt><dd class="mono">2026-09-28</dd></div>
+  </dl>
+
+  <p class="lead">20 req/min · 50 req/day free → 1,000 req/day after a one-time $10 purchase</p>
+  <p>You get a real API key you can point any OpenAI-compatible client at.</p>
+
+  <a class="cta" href="https://openrouter.ai/keys" target="_blank" rel="noopener">Get key →</a>
+
+
+  <div class="callout warn"><div class="h">Watch out</div>The free roster rotates weekly. <b>Read model IDs from the API at runtime</b> rather than hardcoding them, or your app breaks on someone else's pricing decision.</div>
+
+
+  <h2>Mechanics</h2>
+  <table>
+    <tr><th>Base URL</th><td class="mono">https://openrouter.ai/api/v1</td></tr>
+    <tr><th>Auth</th><td>Authorization: Bearer</td></tr>
+    <tr><th>Models</th><td class="mono">nvidia/nemotron-3-ultra-550b-a55b:free<br>inclusionai/ling-3.0-flash-fin:free<br>poolside/laguna-s-2.1:free</td></tr>
+  </table>
+
+  <h2>Set it up</h2>
+  <ol>
+    <li>Sign up at <b>openrouter.ai</b> — Google or GitHub login.</li>
+    <li>Go to <b>openrouter.ai/keys</b> → <b>Create Key</b>. Starts with <b>sk-or-v1-</b>.</li>
+    <li>Optional but significant: buy <b>$10 of credit once</b>. It is a lifetime condition, not a balance — the 20× daily limit increase is permanent even after you spend it.</li>
+  </ol>
+
+  <h2>Test it</h2>
+  <pre># list what is free right now — do this instead of hardcoding curl https://openrouter.ai/api/v1/models \ -H &quot;Authorization: Bearer $OPENROUTER_API_KEY&quot; | grep -o '&quot;[^&quot;]*:free&quot;' | sort -u</pre>
+
+    <h2>Before you commit</h2>
+    <ul>
+      <li><b>No published figure.</b> The provider does not publish a numeric allowance, so this page cannot quote one. Check the provider's own page for current limits.</li>
+    </ul>
+
+    <h2>Other portable API key options</h2>
+    <div class="alts">
+      <a class="alt" href="amd.html">
+        <span class="n">AMD Radeon Cloud</span>
+        <span class="m">Token Factory</span>
+      </a>
+      <a class="alt" href="groq.html">
+        <span class="n">Groq</span>
+        <span class="m">LPU inference</span>
+      </a>
+      <a class="alt" href="gemini.html">
+        <span class="n">Google Gemini</span>
+        <span class="m">Flash / Flash-Lite line</span>
+      </a>
+      <a class="alt" href="inception.html">
+        <span class="n">InceptionLabs</span>
+        <span class="m">Mercury</span>
+      </a>
+    </div>
+</main>
+
+<footer>
+  <p><b>Verified 2026-09-29.</b>
+  Free tiers change without notice — re-check the provider's own page before you build on this.
+  This page was generated from the radar's dataset; the offer <code>id</code> is
+  <code>openrouter</code>.</p>
+  <p><a href="../index.html">← Back to the full radar</a> · <a href="index.html">All offers</a></p>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%2312100d'/%3E%3Ccircle cx='16' cy='16' r='9.5' fill='none' stroke='%23e8a33d' stroke-width='2.2'/%3E%3Ccircle cx='16' cy='16' r='3' fill='%23e8a33d'/%3E%3Cpath d='M16 16 L25 9' stroke='%23e8a33d' stroke-width='2.2' stroke-linecap='round'/%3E%3C/svg%3E">
+<title>Google Gemini free tier — limits, base URL and setup | Free LLM Radar</title>
+<meta name="description" content="Google Gemini free tier: Flash / Flash-Lite line · no card required. ~15 req/min · 1,500 req/day (Google no longer publishes these — read them in AI…">
+<link rel="canonical" href="https://ericagulto.github.io/free-llm-radar/offers/gemini.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Google Gemini free tier — limits, base URL and setup">
+<meta property="og:description" content="Google Gemini free tier: Flash / Flash-Lite line · no card required. ~15 req/min · 1,500 req/day (Google no longer publishes these — read them in AI…">
+<meta property="og:url" content="https://ericagulto.github.io/free-llm-radar/offers/gemini.html">
+<meta name="twitter:card" content="summary">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,400;0,500;0,600;0,700;0,800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/offer.css">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Free LLM Radar","item":"https://ericagulto.github.io/free-llm-radar/"},{"@type":"ListItem","position":2,"name":"Offers","item":"https://ericagulto.github.io/free-llm-radar/offers/"},{"@type":"ListItem","position":3,"name":"Google Gemini","item":"https://ericagulto.github.io/free-llm-radar/offers/gemini.html"}]}</script>
+</head>
+<body>
+
+<div class="bar">
+  <a href="../index.html">← Free LLM Radar</a>
+  <span class="sp">Verified 2026-09-29</span>
+</div>
+
+<main>
+  <div class="crumb"><a href="../index.html">Radar</a> / <a href="index.html">Offers</a> / Google Gemini</div>
+
+  <h1>Google Gemini</h1>
+  <p class="sub">Flash / Flash-Lite line</p>
+  <div class="tags">
+    <span class="tag portable">Portable API key</span>
+    
+    <span class="tag">No card</span>
+    
+  </div>
+
+  <dl class="facts">
+    <div><dt>Allowance</dt><dd class="mono">—</dd></div>
+    <div><dt>Metered in</dt><dd class="mono">unpublished</dd></div>
+    <div><dt>Promotion</dt><dd class="ok">Ongoing — no published end date</dd></div>
+    <div><dt>Last changed</dt><dd class="mono">2026-09-28</dd></div>
+  </dl>
+
+  <p class="lead">~15 req/min · 1,500 req/day (Google no longer publishes these — read them in AI Studio)</p>
+  <p>You get a real API key you can point any OpenAI-compatible client at.</p>
+
+  <a class="cta" href="https://aistudio.google.com/apikey" target="_blank" rel="noopener">Get key →</a>
+
+
+  <div class="callout warn"><div class="h">Watch out</div><b>Google's own pricing table marks free-tier content as used to improve their products.</b> Paid tier says no. This disqualifies the free tier for client code, proprietary source, or anything under an NDA. Pro models are not free at all.</div>
+
+  <div class="callout note"><div class="h">Worth knowing</div><b>Endpoint quirk:</b> the native path wants <b>?key=</b> as a query parameter, not a Bearer header. Use the <b>/openai/</b> path shown above and your existing OpenAI code works unchanged.</div>
+
+  <h2>Mechanics</h2>
+  <table>
+    <tr><th>Base URL</th><td class="mono">https://generativelanguage.googleapis.com/v1beta/openai/</td></tr>
+    <tr><th>Auth</th><td>Authorization: Bearer</td></tr>
+    <tr><th>Models</th><td class="mono">gemini-3.8-flash<br>gemini-3.7-flash<br>gemini-3.6-flash<br>gemini-3.5-flash<br>gemini-3.5-flash-lite<br>gemini-3.1-flash-lite<br>gemini-2.5-flash<br>gemini-2.5-flash-lite<br>gemma-4</td></tr>
+  </table>
+
+  <h2>Set it up</h2>
+  <ol>
+    <li>Go to <b>aistudio.google.com/apikey</b>, sign in with a Google account.</li>
+    <li>Click <b>Create API key</b>. Pick an existing Cloud project or let it create one.</li>
+    <li>Copy the key — starts with <b>AIza</b>.</li>
+  </ol>
+
+  <h2>Test it</h2>
+  <pre>curl https://generativelanguage.googleapis.com/v1beta/openai/chat/completions \ -H &quot;Authorization: Bearer $GEMINI_API_KEY&quot; \ -H &quot;Content-Type: application/json&quot; \ -d '{&quot;model&quot;:&quot;gemini-3.5-flash&quot;,&quot;messages&quot;:[{&quot;role&quot;:&quot;user&quot;,&quot;content&quot;:&quot;Hello&quot;}]}'</pre>
+
+    <h2>Before you commit</h2>
+    <ul>
+      <li><b>No published figure.</b> The provider does not publish a numeric allowance, so this page cannot quote one. Check the provider's own page for current limits.</li>
+    </ul>
+
+    <h2>Other portable API key options</h2>
+    <div class="alts">
+      <a class="alt" href="amd.html">
+        <span class="n">AMD Radeon Cloud</span>
+        <span class="m">Token Factory</span>
+      </a>
+      <a class="alt" href="groq.html">
+        <span class="n">Groq</span>
+        <span class="m">LPU inference</span>
+      </a>
+      <a class="alt" href="openrouter.html">
+        <span class="n">OpenRouter</span>
+        <span class="m">Model aggregator</span>
+      </a>
+      <a class="alt" href="inception.html">
+        <span class="n">InceptionLabs</span>
+        <span class="m">Mercury</span>
+      </a>
+    </div>
+</main>
+
+<footer>
+  <p><b>Verified 2026-09-29.</b>
+  Free tiers change without notice — re-check the provider's own page before you build on this.
+  This page was generated from the radar's dataset; the offer <code>id</code> is
+  <code>gemini</code>.</p>
+  <p><a href="../index.html">← Back to the full radar</a> · <a href="index.html">All offers</a></p>
+</footer>
+
+</body>
+</html>

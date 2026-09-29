@@ -164,9 +164,113 @@ if (!fs.existsSync(path.join(DIR, 'AGENTS.md'))) {
   warn('AGENTS.md is missing — an agent picking this up cold would have no runbook');
 } else {
   const agents = read('AGENTS.md');
-  for (const ref of ['deploy/sync-data.sh', 'validate.js', 'CHANGELOG.md', 'referrals.js']) {
+  for (const ref of ['deploy/sync-data.sh', 'validate.js', 'CHANGELOG.md', 'referrals.js', 'build-pages.js']) {
     if (!agents.includes(ref)) warn(`AGENTS.md no longer mentions ${ref} — has it drifted?`);
   }
+}
+
+// ---------- 8. generated offer pages ----------
+// build-pages.js writes one static page per offer. A stale or partial generation is
+// invisible in the browser until a reader clicks a link and gets a 404, so the output is
+// checked here rather than trusted. If offers/ is absent the run has simply not generated
+// yet — that is a warning, not a failure, so a data-only edit can still be validated.
+const SITE = 'https://ericagulto.github.io/free-llm-radar';
+const OFFERS_DIR = path.join(DIR, 'offers');
+
+function refFor(o) {
+  const pid = refs[o.id];
+  if (!pid) return null;
+  const prog = (REFERRALS.programs || []).find(p => p.id === pid);
+  if (!prog) return null;
+  const mine = (YOUR_LINKS || {})[pid];
+  return { prog, pid, mine, active: prog.status === 'live' && !!mine && mine.length > 0 };
+}
+
+const escHtml = s => String(s == null ? '' : s)
+  .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+
+let pageCount = 0;
+if (!fs.existsSync(OFFERS_DIR)) {
+  warn('offers/ does not exist — run build-pages.js to generate the detail pages');
+} else {
+  const files = fs.readdirSync(OFFERS_DIR).filter(f => f.endsWith('.html'));
+  const have = new Set(files);
+  const expected = new Set(['index.html', ...[...ids].map(id => id + '.html')]);
+
+  for (const id of ids) {
+    if (!have.has(id + '.html')) fail(`offers/${id}.html was not generated — run build-pages.js`);
+  }
+  for (const f of files) {
+    if (!expected.has(f)) fail(`offers/${f} is orphaned — no offer in data.js has that id`);
+  }
+  if (!have.has('index.html')) fail('offers/index.html was not generated');
+
+  let sponsored = 0;
+  for (const o of RADAR.offers || []) {
+    const p = path.join(OFFERS_DIR, o.id + '.html');
+    if (!fs.existsSync(p)) continue;
+    pageCount++;
+    const h = fs.readFileSync(p, 'utf8');
+    const at = `offers/${o.id}.html`;
+
+    // An unrendered template literal means the generator silently failed on this offer.
+    if (/\$\{/.test(h)) fail(`${at} contains an unrendered \${...} placeholder`);
+    if ((h.match(/<h1>/g) || []).length !== 1) fail(`${at} must have exactly one <h1>`);
+    if (!h.includes(`<h1>${escHtml(o.name)}</h1>`)) fail(`${at} does not carry the offer name in its <h1>`);
+    if ((h.match(/<dl class="facts">/g) || []).length !== 1) fail(`${at} must have exactly one facts block`);
+    if (!h.includes(`<link rel="canonical" href="${SITE}/offers/${o.id}.html">`)) {
+      fail(`${at} is missing its canonical URL`);
+    }
+    if (!h.includes(`<title>${escHtml(o.name)} free tier`)) fail(`${at} has a non-unique or malformed <title>`);
+
+    // Search engines truncate around 155–160 characters; a longer one is silently cut off.
+    const md = h.match(/<meta name="description" content="([^"]*)"/);
+    if (!md) fail(`${at} has no meta description`);
+    else if (md[1].length < 60) fail(`${at} meta description is too short to be useful (${md[1].length})`);
+    else if (md[1].length > 160) fail(`${at} meta description is ${md[1].length} chars — search engines will truncate it`);
+
+    // Structured data must survive the templating.
+    if (!/"@type":"BreadcrumbList"/.test(h)) fail(`${at} lost its BreadcrumbList structured data`);
+
+    // rel="sponsored" may appear only on pages that genuinely carry a referral link.
+    const isRef = !!(refFor(o) || {}).active;
+    const hasSponsored = /noopener sponsored/.test(h);
+    if (isRef && !hasSponsored) fail(`${at} carries a live referral but its link is not marked rel="sponsored"`);
+    if (!isRef && hasSponsored) fail(`${at} marks an ordinary provider link as rel="sponsored"`);
+    if (hasSponsored) sponsored++;
+  }
+  console.log(`offers/: ${pageCount} pages checked · ${sponsored} carrying a sponsored referral link`);
+}
+
+// sitemap and robots must agree with what was actually generated
+if (fs.existsSync(path.join(DIR, 'sitemap.xml'))) {
+  const sm = read('sitemap.xml');
+  const locs = [...sm.matchAll(/<loc>([^<]+)<\/loc>/g)].map(m => m[1]);
+  const wantUrls = new Set([`${SITE}/`, `${SITE}/offers/`, ...[...ids].map(id => `${SITE}/offers/${id}.html`)]);
+  for (const u of wantUrls) {
+    if (!locs.includes(u)) fail(`sitemap.xml is missing ${u}`);
+  }
+  for (const u of locs) {
+    if (!wantUrls.has(u)) fail(`sitemap.xml lists ${u}, which is not a generated page`);
+  }
+  if (locs.length !== wantUrls.size) {
+    fail(`sitemap.xml has ${locs.length} urls but ${wantUrls.size} pages were generated`);
+  }
+  console.log(`sitemap.xml: ${locs.length} urls`);
+} else {
+  warn('sitemap.xml is missing — run build-pages.js');
+}
+
+if (fs.existsSync(path.join(DIR, 'robots.txt'))) {
+  if (!/Sitemap:\s*https:\/\//.test(read('robots.txt'))) {
+    fail('robots.txt does not point at a sitemap — the offer pages will not be discovered');
+  }
+} else {
+  warn('robots.txt is missing — run build-pages.js');
+}
+
+if (!fs.existsSync(path.join(DIR, 'assets', 'offer.css'))) {
+  warn('assets/offer.css is missing — the detail pages will render unstyled');
 }
 
 // ---------- report ----------
