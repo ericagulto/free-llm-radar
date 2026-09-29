@@ -108,24 +108,33 @@ immediate, the loader can be changed to append a cache-busting query string.
 
 ### Updating the data
 
+From the workspace root:
+
 ```bash
-git -C <data-repo> add data.js
-git -C <data-repo> commit -m "Refresh: <what changed>"
-git -C <data-repo> push
+bash deploy/sync-data.sh
 ```
 
-The dashboard needs no redeploy. Only push to the site repo when `index.html`, `referrals.js` or
-the docs change.
+It copies `free-llm-radar/data.js` into `deploy/data-repo`, commits, and pushes. Exits without
+committing if nothing changed, so it is safe to run unconditionally. **This is the only step needed
+to publish a data refresh — the dashboard never has to be redeployed.**
+
+The daily automation runs this automatically as its final step, after validation passes.
 
 ### Redeploying the site
 
+Only needed when `index.html`, `referrals.js` or a doc changes:
+
 ```bash
-git -C <site-repo> add -A
-git -C <site-repo> commit -m "<what changed>"
-git -C <site-repo> push
+cp free-llm-radar/{index.html,referrals.js,README.md,REFERRALS.md,CHANGELOG.md,validate.js,test-ui.js} deploy/site-repo/
+cp -r free-llm-radar/archive/. deploy/site-repo/archive/
+git -C deploy/site-repo add -A
+git -C deploy/site-repo commit -m "<what changed>"
+git -C deploy/site-repo push
 ```
 
 Pages rebuilds automatically. A `.nojekyll` file is present so Jekyll does not process the output.
+
+Credentials: `gh auth setup-git` has been run, so plain `git push` works in these clones.
 
 ---
 
