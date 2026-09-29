@@ -13,6 +13,33 @@ Format per entry:
 
 ---
 
+## 2026-09-29 (sixth pass — AGENTS.md runbook)
+
+Documentation only. No data change, so no data publish was needed.
+
+- **ADDED `AGENTS.md`** — the operational runbook for any agent picking this project up cold. It
+  answers three questions explicitly: **where to research** (trackers for breadth, vendor pages for
+  truth, with a per-provider table), **how to research** (verify deadlines first, label verification
+  level, search both locales, and the eight recurring traps), and **how to update the data** (schema,
+  idempotency rules, archive-then-write, validate, publish).
+- It also records the **corrections already established** — GitHub Models retired, Qoder extended,
+  Bailian 70M, AutoClaw 200M, Qoder intl referral dead, the two distinct WorkBuddy campaigns, and
+  the `.tag.port` CSS bug — so a future run does not re-introduce any of them.
+- **ADDED an explicit "when to stop and ask" section.** The most useful rule in it: if a tracker and
+  the vendor disagree, the vendor wins, and you note the discrepancy rather than guessing.
+- **CHANGED the scheduled job's prompt to a pointer.** It now says "read `AGENTS.md` first" plus a
+  short version of the loop, instead of restating the whole procedure. The runbook can now be
+  updated without touching the automation, and there is one place where the procedure lives.
+- **ADDED a `validate.js` warning** if `AGENTS.md` is missing, or if it stops mentioning
+  `deploy/sync-data.sh`, `validate.js`, `CHANGELOG.md` or `referrals.js` — a light drift check.
+  A warning rather than a failure, because a missing doc should not block a data refresh.
+
+**Notes for the next run:**
+- Read `AGENTS.md`, not this file, for the procedure. This changelog is history.
+- If the procedure changes, update `AGENTS.md` and leave the automation prompt alone.
+
+---
+
 ## 2026-09-29 (fifth pass — featured block, multi-column sort, a third bug fixed)
 
 Presentation-layer changes. Hand-edited, deliberately.

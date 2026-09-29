@@ -5,12 +5,17 @@ grants. Refreshed daily by a scheduled task.
 
 **Open `index.html`** — it runs from the filesystem with no server and no build step.
 
+> **If you are an agent picking this up, read [`AGENTS.md`](AGENTS.md) first.** It is the operational
+> runbook: where to research, how to research, and exactly how to update and publish the data.
+> This README explains the design; `AGENTS.md` tells you what to do.
+
 ---
 
 ## Layout
 
 ```
 free-llm-radar/
+├── AGENTS.md       Operational runbook. Sources, research method, update procedure.
 ├── index.html      Presentation layer. Stable — the daily job does not touch this.
 ├── data.js         Offer data. THE ONLY FILE THE DAILY JOB REWRITES.
 ├── referrals.js    Referral programme data + your own links. Edited by hand.
@@ -165,7 +170,7 @@ The daily automation runs this automatically as its final step, after validation
 Only needed when `index.html`, `referrals.js` or a doc changes:
 
 ```bash
-cp free-llm-radar/{index.html,referrals.js,README.md,REFERRALS.md,CHANGELOG.md,validate.js,test-ui.js} deploy/site-repo/
+cp free-llm-radar/{AGENTS.md,index.html,referrals.js,README.md,REFERRALS.md,CHANGELOG.md,validate.js,test-ui.js} deploy/site-repo/
 cp -r free-llm-radar/archive/. deploy/site-repo/archive/
 git -C deploy/site-repo add -A
 git -C deploy/site-repo commit -m "<what changed>"

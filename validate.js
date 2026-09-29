@@ -157,6 +157,18 @@ if (!/referrals\.js/.test(html)) fail('index.html: no longer loads referrals.js'
 if (!/data\.js/.test(html)) fail('index.html: no longer loads data.js');
 if (!/typeof RADAR === 'undefined'/.test(html)) warn('index.html: the missing-data guard looks gone');
 
+// ---------- 7. the runbook must be present ----------
+// The scheduled refresh reads AGENTS.md for its sources and procedure. A warning rather than a
+// failure: a missing doc should not block a data refresh, but it should be loud.
+if (!fs.existsSync(path.join(DIR, 'AGENTS.md'))) {
+  warn('AGENTS.md is missing — an agent picking this up cold would have no runbook');
+} else {
+  const agents = read('AGENTS.md');
+  for (const ref of ['deploy/sync-data.sh', 'validate.js', 'CHANGELOG.md', 'referrals.js']) {
+    if (!agents.includes(ref)) warn(`AGENTS.md no longer mentions ${ref} — has it drifted?`);
+  }
+}
+
 // ---------- report ----------
 console.log(`data.js: OK — offers ${(RADAR.offers || []).length} | rail groups ${(RADAR.rail || []).length}`);
 console.log(`referrals.js: OK — programs ${(REFERRALS.programs || []).length}`);
