@@ -41,10 +41,11 @@ const GENERATED = new Date().toISOString().slice(0, 10);
 // ---------- load ----------
 const box = { window: {} };
 vm.createContext(box);
-for (const f of ['data.js', 'referrals.js']) {
+for (const f of ['data.js', 'content.js', 'referrals.js']) {
   vm.runInContext(fs.readFileSync(path.join(DIR, f), 'utf8'), box, { filename: f });
 }
 const RADAR = box.window.RADAR;
+const CONTENT = box.window.CONTENT || {};
 const REFERRALS = box.window.REFERRALS || { programs: [], offerRefs: {} };
 const MY = box.window.YOUR_LINKS || {};
 
@@ -91,6 +92,24 @@ const KIND_NOTE = {
   credit: 'A credit balance on a cloud platform, spent through that provider\'s own APIs.'
 };
 
+/* The direct answer to "is it free forever?". Five states, because collapsing them loses the
+   distinction that matters most: a standing tier, a grant that never renews, and a promotion
+   that recurs are three different kinds of commitment. */
+const FOREVER = {
+  standing:  { label: 'Standing free tier',        note: 'No published end date.',                          cls: 'ok' },
+  recurring: { label: 'Recurring — not permanent', note: 'The allowance refreshes, but the vendor has not committed to it indefinitely.', cls: 'recur' },
+  'one-off': { label: 'One-off grant',             note: 'It does not renew. Once spent, it is gone.',      cls: 'warn' },
+  limited:   { label: 'Time-limited promotion',    note: 'This ends on the date shown.',                    cls: 'warn' },
+  unclear:   { label: 'Not committed',             note: 'The vendor has not said either way.',             cls: 'muted' }
+};
+
+const COVERAGE = {
+  good: { label: 'Well covered',                cls: 'ok' },
+  some: { label: 'Some independent coverage',   cls: 'recur' },
+  thin: { label: 'Thin independent coverage',   cls: 'warn' },
+  none: { label: 'No independent reviews found', cls: 'muted' }
+};
+
 function daysTo(d) {
   if (!d) return null;
   const t = Date.parse(d + 'T23:59:59+08:00');
@@ -117,24 +136,40 @@ function fmtBudget(o) {
 }
 
 /* Derived, not invented: every line here is a direct consequence of a field in data.js.
-   If a check does not apply, it is simply absent. */
+   If a check does not apply, it is simply absent.
+
+   These are the MECHANICAL, time-sensitive checks — "is this still true today". They are
+   rendered as chips, not prose, because the substantive caveats live in content.js redFlags
+   and the two would otherwise read as one long wall of warnings.
+
+   Deliberately NOT included here: "no API key" (already the kind tag plus the kind note) and
+   "serves China" (which is a positive trait, and was previously rendered as a warning). */
 function watchOuts(o) {
   const out = [];
-  if (o.kind === 'client') out.push(
-    ['No API key', 'Usage is bound to the vendor\'s own application. Plan around that — you cannot call this from your own code.']);
-  if (o.card) out.push(
-    ['Card required', 'A payment method is needed to activate. <b>Set a budget alert before you start</b> — these grants convert to pay-as-you-go when they expire.']);
+  if (o.card) out.push({
+    label: 'Card required', hot: false,
+    detail: 'A payment method is needed to activate. Set a budget alert before you start — these grants convert to pay-as-you-go when they expire.'
+  });
   const n = daysTo(o.end);
-  if (o.end && n !== null && n >= 0 && n <= 14) out.push(
-    ['Deadline', `This closes on <b>${esc(o.end)}</b>${n === 0 ? ' — today' : ` (${n} day${n === 1 ? '' : 's'})`}. Verify it is still running before you build on it.`]);
-  if (o.end && n !== null && n < 0) out.push(
-    ['Closed', 'This promotion has ended. The row is kept for reference — check whether a successor campaign exists.']);
-  if (!o.budget) out.push(
-    ['No published figure', 'The provider does not publish a numeric allowance, so this page cannot quote one. ' + (String(o.unit).includes('point') ? 'Usage is metered in points, not tokens, so a token figure would be misleading.' : 'Check the provider\'s own page for current limits.')]);
-  if (o.kind === 'credit') out.push(
-    ['Converts to paid', 'Signup credits expire and the account flips to pay-as-you-go. Know the expiry date before you depend on it.']);
-  if (o.china) out.push(
-    ['Serves China directly', 'Reachable from mainland China without a proxy. Many providers on this list are not.']);
+  if (o.end && n !== null && n >= 0 && n <= 14) out.push({
+    label: n === 0 ? 'Closes today' : `Closes ${o.end} (${n} day${n === 1 ? '' : 's'})`, hot: true,
+    detail: 'Verify it is still running before you build on it.'
+  });
+  if (o.end && n !== null && n < 0) out.push({
+    label: 'Closed', hot: true,
+    detail: 'This promotion has ended. The row is kept for reference — check whether a successor campaign exists.'
+  });
+  if (!o.budget) out.push({
+    label: 'No published figure', hot: false,
+    detail: 'The provider does not publish a numeric allowance, so this page cannot quote one. ' +
+      (String(o.unit).includes('point')
+        ? 'Usage is metered in points, not tokens, so a token figure would be misleading.'
+        : 'Check the provider\'s own page for current limits.')
+  });
+  if (o.kind === 'credit') out.push({
+    label: 'Converts to paid', hot: false,
+    detail: 'Signup credits expire and the account flips to pay-as-you-go. Know the expiry date before you depend on it.'
+  });
   return out;
 }
 
@@ -145,6 +180,9 @@ const CSS = `:root{
   --tx:#f2e9dc; --tx2:#a89b88; --tx3:#6f6555;
   --amber:#e8a33d; --amber2:#c9862a; --amberd:#5c4318;
   --green:#6fb98f; --red:#e06c5a; --blue:#7ba7cc; --purple:#b08cc9;
+  /* Referral CTA green, matching the dashboard. Brighter than --green so a filled button
+     does not read as the "ongoing / no deadline" status colour. */
+  --go:#5ec98b;
   --r:3px;
   --mono:'IBM Plex Mono',ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
 }
@@ -199,6 +237,10 @@ h2{
   font-size:11px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--tx3);
   margin:32px 0 12px;padding-bottom:7px;border-bottom:1px solid var(--line);
 }
+h3{
+  font-size:13px;font-weight:700;color:var(--tx);margin:20px 0 10px;letter-spacing:-.01em;
+}
+ul.flags li::marker{color:var(--red)}
 p{margin:0 0 13px;color:var(--tx2)}
 p.lead{color:var(--tx);font-size:16px}
 b,strong{color:var(--tx);font-weight:600}
@@ -224,11 +266,79 @@ code{font-family:var(--mono);font-size:12.5px;background:var(--bg3);padding:1px 
 .note .h{color:var(--blue)}
 .ref{background:rgba(232,163,61,.07);border-color:rgba(232,163,61,.32);color:var(--tx2)}
 .ref .h{color:var(--amber)}
+/* "Is it free forever?" — the question every reader has, answered before the prose. */
+.verdict{
+  border:1px solid var(--line2);border-left-width:3px;border-radius:var(--r);
+  background:var(--bg2);padding:13px 16px;margin:0 0 18px;
+}
+.verdict.ok{border-left-color:var(--green)}
+.verdict.recur{border-left-color:var(--blue)}
+.verdict.warn{border-left-color:var(--red)}
+.verdict.muted{border-left-color:var(--tx3)}
+.verdict .k{font-size:9.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--tx3);margin-bottom:5px}
+.verdict .v{font-size:16px;font-weight:700;letter-spacing:-.01em}
+.verdict.ok .v{color:var(--green)}
+.verdict.recur .v{color:var(--blue)}
+.verdict.warn .v{color:var(--red)}
+.verdict.muted .v{color:var(--tx2)}
+.verdict p{margin:5px 0 0;font-size:13px;color:var(--tx2)}
+/* Preflight chips — the mechanical, time-sensitive checks, kept short so they do not
+   duplicate the editorial red-flag list below. */
+.preflight{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 16px}
+.preflight span{
+  font-family:var(--mono);font-size:10.5px;padding:4px 9px;border-radius:2px;
+  background:var(--bg3);border:1px solid var(--line2);color:var(--tx2);
+}
+.preflight span.hot{background:rgba(224,108,90,.1);border-color:rgba(224,108,90,.35);color:var(--red)}
+/* Reviews — sourced evidence, then explicitly-labelled opinion. */
+.coverage{
+  display:flex;align-items:center;gap:8px;flex-wrap:wrap;
+  font-size:12px;color:var(--tx2);margin:0 0 14px;
+}
+.coverage .badge{
+  font-size:9.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+  padding:3px 8px;border-radius:2px;border:1px solid var(--line2);color:var(--tx2);background:var(--bg3);
+}
+.coverage .badge.ok{color:var(--green);border-color:rgba(111,185,143,.4);background:rgba(111,185,143,.1)}
+.coverage .badge.recur{color:var(--blue);border-color:rgba(123,167,204,.4);background:rgba(123,167,204,.1)}
+.coverage .badge.warn{color:var(--red);border-color:rgba(224,108,90,.4);background:rgba(224,108,90,.1)}
+.docs{list-style:none;padding:0;margin:0 0 16px}
+.docs li{
+  position:relative;padding:0 0 0 18px;margin-bottom:10px;font-size:13.5px;line-height:1.6;color:var(--tx2);
+}
+.docs li::before{content:'▪';position:absolute;left:0;top:0;color:var(--amber2);font-size:11px}
+.docs .src{
+  display:block;margin-top:3px;font-family:var(--mono);font-size:10.5px;color:var(--tx3);
+}
+.docs .src a{color:var(--tx3)}
+.docs .src a:hover{color:var(--amber)}
+/* Labelled as opinion on purpose — never allowed to read as a verified fact. */
+.ourtake{
+  border:1px solid var(--line2);border-radius:var(--r);background:var(--bg2);
+  padding:13px 16px;margin:0 0 13px;
+}
+.ourtake .k{
+  display:flex;align-items:center;gap:7px;
+  font-size:9.5px;font-weight:700;letter-spacing:.13em;text-transform:uppercase;color:var(--tx3);margin-bottom:7px;
+}
+.ourtake .k em{
+  font-style:normal;font-size:8.5px;letter-spacing:.08em;color:var(--tx3);
+  border:1px solid var(--line2);border-radius:2px;padding:1px 5px;
+}
+.ourtake p{margin:0;font-size:13.5px;line-height:1.65;color:var(--tx2)}
+.support{display:flex;gap:9px;align-items:flex-start;font-size:12.5px;line-height:1.6;color:var(--tx2)}
+.support .hrt{color:var(--go);flex-shrink:0;font-size:11px;margin-top:1px}
+.support b{color:var(--tx)}
+.fsupport{margin-top:9px;padding-top:9px;border-top:1px solid rgba(94,201,139,.22)}
 .cta{
   display:inline-block;background:var(--amber);color:#1a1206;font-size:13px;font-weight:700;
   padding:11px 20px;border-radius:var(--r);border:1px solid var(--amber);margin:2px 0 6px;
 }
 .cta:hover{background:#f5b954;border-color:#f5b954;text-decoration:none}
+/* A referral link is filled green — the loudest thing on the page, and visually distinct from
+   the amber used for ordinary provider links. */
+.cta.ref{background:var(--go);border-color:var(--go);color:#08210f;font-weight:800}
+.cta.ref:hover{background:#74dba0;border-color:#74dba0}
 .alts{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:9px;margin-bottom:13px}
 .alt{
   display:block;padding:12px 14px;background:var(--bg2);border:1px solid var(--line2);
@@ -242,11 +352,26 @@ footer{
   font-size:11.5px;color:var(--tx3);line-height:1.65;
 }
 footer b{color:var(--tx2)}
-@media(max-width:560px){
+@media(max-width:640px){
   h1{font-size:24px}
   main{padding:22px 16px 50px}
-  th{width:96px}
+  th{width:92px;padding:8px 10px}
+  td{padding:8px 10px}
   .bar{padding:10px 16px}
+  .bar .sp{display:none}
+  .facts{grid-template-columns:1fr 1fr}
+  .facts div{padding:11px 12px}
+  .verdict{padding:12px 13px}
+  .verdict .v{font-size:15px}
+  .alts{grid-template-columns:1fr}
+  pre{font-size:11.5px;padding:12px 13px}
+  footer{padding:18px 16px 40px}
+  .coverage{gap:6px}
+  .ourtake{padding:12px 13px}
+  .support{font-size:12px}
+}
+@media(max-width:380px){
+  .facts{grid-template-columns:1fr}
 }
 `;
 
@@ -255,10 +380,14 @@ function renderPage(o, all) {
   const r = refFor(o);
   const end = endLabel(o);
   const budget = fmtBudget(o);
+  const c = CONTENT[o.id] || null;
   const alts = all.filter(x => x.id !== o.id && x.kind === o.kind && !(x.end && daysTo(x.end) < 0)).slice(0, 4);
 
   const title = `${o.name} free tier — limits, base URL and setup | Free LLM Radar`;
-  const descBits = [o.sub, budget ? budget : null, o.card ? 'card required' : 'no card required']
+  // Leading with the "free forever" answer puts the single most-searched question into the
+  // snippet, and keeps the description inside the ~155 characters search engines display.
+  const foreverShort = c ? (FOREVER[c.forever] || FOREVER.unclear).label : null;
+  const descBits = [foreverShort, budget ? budget : null, o.card ? 'card required' : 'no card required']
     .filter(Boolean).join(' · ');
   const description = clip(
     `${o.name} free tier: ${descBits}. ${stripTags(o.budgetNote)}`, 155);
@@ -272,6 +401,14 @@ function renderPage(o, all) {
       { '@type': 'ListItem', position: 3, name: o.name, item: `${SITE}/offers/${o.id}.html` }
     ]
   };
+
+  /* `base` uses a leading em dash as a "this is not a URL" sentinel — 24 of the 43 offers do,
+     for reasons ranging from "client-bound" to "see console". Rendered verbatim in a monospace
+     cell it reads as a broken value rather than an explanation, so the sentinel is stripped and
+     the cell drops out of monospace. A real URL keeps the mono treatment. */
+  const baseCell = b => /^https?:\/\//.test(b || '')
+    ? `<td class="mono">${esc(b)}</td>`
+    : `<td class="na">${esc((b || 'Not published').replace(/^\s*—\s*/, ''))}</td>`;
 
   const watches = watchOuts(o);
   const link = (r && r.active) ? r.mine : o.link;
@@ -293,13 +430,73 @@ function renderPage(o, all) {
         sign up through the button above, at no extra cost to you. That is a material connection and
         you should weigh it. It did not affect whether this offer is listed, or how it is described.
         <a href="${SITE}/#disclosure">Full disclosure</a>.
+      </div>
+      <div class="support fsupport">
+        <span class="hrt">◆</span>
+        <span><b>Want to support this project?</b> Using the green button above costs you nothing
+        extra and keeps the radar running. If you would rather not, the provider's own signup page
+        works exactly the same — search for the offer on the
+        <a href="../index.html">dashboard</a> and use the plain link there.</span>
       </div>` : '';
 
-  const watchBlock = watches.length ? `
-    <h2>Before you commit</h2>
-    <ul>
-      ${watches.map(w => `<li><b>${w[0]}.</b> ${w[1]}</li>`).join('\n      ')}
-    </ul>` : '';
+  /* The editorial red flags and the derived mechanical checks answer different questions —
+     "what will bite me" versus "is this still true today" — so they are rendered separately.
+     The derived ones are chips rather than prose, to keep the page from reading as one long
+     list of warnings. */
+  const preflight = watches.length ? `
+  <div class="preflight">
+    ${watches.map(w => `<span${w.hot ? ' class="hot"' : ''} title="${esc(w.detail)}">${esc(w.label)}</span>`).join('')}
+  </div>` : '';
+
+  const forever = c ? (FOREVER[c.forever] || FOREVER.unclear) : null;
+  const verdictBlock = c ? `
+  <div class="verdict ${forever.cls}">
+    <div class="k">Is it free forever?</div>
+    <div class="v">${esc(forever.label)}</div>
+    <p>${esc(c.foreverNote)}</p>
+  </div>` : '';
+
+  const whatBlock = c ? `
+  <h2>What this is</h2>
+  <p>${esc(c.what)}</p>` : '';
+
+  const usesBlock = (c && c.uses && c.uses.length) ? `
+  <h2>What it's good for</h2>
+  <ul>
+    ${c.uses.map(u => `<li>${esc(u)}</li>`).join('\n    ')}
+  </ul>` : '';
+
+  const redFlagsBlock = (c && c.redFlags && c.redFlags.length) ? `
+  <h2>Caveats and red flags</h2>
+  <ul class="flags">
+    ${c.redFlags.map(f => `<li>${esc(f)}</li>`).join('\n    ')}
+  </ul>` : '';
+
+  /* Two clearly separated halves: what a source actually says, and what we think. The opinion
+     box is labelled so it can never be mistaken for the verified half. */
+  let reviewsBlock = '';
+  if (c && c.reviews) {
+    const rv = c.reviews;
+    const cov = COVERAGE[rv.coverage] || COVERAGE.none;
+    reviewsBlock = `
+  <h2>Reviews and reputation</h2>
+  <div class="coverage">
+    <span class="badge ${cov.cls}">${esc(cov.label)}</span>
+    <span>${esc(rv.coverageNote)}</span>
+  </div>
+  ${(rv.documented && rv.documented.length) ? `
+  <h3>What we could verify</h3>
+  <ul class="docs">
+    ${rv.documented.map(d => `<li>${esc(d.t)}
+      <span class="src">Source: ${d.url
+        ? `<a href="${esc(d.url)}" target="_blank" rel="noopener">${esc(d.src)}</a>`
+        : esc(d.src)}</span></li>`).join('\n    ')}
+  </ul>` : ''}
+  <div class="ourtake">
+    <div class="k">Our take <em>opinion</em></div>
+    <p>${esc(rv.ourTake)}</p>
+  </div>`;
+  }
 
   const altBlock = alts.length ? `
     <h2>${esc(KIND_ALT_HEADING[o.kind] || 'Other options')}</h2>
@@ -350,7 +547,9 @@ function renderPage(o, all) {
   </div>
 
   <dl class="facts">
-    <div><dt>Allowance</dt><dd class="mono">${esc(budget || '—')}</dd></div>
+    ${budget
+      ? `<div><dt>Allowance</dt><dd class="mono">${esc(budget)}</dd></div>`
+      : '<div><dt>Allowance</dt><dd class="bad">Not published</dd></div>'}
     <div><dt>Metered in</dt><dd class="mono">${esc(String(o.unit).split(' ')[0])}</dd></div>
     <div><dt>Promotion</dt><dd class="${end.cls}">${esc(end.text)}</dd></div>
     <div><dt>Last changed</dt><dd class="mono">${esc(o.added)}</dd></div>
@@ -358,17 +557,21 @@ function renderPage(o, all) {
 
   <p class="lead">${o.budgetNote}</p>
   <p>${KIND_NOTE[o.kind] || ''}</p>
-
-  <a class="cta" href="${esc(link)}" target="_blank" rel="${rel}">${esc(o.linkLabel)} →</a>
+${verdictBlock}
+  <a class="cta${(r && r.active) ? ' ref' : ''}" href="${esc(link)}" target="_blank" rel="${rel}">${esc(o.linkLabel)} →</a>
 ${refBlock}
+${preflight}
 ${o.warn ? `
   <div class="callout warn"><div class="h">Watch out</div>${o.warn}</div>` : ''}
 ${o.note ? `
   <div class="callout note"><div class="h">Worth knowing</div>${o.note}</div>` : ''}
-
+${whatBlock}
+${usesBlock}
+${redFlagsBlock}
+${reviewsBlock}
   <h2>Mechanics</h2>
   <table>
-    <tr><th>Base URL</th><td class="mono">${esc(o.base)}</td></tr>
+    <tr><th>Base URL</th>${baseCell(o.base)}</tr>
     <tr><th>Auth</th><td>${esc(o.auth)}</td></tr>
     <tr><th>Models</th><td class="mono">${(o.models || []).map(esc).join('<br>')}</td></tr>
   </table>
@@ -378,7 +581,6 @@ ${o.note ? `
     ${(o.steps || []).map(s => `<li>${s}</li>`).join('\n    ')}
   </ol>
 ${testBlock}
-${watchBlock}
 ${altBlock}
 </main>
 

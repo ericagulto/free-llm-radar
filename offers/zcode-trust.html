@@ -5,11 +5,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%2312100d'/%3E%3Ccircle cx='16' cy='16' r='9.5' fill='none' stroke='%23e8a33d' stroke-width='2.2'/%3E%3Ccircle cx='16' cy='16' r='3' fill='%23e8a33d'/%3E%3Cpath d='M16 16 L25 9' stroke='%23e8a33d' stroke-width='2.2' stroke-linecap='round'/%3E%3C/svg%3E">
 <title>ZCode — Trust Build free tier — limits, base URL and setup | Free LLM Radar</title>
-<meta name="description" content="ZCode — Trust Build free tier: GLM-5.3-Flash · 100M tokens · no card required. ~100M GLM-5.3-Flash tokens · ~100,000 allocations, first-come first-served…">
+<meta name="description" content="ZCode — Trust Build free tier: One-off grant · 100M tokens · no card required. ~100M GLM-5.3-Flash tokens · ~100,000 allocations, first-come first-served…">
 <link rel="canonical" href="https://ericagulto.github.io/free-llm-radar/offers/zcode-trust.html">
 <meta property="og:type" content="article">
 <meta property="og:title" content="ZCode — Trust Build free tier — limits, base URL and setup">
-<meta property="og:description" content="ZCode — Trust Build free tier: GLM-5.3-Flash · 100M tokens · no card required. ~100M GLM-5.3-Flash tokens · ~100,000 allocations, first-come first-served…">
+<meta property="og:description" content="ZCode — Trust Build free tier: One-off grant · 100M tokens · no card required. ~100M GLM-5.3-Flash tokens · ~100,000 allocations, first-come first-served…">
 <meta property="og:url" content="https://ericagulto.github.io/free-llm-radar/offers/zcode-trust.html">
 <meta name="twitter:card" content="summary">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -47,12 +47,55 @@
   <p class="lead">~100M GLM-5.3-Flash tokens · ~100,000 allocations, first-come first-served · claim window 28 Sep → 7 Oct</p>
   <p>Usage is granted <b>inside the vendor's own app</b>. There is no extractable API key — you cannot wire this into your own stack.</p>
 
+  <div class="verdict warn">
+    <div class="k">Is it free forever?</div>
+    <div class="v">One-off grant</div>
+    <p>A single allocation that does not renew. The headline number is large; the usable window is not.</p>
+  </div>
   <a class="cta" href="https://zcode.z.ai/en" target="_blank" rel="noopener">Download →</a>
 
+
+  <div class="preflight">
+    <span class="hot" title="Verify it is still running before you build on it.">Closes 2026-10-07 (9 days)</span>
+  </div>
 
   <div class="callout warn"><div class="h">Watch out</div><b>The claim window is 10 days; the usable window is roughly one evening.</b> Tokens land late and expire at the next midnight. Claim it on a day you can actually sit down and work, not as a reserve.</div>
 
 
+  <h2>What this is</h2>
+  <p>ZCode's Trust Build grants roughly 100M GLM-5.3-Flash tokens to the first ~100,000 claimants, spread over a ten-day claim window.</p>
+
+  <h2>What it's good for</h2>
+  <ul>
+    <li>A single focused evening of GLM-5.3-Flash work</li>
+    <li>Deciding whether GLM-5.3-Flash justifies a paid Coding Plan — 100M tokens is enough to form a view</li>
+  </ul>
+
+  <h2>Caveats and red flags</h2>
+  <ul class="flags">
+    <li>The claim window is ten days but the usable window is roughly one evening — tokens land late and expire at the next midnight.</li>
+    <li>Limited to ~100,000 allocations on a first-come basis.</li>
+    <li>Client-bound, so the tokens only work inside ZCode.</li>
+    <li>Claim it on a day you can actually sit down and work, not as a reserve.</li>
+  </ul>
+
+  <h2>Reviews and reputation</h2>
+  <div class="coverage">
+    <span class="badge warn">Thin independent coverage</span>
+    <span>Little independent coverage. Discussion is concentrated in Chinese-language developer channels and focuses on the claim mechanics rather than the model.</span>
+  </div>
+  
+  <h3>What we could verify</h3>
+  <ul class="docs">
+    <li>Tokens arrive late in the day and expire at the following midnight.
+      <span class="src">Source: ZCode event page</span></li>
+    <li>Claim window runs 28 September to 7 October, limited to roughly 100,000 allocations.
+      <span class="src">Source: ZCode event page</span></li>
+  </ul>
+  <div class="ourtake">
+    <div class="k">Our take <em>opinion</em></div>
+    <p>This has the widest gap on the list between the number advertised and the number you can actually use. A hundred million tokens that expire at midnight is worth about one evening. It is still worth claiming — just do not treat it as a reserve you can draw on later.</p>
+  </div>
   <h2>Mechanics</h2>
   <table>
     <tr><th>Base URL</th><td class="mono">— client-bound, no API key</td></tr>
@@ -68,13 +111,6 @@
     <li><b>Use them the same day.</b> Tokens typically land around 11pm and expire at midnight the following day.</li>
   </ol>
 
-
-    <h2>Before you commit</h2>
-    <ul>
-      <li><b>No API key.</b> Usage is bound to the vendor's own application. Plan around that — you cannot call this from your own code.</li>
-      <li><b>Deadline.</b> This closes on <b>2026-10-07</b> (9 days). Verify it is still running before you build on it.</li>
-      <li><b>Serves China directly.</b> Reachable from mainland China without a proxy. Many providers on this list are not.</li>
-    </ul>
 
     <h2>Other client-bound options</h2>
     <div class="alts">

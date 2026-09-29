@@ -4,6 +4,9 @@
   --tx:#f2e9dc; --tx2:#a89b88; --tx3:#6f6555;
   --amber:#e8a33d; --amber2:#c9862a; --amberd:#5c4318;
   --green:#6fb98f; --red:#e06c5a; --blue:#7ba7cc; --purple:#b08cc9;
+  /* Referral CTA green, matching the dashboard. Brighter than --green so a filled button
+     does not read as the "ongoing / no deadline" status colour. */
+  --go:#5ec98b;
   --r:3px;
   --mono:'IBM Plex Mono',ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
 }
@@ -58,6 +61,10 @@ h2{
   font-size:11px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--tx3);
   margin:32px 0 12px;padding-bottom:7px;border-bottom:1px solid var(--line);
 }
+h3{
+  font-size:13px;font-weight:700;color:var(--tx);margin:20px 0 10px;letter-spacing:-.01em;
+}
+ul.flags li::marker{color:var(--red)}
 p{margin:0 0 13px;color:var(--tx2)}
 p.lead{color:var(--tx);font-size:16px}
 b,strong{color:var(--tx);font-weight:600}
@@ -83,11 +90,79 @@ code{font-family:var(--mono);font-size:12.5px;background:var(--bg3);padding:1px 
 .note .h{color:var(--blue)}
 .ref{background:rgba(232,163,61,.07);border-color:rgba(232,163,61,.32);color:var(--tx2)}
 .ref .h{color:var(--amber)}
+/* "Is it free forever?" — the question every reader has, answered before the prose. */
+.verdict{
+  border:1px solid var(--line2);border-left-width:3px;border-radius:var(--r);
+  background:var(--bg2);padding:13px 16px;margin:0 0 18px;
+}
+.verdict.ok{border-left-color:var(--green)}
+.verdict.recur{border-left-color:var(--blue)}
+.verdict.warn{border-left-color:var(--red)}
+.verdict.muted{border-left-color:var(--tx3)}
+.verdict .k{font-size:9.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--tx3);margin-bottom:5px}
+.verdict .v{font-size:16px;font-weight:700;letter-spacing:-.01em}
+.verdict.ok .v{color:var(--green)}
+.verdict.recur .v{color:var(--blue)}
+.verdict.warn .v{color:var(--red)}
+.verdict.muted .v{color:var(--tx2)}
+.verdict p{margin:5px 0 0;font-size:13px;color:var(--tx2)}
+/* Preflight chips — the mechanical, time-sensitive checks, kept short so they do not
+   duplicate the editorial red-flag list below. */
+.preflight{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 16px}
+.preflight span{
+  font-family:var(--mono);font-size:10.5px;padding:4px 9px;border-radius:2px;
+  background:var(--bg3);border:1px solid var(--line2);color:var(--tx2);
+}
+.preflight span.hot{background:rgba(224,108,90,.1);border-color:rgba(224,108,90,.35);color:var(--red)}
+/* Reviews — sourced evidence, then explicitly-labelled opinion. */
+.coverage{
+  display:flex;align-items:center;gap:8px;flex-wrap:wrap;
+  font-size:12px;color:var(--tx2);margin:0 0 14px;
+}
+.coverage .badge{
+  font-size:9.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+  padding:3px 8px;border-radius:2px;border:1px solid var(--line2);color:var(--tx2);background:var(--bg3);
+}
+.coverage .badge.ok{color:var(--green);border-color:rgba(111,185,143,.4);background:rgba(111,185,143,.1)}
+.coverage .badge.recur{color:var(--blue);border-color:rgba(123,167,204,.4);background:rgba(123,167,204,.1)}
+.coverage .badge.warn{color:var(--red);border-color:rgba(224,108,90,.4);background:rgba(224,108,90,.1)}
+.docs{list-style:none;padding:0;margin:0 0 16px}
+.docs li{
+  position:relative;padding:0 0 0 18px;margin-bottom:10px;font-size:13.5px;line-height:1.6;color:var(--tx2);
+}
+.docs li::before{content:'▪';position:absolute;left:0;top:0;color:var(--amber2);font-size:11px}
+.docs .src{
+  display:block;margin-top:3px;font-family:var(--mono);font-size:10.5px;color:var(--tx3);
+}
+.docs .src a{color:var(--tx3)}
+.docs .src a:hover{color:var(--amber)}
+/* Labelled as opinion on purpose — never allowed to read as a verified fact. */
+.ourtake{
+  border:1px solid var(--line2);border-radius:var(--r);background:var(--bg2);
+  padding:13px 16px;margin:0 0 13px;
+}
+.ourtake .k{
+  display:flex;align-items:center;gap:7px;
+  font-size:9.5px;font-weight:700;letter-spacing:.13em;text-transform:uppercase;color:var(--tx3);margin-bottom:7px;
+}
+.ourtake .k em{
+  font-style:normal;font-size:8.5px;letter-spacing:.08em;color:var(--tx3);
+  border:1px solid var(--line2);border-radius:2px;padding:1px 5px;
+}
+.ourtake p{margin:0;font-size:13.5px;line-height:1.65;color:var(--tx2)}
+.support{display:flex;gap:9px;align-items:flex-start;font-size:12.5px;line-height:1.6;color:var(--tx2)}
+.support .hrt{color:var(--go);flex-shrink:0;font-size:11px;margin-top:1px}
+.support b{color:var(--tx)}
+.fsupport{margin-top:9px;padding-top:9px;border-top:1px solid rgba(94,201,139,.22)}
 .cta{
   display:inline-block;background:var(--amber);color:#1a1206;font-size:13px;font-weight:700;
   padding:11px 20px;border-radius:var(--r);border:1px solid var(--amber);margin:2px 0 6px;
 }
 .cta:hover{background:#f5b954;border-color:#f5b954;text-decoration:none}
+/* A referral link is filled green — the loudest thing on the page, and visually distinct from
+   the amber used for ordinary provider links. */
+.cta.ref{background:var(--go);border-color:var(--go);color:#08210f;font-weight:800}
+.cta.ref:hover{background:#74dba0;border-color:#74dba0}
 .alts{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:9px;margin-bottom:13px}
 .alt{
   display:block;padding:12px 14px;background:var(--bg2);border:1px solid var(--line2);
@@ -101,9 +176,24 @@ footer{
   font-size:11.5px;color:var(--tx3);line-height:1.65;
 }
 footer b{color:var(--tx2)}
-@media(max-width:560px){
+@media(max-width:640px){
   h1{font-size:24px}
   main{padding:22px 16px 50px}
-  th{width:96px}
+  th{width:92px;padding:8px 10px}
+  td{padding:8px 10px}
   .bar{padding:10px 16px}
+  .bar .sp{display:none}
+  .facts{grid-template-columns:1fr 1fr}
+  .facts div{padding:11px 12px}
+  .verdict{padding:12px 13px}
+  .verdict .v{font-size:15px}
+  .alts{grid-template-columns:1fr}
+  pre{font-size:11.5px;padding:12px 13px}
+  footer{padding:18px 16px 40px}
+  .coverage{gap:6px}
+  .ourtake{padding:12px 13px}
+  .support{font-size:12px}
+}
+@media(max-width:380px){
+  .facts{grid-template-columns:1fr}
 }

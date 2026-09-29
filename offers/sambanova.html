@@ -5,11 +5,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%2312100d'/%3E%3Ccircle cx='16' cy='16' r='9.5' fill='none' stroke='%23e8a33d' stroke-width='2.2'/%3E%3Ccircle cx='16' cy='16' r='3' fill='%23e8a33d'/%3E%3Cpath d='M16 16 L25 9' stroke='%23e8a33d' stroke-width='2.2' stroke-linecap='round'/%3E%3C/svg%3E">
 <title>SambaNova free tier — limits, base URL and setup | Free LLM Radar</title>
-<meta name="description" content="SambaNova free tier: DeepSeek hosting · 200K tokens/day · no card required. 20 req/min · 20 req/day · 200K tokens/day">
+<meta name="description" content="SambaNova free tier: Standing free tier · 200K tokens/day · no card required. 20 req/min · 20 req/day · 200K tokens/day">
 <link rel="canonical" href="https://ericagulto.github.io/free-llm-radar/offers/sambanova.html">
 <meta property="og:type" content="article">
 <meta property="og:title" content="SambaNova free tier — limits, base URL and setup">
-<meta property="og:description" content="SambaNova free tier: DeepSeek hosting · 200K tokens/day · no card required. 20 req/min · 20 req/day · 200K tokens/day">
+<meta property="og:description" content="SambaNova free tier: Standing free tier · 200K tokens/day · no card required. 20 req/min · 20 req/day · 200K tokens/day">
 <meta property="og:url" content="https://ericagulto.github.io/free-llm-radar/offers/sambanova.html">
 <meta name="twitter:card" content="summary">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -47,12 +47,51 @@
   <p class="lead">20 req/min · <b>20 req/day</b> · 200K tokens/day</p>
   <p>You get a real API key you can point any OpenAI-compatible client at.</p>
 
+  <div class="verdict ok">
+    <div class="k">Is it free forever?</div>
+    <div class="v">Standing free tier</div>
+    <p>A standing free allowance with no published end date.</p>
+  </div>
   <a class="cta" href="https://cloud.sambanova.ai" target="_blank" rel="noopener">Get key →</a>
+
 
 
   <div class="callout warn"><div class="h">Watch out</div><b>20 requests per day</b> is very tight. Useful as an occasional high-capability fallback, not as a primary.</div>
 
 
+  <h2>What this is</h2>
+  <p>A free daily allowance on SambaNova's inference platform, hosting DeepSeek and MiniMax models on custom silicon.</p>
+
+  <h2>What it's good for</h2>
+  <ul>
+    <li>An occasional high-capability fallback when other caps are exhausted</li>
+    <li>Evaluating DeepSeek and MiniMax models on non-GPU hardware</li>
+  </ul>
+
+  <h2>Caveats and red flags</h2>
+  <ul class="flags">
+    <li>20 requests per day is extremely tight — roughly one debugging session.</li>
+    <li>200K tokens/day sits behind that request cap, so neither limit is generous.</li>
+    <li>Not viable as a primary provider.</li>
+  </ul>
+
+  <h2>Reviews and reputation</h2>
+  <div class="coverage">
+    <span class="badge warn">Thin independent coverage</span>
+    <span>Coverage concentrates on SambaNova's hardware and funding rather than the developer free tier, which is rarely discussed.</span>
+  </div>
+  
+  <h3>What we could verify</h3>
+  <ul class="docs">
+    <li>Free tier is 20 requests/day and 200K tokens/day.
+      <span class="src">Source: <a href="https://docs.sambanova.ai/" target="_blank" rel="noopener">SambaNova Cloud documentation</a></span></li>
+    <li>Serves DeepSeek and MiniMax model families.
+      <span class="src">Source: <a href="https://cloud.sambanova.ai/" target="_blank" rel="noopener">SambaNova Cloud console</a></span></li>
+  </ul>
+  <div class="ourtake">
+    <div class="k">Our take <em>opinion</em></div>
+    <p>Twenty requests a day is the number that matters, and it is small enough that this is really a sampler rather than a tier. Worth having configured as a fallback for the one day your primary is rate-limited.</p>
+  </div>
   <h2>Mechanics</h2>
   <table>
     <tr><th>Base URL</th><td class="mono">https://api.sambanova.ai/v1</td></tr>
@@ -68,7 +107,6 @@
 
   <h2>Test it</h2>
   <pre>curl https://api.sambanova.ai/v1/chat/completions \ -H &quot;Authorization: Bearer $SAMBANOVA_API_KEY&quot; \ -H &quot;Content-Type: application/json&quot; \ -d '{&quot;model&quot;:&quot;deepseek-v3-1&quot;,&quot;messages&quot;:[{&quot;role&quot;:&quot;user&quot;,&quot;content&quot;:&quot;Hello&quot;}]}'</pre>
-
 
     <h2>Other portable API key options</h2>
     <div class="alts">

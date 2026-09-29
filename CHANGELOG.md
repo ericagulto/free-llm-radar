@@ -13,6 +13,42 @@ Format per entry:
 
 ---
 
+## 2026-09-29 (eighth pass — editorial layer, mobile repair, referral styling)
+
+Presentation, content and tooling. No offer data changed, so nothing about the numbers moved.
+
+**Why.** Two complaints, both fair. The dashboard broke on phones — columns and buttons collapsed
+into a 22px gutter and overlapped. And the new detail pages were *thinner* than the dashboard row
+they were meant to expand: they restated the same facts in a longer layout. A page that says nothing
+new is not worth generating.
+
+- **ADDED `content.js`** — a third layer. `data.js` holds volatile facts and is rewritten every run;
+  `content.js` holds hand-authored judgement that changes rarely. Keeping them apart means a daily
+  refresh cannot paraphrase the prose, and an editorial edit cannot disturb a verified number. This
+  is the data/presentation split applied one level down.
+- **Every one of the 43 offer pages gained** an explicit "Is it free forever?" verdict, a plain-language
+  *What this is*, *What it's good for*, *Caveats and red flags*, and *Reviews and reputation* — with
+  the review block stating outright how much independent coverage exists, and an *Our take* box
+  labelled `opinion` so commentary is never mistaken for a verified fact.
+- **FIXED — mobile.** The offer row now reflows through a `.metarow` wrapper (`display:contents` on
+  desktop, a real flex row below 1120px), and the rail drops below the table instead of above it.
+  The first offer moved from y=2205 to y=1111 at 390px.
+- **CHANGED — referral links are now green** (`--go: #5ec98b`), deliberately brighter than the
+  `--green` that already means "ongoing". Applied to the featured ribbon, featured cards and the
+  referral CTA. A "Want to support this project?" note sits under every referral link, and says
+  plainly that the provider's own signup page works identically.
+- **DECIDED — the disclosure stays permanently visible.** An auto-hiding disclosure fails the FTC
+  "unavoidable" test; a notice you can dismiss is not a notice.
+- **EXTENDED `test-ui.js`** from 61 to 87 assertions. The offer pages had their own stylesheet and
+  their own breakpoints and **nothing loaded them** — they could have shipped completely broken
+  behind a green suite. Both surfaces are now swept at 360px and 390px.
+- **EXTENDED `test-validate.js`** to 16 cases, and added a no-op guard: a mutation that changes
+  nothing now reports `[NO-OP]` and fails, instead of silently reporting MISSED. That guard was
+  written because the coverage-contradiction case had been passing for the wrong reason — its
+  `String.replace` appended a duplicate object key that the entry's own field then overrode.
+- **FIXED — `test-ui.js` no longer needs `NODE_PATH`**, resolves Chromium by scanning for the
+  highest build instead of hardcoding `chromium-1243`, and refuses to let a skip look like a pass.
+
 ## 2026-09-29 (seventh pass — per-offer detail pages)
 
 Presentation layer plus tooling. No offer data changed, so nothing about the numbers moved.

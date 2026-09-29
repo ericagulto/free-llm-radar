@@ -13,6 +13,8 @@ manual update, or a one-off fix. `README.md` explains the design; this file tell
 # 1. Re-verify deadlines BEFORE anything else (extensions are the most common change)
 # 2. Research new offers          → see "Where to research"
 # 3. Archive then rewrite ONLY free-llm-radar/data.js   → see "How to update the data"
+#    If you ADDED an offer, also add its content.js entry → see "The editorial layer".
+#    Do NOT rewrite content.js for offers that already have one.
 # 4. Regenerate the offer pages   → node free-llm-radar/build-pages.js
 # 5. Validate — must exit 0
 node free-llm-radar/validate.js
@@ -27,6 +29,9 @@ Never leave broken data in place.
 
 Step 4 is not optional. The offer pages quote limits and deadlines; publishing new data without
 regenerating them leaves indexed pages stating numbers the dashboard no longer shows.
+
+Step 5 will fail if you added an offer without a `content.js` entry. That is intentional — it stops
+a blank page from shipping. Add the entry rather than deleting the offer.
 
 ---
 
@@ -49,8 +54,10 @@ regenerating them leaves indexed pages stating numbers the dashboard no longer s
 
 ## Golden rules
 
-1. **Rewrite only `data.js`.** Never regenerate `index.html`. Never edit `referrals.js`,
-   `REFERRALS.md`, `validate.js` or `test-ui.js` on an automated run.
+1. **Rewrite only `data.js`.** Never regenerate `index.html`. Never edit `content.js`,
+   `referrals.js`, `REFERRALS.md`, `validate.js` or `test-ui.js` on an automated run.
+   `content.js` is hand-authored editorial prose and is **not** a refresh target — see
+   "The editorial layer" below.
 2. **Offer `id` values are permanent.** Never rename one — the referral layer keys off them, and
    the generated page filename is derived from it.
 3. **Never delete an offer silently.** Record removals in `RADAR.rail` under the `closed` group
@@ -209,6 +216,47 @@ Leave the data untouched and report, rather than guessing, if:
 
 ---
 
+## The editorial layer — `content.js`
+
+`content.js` holds the prose a reader actually came for: what an offer is, whether it is free
+forever, what it is good for, what will bite you, and how much independent review exists.
+
+**You do not write to this file on a refresh.** It is not a data target. It exists precisely so a
+daily job cannot paraphrase a sentence, soften a caveat, or lose an edit while rewriting numbers
+that changed. Facts and judgement age at different rates; interleaving them makes every refresh a
+chance to corrupt the prose.
+
+### If you ADD an offer
+
+An offer with no `content.js` entry **fails validation** — deliberately, so a new offer cannot ship
+as a blank page. Add an entry with every field:
+
+| field | meaning |
+|---|---|
+| `what` | 2–3 sentences. Use only facts already verified in `data.js`. No new claims. |
+| `forever` | `standing` / `limited` / `recurring` / `one-off` / `unclear` — the direct answer |
+| `foreverNote` | one sentence of nuance on the above |
+| `uses` | 3–4 practical uses, derived from the limits — advice, not a vendor claim |
+| `redFlags` | 2–4 things that will actually bite the reader |
+| `reviews.coverage` | `none` / `thin` / `some` / `good` — say "none" when it is none |
+| `reviews.documented` | `{ t, src, url? }` per verifiable fact. **Never invent a URL.** |
+| `reviews.ourTake` | opinion — the page labels it `opinion` so it is never read as fact |
+
+### If you REMOVE an offer
+
+Leave its `content.js` entry alone for one cycle, then delete it. The validator fails on an orphan
+entry, so a stale one will be caught rather than lingering silently.
+
+### The two rules that matter most
+
+1. **Never invent a URL.** If a source exists but has no page, name it as plain text. The renderer
+   handles this; a fabricated link does not.
+2. **Say "no coverage" when there is no coverage.** An empty review section is honest. A fabricated
+   one is not. The validator cross-checks this: it fails if an entry claims `coverage: 'none'` while
+   citing a third-party review.
+
+---
+
 ## The generated offer pages
 
 `offers/` holds one static HTML page per offer, plus an index. They are **generated output** —
@@ -220,10 +268,11 @@ rank for its own query ("groq free tier", "amd token factory limits").
 
 Rules:
 
-- **Never hand-edit `offers/` or `assets/offer.css`.** Change `data.js` or `build-pages.js` and
-  regenerate. The generator deletes any page whose offer no longer exists.
-- **Every statement on a page is derived from a field in `data.js`.** The generator does not invent
-  filler. If a page looks thin, the fix is more data, not more prose.
+- **Never hand-edit `offers/` or `assets/offer.css`.** Change `data.js`, `content.js` or
+  `build-pages.js` and regenerate. The generator deletes any page whose offer no longer exists.
+- **A page draws on two sources.** Every *fact* comes from a field in `data.js`; every *judgement*
+  comes from `content.js`. The generator invents neither. If a page looks thin, the fix is a better
+  `content.js` entry — the generator will not manufacture filler.
 - **The generator exits non-zero if any offer fails to render**, so a half-built page never ships.
 - The `rel="sponsored"` rule applies here too: it appears **only** on pages whose offer carries a
   live referral link. `validate.js` fails the build if an ordinary provider page is marked
@@ -245,9 +294,10 @@ node free-llm-radar/test-validate.js   # proves the validator actually fails on 
 # Schema, cross-file integrity, generated output, compliance hooks. Must exit 0.
 node free-llm-radar/validate.js
 
-# Only if you changed index.html:
-NODE_PATH="C:/Users/Eric/.workbuddy-ai/binaries/node/workspace/node_modules" \
-  node free-llm-radar/test-ui.js
+# After changing index.html, build-pages.js or content.js. No NODE_PATH needed —
+# Playwright and Chromium are resolved automatically. RADAR_REQUIRE_UI=1 makes a
+# skip (missing browser) a hard failure instead of a quiet exit 0.
+node free-llm-radar/test-ui.js
 
 # The daily entry point: regenerates pages, validates, pushes data + site, verifies live.
 bash deploy/publish.sh

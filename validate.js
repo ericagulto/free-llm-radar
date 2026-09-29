@@ -35,7 +35,7 @@ const RAIL_KINDS = ['new', 'ext', 'exp', 'dead'];
 const sandbox = { window: {} };
 vm.createContext(sandbox);
 
-for (const f of ['data.js', 'referrals.js']) {
+for (const f of ['data.js', 'content.js', 'referrals.js']) {
   try {
     vm.runInContext(read(f), sandbox, { filename: f });
     console.log(`${f}: OK`);
@@ -48,6 +48,7 @@ if (fails.length) {
 }
 
 const RADAR = sandbox.window.RADAR;
+const CONTENT = sandbox.window.CONTENT;
 const REFERRALS = sandbox.window.REFERRALS;
 const YOUR_LINKS = sandbox.window.YOUR_LINKS;
 
@@ -169,7 +170,87 @@ if (!fs.existsSync(path.join(DIR, 'AGENTS.md'))) {
   }
 }
 
-// ---------- 8. generated offer pages ----------
+// ---------- 8. editorial content ----------
+// content.js is hand-authored and carries the claims that make a page worth reading. An offer
+// without an entry renders a thin page; a wrong `forever` value misleads a reader about whether
+// the thing will still exist next month. Both are failures, not warnings.
+const FOREVER = ['standing', 'limited', 'recurring', 'one-off', 'unclear'];
+const COVERAGE = ['none', 'thin', 'some', 'good'];
+// Venues that would count as independent coverage. Used only to catch a contradiction between
+// the `coverage` claim and the citations — not as a judgement about quality.
+const THIRD_PARTY = /(reddit\.com|news\.ycombinator|medium\.com|substack\.com|techcrunch|theverge|venturebeat|arstechnica|theregister|hackernews|github\.com\/[^/]+\/[^/]+\/(issues|discussions))/i;
+
+if (!CONTENT) {
+  fail('content.js did not set window.CONTENT — every offer page would render without its sections');
+} else {
+  const cIds = Object.keys(CONTENT);
+  for (const id of ids) {
+    if (!CONTENT[id]) fail(`no editorial content for offer "${id}" — its page would be a stub`);
+  }
+  for (const id of cIds) {
+    if (!ids.has(id)) fail(`content.js has an entry for "${id}" but no such offer exists — orphan`);
+  }
+
+  for (const [id, c] of Object.entries(CONTENT)) {
+    for (const k of ['what', 'forever', 'foreverNote', 'uses', 'redFlags', 'reviews']) {
+      if (c[k] === undefined || c[k] === null) fail(`content "${id}" is missing "${k}"`);
+    }
+    if (!FOREVER.includes(c.forever)) {
+      fail(`content "${id}" has unknown forever value "${c.forever}" — must be one of ${FOREVER.join(', ')}`);
+    }
+    if (typeof c.what !== 'string' || c.what.length < 60) {
+      fail(`content "${id}" what is too short to be worth a section (${String(c.what).length} chars)`);
+    }
+    if (!Array.isArray(c.uses) || c.uses.length < 2) fail(`content "${id}" needs at least 2 uses`);
+    if (!Array.isArray(c.redFlags) || c.redFlags.length < 1) {
+      fail(`content "${id}" has no redFlags — every offer has at least one caveat`);
+    }
+    // A red flag that is actually a compliment is worse than none: it trains readers to skip them.
+    for (const f of (c.redFlags || [])) {
+      if (/^serves china|^cheap|^fast|^great/i.test(String(f).trim())) {
+        warn(`content "${id}" lists what looks like a positive as a red flag: "${String(f).slice(0, 50)}…"`);
+      }
+    }
+
+    const r = c.reviews || {};
+    if (!COVERAGE.includes(r.coverage)) {
+      fail(`content "${id}" has unknown reviews.coverage "${r.coverage}"`);
+    }
+    if (!r.coverageNote) fail(`content "${id}" is missing reviews.coverageNote`);
+    else if (r.coverageNote.length < 40) fail(`content "${id}" reviews.coverageNote is too short to say anything`);
+    if (!r.ourTake) fail(`content "${id}" is missing reviews.ourTake`);
+    if (!Array.isArray(r.documented) || r.documented.length === 0) {
+      fail(`content "${id}" has no reviews.documented entries`);
+    }
+    for (const d of (r.documented || [])) {
+      if (!d.t || !d.src) fail(`content "${id}" has a documented entry missing "t" or "src"`);
+      // An invented URL is the worst failure mode here — it looks sourced and is not.
+      if (d.url && !/^https:\/\//.test(d.url)) {
+        fail(`content "${id}" documented url is not https: ${d.url}`);
+      }
+    }
+    // Claiming "no independent reviews found" while citing one is a contradiction a reader
+    // would catch. Matched against known third-party venues rather than by trying to exclude
+    // vendor domains, which produced false positives on the vendors' own API docs.
+    if (r.coverage === 'none') {
+      const thirdParty = (r.documented || []).find(d => d.url && THIRD_PARTY.test(d.url));
+      if (thirdParty) {
+        fail(`content "${id}" claims no independent coverage but cites ${thirdParty.url}`);
+      }
+    }
+  }
+
+  const cov = {}, fv = {};
+  for (const c of Object.values(CONTENT)) {
+    cov[c.reviews.coverage] = (cov[c.reviews.coverage] || 0) + 1;
+    fv[c.forever] = (fv[c.forever] || 0) + 1;
+  }
+  console.log(`content.js: OK — ${cIds.length} entries`);
+  console.log('  free-forever: ' + Object.entries(fv).map(([k, v]) => `${k} ${v}`).join(' | '));
+  console.log('  review coverage: ' + Object.entries(cov).map(([k, v]) => `${k} ${v}`).join(' | '));
+}
+
+// ---------- 9. generated offer pages ----------
 // build-pages.js writes one static page per offer. A stale or partial generation is
 // invisible in the browser until a reader clicks a link and gets a 404, so the output is
 // checked here rather than trusted. If offers/ is absent the run has simply not generated
@@ -231,6 +312,21 @@ if (!fs.existsSync(OFFERS_DIR)) {
 
     // Structured data must survive the templating.
     if (!/"@type":"BreadcrumbList"/.test(h)) fail(`${at} lost its BreadcrumbList structured data`);
+
+    // The editorial sections are the whole reason these pages exist beyond the dashboard.
+    for (const [marker, label] of [
+      ['Is it free forever?', 'the free-forever verdict'],
+      ['<h2>What this is</h2>', 'the "What this is" section'],
+      ["<h2>What it's good for</h2>", 'the "What it\'s good for" section'],
+      ['<h2>Caveats and red flags</h2>', 'the red-flags section'],
+      ['<h2>Reviews and reputation</h2>', 'the reviews section']
+    ]) {
+      if (!h.includes(marker)) fail(`${at} is missing ${label} — the page would be thinner than the dashboard`);
+    }
+    // The opinion box must stay labelled, or it reads as verified fact.
+    if (!/Our take\s*<em>opinion<\/em>/.test(h)) {
+      fail(`${at} does not label its "Our take" box as opinion`);
+    }
 
     // rel="sponsored" may appear only on pages that genuinely carry a referral link.
     const isRef = !!(refFor(o) || {}).active;

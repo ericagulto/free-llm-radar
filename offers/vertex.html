@@ -5,11 +5,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%2312100d'/%3E%3Ccircle cx='16' cy='16' r='9.5' fill='none' stroke='%23e8a33d' stroke-width='2.2'/%3E%3Ccircle cx='16' cy='16' r='3' fill='%23e8a33d'/%3E%3Cpath d='M16 16 L25 9' stroke='%23e8a33d' stroke-width='2.2' stroke-linecap='round'/%3E%3C/svg%3E">
 <title>Google Cloud Vertex AI free tier — limits, base URL and setup | Free LLM Radar</title>
-<meta name="description" content="Google Cloud Vertex AI free tier: Cloud grant · card required. $300 credit · 90 days">
+<meta name="description" content="Google Cloud Vertex AI free tier: One-off grant · card required. $300 credit · 90 days">
 <link rel="canonical" href="https://ericagulto.github.io/free-llm-radar/offers/vertex.html">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Google Cloud Vertex AI free tier — limits, base URL and setup">
-<meta property="og:description" content="Google Cloud Vertex AI free tier: Cloud grant · card required. $300 credit · 90 days">
+<meta property="og:description" content="Google Cloud Vertex AI free tier: One-off grant · card required. $300 credit · 90 days">
 <meta property="og:url" content="https://ericagulto.github.io/free-llm-radar/offers/vertex.html">
 <meta name="twitter:card" content="summary">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -47,12 +47,56 @@
   <p class="lead">$300 credit · 90 days</p>
   <p>A credit balance on a cloud platform, spent through that provider's own APIs.</p>
 
+  <div class="verdict warn">
+    <div class="k">Is it free forever?</div>
+    <div class="v">One-off grant</div>
+    <p>A one-time credit with a 90-day life. When it expires or runs dry the account continues on pay-as-you-go.</p>
+  </div>
   <a class="cta" href="https://cloud.google.com/free" target="_blank" rel="noopener">Claim →</a>
 
+
+  <div class="preflight">
+    <span title="A payment method is needed to activate. Set a budget alert before you start — these grants convert to pay-as-you-go when they expire.">Card required</span><span title="The provider does not publish a numeric allowance, so this page cannot quote one. Check the provider's own page for current limits.">No published figure</span><span title="Signup credits expire and the account flips to pay-as-you-go. Know the expiry date before you depend on it.">Converts to paid</span>
+  </div>
 
   <div class="callout warn"><div class="h">Watch out</div><b>Converts to paid silently</b> when the credit expires or runs dry. Set the budget alert at activation, not later.</div>
 
 
+  <h2>What this is</h2>
+  <p>Google Cloud's $300 credit, valid 90 days, usable across Vertex AI and Model Garden including Gemini. The largest absolute credit here, attached to the platform most likely to produce a surprise bill.</p>
+
+  <h2>What it's good for</h2>
+  <ul>
+    <li>Production-shaped prototyping on Google's stack</li>
+    <li>Model Garden access to a wide range of third-party models</li>
+    <li>Anything you might later migrate to Vertex</li>
+  </ul>
+
+  <h2>Caveats and red flags</h2>
+  <ul class="flags">
+    <li>Converts to paid silently when the credit expires or runs dry. Set the budget alert at activation, not later.</li>
+    <li>A card is required.</li>
+    <li>Service-account JSON auth is more setup than a Bearer token.</li>
+    <li>90 days is longer than OCI or Azure but shorter than Bedrock.</li>
+  </ul>
+
+  <h2>Reviews and reputation</h2>
+  <div class="coverage">
+    <span class="badge recur">Some independent coverage</span>
+    <span>Google Cloud's free trial is extremely widely covered, usually in the context of billing surprises rather than AI specifically.</span>
+  </div>
+  
+  <h3>What we could verify</h3>
+  <ul class="docs">
+    <li>$300 credit valid for 90 days, requiring a payment method.
+      <span class="src">Source: <a href="https://cloud.google.com/free/docs/free-cloud-features" target="_blank" rel="noopener">Google Cloud free trial terms</a></span></li>
+    <li>Auth uses a service-account JSON key rather than a Bearer token.
+      <span class="src">Source: <a href="https://cloud.google.com/vertex-ai/docs" target="_blank" rel="noopener">Vertex AI documentation</a></span></li>
+  </ul>
+  <div class="ourtake">
+    <div class="k">Our take <em>opinion</em></div>
+    <p>The biggest number on the credit list and the one I would be most careful with. The failure mode is well documented: the credit ends, the billing starts, and nobody notices until the invoice. If you claim it, create the budget alert in the same session.</p>
+  </div>
   <h2>Mechanics</h2>
   <table>
     <tr><th>Base URL</th><td class="mono">— see console</td></tr>
@@ -68,13 +112,6 @@
     <li><b>Set a budget alert before you use it.</b></li>
   </ol>
 
-
-    <h2>Before you commit</h2>
-    <ul>
-      <li><b>Card required.</b> A payment method is needed to activate. <b>Set a budget alert before you start</b> — these grants convert to pay-as-you-go when they expire.</li>
-      <li><b>No published figure.</b> The provider does not publish a numeric allowance, so this page cannot quote one. Check the provider's own page for current limits.</li>
-      <li><b>Converts to paid.</b> Signup credits expire and the account flips to pay-as-you-go. Know the expiry date before you depend on it.</li>
-    </ul>
 
     <h2>Other cloud credit offers</h2>
     <div class="alts">

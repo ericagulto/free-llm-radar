@@ -5,11 +5,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%2312100d'/%3E%3Ccircle cx='16' cy='16' r='9.5' fill='none' stroke='%23e8a33d' stroke-width='2.2'/%3E%3Ccircle cx='16' cy='16' r='3' fill='%23e8a33d'/%3E%3Cpath d='M16 16 L25 9' stroke='%23e8a33d' stroke-width='2.2' stroke-linecap='round'/%3E%3C/svg%3E">
 <title>Oracle Cloud (OCI) free tier — limits, base URL and setup | Free LLM Radar</title>
-<meta name="description" content="Oracle Cloud (OCI) free tier: Cloud grant · card required. $300 credit · 30 days only">
+<meta name="description" content="Oracle Cloud (OCI) free tier: One-off grant · card required. $300 credit · 30 days only">
 <link rel="canonical" href="https://ericagulto.github.io/free-llm-radar/offers/oci.html">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Oracle Cloud (OCI) free tier — limits, base URL and setup">
-<meta property="og:description" content="Oracle Cloud (OCI) free tier: Cloud grant · card required. $300 credit · 30 days only">
+<meta property="og:description" content="Oracle Cloud (OCI) free tier: One-off grant · card required. $300 credit · 30 days only">
 <meta property="og:url" content="https://ericagulto.github.io/free-llm-radar/offers/oci.html">
 <meta name="twitter:card" content="summary">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -47,12 +47,55 @@
   <p class="lead">$300 credit · <b>30 days only</b></p>
   <p>A credit balance on a cloud platform, spent through that provider's own APIs.</p>
 
+  <div class="verdict warn">
+    <div class="k">Is it free forever?</div>
+    <div class="v">One-off grant</div>
+    <p>A one-time credit with the shortest validity window of the major clouds.</p>
+  </div>
   <a class="cta" href="https://www.oracle.com/cloud/free/" target="_blank" rel="noopener">Claim →</a>
 
+
+  <div class="preflight">
+    <span title="A payment method is needed to activate. Set a budget alert before you start — these grants convert to pay-as-you-go when they expire.">Card required</span><span title="The provider does not publish a numeric allowance, so this page cannot quote one. Check the provider's own page for current limits.">No published figure</span><span title="Signup credits expire and the account flips to pay-as-you-go. Know the expiry date before you depend on it.">Converts to paid</span>
+  </div>
 
   <div class="callout warn"><div class="h">Watch out</div><b>30 days</b> is the shortest window of the major cloud grants.</div>
 
 
+  <h2>What this is</h2>
+  <p>Oracle's $300 cloud credit, valid 30 days — the same headline figure as Vertex with a third of the time.</p>
+
+  <h2>What it's good for</h2>
+  <ul>
+    <li>A focused 30-day evaluation of OCI Generative AI</li>
+    <li>Short projects where you already know what you are building</li>
+  </ul>
+
+  <h2>Caveats and red flags</h2>
+  <ul class="flags">
+    <li>30 days is the shortest window of the major cloud grants.</li>
+    <li>OCI signature auth is noticeably more work to set up than a Bearer token.</li>
+    <li>A card is required.</li>
+    <li>Only claim it when you have a plan ready to execute.</li>
+  </ul>
+
+  <h2>Reviews and reputation</h2>
+  <div class="coverage">
+    <span class="badge warn">Thin independent coverage</span>
+    <span>Limited coverage of OCI Generative AI specifically. Oracle's broader free tier is better documented than its AI services.</span>
+  </div>
+  
+  <h3>What we could verify</h3>
+  <ul class="docs">
+    <li>$300 credit valid for 30 days, requiring a payment method.
+      <span class="src">Source: <a href="https://www.oracle.com/cloud/free/" target="_blank" rel="noopener">Oracle Cloud Free Tier terms</a></span></li>
+    <li>Authentication uses OCI request signing rather than a Bearer token.
+      <span class="src">Source: <a href="https://docs.oracle.com/en-us/iaas/Content/generative-ai/home.htm" target="_blank" rel="noopener">OCI Generative AI documentation</a></span></li>
+  </ul>
+  <div class="ourtake">
+    <div class="k">Our take <em>opinion</em></div>
+    <p>The 30-day window is the problem. A $300 credit you have to spend in a month is a deadline, not an opportunity — unless you already know exactly what you are building, you will spend the first week reading documentation and the last week panicking.</p>
+  </div>
   <h2>Mechanics</h2>
   <table>
     <tr><th>Base URL</th><td class="mono">— see console</td></tr>
@@ -67,13 +110,6 @@
     <li>Claim the credits in the console.</li>
   </ol>
 
-
-    <h2>Before you commit</h2>
-    <ul>
-      <li><b>Card required.</b> A payment method is needed to activate. <b>Set a budget alert before you start</b> — these grants convert to pay-as-you-go when they expire.</li>
-      <li><b>No published figure.</b> The provider does not publish a numeric allowance, so this page cannot quote one. Check the provider's own page for current limits.</li>
-      <li><b>Converts to paid.</b> Signup credits expire and the account flips to pay-as-you-go. Know the expiry date before you depend on it.</li>
-    </ul>
 
     <h2>Other cloud credit offers</h2>
     <div class="alts">

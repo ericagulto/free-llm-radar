@@ -18,13 +18,14 @@ free-llm-radar/
 ├── AGENTS.md       Operational runbook. Sources, research method, update procedure.
 ├── index.html      Presentation layer. Stable — the daily job does not touch this.
 ├── data.js         Offer data. THE ONLY FILE THE DAILY JOB REWRITES.
+├── content.js      Editorial layer. Hand-authored prose. Also never touched by the daily job.
 ├── referrals.js    Referral programme data + your own links. Edited by hand.
 ├── build-pages.js  Static generator. Writes offers/, assets/offer.css, sitemap.xml, robots.txt.
 ├── offers/         GENERATED. One standalone page per offer, plus an index. Do not hand-edit.
 ├── assets/         GENERATED. offer.css, shared by the offer pages.
 ├── validate.js     Schema, generated-output + compliance validator. Run after every edit.
-├── test-ui.js      Browser test for filters, sorting, featured block and cross-links.
-├── test-validate.js Negative test — proves validate.js actually fails on real breakage.
+├── test-ui.js      Browser test — dashboard and offer pages, desktop + mobile. 87 assertions.
+├── test-validate.js Negative test — 16 deliberate breakages, each of which validate.js must catch.
 ├── REFERRALS.md    Programme terms, payout conditions, compliance notes. Read before publishing.
 ├── CHANGELOG.md    Append-only log of every refresh.
 └── archive/        Dated snapshots of data.js, one per refresh.
@@ -34,6 +35,30 @@ The split exists so the daily job has the smallest possible blast radius. It rew
 regenerates `offers/`, and appends to `CHANGELOG.md`. It never regenerates `index.html` — a quoting
 error in a regenerated page produces a blank screen, whereas a malformed `data.js` fails loudly and
 is trivially reverted from `archive/`.
+
+### Three layers, not two
+
+`content.js` is the third. It holds the prose a reader actually came for — what an offer is, whether
+it is free forever, what it is good for, what will bite you, and how much independent review exists.
+The daily job **never writes to it.**
+
+The reasoning is the same as the data/presentation split, one level down. A number and a judgement
+age at completely different rates. Limits and deadlines change weekly; an assessment of a provider's
+reputation changes yearly. Interleaving them means every refresh is an opportunity to paraphrase a
+sentence, quietly soften a caveat, or lose an edit. Separated, a refresh physically cannot touch the
+prose — and the validator enforces that every offer has an entry, so a newly added offer cannot ship
+with a blank page.
+
+`content.js` also carries six honesty rules in its header, and they are load-bearing:
+
+1. `what` uses only facts already verified in `data.js` — no new claims.
+2. `uses` is advice derived from the limits, not a vendor claim.
+3. `redFlags` is allowed to be unflattering, and should be.
+4. `documented` cites a source per fact; **a URL is never invented.** Where no page exists, the
+   source is named as plain text rather than linked.
+5. `ourTake` is opinion, and the page labels it `opinion` so it is never read as verified fact.
+6. `coverage` states outright how much independent material exists — *including* when the answer is
+   "none". An empty review section is honest; a fabricated one is not.
 
 ---
 
@@ -293,18 +318,38 @@ and the page keeps working.
 
 ### UI test
 
-Only needed after editing `index.html`:
+Needed after editing `index.html`, `build-pages.js` or `content.js`:
 
 ```bash
-NODE_PATH="<managed-node-workspace>/node_modules" node free-llm-radar/test-ui.js
+node free-llm-radar/test-ui.js
 ```
 
-Loads the page in a real Chromium and asserts behaviour in the DOM rather than in the source — the
-filter semantics (OR within a dimension, AND across, the complementary pair, Clear, `aria-pressed`,
-search composing as an AND), the featured block and its label, multi-column sorting including
-nulls-last in both directions, `aria-sort`, and that every row cross-links to a detail page that
-exists on disk. 45 assertions. It skips with exit 0 if Playwright or Chromium is missing, so it
-never blocks a data refresh.
+Loads real pages in a real Chromium and asserts behaviour in the DOM rather than in the source. It
+covers **both surfaces** — the dashboard and the generated offer pages — because they have separate
+stylesheets and separate breakpoints, and for a long time only the dashboard was tested. 87
+assertions:
+
+- **Dashboard** — filter semantics (OR within a dimension, AND across, the complementary pair,
+  Clear, `aria-pressed`, search composing as an AND), the featured block and its label, multi-column
+  sorting including nulls-last in both directions, `aria-sort`, and that every row cross-links to a
+  detail page that exists on disk.
+- **Referral styling** — asserted by *computed colour*, not class name, so a palette change cannot
+  silently turn the referral link back to amber. Plus that the support note appears on referral
+  pages and only there.
+- **Offer pages** — the verdict block and all five editorial sections actually render, the referral
+  CTA carries `rel="sponsored"`, and at 360px and 390px there is no horizontal scroll, no element
+  wider than the viewport, and the CTA stays inside it as a comfortable tap target.
+- **Mobile** — the rail sits below the table and the first offer is within 1.5 screens.
+
+Playwright and Chromium are resolved automatically, including from the managed Node workspace, so no
+`NODE_PATH` is needed. If either is genuinely missing the test skips — but loudly, with a banner
+saying the assertions were never evaluated, because a quiet one-line "SKIP" is easily mistaken for a
+pass. Set `RADAR_REQUIRE_UI=1` (or pass `--require`) to turn a skip into a failure.
+
+> One subtlety worth keeping: the offer pages' `<h2>` elements are `text-transform: uppercase`, so
+> `innerText` returns `"WHAT THIS IS"` while the source says `"What this is"`. The section check has
+> to compare case-insensitively, or every section looks missing. `innerText` reflects rendered text;
+> `textContent` reflects source text. Pick deliberately.
 
 ### Negative test
 
@@ -312,12 +357,21 @@ never blocks a data refresh.
 node free-llm-radar/test-validate.js
 ```
 
-A validator that cannot fail is worthless. This breaks the generated output ten different ways —
+A validator that cannot fail is worthless. This breaks the generated output 16 different ways —
 deletes a page, adds an orphan, injects a placeholder, strips a canonical, mislabels an ordinary
 link as sponsored, drops a referral's sponsored mark, removes a sitemap URL, overruns a meta
-description, strips the structured data, adds an offer without generating its page — and asserts
-`validate.js` rejects every one. It asserts a clean copy passes first, because a test whose baseline
-already fails proves nothing. Runs in a throwaway copy; the project is never modified.
+description, strips the structured data, adds an offer without generating its page, removes an
+offer's editorial content, sets an invalid `forever` value, claims "no coverage" while citing a
+third-party review, and strips the reviews section, the opinion label and the free-forever verdict —
+then asserts `validate.js` rejects every one. It asserts a clean copy passes first, because a test
+whose baseline already fails proves nothing. Runs in a throwaway copy; the project is never modified.
+
+**Every mutation is checked against a content hash of the whole tree.** If a mutation changes
+nothing, the case reports `[NO-OP]` and counts as a failure rather than as coverage. This exists
+because the coverage-contradiction case had been reporting MISSED while looking correct: its
+`String.replace` appended a duplicate `documented` key that the entry's own field then overrode, so
+the contradiction it meant to create never existed. A `String.replace` whose pattern stops matching
+writes the file back untouched and fails silently — the hash makes that impossible to miss.
 
 Note it runs `validate.js` **in-process** with a stubbed `process.exit` rather than as a child
 process: the sandbox refuses to spawn `node.exe` (it fails `EBUSY`), and a child that never starts
