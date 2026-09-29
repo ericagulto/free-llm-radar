@@ -33,18 +33,22 @@ window.YOUR_LINKS = {
 
 window.REFERRALS = {
   disclosureShort:
-    'Some signup links on this page are referral links. If you sign up through one, ' +
-    'this site earns platform credits at no extra cost to you.',
+    'Some signup links on this page are referral links, and the Featured block above the table ' +
+    'contains only those. If you sign up through one, this site earns platform credits at no ' +
+    'extra cost to you.',
 
   disclosureLong:
     'Referral disclosure. Some links on this page are referral links. If you create an account ' +
     'through one, the site operator earns platform credits or rewards from that provider, at no ' +
-    'additional cost to you. This is a material connection and you should weigh it when reading ' +
-    'any recommendation here. Referral availability does not affect an offer\'s position in the ' +
-    'default sort order — sorting is driven by the sort control you select, and you can filter to ' +
-    'hide referral-linked offers entirely. Offers with no referral program are listed on equal ' +
-    'terms. We do not accept payment for placement, and no provider has editorial input into ' +
-    'these descriptions.',
+    'additional cost to you. This is a material connection, and you should weigh it when reading ' +
+    'any recommendation here. ' +
+    'A "Featured" block appears above the table. It contains only offers that carry a referral ' +
+    'link — that is, the ones the operator earns from. It is labelled for exactly that reason: ' +
+    'you are meant to know it is a promoted placement, not a ranking. ' +
+    'It does not change the order of the table. The table lists every offer on equal terms, ' +
+    'sorting is driven by the column or control you choose, and you can filter referral-linked ' +
+    'offers out entirely. No provider pays for placement, and no provider has editorial input ' +
+    'into these descriptions.',
 
   // Maps an offer id (from data.js) to a referral program id above.
   // Kept here rather than in data.js so the daily refresh job cannot wipe it.

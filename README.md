@@ -34,7 +34,12 @@ from `archive/`.
   NEW / EXTENDED / EXPIRING / CLOSED chips
 - **Metric strip** — offers tracked, portable key count, expiring within 7 days, largest grant.
   Computed from the data at load, never hardcoded.
-- **Sort** — freshest / token allowance ↓ / token allowance ↑ / promotion ends soonest / name
+- **Featured block** — a labelled promotional placement above the table, carrying only offers with
+  an active referral link. See the honesty note below.
+- **Multi-column sort** — click a column header to sort by it, click again to flip the direction,
+  **shift-click to add a secondary sort**. Active columns show ▲/▼ and, once more than one is
+  active, a priority number. The dropdown remains as a quick single-key preset and reports
+  "Custom (multi-column)" when the stack does not match one.
 - **Multi-select filters** — Portable key, Client-bound, Keyless, Cloud credit, No card,
   Expiring ≤7d, Referral-linked, No referral. Combine any number of them.
 - **Search** — provider, sub-label, model IDs, base URL and allowance text
@@ -58,6 +63,41 @@ portables that need no card (narrower). Three dimensions at once is fine.
 The first chip doubles as the reset control. With no filters it reads **All**; once any filter is
 live it switches to **Clear n** and turns amber-outlined, so the way out is always visible. Search
 composes with filters as an additional AND.
+
+### How sorting resolves
+
+`sortStack` is an ordered list of `{key, dir}`. Earlier entries win; later entries break ties. The
+final tiebreak is always name, so the order never flickers between renders.
+
+**Nulls sort last in both directions.** An ongoing promotion has no `end` date, so without this
+rule "promotion ends soonest" would float every open-ended offer to the top of the table — the
+opposite of what the reader asked for. `test-ui.js` asserts this in both directions.
+
+Columns: Offer (`name`), Allowance (`budget`), Promotion period (`end`), Type (`kind`). Freshness
+(`added`) has no column but is available from the dropdown and is the default sort.
+
+### The featured block, and why it is labelled
+
+The featured block promotes the offers that carry a referral link. It is deliberately **not**
+discreet: the ribbon says "Featured", each card says "Referral", and the copy states plainly that
+those offers appear because the operator earns from them, not because they rank better.
+
+That is not decoration. An undisclosed promoted placement is the exact pattern the FTC has
+prosecuted, and the specific obligation to disclose when compensation may influence placement
+applies to a directory like this. A reader who notices an undisclosed ad stops trusting the whole
+table — so the label protects the rankings as much as it protects you legally.
+
+Three rules the code enforces, and `validate.js` fails if any is removed:
+
+1. The block is labelled (`class="fribbon"` / `class="frib"` must exist).
+2. It does **not** reorder the table. The table still lists every offer on equal terms; only the
+   sort control changes its order.
+3. It respects the active filters — filter referral offers out and the block empties rather than
+   leaving a stale card behind.
+
+Referral-linked links carry `rel="noopener sponsored"`; every other link carries plain
+`rel="noopener"`. `test-ui.js` asserts exactly two sponsored anchors — the featured card and its
+row in the table — and that both point at the referral URL.
 
 ### Reading the data honestly
 

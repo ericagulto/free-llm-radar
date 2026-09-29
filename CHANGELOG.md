@@ -13,6 +13,42 @@ Format per entry:
 
 ---
 
+## 2026-09-29 (fifth pass — featured block, multi-column sort, a third bug fixed)
+
+Presentation-layer changes. Hand-edited, deliberately.
+
+- **ADDED — a Featured block** above the table, carrying the offers with an active referral link.
+  It is **labelled**, not discreet: a "Featured" ribbon, a "Referral" chip on each card, and copy
+  stating the offers appear *because* the operator earns from them, not because they rank better.
+  It does not reorder the table and it respects the active filters. See the README for why the
+  label is load-bearing rather than decorative.
+- **ADDED — multi-column sort on the table headers.** Click to sort, click again to flip,
+  **shift-click to append a secondary sort**. Active columns show ▲/▼ and a priority number once
+  more than one is live. `aria-sort` tracks state. The dropdown stays as a quick single-key preset
+  and reports `Custom (multi-column)` when the stack matches no preset.
+- **CHANGED — `disclosureShort` and `disclosureLong` now cover the featured block explicitly.**
+  The long form states that the block contains only offers the operator earns from, and that it
+  does not change the table order. Without this the block would have been an undisclosed placement.
+- **FIXED — a third bug, pre-existing since the first build: the "Portable key" tag has never been
+  styled.** The CSS rule was written `.tag.port` while the markup emits `class="tag portable"`, so
+  the rule never matched and portables fell back to the unstyled base tag. The other three kinds
+  matched correctly, which is why it went unnoticed. Renamed to `.tag.portable`.
+  `validate.js` now fails if any `kind` lacks a matching `.tag.<kind>` rule.
+
+**Verified this run:** local validation passes; `test-ui.js` extended to **41 assertions, all
+passing** — covering the featured block's label, link and filter behaviour, single and multi-column
+sorting, sort-direction flipping, nulls-last in both directions, `aria-sort` state, and the
+dropdown's custom state.
+
+**Notes for the next run:**
+- The featured block is driven entirely by `referrals.js`. Add a link there and the offer appears
+  in the block automatically; remove it and the block hides itself.
+- `validate.js` now asserts the featured label exists. Do not remove `fribbon` / `frib` markup.
+- The `.tag.portable` bug is a reminder: **a CSS class that never matches fails silently.** When
+  adding a kind or status, check the rule actually matches the rendered class name.
+
+---
+
 ## 2026-09-29 (fourth pass — referral link wired, published, two bugs fixed)
 
 **Published.** The dashboard now has a public URL and the data lives on a separate free origin:

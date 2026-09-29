@@ -130,6 +130,54 @@ select:focus,input:focus{border-color:var(--amber)}
   color:var(--tx3);font-weight:700;border-bottom:1px solid var(--line2);
 }
 @media(max-width:1080px){.hdr{display:none}}
+/* sortable column headers — click to sort, shift-click to add a secondary sort */
+.sh{
+  background:none;border:0;padding:2px 0;margin:0;font:inherit;color:inherit;
+  letter-spacing:inherit;text-transform:inherit;font-weight:inherit;
+  text-align:left;cursor:pointer;display:flex;align-items:center;gap:5px;
+  transition:color .12s ease;
+}
+.sh:hover{color:var(--tx2)}
+.sh.on{color:var(--amber)}
+.sh:focus-visible{outline:2px solid var(--amber);outline-offset:3px;border-radius:2px}
+.sh .ind{font-size:8px;line-height:1}
+.sh .pr{
+  font-family:var(--mono);font-size:8px;opacity:.7;border:1px solid currentColor;
+  border-radius:2px;padding:0 3px;line-height:1.35;
+}
+.sortnote{font-family:var(--mono);font-size:10px;color:var(--tx3);white-space:nowrap;align-self:center}
+
+/* featured block — a labelled promotional placement, not a ranking change */
+.feat{
+  margin:10px 30px 2px;padding:14px 16px;border-radius:var(--r);
+  background:linear-gradient(180deg,rgba(232,163,61,.075),rgba(232,163,61,.015));
+  border:1px solid rgba(232,163,61,.3);
+}
+.feat[hidden]{display:none}
+.feathd{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;margin-bottom:12px}
+.fribbon{
+  font-size:9px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;
+  color:#1a1206;background:var(--amber);padding:3px 8px;border-radius:2px;
+}
+.ftxt{font-size:11px;color:var(--tx3);line-height:1.55;max-width:820px}
+.ftxt b{color:var(--tx2)}
+.fcards{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:10px}
+.fcard{
+  display:flex;flex-direction:column;gap:5px;padding:13px 15px;
+  background:var(--bg3);border:1px solid var(--line2);border-radius:var(--r);
+  text-decoration:none;transition:border-color .15s ease,background .15s ease;
+}
+.fcard:hover{border-color:var(--amber);background:var(--bg4)}
+.fcard:focus-visible{outline:2px solid var(--amber);outline-offset:2px}
+.fnm{font-weight:700;font-size:14.5px;color:var(--tx);display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.frib{
+  font-size:8.5px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--amber);border:1px solid rgba(232,163,61,.4);padding:2px 6px;border-radius:2px;
+}
+.fsub{font-family:var(--mono);font-size:10.5px;color:var(--tx3)}
+.fnote{font-size:11.5px;color:var(--tx2);line-height:1.55}
+.fnote b{color:var(--amber);font-weight:600}
+.fcta{margin-top:5px;font-size:11px;font-weight:700;color:var(--amber)}
 .row{border-bottom:1px solid var(--line)}
 .row>.sum{
   display:grid;grid-template-columns:26px minmax(180px,1.6fr) 130px 150px 120px 92px;
@@ -151,7 +199,8 @@ select:focus,input:focus{border-color:var(--amber)}
   display:inline-block;font-size:9px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;
   padding:2px 7px;border-radius:2px;border:1px solid;
 }
-.tag.port{background:rgba(111,185,143,.1);color:var(--green);border-color:rgba(111,185,143,.32)}
+/* must match o.kind exactly — the markup emits class="tag portable", not "tag port" */
+.tag.portable{background:rgba(111,185,143,.1);color:var(--green);border-color:rgba(111,185,143,.32)}
 .tag.client{background:rgba(176,140,201,.1);color:var(--purple);border-color:rgba(176,140,201,.32)}
 .tag.keyless{background:rgba(123,167,204,.1);color:var(--blue);border-color:rgba(123,167,204,.32)}
 .tag.credit{background:rgba(232,163,61,.1);color:var(--amber);border-color:rgba(232,163,61,.32)}
@@ -282,7 +331,9 @@ footer b{color:var(--tx2)}
           <option value="budget-asc">Token allowance ↑</option>
           <option value="end">Promotion ends soonest</option>
           <option value="name">Name A→Z</option>
+          <option value="custom" hidden>Custom (multi-column)</option>
         </select>
+        <span class="sortnote">or click a column header · shift-click to add a 2nd</span>
       </div>
       <div class="chips" id="filters" role="group" aria-label="Filter offers — select any number to combine">
         <button class="chipbtn on" data-f="all" aria-pressed="true">All</button>
@@ -302,9 +353,16 @@ footer b{color:var(--tx2)}
       <div class="count" id="count"></div>
     </div>
 
+    <div class="feat" id="feat" hidden></div>
+
     <div class="rows">
-      <div class="hdr">
-        <div></div><div>Offer</div><div>Allowance</div><div>Promotion period</div><div>Type</div><div>Link</div>
+      <div class="hdr" id="hdr">
+        <div></div>
+        <button class="sh" data-key="name" aria-sort="none" title="Sort by name. Shift-click to add a secondary sort.">Offer<span class="ind"></span></button>
+        <button class="sh" data-key="budget" aria-sort="none" title="Sort by allowance. Shift-click to add a secondary sort.">Allowance<span class="ind"></span></button>
+        <button class="sh" data-key="end" aria-sort="none" title="Sort by when the promotion ends. Shift-click to add a secondary sort.">Promotion period<span class="ind"></span></button>
+        <button class="sh" data-key="kind" aria-sort="none" title="Sort by type. Shift-click to add a secondary sort.">Type<span class="ind"></span></button>
+        <div>Link</div>
       </div>
       <div id="list"></div>
     </div>
@@ -471,7 +529,36 @@ if (typeof RADAR === 'undefined') {
 
   /* ---------- list ---------- */
   const kindLabel = {portable:'Portable key',client:'Client-bound',keyless:'Keyless',credit:'Cloud credit'};
-  let sort='fresh', q='';
+  let q='';
+
+  /* ---------- multi-column sort ----------
+     sortStack is an ordered list of {key, dir}; earlier entries take priority.
+     Click a column header to sort by it, shift-click to append a secondary sort.
+     Nulls (an ongoing promotion has no end date) always sort last in BOTH directions —
+     otherwise "ends soonest" would float every open-ended offer to the top. */
+  const DEFAULT_DIR = {name:'asc', budget:'desc', end:'asc', kind:'asc', added:'desc'};
+  const KEY_OF = {
+    name:   o => o.name,
+    budget: o => o.budget,
+    end:    o => o.end ? Date.parse(o.end) : null,
+    kind:   o => o.kind,
+    added:  o => Date.parse(o.added)
+  };
+  const FIELD_CMP = {
+    name:   (a,b) => String(a).localeCompare(String(b)),
+    budget: (a,b) => a - b,
+    end:    (a,b) => a - b,
+    kind:   (a,b) => String(a).localeCompare(String(b)),
+    added:  (a,b) => a - b
+  };
+  const PRESETS = {
+    'fresh':      [{key:'added',  dir:'desc'}],
+    'budget':     [{key:'budget', dir:'desc'}],
+    'budget-asc': [{key:'budget', dir:'asc'}],
+    'end':        [{key:'end',    dir:'asc'}],
+    'name':       [{key:'name',   dir:'asc'}]
+  };
+  let sortStack = PRESETS.fresh.map(s => ({...s}));
 
   /* Multi-select filters, grouped into dimensions.
      Within a dimension the selected chips OR together; across dimensions they AND together.
@@ -519,21 +606,56 @@ if (typeof RADAR === 'undefined') {
     return true;
   }
   function cmp(a,b){
-    if(sort==='budget') return (b.budget||-1)-(a.budget||-1);
-    if(sort==='budget-asc'){
-      if(!a.budget&&!b.budget) return 0; if(!a.budget) return 1; if(!b.budget) return -1;
-      return a.budget-b.budget;
+    for(const s of sortStack){
+      const av = KEY_OF[s.key](a), bv = KEY_OF[s.key](b);
+      const an = av === null || av === undefined;
+      const bn = bv === null || bv === undefined;
+      if(an && bn) continue;
+      if(an) return 1;                 // nulls last, regardless of direction
+      if(bn) return -1;
+      let r = FIELD_CMP[s.key](av, bv);
+      if(s.dir === 'desc') r = -r;
+      if(r) return r;
     }
-    if(sort==='end'){
-      const ae=a.end?new Date(a.end):null, be=b.end?new Date(b.end):null;
-      if(!ae&&!be) return 0; if(!ae) return 1; if(!be) return -1; return ae-be;
-    }
-    if(sort==='name') return a.name.localeCompare(b.name);
-    return new Date(b.added)-new Date(a.added) || a.name.localeCompare(b.name);
+    return a.name.localeCompare(b.name);   // stable tiebreak, so order never flickers
+  }
+
+  /* ---------- featured block ----------
+     A LABELLED promotional placement, not a hidden one. It shows the offers carrying an active
+     referral link — the ones this site earns from. Saying so plainly is both the honest option
+     and the one that survives scrutiny: an undisclosed promoted block is the exact pattern the
+     FTC has prosecuted, and it also reads as an ad to anyone who notices.
+
+     It does NOT reorder the table below. The table still lists every offer on equal terms. */
+  function renderFeatured(matched){
+    const el = document.getElementById('feat');
+    const feat = matched.filter(o => { const r = refFor(o); return !!(r && r.active); });
+    if(!feat.length){ el.hidden = true; el.innerHTML = ''; return; }
+    el.hidden = false;
+    el.innerHTML =
+      '<div class="feathd">' +
+        '<span class="fribbon">Featured</span>' +
+        '<span class="ftxt">These offers carry a <b>referral link</b> — the site operator earns ' +
+        'credits if you sign up through one. They appear here <b>because</b> of that, not because ' +
+        'they rank better. The table below lists every offer on equal terms.</span>' +
+      '</div>' +
+      '<div class="fcards">' +
+        feat.map(o => {
+          const r = refFor(o);
+          return '<a class="fcard" href="' + r.mine + '" target="_blank" rel="noopener sponsored">' +
+                   '<span class="fnm">' + o.name + '<span class="frib">Referral</span></span>' +
+                   '<span class="fsub">' + o.sub + '</span>' +
+                   '<span class="fnote">' + o.budgetNote + '</span>' +
+                   '<span class="fcta">' + o.linkLabel + ' →</span>' +
+                 '</a>';
+        }).join('') +
+      '</div>';
   }
 
   function render(){
-    const list = D.filter(passes).sort(cmp);
+    const matched = D.filter(passes);
+    const list = matched.slice().sort(cmp);
+    renderFeatured(matched);
     const nf = activeFilters.size;
     document.getElementById('count').textContent =
       `${list.length} / ${D.length} shown` + (nf ? ` · ${nf} filter${nf>1?'s':''}` : '');
@@ -624,7 +746,47 @@ if (typeof RADAR === 'undefined') {
     });
   }
 
-  document.getElementById('sort').addEventListener('change', e=>{ sort=e.target.value; render(); });
+  /* Keep the header indicators and the quick-sort dropdown in step with sortStack. */
+  function syncSort(){
+    document.querySelectorAll('.sh').forEach(el=>{
+      const i = sortStack.findIndex(s => s.key === el.dataset.key);
+      const on = i >= 0;
+      el.classList.toggle('on', on);
+      el.setAttribute('aria-sort', on ? (sortStack[i].dir === 'asc' ? 'ascending' : 'descending') : 'none');
+      el.querySelector('.ind').textContent = on ? (sortStack[i].dir === 'asc' ? '▲' : '▼') : '';
+      let pr = el.querySelector('.pr');
+      if(!pr){ pr = document.createElement('span'); pr.className = 'pr'; el.appendChild(pr); }
+      pr.textContent = (on && sortStack.length > 1) ? String(i + 1) : '';
+    });
+    const sel = document.getElementById('sort');
+    const match = Object.keys(PRESETS).find(k =>
+      PRESETS[k].length === sortStack.length &&
+      PRESETS[k].every((p,i) => p.key === sortStack[i].key && p.dir === sortStack[i].dir));
+    sel.value = match || 'custom';
+  }
+
+  document.getElementById('hdr').addEventListener('click', e=>{
+    const b = e.target.closest('.sh'); if(!b) return;
+    const key = b.dataset.key;
+    const i = sortStack.findIndex(s => s.key === key);
+    if(e.shiftKey){
+      // shift-click appends a secondary sort, or flips this one if it is already active
+      if(i >= 0) sortStack[i].dir = sortStack[i].dir === 'asc' ? 'desc' : 'asc';
+      else sortStack.push({key, dir: DEFAULT_DIR[key]});
+    } else if(i === 0 && sortStack.length === 1){
+      sortStack[0].dir = sortStack[0].dir === 'asc' ? 'desc' : 'asc';
+    } else {
+      sortStack = [{key, dir: i >= 0 ? sortStack[i].dir : DEFAULT_DIR[key]}];
+    }
+    syncSort(); render();
+  });
+
+  document.getElementById('sort').addEventListener('change', e=>{
+    const p = PRESETS[e.target.value];
+    if(!p) return;                       // 'custom' is a display state, not a choice
+    sortStack = p.map(s => ({...s}));
+    syncSort(); render();
+  });
   document.getElementById('q').addEventListener('input', e=>{ q=e.target.value; render(); });
   const allChip = document.querySelector('.chipbtn[data-f="all"]');
   function syncChips(){
@@ -647,6 +809,7 @@ if (typeof RADAR === 'undefined') {
     syncChips(); render();
   });
   syncChips();
+  syncSort();
   render();
 })();
 };

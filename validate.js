@@ -142,6 +142,17 @@ if (!/isRef\s*\?\s*'noopener sponsored'\s*:\s*'noopener'/.test(html)) {
        'ordinary provider links would be mislabelled as sponsored');
 }
 if (!/id="disclosure"/.test(html) && !/class="disc"/.test(html)) fail('index.html: no disclosure element found');
+// Every kind must have a matching .tag rule. The markup emits class="tag <kind>", so a rule
+// written as ".tag.port" silently renders the tag unstyled — which is exactly what happened.
+for (const k of OFFER_KINDS) {
+  if (!new RegExp('\\.tag\\.' + k + '\\s*[,{]').test(html)) {
+    fail(`index.html: no CSS rule for .tag.${k} — that kind's tag renders unstyled`);
+  }
+}
+// The featured block must stay labelled; an unlabelled promoted block is the thing we must not ship.
+if (!/class="fribbon"/.test(html) || !/class="frib"/.test(html)) {
+  fail('index.html: the featured block lost its label — an unlabelled promoted placement is not shippable');
+}
 if (!/referrals\.js/.test(html)) fail('index.html: no longer loads referrals.js');
 if (!/data\.js/.test(html)) fail('index.html: no longer loads data.js');
 if (!/typeof RADAR === 'undefined'/.test(html)) warn('index.html: the missing-data guard looks gone');
