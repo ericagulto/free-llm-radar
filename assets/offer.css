@@ -76,6 +76,7 @@ th,td{text-align:left;padding:9px 12px;border-bottom:1px solid var(--line);verti
 th{font-size:9.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--tx3);font-weight:700;width:132px}
 td{color:var(--tx2)}
 td.mono{font-family:var(--mono);font-size:12.5px;color:var(--tx);word-break:break-all}
+td.na{color:var(--tx3);font-style:italic}
 pre{
   background:var(--bg2);border:1px solid var(--line2);border-radius:var(--r);
   padding:14px 16px;overflow-x:auto;margin:0 0 13px;
