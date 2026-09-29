@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Free LLM Radar</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,400;0,500;0,600;0,700;0,800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#12100d; --bg2:#1a1714; --bg3:#221e19; --bg4:#2b261f;
+  --line:#332d25; --line2:#453d31;
+  --tx:#f2e9dc; --tx2:#a89b88; --tx3:#6f6555;
+  --amber:#e8a33d; --amber2:#c9862a; --amberd:#5c4318;
+  --green:#6fb98f; --red:#e06c5a; --blue:#7ba7cc; --purple:#b08cc9;
+  --r:3px;
+  --mono:'IBM Plex Mono',ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  background:var(--bg); color:var(--tx);
+  font-family:'Archivo',-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  font-size:14px; line-height:1.55;
+  -webkit-font-smoothing:antialiased;
+}
+.shell{display:grid;grid-template-columns:290px 1fr;min-height:100vh}
+@media(max-width:1000px){.shell{grid-template-columns:1fr}}
+
+/* ---------- sidebar ---------- */
+.rail{
+  background:var(--bg2);border-right:1px solid var(--line);
+  padding:22px 0 40px;position:sticky;top:0;height:100vh;overflow-y:auto;
+}
+@media(max-width:1000px){.rail{position:static;height:auto;border-right:none;border-bottom:1px solid var(--line)}}
+.rail-hd{padding:0 20px 16px;border-bottom:1px solid var(--line);margin-bottom:16px}
+.rail-hd .k{font-size:9.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--amber);font-weight:700}
+.rail-hd .t{font-size:15px;font-weight:700;letter-spacing:-.01em;margin-top:3px}
+.rail-hd .s{font-size:11px;color:var(--tx3);margin-top:2px}
+
+.tl{position:relative;padding:0 20px}
+.tl::before{content:'';position:absolute;left:26px;top:4px;bottom:0;width:1px;background:var(--line)}
+.tl-day{margin-bottom:22px;position:relative}
+.tl-day .day{
+  font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;
+  color:var(--tx3);margin-bottom:9px;padding-left:19px;position:relative;
+}
+.tl-day .day::before{content:'';position:absolute;left:4px;top:5px;width:7px;height:7px;border-radius:50%;
+  background:var(--bg2);border:1.5px solid var(--line2)}
+.tl-day.today .day{color:var(--amber)}
+.tl-day.today .day::before{background:var(--amber);border-color:var(--amber);box-shadow:0 0 0 3px rgba(232,163,61,.16)}
+.ev{position:relative;padding:7px 0 7px 19px;font-size:12.5px;cursor:default}
+.ev::before{content:'';position:absolute;left:5.5px;top:12px;width:5px;height:5px;border-radius:50%;background:var(--line2)}
+.ev.new::before{background:var(--green)}
+.ev.ext::before{background:var(--blue)}
+.ev.exp::before{background:var(--red)}
+.ev.dead::before{background:var(--tx3)}
+.ev .n{font-weight:600;color:var(--tx);display:block;line-height:1.35}
+.ev .d{color:var(--tx3);font-size:11px;line-height:1.4;display:block;margin-top:1px}
+.ev .chip{
+  display:inline-block;font-size:8.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+  padding:1px 5px;border-radius:2px;margin-right:5px;vertical-align:1px;
+}
+.chip.new{background:rgba(111,185,143,.16);color:var(--green)}
+.chip.ext{background:rgba(123,167,204,.16);color:var(--blue)}
+.chip.exp{background:rgba(224,108,90,.16);color:var(--red)}
+.chip.dead{background:var(--bg4);color:var(--tx3)}
+
+/* ---------- main ---------- */
+.main{padding:0 0 60px;min-width:0}
+.top{
+  padding:22px 30px 18px;border-bottom:1px solid var(--line);
+  display:flex;flex-wrap:wrap;align-items:flex-end;gap:20px;justify-content:space-between;
+}
+.top h1{margin:0;font-size:26px;font-weight:800;letter-spacing:-.025em;line-height:1.1}
+.top h1 em{font-style:normal;color:var(--amber)}
+.top .meta{font-size:11.5px;color:var(--tx3);margin-top:5px;font-family:var(--mono)}
+.live{display:inline-flex;align-items:center;gap:7px;font-size:10.5px;font-family:var(--mono);
+  color:var(--green);letter-spacing:.06em;text-transform:uppercase}
+.live i{width:6px;height:6px;border-radius:50%;background:var(--green);display:block;
+  animation:pulse 2.4s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
+
+.strip{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);
+  border-bottom:1px solid var(--line)}
+@media(max-width:820px){.strip{grid-template-columns:repeat(2,1fr)}}
+.mc{background:var(--bg);padding:16px 22px}
+.mc .l{font-size:9.5px;letter-spacing:.15em;text-transform:uppercase;color:var(--tx3);font-weight:600}
+.mc .v{font-size:30px;font-weight:800;letter-spacing:-.035em;line-height:1.05;margin-top:6px;
+  font-variant-numeric:tabular-nums}
+.mc .v.a{color:var(--amber)}
+.mc .v.g{color:var(--green)}
+.mc .v.r{color:var(--red)}
+.mc .f{font-size:11px;color:var(--tx3);margin-top:3px}
+
+.ctl{padding:16px 30px;border-bottom:1px solid var(--line);background:var(--bg2);
+  display:flex;flex-wrap:wrap;gap:14px;align-items:center}
+.ctl .grp{display:flex;align-items:center;gap:8px}
+.ctl label{font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--tx3);font-weight:700}
+select,input[type=search]{
+  background:var(--bg3);border:1px solid var(--line2);color:var(--tx);
+  font-family:var(--mono);font-size:12px;padding:7px 11px;border-radius:var(--r);outline:none;
+}
+select{cursor:pointer;min-width:190px}
+input[type=search]{min-width:180px}
+select:focus,input:focus{border-color:var(--amber)}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chipbtn{
+  background:var(--bg3);border:1px solid var(--line2);color:var(--tx2);
+  font-size:11px;font-weight:600;padding:6px 12px;border-radius:999px;cursor:pointer;
+  font-family:'Archivo',sans-serif;transition:all .14s ease;
+}
+.chipbtn:hover{border-color:var(--amberd);color:var(--tx)}
+.chipbtn.on{background:var(--amber);border-color:var(--amber);color:#1a1206}
+.chipbtn:focus-visible{outline:2px solid var(--amber);outline-offset:2px}
+/* the All/Clear chip turns amber-outlined once any filter is live, so the way out is obvious */
+.chipbtn.armed{border-color:var(--amber);color:var(--amber);background:var(--bg3)}
+.chipbtn.armed:hover{background:var(--amber);color:#1a1206}
+.chiphint{flex-basis:100%;font-family:var(--mono);font-size:10.5px;color:var(--tx3);margin-top:1px}
+.chiphint b{color:var(--tx2);font-weight:600}
+.count{margin-left:auto;font-family:var(--mono);font-size:11.5px;color:var(--tx3)}
+
+.rows{padding:8px 30px 0}
+.hdr{
+  display:grid;grid-template-columns:26px minmax(180px,1.6fr) 130px 150px 120px 92px;
+  gap:14px;padding:9px 12px;font-size:9.5px;letter-spacing:.13em;text-transform:uppercase;
+  color:var(--tx3);font-weight:700;border-bottom:1px solid var(--line2);
+}
+@media(max-width:1080px){.hdr{display:none}}
+.row{border-bottom:1px solid var(--line)}
+.row>.sum{
+  display:grid;grid-template-columns:26px minmax(180px,1.6fr) 130px 150px 120px 92px;
+  gap:14px;padding:13px 12px;cursor:pointer;align-items:center;transition:background .12s ease;
+}
+@media(max-width:1080px){.row>.sum{grid-template-columns:22px 1fr;gap:10px}}
+.row>.sum:hover{background:var(--bg2)}
+.row.open>.sum{background:var(--bg2)}
+.caret{color:var(--tx3);font-size:10px;transition:transform .18s cubic-bezier(.22,1,.36,1);display:inline-block}
+.row.open .caret{transform:rotate(90deg);color:var(--amber)}
+.nm{font-weight:600;font-size:14px;letter-spacing:-.01em;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.nm .sub{font-size:11px;color:var(--tx3);font-weight:400;font-family:var(--mono)}
+.bud{font-family:var(--mono);font-size:12.5px;font-weight:600;font-variant-numeric:tabular-nums;color:var(--tx)}
+.bud .u{color:var(--tx3);font-weight:400;font-size:10.5px}
+.until{font-family:var(--mono);font-size:12px;color:var(--tx2)}
+.until.soon{color:var(--red);font-weight:600}
+.until.ongoing{color:var(--green)}
+.tag{
+  display:inline-block;font-size:9px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;
+  padding:2px 7px;border-radius:2px;border:1px solid;
+}
+.tag.port{background:rgba(111,185,143,.1);color:var(--green);border-color:rgba(111,185,143,.32)}
+.tag.client{background:rgba(176,140,201,.1);color:var(--purple);border-color:rgba(176,140,201,.32)}
+.tag.keyless{background:rgba(123,167,204,.1);color:var(--blue);border-color:rgba(123,167,204,.32)}
+.tag.credit{background:rgba(232,163,61,.1);color:var(--amber);border-color:rgba(232,163,61,.32)}
+.go{
+  display:inline-block;background:var(--amber);color:#1a1206;font-size:11px;font-weight:700;
+  padding:7px 13px;border-radius:var(--r);text-decoration:none;white-space:nowrap;
+  border:1px solid var(--amber);transition:all .14s ease;
+}
+.go:hover{background:#f5b954;border-color:#f5b954}
+
+.det{display:none;padding:0 12px 22px 52px;background:var(--bg2);border-top:1px solid var(--line)}
+@media(max-width:1080px){.det{padding-left:12px}}
+.row.open .det{display:block}
+.dgrid{display:grid;grid-template-columns:1fr 1fr;gap:26px;padding-top:18px}
+@media(max-width:900px){.dgrid{grid-template-columns:1fr}}
+.dsec{margin-bottom:18px}
+.dsec .h{
+  font-size:9.5px;letter-spacing:.15em;text-transform:uppercase;color:var(--amber);
+  font-weight:700;margin-bottom:9px;padding-bottom:5px;border-bottom:1px solid var(--line)
+}
+.kv{display:grid;grid-template-columns:74px 1fr;gap:6px 12px;font-size:12.5px;margin-bottom:4px}
+.kv dt{color:var(--tx3);font-size:11px;letter-spacing:.04em;padding-top:2px}
+.kv dd{margin:0;font-family:var(--mono);font-size:11.5px;color:var(--tx);word-break:break-all}
+ol.st{margin:0;padding-left:0;list-style:none;counter-reset:s}
+ol.st li{counter-increment:s;position:relative;padding-left:27px;margin-bottom:8px;font-size:12.5px;color:var(--tx2);line-height:1.5}
+ol.st li::before{content:counter(s);position:absolute;left:0;top:1px;width:18px;height:18px;
+  background:var(--bg4);border:1px solid var(--line2);color:var(--amber);font-size:9.5px;font-weight:700;
+  display:flex;align-items:center;justify-content:center;font-family:var(--mono)}
+ol.st li b{color:var(--tx);font-weight:600}
+pre{
+  background:#0b0a08;border:1px solid var(--line);border-left:2px solid var(--amberd);
+  border-radius:var(--r);padding:12px 14px;overflow-x:auto;margin:0;
+  font-family:var(--mono);font-size:11px;line-height:1.7;color:var(--tx2)
+}
+.warn{
+  border-left:2px solid var(--red);background:rgba(224,108,90,.055);
+  padding:11px 14px;font-size:12.5px;color:var(--tx2);margin-top:12px;border-radius:0 var(--r) var(--r) 0;
+}
+.warn b{color:var(--red)}
+.note{
+  border-left:2px solid var(--blue);background:rgba(123,167,204,.05);
+  padding:11px 14px;font-size:12.5px;color:var(--tx2);margin-top:12px;border-radius:0 var(--r) var(--r) 0;
+}
+.note b{color:var(--blue)}
+.models{display:flex;flex-wrap:wrap;gap:5px;margin-top:6px}
+.models span{background:var(--bg4);border:1px solid var(--line2);color:var(--tx2);
+  font-family:var(--mono);font-size:10px;padding:2px 7px;border-radius:2px}
+.empty{padding:56px 30px;text-align:center;color:var(--tx3);font-size:13px}
+.empty b{color:var(--tx2);display:block;font-size:15px;margin-bottom:5px}
+footer{padding:26px 30px 0;color:var(--tx3);font-size:11px;line-height:1.7;border-top:1px solid var(--line);margin-top:30px}
+footer b{color:var(--tx2)}
+.err{margin:40px;padding:24px;border:1px solid var(--red);border-left:3px solid var(--red);
+  background:rgba(224,108,90,.06);font-family:var(--mono);font-size:13px;color:var(--tx2);border-radius:var(--r)}
+.err b{color:var(--red);display:block;margin-bottom:8px;font-size:15px}
+
+/* ---------- referral disclosure (FTC: sticky, above the fold, near links) ---------- */
+.disc{
+  position:sticky;top:0;z-index:40;
+  background:#2a2113;border-bottom:1px solid var(--amberd);
+  padding:11px 30px;display:flex;align-items:flex-start;gap:12px;
+  box-shadow:0 1px 0 rgba(0,0,0,.35);
+}
+.disc .ic{
+  flex-shrink:0;width:17px;height:17px;border-radius:50%;border:1.5px solid var(--amber);
+  color:var(--amber);font-size:11px;font-weight:700;display:flex;align-items:center;
+  justify-content:center;font-family:var(--mono);margin-top:1px;
+}
+.disc p{margin:0;font-size:12.5px;line-height:1.5;color:#e8d9bd;flex:1}
+.disc p b{color:var(--amber);font-weight:700}
+.disc details{flex:1}
+.disc summary{
+  cursor:pointer;font-size:12.5px;color:#e8d9bd;line-height:1.5;list-style:none;
+}
+.disc summary::-webkit-details-marker{display:none}
+.disc summary::after{content:' ▾';color:var(--amber);font-size:10px}
+.disc details[open] summary::after{content:' ▴'}
+.disc .full{
+  margin-top:9px;padding-top:9px;border-top:1px solid rgba(232,163,61,.25);
+  font-size:12px;line-height:1.65;color:#d8c8a8;
+}
+.disc .full b{color:var(--amber)}
+.refbadge{
+  display:inline-block;font-size:9px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;
+  padding:2px 7px;border-radius:2px;border:1px solid rgba(232,163,61,.45);
+  background:rgba(232,163,61,.1);color:var(--amber);
+}
+.go.ref{background:transparent;color:var(--amber);border-color:var(--amberd)}
+.go.ref:hover{background:rgba(232,163,61,.12);border-color:var(--amber)}
+.go.ref::after{content:' ●';font-size:7px;vertical-align:1px;color:var(--amber)}
+</style>
+</head>
+<body>
+<div class="shell">
+  <aside class="rail">
+    <div class="rail-hd">
+      <div class="k">Freshness rail</div>
+      <div class="t">What changed</div>
+      <div class="s" id="railSub">Newest first</div>
+    </div>
+    <div class="tl" id="rail"></div>
+  </aside>
+
+  <div class="main">
+    <div class="disc">
+      <span class="ic">i</span>
+      <details id="discBox">
+        <summary id="discSummary">Some signup links here are referral links — the site earns platform credits if you use one.</summary>
+        <div class="full" id="discFull"></div>
+      </details>
+    </div>
+
+    <div class="top">
+      <div>
+        <h1>Free LLM <em>Radar</em></h1>
+        <div class="meta" id="meta">loading…</div>
+      </div>
+      <div class="live"><i></i> Auto-refreshed daily</div>
+    </div>
+
+    <div class="strip" id="strip"></div>
+
+    <div class="ctl">
+      <div class="grp">
+        <label for="sort">Sort</label>
+        <select id="sort">
+          <option value="fresh">Freshest first</option>
+          <option value="budget">Token allowance ↓</option>
+          <option value="budget-asc">Token allowance ↑</option>
+          <option value="end">Promotion ends soonest</option>
+          <option value="name">Name A→Z</option>
+        </select>
+      </div>
+      <div class="chips" id="filters" role="group" aria-label="Filter offers — select any number to combine">
+        <button class="chipbtn on" data-f="all" aria-pressed="true">All</button>
+        <button class="chipbtn" data-f="portable" aria-pressed="false">Portable key</button>
+        <button class="chipbtn" data-f="client" aria-pressed="false">Client-bound</button>
+        <button class="chipbtn" data-f="keyless" aria-pressed="false">Keyless</button>
+        <button class="chipbtn" data-f="credit" aria-pressed="false">Cloud credit</button>
+        <button class="chipbtn" data-f="nocard" aria-pressed="false">No card</button>
+        <button class="chipbtn" data-f="expiring" aria-pressed="false">Expiring ≤7d</button>
+        <button class="chipbtn" data-f="refonly" aria-pressed="false">Referral-linked</button>
+        <button class="chipbtn" data-f="noref" aria-pressed="false">No referral</button>
+        <div class="chiphint">Multi-select — pick several. <b>Portable key + No card</b> shows portables that need no card.</div>
+      </div>
+      <div class="grp">
+        <input type="search" id="q" placeholder="search provider or model…">
+      </div>
+      <div class="count" id="count"></div>
+    </div>
+
+    <div class="rows">
+      <div class="hdr">
+        <div></div><div>Offer</div><div>Allowance</div><div>Promotion period</div><div>Type</div><div>Link</div>
+      </div>
+      <div id="list"></div>
+    </div>
+
+    <footer>
+      <b>How to read this.</b> <span style="color:var(--green)">Portable key</span> = a real API key you can paste into any tool or script.
+      <span style="color:var(--purple)">Client-bound</span> = usage only inside the vendor's own app; no key to extract.
+      <span style="color:var(--blue)">Keyless</span> = no signup at all. <span style="color:var(--amber)">Cloud credit</span> = card-backed grant that expires.
+      <br><br>
+      <b>Allowance caveat.</b> Daily quotas and one-time grants are not equivalent — a 200K/day cap renews, a 100M one-time grant does not.
+      The unit is shown in every row. Sorting by allowance compares the raw number, so read the unit before drawing conclusions.
+      <br><br>
+      <b>Refreshed daily.</b> Data lives in <span style="font-family:var(--mono)">data.js</span>; this page is the stable view. Every run appends to
+      <span style="font-family:var(--mono)">CHANGELOG.md</span> and archives a dated snapshot under <span style="font-family:var(--mono)">archive/</span>.
+      <br><br>
+      <b>Verification.</b> Base URLs, model IDs and limits are read from each provider's own documentation or console. Promotional terms change without notice —
+      several have live countdowns rather than published dates. Confirm on the provider's page before relying on any figure.
+      Never use a shared or resold API key: no provider issues those, and whoever issued them can read your traffic.
+    </footer>
+  </div>
+</div>
+
+<script src="referrals.js"></script>
+
+<!-- ============================================================
+     DATA SOURCE
+     ------------------------------------------------------------
+     The offer data can live somewhere other than this page, so the
+     daily refresh job can update it WITHOUT redeploying the site.
+     Remote is tried first; the local data.js next to this file is
+     the fallback, so the page still works offline and straight off
+     the filesystem.
+
+     To point at your own copy, edit RADAR_DATA_URL below.
+     Set it to '' to always use the local file.
+     ============================================================ -->
+<script>
+window.RADAR_DATA_URL = 'https://ericagulto.github.io/free-llm-radar-data/data.js';
+</script>
+
+<script>
+(function(){
+  var REMOTE = window.RADAR_DATA_URL || '';
+  var settled = false, tryingLocal = false;
+
+  function settle(){
+    if (settled) return;
+    settled = true;
+    if (window.__BOOT) window.__BOOT();
+  }
+  function loadLocal(){
+    if (settled || tryingLocal) return;   // never double-load
+    tryingLocal = true;
+    var s = document.createElement('script');
+    s.src = 'data.js';
+    s.onload = settle;
+    s.onerror = settle;                   // boot reports the failure itself
+    document.head.appendChild(s);
+    setTimeout(function(){ if(!settled) settle(); }, 3000);
+  }
+  function loadRemote(url){
+    var s = document.createElement('script');
+    s.src = url;
+    s.onload = settle;
+    s.onerror = loadLocal;                // unreachable host, or blocked
+    document.head.appendChild(s);
+    // a host that accepts the connection but never answers
+    setTimeout(function(){ if(!settled) loadLocal(); }, 6000);
+  }
+
+  if (REMOTE) loadRemote(REMOTE); else loadLocal();
+})();
+</script>
+
+<script>
+window.__BOOT = function(){
+if (typeof RADAR === 'undefined') {
+  document.getElementById('list').innerHTML =
+    '<div class="err"><b>Offer data could not be loaded</b>' +
+    'Neither the remote data source nor the local <b>data.js</b> could be read. ' +
+    'Check your connection, or open this page from inside the free-llm-radar folder.</div>';
+  document.getElementById('meta').textContent = 'data unavailable';
+  return;
+}
+(function(){
+  const D = RADAR.offers;
+  const RAIL = RADAR.rail;
+
+  /* ---------- referral layer ---------- */
+  const RF = (typeof REFERRALS !== 'undefined') ? REFERRALS : null;
+  const MY = (typeof YOUR_LINKS !== 'undefined') ? YOUR_LINKS : {};
+  const progById = {};
+  if (RF) RF.programs.forEach(p => progById[p.id] = p);
+
+  // Resolve an offer's referral state.
+  // A referral is only "active" when a program exists, is live, and the operator
+  // has actually supplied their own link. Otherwise we fall back to the plain URL.
+  function refFor(o){
+    if (!RF) return null;
+    const pid = RF.offerRefs ? RF.offerRefs[o.id] : null;
+    if (!pid) return null;
+    const prog = progById[pid];
+    if (!prog) return null;
+    const mine = MY[pid];
+    const active = prog.status === 'live' && mine && mine.length > 0;
+    return { prog, pid, mine, active };
+  }
+
+  // Disclosure text — adapts to whether any referral links are actually configured,
+  // so the page is accurate in both states rather than claiming links it does not carry.
+  const discSummary = document.getElementById('discSummary');
+  const discFull = document.getElementById('discFull');
+  const anyActive = Object.keys(MY).some(k => MY[k] && MY[k].length > 0);
+  if (RF) {
+    discSummary.textContent = anyActive
+      ? RF.disclosureShort
+      : 'No referral links are active on this page — all signup links are plain, untracked URLs.';
+    discFull.innerHTML = anyActive
+      ? '<b>Full disclosure.</b> ' + RF.disclosureLong
+      : '<b>Status.</b> This build carries no active referral links. Every signup link points at the ' +
+        'provider directly with no tracking parameter. The referral layer is present in the code and ' +
+        'documented in <b>REFERRALS.md</b>, but <span style="font-family:var(--mono)">referrals.js → ' +
+        'YOUR_LINKS</span> is empty, so nothing is being tracked. If links are added later, a full ' +
+        'disclosure will appear here automatically.';
+    discFull.innerHTML +=
+      '<br><br>Programme terms, payout conditions and caps are documented in <b>REFERRALS.md</b>, ' +
+      'including which programmes prohibit public posting and which only pay on paid conversions.';
+  }
+
+  /* ---------- sidebar ---------- */
+  document.getElementById('rail').innerHTML = RAIL.map(g => `
+    <div class="tl-day ${g.d==='today'?'today':''}">
+      <div class="day">${g.label}</div>
+      ${g.items.map(i=>`<div class="ev ${i.c}">
+        <span class="n"><span class="chip ${i.c}">${i.c==='new'?'new':i.c==='ext'?'extended':i.c==='exp'?'expiring':'closed'}</span>${i.n}</span>
+        <span class="d">${i.t}</span>
+      </div>`).join('')}
+    </div>`).join('');
+
+  /* ---------- meta ---------- */
+  const upd = new Date(RADAR.updated);
+  const fmt = upd.toLocaleString('en-GB',{day:'2-digit',month:'short',year:'numeric',
+    hour:'2-digit',minute:'2-digit',timeZone:'Asia/Shanghai'});
+  document.getElementById('meta').textContent =
+    `Last refresh ${fmt} GMT+8 · ${D.length} offers tracked`;
+
+  /* ---------- metrics ---------- */
+  const now = upd;
+  const daysTo = d => d ? Math.ceil((new Date(d+'T23:59:59+08:00') - now)/86400000) : null;
+  const withBudget = D.filter(x=>x.budget>0).sort((a,b)=>b.budget-a.budget);
+  const biggest = withBudget[0];
+  const expiring = D.filter(x=>{const n=daysTo(x.end); return n!==null && n>=0 && n<=7;}).length;
+  const portables = D.filter(x=>x.kind==='portable'||x.kind==='keyless').length;
+
+  document.getElementById('strip').innerHTML = `
+    <div class="mc"><div class="l">Offers tracked</div><div class="v">${D.length}</div><div class="f">across 4 categories</div></div>
+    <div class="mc"><div class="l">Portable keys</div><div class="v g">${portables}</div><div class="f">usable anywhere</div></div>
+    <div class="mc"><div class="l">Expiring ≤ 7 days</div><div class="v r">${expiring}</div><div class="f">act on these first</div></div>
+    <div class="mc"><div class="l">Largest grant</div><div class="v a">${biggest?(biggest.budget/1e6).toFixed(0):'—'}M</div><div class="f">${biggest?biggest.name:'—'}</div></div>`;
+
+  /* ---------- list ---------- */
+  const kindLabel = {portable:'Portable key',client:'Client-bound',keyless:'Keyless',credit:'Cloud credit'};
+  let sort='fresh', q='';
+
+  /* Multi-select filters, grouped into dimensions.
+     Within a dimension the selected chips OR together; across dimensions they AND together.
+     So "Portable key" + "Keyless" widens the result (both are kinds), while adding
+     "No card" narrows it to offers that also need no card. */
+  const DIMS = {
+    kind: ['portable','client','keyless','credit'],
+    card: ['nocard'],
+    time: ['expiring'],
+    ref:  ['refonly','noref']
+  };
+  const activeFilters = new Set();
+
+  function fmtBudget(o){
+    if(!o.budget) return `<span class="bud" style="color:var(--tx3)">—</span>`;
+    const u = o.unit.split(' ')[0];
+    if(o.budget>=1e9) return `<span class="bud">${(o.budget/1e9).toFixed(0)}B <span class="u">${u}</span></span>`;
+    if(o.budget>=1e6) return `<span class="bud">${(o.budget/1e6).toFixed(0)}M <span class="u">${u}</span></span>`;
+    if(o.budget>=1e3) return `<span class="bud">${(o.budget/1e3).toFixed(0)}K <span class="u">${u}</span></span>`;
+    return `<span class="bud">${o.budget} <span class="u">${u}</span></span>`;
+  }
+  function fmtEnd(o){
+    if(!o.end) return `<span class="until ongoing">ongoing</span>`;
+    const n = daysTo(o.end);
+    if(n<0) return `<span class="until" style="color:var(--tx3)">closed</span>`;
+    return `<span class="until ${n<=7?'soon':''}">${o.end.slice(5)} <span style="opacity:.65">· ${n===0?'today':n+'d'}</span></span>`;
+  }
+  function passes(o){
+    for(const dim in DIMS){
+      const sel = DIMS[dim].filter(f=>activeFilters.has(f));
+      if(!sel.length) continue;                       // dimension not in use — skip it
+      const hit = sel.some(f=>{
+        if(f==='nocard')   return !o.card;
+        if(f==='expiring'){ const n=daysTo(o.end); return n!==null && n>=0 && n<=7; }
+        if(f==='refonly')  return !!refFor(o);
+        if(f==='noref')    return !refFor(o);
+        return o.kind===f;                            // kind dimension
+      });
+      if(!hit) return false;                          // AND across dimensions
+    }
+    if(q){
+      const hay = (o.name+' '+o.sub+' '+o.models.join(' ')+' '+o.base+' '+(o.budgetNote||'')).toLowerCase();
+      if(!hay.includes(q.toLowerCase())) return false;
+    }
+    return true;
+  }
+  function cmp(a,b){
+    if(sort==='budget') return (b.budget||-1)-(a.budget||-1);
+    if(sort==='budget-asc'){
+      if(!a.budget&&!b.budget) return 0; if(!a.budget) return 1; if(!b.budget) return -1;
+      return a.budget-b.budget;
+    }
+    if(sort==='end'){
+      const ae=a.end?new Date(a.end):null, be=b.end?new Date(b.end):null;
+      if(!ae&&!be) return 0; if(!ae) return 1; if(!be) return -1; return ae-be;
+    }
+    if(sort==='name') return a.name.localeCompare(b.name);
+    return new Date(b.added)-new Date(a.added) || a.name.localeCompare(b.name);
+  }
+
+  function render(){
+    const list = D.filter(passes).sort(cmp);
+    const nf = activeFilters.size;
+    document.getElementById('count').textContent =
+      `${list.length} / ${D.length} shown` + (nf ? ` · ${nf} filter${nf>1?'s':''}` : '');
+    const el = document.getElementById('list');
+    if(!list.length){
+      el.innerHTML = `<div class="empty"><b>Nothing matches</b>` +
+        `Try removing one of the filters or clearing the search term.</div>`;
+      return;
+    }
+    el.innerHTML = list.map(o=>{
+      const r = refFor(o);
+      const href = (r && r.active) ? r.mine : o.link;
+      const btnCls = (r && r.active) ? 'go ref' : 'go';
+      const refBadge = r
+        ? `<span class="refbadge" title="${r.prog.provider}: ${r.prog.reward}">${r.active?'referral':'referral prog.'}</span>`
+        : '';
+      const refBlock = r ? `
+        <div class="dsec">
+          <div class="h">Referral programme</div>
+          <dl class="kv">
+            <dt>Provider</dt><dd>${r.prog.provider}</dd>
+            <dt>Status</dt><dd style="color:${r.prog.status==='live'?'var(--green)':r.prog.status==='dead'?'var(--red)':'var(--amber)'}">${r.prog.status}</dd>
+            <dt>Reward</dt><dd>${r.prog.reward}</dd>
+            <dt>Trigger</dt><dd>${r.prog.trigger}</dd>
+            <dt>Cap</dt><dd>${r.prog.cap}</dd>
+            <dt>Link</dt><dd>${r.active ? 'your link is configured' : 'not configured — using the plain signup URL'}</dd>
+          </dl>
+          ${r.prog.paidRequired === true ? '<div class="warn"><b>Paid conversion required.</b> This programme only pays when the referred user buys a subscription — a poor fit for a free-tier audience.</div>' : ''}
+          ${r.prog.status === 'dead' ? '<div class="warn"><b>Programme ended.</b> Do not publish this link.</div>' : ''}
+          ${r.prog.status === 'unknown' ? '<div class="warn"><b>Unverified.</b> The terms could not be read from a primary source. Verify before publishing.</div>' : ''}
+          <div class="note">${r.prog.note}</div>
+        </div>` : '';
+
+      return `
+      <div class="row" data-id="${o.id}">
+        <div class="sum">
+          <span class="caret">▶</span>
+          <span class="nm">${o.name}<span class="sub">${o.sub}</span>
+            ${o.status==='new'?'<span class="tag" style="background:rgba(111,185,143,.12);color:var(--green);border-color:rgba(111,185,143,.35)">new</span>':''}
+            ${o.status==='extended'?'<span class="tag" style="background:rgba(123,167,204,.12);color:var(--blue);border-color:rgba(123,167,204,.35)">extended</span>':''}
+            ${o.status==='expiring'?'<span class="tag" style="background:rgba(224,108,90,.12);color:var(--red);border-color:rgba(224,108,90,.35)">expiring</span>':''}
+            ${o.card?'<span class="tag" style="background:var(--bg4);color:var(--tx3);border-color:var(--line2)">card</span>':''}
+            ${o.china?'<span class="tag" style="background:var(--bg4);color:var(--tx2);border-color:var(--line2)">CN direct</span>':''}
+            ${refBadge}
+          </span>
+          <span>${fmtBudget(o)}</span>
+          <span>${fmtEnd(o)}</span>
+          <span><span class="tag ${o.kind}">${kindLabel[o.kind]}</span></span>
+          <span><a class="${btnCls}" href="${href}" target="_blank" rel="noopener sponsored" onclick="event.stopPropagation()">${o.linkLabel} →</a></span>
+        </div>
+        <div class="det">
+          <div class="dgrid">
+            <div>
+              <div class="dsec">
+                <div class="h">Mechanics</div>
+                <dl class="kv">
+                  <dt>Allowance</dt><dd style="font-family:inherit;font-size:12px;color:var(--tx2)">${o.budgetNote}</dd>
+                  <dt>Base URL</dt><dd>${o.base}</dd>
+                  <dt>Auth</dt><dd>${o.auth}</dd>
+                </dl>
+                <div class="models">${o.models.map(m=>`<span>${m}</span>`).join('')}</div>
+              </div>
+              ${refBlock}
+              ${o.note?`<div class="note">${o.note}</div>`:''}
+              ${o.warn?`<div class="warn">${o.warn}</div>`:''}
+            </div>
+            <div>
+              <div class="dsec">
+                <div class="h">Step by step</div>
+                <ol class="st">${o.steps.map(s=>`<li>${s}</li>`).join('')}</ol>
+              </div>
+              <div class="dsec">
+                <div class="h">Test it</div>
+                <pre>${o.test}</pre>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>`;}).join('');
+
+    el.querySelectorAll('.row > .sum').forEach(s=>{
+      s.addEventListener('click', ()=> s.parentElement.classList.toggle('open'));
+    });
+  }
+
+  document.getElementById('sort').addEventListener('change', e=>{ sort=e.target.value; render(); });
+  document.getElementById('q').addEventListener('input', e=>{ q=e.target.value; render(); });
+  const allChip = document.querySelector('.chipbtn[data-f="all"]');
+  function syncChips(){
+    document.querySelectorAll('.chipbtn').forEach(x=>{
+      const f = x.dataset.f;
+      const on = f==='all' ? activeFilters.size===0 : activeFilters.has(f);
+      x.classList.toggle('on', on);
+      x.setAttribute('aria-pressed', on ? 'true' : 'false');
+    });
+    // When filters are live the first chip becomes an obvious way back out.
+    allChip.classList.toggle('armed', activeFilters.size>0);
+    allChip.textContent = activeFilters.size ? `Clear ${activeFilters.size}` : 'All';
+    allChip.title = activeFilters.size ? 'Clear all filters' : '';
+  }
+  document.getElementById('filters').addEventListener('click', e=>{
+    const b=e.target.closest('.chipbtn'); if(!b) return;
+    const f=b.dataset.f;
+    if(f==='all') activeFilters.clear();
+    else activeFilters.has(f) ? activeFilters.delete(f) : activeFilters.add(f);
+    syncChips(); render();
+  });
+  syncChips();
+  render();
+})();
+};
+
+/* If the data was already present when this script ran (a plain <script src="data.js">
+   tag, or a cache hit), boot immediately rather than waiting for the loader. */
+if (typeof RADAR !== 'undefined') window.__BOOT();
+</script>
+</body>
+</html>
