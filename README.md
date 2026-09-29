@@ -71,6 +71,64 @@ shown in every row and the footer says so.
 
 ---
 
+## Hosting
+
+Two free GitHub Pages origins, deliberately separate:
+
+| | URL | Repo |
+|---|---|---|
+| **Dashboard** | https://ericagulto.github.io/free-llm-radar/ | `ericagulto/free-llm-radar` |
+| **Data** | https://ericagulto.github.io/free-llm-radar-data/data.js | `ericagulto/free-llm-radar-data` |
+
+**Why split them.** The daily job only needs to change data. If the data lived with the page, every
+refresh would mean redeploying the site and waiting on a build. Split, the job pushes one file to
+the data repo and the site picks it up on the next load — no site deploy, ever.
+
+**How the page finds its data.** `index.html` tries the remote URL first and falls back to the
+local `data.js` next to it. So the same file works published, offline, and straight off the
+filesystem. The source is one constant:
+
+```html
+<script>
+window.RADAR_DATA_URL = window.RADAR_DATA_URL !== undefined
+  ? window.RADAR_DATA_URL
+  : 'https://ericagulto.github.io/free-llm-radar-data/data.js';
+</script>
+```
+
+Set it to `''` to force local mode. The tests use that to stay deterministic and offline.
+
+**Why this works cross-origin.** GitHub Pages serves `.js` as
+`application/javascript; charset=utf-8` with `access-control-allow-origin: *`, which is what a
+cross-origin `<script>` needs. A gist would not do — its raw URLs come back as `text/plain`.
+
+**Caching.** Pages sets `cache-control: max-age=600` on the data file, so a refresh can take up to
+10 minutes to appear. That is fine for a daily job and keeps the site fast. If you need it
+immediate, the loader can be changed to append a cache-busting query string.
+
+### Updating the data
+
+```bash
+git -C <data-repo> add data.js
+git -C <data-repo> commit -m "Refresh: <what changed>"
+git -C <data-repo> push
+```
+
+The dashboard needs no redeploy. Only push to the site repo when `index.html`, `referrals.js` or
+the docs change.
+
+### Redeploying the site
+
+```bash
+git -C <site-repo> add -A
+git -C <site-repo> commit -m "<what changed>"
+git -C <site-repo> push
+```
+
+Pages rebuilds automatically. A `.nojekyll` file is present so Jekyll does not process the output.
+
+---
+
 ## Daily refresh
 
 A scheduled task runs the research and updates `data.js`. It:

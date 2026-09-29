@@ -13,6 +13,51 @@ Format per entry:
 
 ---
 
+## 2026-09-29 (fourth pass — referral link wired, published, two bugs fixed)
+
+**Published.** The dashboard now has a public URL and the data lives on a separate free origin:
+
+- Dashboard: https://ericagulto.github.io/free-llm-radar/
+- Data: https://ericagulto.github.io/free-llm-radar-data/data.js
+
+- **ADDED — WorkBuddy offer** (id `workbuddy`, kind `client`). It did not exist, so the invite link
+  had no row to render into. Free 体验版 tier: **¥0/month, 500 points**, Auto model scheduling across
+  all models. Verified from workbuddy.cn/pricing. `budget` is **0** on purpose — points are not
+  tokens, and inventing a token number would break the honesty rule.
+- **ADDED — the referral link** to `YOUR_LINKS.workbuddy` and mapped `offerRefs.workbuddy`. The
+  disclosure banner has switched to its active text and the link carries `rel="noopener sponsored"`.
+- **CHANGED — `index.html` now resolves its data source at runtime**, remote first with a local
+  fallback, so the daily job can update data without redeploying the site. Overridable via
+  `window.RADAR_DATA_URL`; `''` forces local mode.
+
+**Two bugs found by testing against the live deployment — both fixed:**
+
+- **FIXED — `rel="sponsored"` was applied to every offer link, not just the referral one.** The
+  template hardcoded `rel="noopener sponsored"` on all 43 anchors, which mislabels 42 ordinary
+  provider links as paid placements. Now gated on the referral actually being active.
+  `validate.js` fails if the conditional is removed, and `test-ui.js` asserts exactly one sponsored
+  link — so this cannot silently return.
+- **FIXED — a 404 on every page load** from the missing `/favicon.ico`. Added an inline SVG favicon
+  in the theme's colours, so there is no extra request and no console error.
+
+**Also:**
+- **ADDED a Hosting section to `README.md`** covering the two origins, why they are split, the
+  cross-origin requirement, and the 10-minute Pages cache.
+- **CHANGED `test-ui.js`** to derive the expected offer count from `data.js` instead of a hardcoded
+  42, with a separate floor check so a silent data loss still trips it. 22 assertions, all passing.
+- **CHANGED `validate.js`** to fail if `rel="sponsored"` stops being conditional.
+
+**Notes for the next run:**
+- The data repo is a **separate working tree**. Pushing `data.js` there is what makes a refresh
+  visible; editing only the local copy changes nothing on the public site.
+- Pages caches the data file for 10 minutes. Do not assume a refresh is instantly live.
+- `test-ui.js` forces local mode via `addInitScript`. If you want to test the deployed page, use
+  the live URL directly — do not repoint `RADAR_DATA_URL` in the repo.
+- **The referral link is now public.** WorkBuddy's terms mark public posting as `unclear`, and the
+  programme window closes **30 September 2026**. Re-check both.
+
+---
+
 ## 2026-09-29 (third pass — multi-select filters)
 
 Hand edit to the **presentation layer** (`index.html`). The daily refresh job must not touch this

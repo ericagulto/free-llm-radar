@@ -134,7 +134,13 @@ for (const phrase of ['referral', 'material']) {
 
 // ---------- 6. presentation layer must still carry the compliance hooks ----------
 const html = read('index.html');
-if (!/rel="noopener sponsored"/.test(html)) fail('index.html: referral anchors lost rel="noopener sponsored"');
+if (!/noopener sponsored/.test(html)) fail('index.html: referral links lost rel="sponsored"');
+// rel="sponsored" declares a paid placement. If it is not gated on the referral actually
+// being active, every ordinary provider link gets mislabelled as sponsored.
+if (!/isRef\s*\?\s*'noopener sponsored'\s*:\s*'noopener'/.test(html)) {
+  fail('index.html: rel="sponsored" is not conditional on the referral being active — ' +
+       'ordinary provider links would be mislabelled as sponsored');
+}
 if (!/id="disclosure"/.test(html) && !/class="disc"/.test(html)) fail('index.html: no disclosure element found');
 if (!/referrals\.js/.test(html)) fail('index.html: no longer loads referrals.js');
 if (!/data\.js/.test(html)) fail('index.html: no longer loads data.js');

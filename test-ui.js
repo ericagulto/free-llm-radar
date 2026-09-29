@@ -70,6 +70,10 @@ const check = (label, actual, expected, cmp = '==') => {
   const browser = await chromium.launch({ executablePath: EXE });
   const page = await browser.newPage();
 
+  // Force local mode so this test stays deterministic and offline — it must exercise the
+  // local fallback path, not whatever the remote data origin happens to be serving today.
+  await page.addInitScript(() => { window.RADAR_DATA_URL = ''; });
+
   const errors = [];
   page.on('pageerror', e => errors.push('pageerror: ' + e.message));
   page.on('console', m => { if (m.type() === 'error') errors.push('console: ' + m.text()); });
@@ -159,6 +163,24 @@ const check = (label, actual, expected, cmp = '==') => {
   await page.fill('#q', '');
   await page.waitForTimeout(40);
   check('clearing search restores filtered set', await count(), pOnly);
+
+  // ---- rel="sponsored" must be limited to links that actually carry a referral ----
+  // Reset first: a filter left active would hide most rows and make this vacuously pass.
+  await reset();
+  check('rel check runs against the full list', await count(), EXPECTED);
+  const relTally = await page.$$eval('a[rel]', as => {
+    const t = { sponsored: [], plain: 0 };
+    for (const a of as) {
+      const parts = (a.getAttribute('rel') || '').split(/\s+/);
+      if (parts.includes('sponsored')) t.sponsored.push(a.href);
+      else if (parts.includes('noopener')) t.plain++;
+    }
+    return t;
+  });
+  check('only referral links are marked sponsored', relTally.sponsored.length, 1);
+  check('the sponsored link is the referral URL',
+        !!(relTally.sponsored[0] || '').includes('workbuddy.ai/invite'), true);
+  check('all other provider links are unmarked', relTally.plain, EXPECTED - 1);
 
   // ---- no runtime errors ----
   check('no page errors', errors.length, 0);
