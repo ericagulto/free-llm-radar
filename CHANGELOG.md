@@ -13,7 +13,56 @@ Format per entry:
 
 ---
 
-## 2026-09-29 (eighth pass — editorial layer, mobile repair, referral styling)
+## 2026-09-30 (ninth pass — three new offers, two date confirmations)
+
+43 → 46 offers. Three additions, no removals, no deadline corrections.
+
+- **ADDED — Kilo Code (`kilo`)** — open-source coding agent with a free hosted tier
+  (`kilo-auto/free`), no credit card and no provider key. Source: `kilo.ai/landing/free-models`
+  (live list, free = $0 input and $0 output) and `kilo.ai/docs/getting-started/using-kilo-for-free`.
+  Client-bound. Verification level: **official**.
+- **ADDED — StepFun Step 5 Preview (`stepfun`)** — 15 free Coding Plan days on registration,
+  +15 after a successful call, +45 by invite. Source: `platform.stepfun.com` (confirming the
+  OpenAI-compatible `api.stepfun.com/v1` endpoint) plus Chinese launch write-ups dated 20 Sep 2026.
+  The day-count mechanics came from secondary sources only — the platform page does not itself
+  publish the numbers, so the claim is labelled **third-party** in the offer note.
+- **ADDED — OpenCode Zen (`opencodezen`)** — ten models at $0 via a **portable** key, not
+  client-bound. Source: `opencode.ai/docs/zen`. Notable trap recorded: billing details are
+  collected at signup and auto-reload charges $20 when the balance drops below $5.
+  Verification level: **official**.
+- **CONFIRMED — Qoder Qwen3.8-Flash extension.** Re-read `docs.qoder.com/events/flashoffer`:
+  "The free period, originally set to end on September 30, has been extended. Qwen3.8-Flash remains
+  free after September 30." End date to be announced on that page. `added` bumped to 2026-09-30;
+  `status` stays `extended` (it is not a new offer).
+- **CONFIRMED — GLM night-free runs to 7 October.** `docs.bigmodel.cn/cn/coding-plan/notice/event-glm-5.3-flash`:
+  9 Sep → 7 Oct, 23:00–09:00, GLM-5.3-Flash only, ZCode/AutoClaw only, paid Coding Plan subscribers
+  only, and ZCode 3.10+ required. No change to the stored values.
+- **RE-VERIFIED, no change** — Groq free plan (30 RPM / 1K RPD / 8K TPM / 200K TPD on gpt-oss-120b,
+  gpt-oss-20b, qwen3.8-27b — matches `data.js` exactly), AMD Token Factory (9 free models, roster
+  unchanged), OpenRouter free-model limits (20 RPM / 50 RPD, 1,000 RPD after ≥10 credits purchased
+  all-time), GMI Hy Image 3.5 free week (Sep 25 → Oct 1), MiniMax Code double check-in (28 Sep → 7 Oct),
+  WorkBuddy invite campaign (closes 30 Sep; 2,000 invitee points confirmed on the live page).
+- **CHANGED — `oci` and `azure`** gained a `note` recording that the 30-day count starts at
+  *activation*, not signup. Wording only; no date moved.
+- **RAIL** — new `today` group for 30 Sep, previous group shifted to `yesterday`; `closed` trimmed
+  to this week plus the Wenxin/Hy3 client closure.
+
+**Next run needs to know.** (1) Both Wenxin 4.0 and Hunyuan Hy3 close tonight, 30 Sep — they should
+move to `closed` and their `status` should change. (2) The WorkBuddy 2,000-point invite bonus also
+closes tonight; the ¥0 tier is separately 限时免费 and must be re-checked rather than assumed dead.
+(3) ZCode Trust Build, MiniMax Code and GLM night-free all end 7 Oct. (4) Hunyuan Hy4's 14-day clock
+runs from first use; the last date to start is 10 Oct. (5) `content.js` gained three entries —
+this file is hand-authored and the refresh job must not rewrite the prose.
+
+**Trap re-confirmed.** The igetoken tracker described ZCode Trust Build as "100M tokens **per day**";
+Zhipu's own page describes a **single** ~100M allocation with a daily claim cap of 100,000 users.
+Vendor wins — the stored figure is unchanged. Also noted: OpenCode Zen's free list overlaps the
+skipped "Space Bunny / LongCat" offers seen on trackers; those are Zen gateway models and are now
+represented here through the `opencodezen` entry rather than as separate offers.
+
+---
+
+
 
 Presentation, content and tooling. No offer data changed, so nothing about the numbers moved.
 

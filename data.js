@@ -37,8 +37,8 @@
    ============================================================ */
 
 window.RADAR = {
-  updated: '2026-09-29T13:45:00+08:00',
-  verifiedBy: 'manual verification pass',
+  updated: '2026-09-30T10:30:00+08:00',
+  verifiedBy: 'Vendor primary docs: docs.qoder.com/events/flashoffer, docs.bigmodel.cn coding-plan notice, kilo.ai/landing/free-models, opencode.ai/docs/zen, console.groq.com/docs/rate-limits, developer.amd.com.cn/radeon/tokenfactory, workbuddy.cn/events/invite, gmicloud.ai/hy-week, platform.stepfun.com',
   offers: [
   {
     "id": "amd",
@@ -598,7 +598,7 @@ window.RADAR = {
     "budget": 0,
     "unit": "unmetered",
     "end": null,
-    "added": "2026-09-29",
+    "added": "2026-09-30",
     "status": "extended",
     "card": false,
     "china": true,
@@ -619,6 +619,110 @@ window.RADAR = {
     ],
     "test": "— no API endpoint. Client-bound usage only.",
     "note": "<b>Extended.</b> Originally ending 30 September, Qoder has extended this — Qwen3.8-Flash stays free from 1 October onward. No action needed. The new end date will be announced on their event page in advance."
+  },
+  {
+    "id": "kilo",
+    "name": "Kilo Code",
+    "sub": "Auto Free tier",
+    "kind": "client",
+    "budget": 0,
+    "unit": "unspecified",
+    "end": null,
+    "added": "2026-09-30",
+    "status": "new",
+    "card": false,
+    "china": false,
+    "link": "https://kilo.ai/install",
+    "linkLabel": "Install",
+    "budgetNote": "Free-model tier (<b>Auto Free</b>) · no credit card, no provider key · free catalog rotates as providers change pricing",
+    "models": [
+      "kilo-auto/free",
+      "stealth/space-bunny-alpha",
+      "nvidia/nemotron-3-super-120b-a12b:free",
+      "poolside/laguna-s-2-1:free"
+    ],
+    "base": "— client-bound, no public Kilo API",
+    "auth": "—",
+    "steps": [
+      "Install Kilo Code into VS Code, JetBrains or the CLI.",
+      "Create a free Kilo Cloud account — <b>no credit card required</b> for the free models.",
+      "Open the model picker and choose <b>Auto Free</b>, or any model marked <b>Free</b>.",
+      "Work. Switch to a paid, local or BYOK model whenever your task changes."
+    ],
+    "test": "— free models are client-bound. Kilo accepts external keys if you want portable capacity.",
+    "warn": "Free hosted inference is <b>not</b> the same as free-to-download weights. The free catalog updates live and a listing can disappear the moment the upstream provider changes its pricing — the free list is a rotating promotion, not a standing commitment.",
+    "note": "Open source (MIT) and model-agnostic: the same client can run free hosted models, your own AMD or Groq key, or a local Ollama model. Verified 30 Sep 2026 at <b>kilo.ai/landing/free-models</b>."
+  },
+  {
+    "id": "stepfun",
+    "name": "StepFun Step 5 Preview",
+    "sub": "Free Coding Plan days",
+    "kind": "client",
+    "budget": 0,
+    "unit": "15–75 days",
+    "end": null,
+    "added": "2026-09-30",
+    "status": "new",
+    "card": false,
+    "china": true,
+    "link": "https://platform.stepfun.com",
+    "linkLabel": "Claim",
+    "budgetNote": "<b>15 days</b> of Coding Plan on signup · +15 after your first successful call · +15 per invite, up to <b>45 bonus days</b> (75 total)",
+    "models": [
+      "Step 5 Preview",
+      "Step 3.7 Flash"
+    ],
+    "base": "https://api.stepfun.com/v1",
+    "auth": "Authorization: Bearer",
+    "steps": [
+      "Register at <b>platform.stepfun.com</b> and sign in.",
+      "Claim the free <b>Coding Plan</b> from the Step 5 Preview activity page — this is a daily-quota giveaway, first-come.",
+      "Make one successful call — a further <b>15 days</b> is credited automatically.",
+      "Invite friends for up to <b>45 more days</b>.",
+      "Call the API with the OpenAI-compatible base URL below, or use Step Plan inside the client."
+    ],
+    "test": "curl https://api.stepfun.com/v1/chat/completions \\\n  -H \"Authorization: Bearer $STEP_API_KEY\" \\\n  -H \"Content-Type: application/json\" \\\n  -d '{\"model\":\"step-5-preview\",\"messages\":[{\"role\":\"user\",\"content\":\"Hello\"}]}'",
+    "warn": "<b>Daily allocation limits.</b> The claim is first-come and the day's quota is often gone — you may need to come back the next morning. It is a Coding Plan grant (subscription-style usage), not a token balance you can bank.",
+    "note": "Step 5 Preview is a 600B-parameter sparse MoE (27B active) with a 1M context window. The platform exposes an <b>OpenAI-compatible</b> endpoint at <b>api.stepfun.com/v1</b>, so it drops into existing OpenAI code — unusual for a Chinese client-bound offer. Verified 30 Sep 2026 at platform.stepfun.com."
+  },
+  {
+    "id": "opencodezen",
+    "name": "OpenCode Zen",
+    "sub": "Free model gateway",
+    "kind": "portable",
+    "budget": 0,
+    "unit": "free models",
+    "end": null,
+    "added": "2026-09-30",
+    "status": "new",
+    "card": true,
+    "china": false,
+    "link": "https://opencode.ai/docs/zen",
+    "linkLabel": "Get key",
+    "budgetNote": "<b>10 models at $0</b> input and output · no per-token charge · an OpenCode Zen API key is required",
+    "models": [
+      "stealth/space-bunny-free",
+      "longcat-2.5-preview-free",
+      "mimo-v2.6-flash-free",
+      "nemotron-3-ultra-free",
+      "nemotron-3.5-lightning-free",
+      "muse-spark-1.3-contributor-free",
+      "big-pickle",
+      "jev-1.13-free",
+      "ling-3.0-flash-fin-free",
+      "mimo-v2.5-free"
+    ],
+    "base": "https://opencode.ai/zen/v1",
+    "auth": "Authorization: Bearer",
+    "steps": [
+      "Sign in to <b>OpenCode Zen</b> and add billing details — required to issue a key even for free models.",
+      "Copy the Zen API key.",
+      "In the OpenCode TUI run <b>/connect</b>, select <b>OpenCode Zen</b>, and paste the key.",
+      "Select any <b>free</b> model from the list."
+    ],
+    "test": "curl https://opencode.ai/zen/v1/chat/completions \\\n  -H \"Authorization: Bearer $OPENCODE_ZEN_KEY\" \\\n  -H \"Content-Type: application/json\" \\\n  -d '{\"model\":\"nemotron-3-ultra-free\",\"messages\":[{\"role\":\"user\",\"content\":\"Hello\"}]}'",
+    "warn": "<b>Billing details are collected at signup</b>, and auto-reload will top the account up by $20 whenever the balance drops below $5. Disable auto-reload unless you intend to pay. Also check each model: most of the free ones <b>train on your prompts</b>; only Space Bunny and LongCat 2.5 are zero-retention.",
+    "note": "Unlike a client-bound list, Zen issues a <b>portable key</b> — the free models can be wired into any OpenAI-compatible tool, not just OpenCode. Ten free models live as of 30 Sep 2026; none publish an end date, all are 'limited time'. Verified 30 Sep 2026 at opencode.ai/docs/zen."
   },
   {
     "id": "zcode-trust",
@@ -1088,7 +1192,8 @@ window.RADAR = {
       "Claim the credits in the console."
     ],
     "test": "— use the OCI SDK.",
-    "warn": "<b>30 days</b> is the shortest window of the major cloud grants."
+    "warn": "<b>30 days</b> is the shortest window of the major cloud grants.",
+    "note": "<b>Status as of 30 Sep 2026:</b> the card is charged a small refundable amount at signup. Both the $300 grant and the 30-day clock start at activation, not at signup — the 30-day figure is the grant validity, not a hard closure date shown here."
   },
   {
     "id": "azure",
@@ -1117,7 +1222,8 @@ window.RADAR = {
       "Grab the endpoint and key from the deployment page."
     ],
     "test": "curl https://YOUR-RESOURCE.openai.azure.com/openai/deployments/YOUR-DEPLOYMENT/chat/completions?api-version=2024-10-21 \\\n  -H \"api-key: $AZURE_API_KEY\" \\\n  -H \"Content-Type: application/json\" \\\n  -d '{\"messages\":[{\"role\":\"user\",\"content\":\"Hello\"}]}'",
-    "warn": "Note the auth differs — Azure uses an <b>api-key header</b>, not Authorization Bearer, and requires an <b>api-version</b> query parameter. <b>30-day</b> window."
+    "warn": "Note the auth differs — Azure uses an <b>api-key header</b>, not Authorization Bearer, and requires an <b>api-version</b> query parameter. <b>30-day</b> window.",
+    "note": "<b>Status as of 30 Sep 2026:</b> the 30-day count starts at activation, not signup. The grant converts to pay-as-you-go when it expires — set a budget alert before you deploy anything."
   },
   {
     "id": "bedrock",
@@ -1329,7 +1435,58 @@ window.RADAR = {
   rail: [
   {
     "d": "today",
-    "label": "Today · 29 Sep",
+    "label": "Today · 30 Sep",
+    "items": [
+      {
+        "c": "new",
+        "n": "Kilo Code — Auto Free tier",
+        "t": "Free hosted models, no card, no provider key. 5 models listed at $0 as of today."
+      },
+      {
+        "c": "new",
+        "n": "StepFun Step 5 Preview",
+        "t": "15 free Coding Plan days, +15 after first call, +45 by invite. Daily claim quota — often gone."
+      },
+      {
+        "c": "new",
+        "n": "OpenCode Zen — 10 free models",
+        "t": "Portable key, not client-bound. Billing details required; auto-reload can charge you."
+      },
+      {
+        "c": "ext",
+        "n": "Qoder Qwen3.8-Flash — extended",
+        "t": "Confirmed on docs.qoder.com/events/flashoffer: free continues past 30 Sep, end date TBA on that page."
+      },
+      {
+        "c": "ext",
+        "n": "GLM night-free to 7 Oct",
+        "t": "Confirmed on docs.bigmodel.cn: 23:00–09:00, ZCode 3.10+ only, GLM-5.3-Flash only, paid plans only."
+      },
+      {
+        "c": "exp",
+        "n": "Wenxin 4.0 + Hunyuan Hy3",
+        "t": "Both close tonight, 30 Sep."
+      },
+      {
+        "c": "exp",
+        "n": "WorkBuddy 2,000-point new-user bonus",
+        "t": "Invite campaign closes tonight, 30 Sep. Tier itself is 限时免费."
+      },
+      {
+        "c": "exp",
+        "n": "GMI Cloud Hy Image 3.5",
+        "t": "Free week closes 1 Oct. Verified: gmicloud.ai/hy-week."
+      },
+      {
+        "c": "exp",
+        "n": "AI21 $10 credit",
+        "t": "7-day window closes 6 Oct — claim only if you will use it this week."
+      }
+    ]
+  },
+  {
+    "d": "yesterday",
+    "label": "Yesterday · 29 Sep",
     "items": [
       {
         "c": "ext",
@@ -1367,16 +1524,6 @@ window.RADAR = {
         "t": "14 days daily free from first use. Start by 10 Oct."
       },
       {
-        "c": "exp",
-        "n": "GMI Cloud Hy Image 3.5",
-        "t": "Free week closes 1 Oct."
-      },
-      {
-        "c": "exp",
-        "n": "Wenxin 4.0 + Hunyuan Hy3",
-        "t": "Both close 30 Sep."
-      },
-      {
         "c": "new",
         "n": "WorkBuddy added — free tier",
         "t": "¥0 Experience tier, 500 points/month. Invite bonus 2,000 points runs to 30 Sep."
@@ -1384,30 +1531,14 @@ window.RADAR = {
     ]
   },
   {
-    "d": "yesterday",
-    "label": "Yesterday · 28 Sep",
-    "items": [
-      {
-        "c": "new",
-        "n": "AMD Token Factory re-verified",
-        "t": "Free list now 9 models. English path at /en/ confirmed working."
-      },
-      {
-        "c": "new",
-        "n": "InceptionLabs — 100M tokens",
-        "t": "No card required. Largest standing no-card grant found."
-      },
-      {
-        "c": "new",
-        "n": "Manus Cue early access",
-        "t": "Invite code MEETCUE. Limited spots."
-      }
-    ]
-  },
-  {
     "d": "closed",
     "label": "Closed this week",
     "items": [
+      {
+        "c": "dead",
+        "n": "Wenxin 4.0 + Hunyuan Hy3 (client)",
+        "t": "Free client access closes 30 Sep. API routes remain."
+      },
       {
         "c": "dead",
         "n": "Vercel AI Gateway × Jev",
