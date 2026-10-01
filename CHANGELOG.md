@@ -50,9 +50,26 @@ in the vendors' favour, which is the direction that gets missed.
 - **RE-VERIFIED, no change** — Qoder Qwen3.8-Flash (still free, still no announced end date,
   `docs.qoder.com/events/flashoffer`); GMI Hy Image 3.5 free week (25 Sep → 1 Oct, closing today,
   `gmicloud.ai/hy-week`); ZCode Trust Build (28 Sep → 7 Oct); MiniMax Code (to 7 Oct); AI21 (to 6 Oct).
+- **FIXED — eight stale `status: 'new'` flags.** `kilo`, `stepfun`, `opencodezen` (all added 30 Sep)
+  and `zcode-trust`, `minimaxcode`, `inkstone`, `manus`, `bailian` (all added 29 Sep) were still
+  carrying `new` into today's run. The idempotency rule says `status: 'new'` applies **only** on the
+  run where an offer first appears, so all eight are now `active`; `doubao` is the only `new` offer
+  today. This also removes a badge the generated pages were still rendering for those eight.
 - **RAIL** — new `today` group for 1 Oct; 30 Sep shifted to `yesterday`; 29 Sep shifted to `week`.
   Two items were dropped from the shifted 30 Sep group because their claim ("both close tonight")
   is now known to be false — the corrected outcomes are in today's group.
+
+**Known failing test — NOT caused by this run, NOT fixable from data.** `test-ui.js` reports
+**86/87**; the failure is `dropdown name sort is alphabetical`. It is a harness bug, and it was
+already present in the previously published data — `git show cfc777d:data.js` fails the same
+assertion at the same pair. Cause: the assertion reads `.row .nm`, whose `textContent` is
+`name + sub + status tag`, while the dashboard sorts on `name` alone. `OpenCode` is a strict prefix
+of `OpenCode Zen`, and ICU collation orders the space in `"OpenCode Zen"` *before* the letter in
+`"OpenCodeNew-model…"`, so the two orderings disagree. The pair was created on 30 September when
+`opencodezen` was added alongside `opencode`. The fix belongs in `test-ui.js` — compare against
+`.nml` (the anchor that holds the name alone) rather than `.nm` — and `test-ui.js` is off-limits on
+an automated run. Left for the operator; the publish path is unaffected because `publish.sh` does
+not run `test-ui.js`.
 
 **Next run needs to know.** (1) `wenxin` is closed but **kept in `offers[]`** because the status
 enum has no `closed` value; it carries `status: 'expiring'` with a past `end`. If a cleaner
