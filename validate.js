@@ -59,8 +59,12 @@ if (!Array.isArray(RADAR.rail)) fail('RADAR.rail is missing');
 if (!RADAR.updated) warn('RADAR.updated is missing — the header will show a stale date');
 
 const REQUIRED = ['id', 'name', 'sub', 'kind', 'budget', 'unit', 'end', 'added', 'status',
-                  'card', 'china', 'link', 'linkLabel', 'budgetNote', 'models', 'base',
+                  'card', 'china', 'reach', 'link', 'linkLabel', 'budgetNote', 'models', 'base',
                   'auth', 'steps', 'test'];
+
+// Reach answers "can a reader outside mainland China actually sign up?"
+// cn-only is NOT the same as china:true — a Chinese vendor can be globally reachable.
+const OFFER_REACH = ['global', 'cn-direct', 'cn-only'];
 
 const ids = new Set();
 for (const o of RADAR.offers || []) {
@@ -74,6 +78,14 @@ for (const o of RADAR.offers || []) {
 
   if (!OFFER_KINDS.includes(o.kind)) fail(`offer "${o.id}" has unknown kind "${o.kind}"`);
   if (!OFFER_STATUS.includes(o.status)) fail(`offer "${o.id}" has unknown status "${o.status}"`);
+  if (!OFFER_REACH.includes(o.reach)) {
+    fail(`offer "${o.id}" has unknown reach "${o.reach}" — must be one of ${OFFER_REACH.join(', ')}`);
+  }
+  // `china` is the legacy boolean. Guard the two against drifting apart in the
+  // direction that matters: a cn-only offer can never be china:false.
+  if (o.reach === 'cn-only' && o.china !== true) {
+    fail(`offer "${o.id}" is reach 'cn-only' but china is not true — these contradict`);
+  }
   if (typeof o.budget !== 'number') fail(`offer "${o.id}" budget must be a number, got ${typeof o.budget}`);
   if (o.end !== null && !/^\d{4}-\d{2}-\d{2}$/.test(o.end)) {
     fail(`offer "${o.id}" end must be 'YYYY-MM-DD' or null, got "${o.end}"`);

@@ -174,6 +174,7 @@ The full field list is in the header comment of the file itself — read it. The
 |---|---|
 | `id` | Permanent slug. Never rename. |
 | `kind` | `portable` \| `client` \| `keyless` \| `credit` |
+| `reach` | `global` \| `cn-direct` \| `cn-only` — **set this on every new offer.** Answers "can a reader outside mainland China actually sign up?" `cn-only` = mainland account / phone / real-name ID required. `cn-direct` = Chinese vendor, reachable from outside. Not the same as `china` — see below. |
 | `budget` | **Number** for sorting. `0` if unmetered, unpublished, or measured in points. |
 | `unit` | How to read `budget`, e.g. `tokens/day`, `tokens one-time`, `$300`, `points · not tokens` |
 | `end` | `YYYY-MM-DD` or `null` for ongoing |
@@ -191,6 +192,34 @@ where `c` is one of `new` \| `ext` \| `exp` \| `dead`.
 - Update `added` **only** on a material change — not every run.
 - Prepend a rail group for today; shift the previous groups down; keep `closed` for this week.
 - Never delete an offer silently.
+
+### Reach — do not skip this on a new offer
+
+`reach` is the field that tells a non-Chinese reader whether an offer is even claimable. The
+audience for this list is not primarily Chinese, and roughly two-thirds of the promotional churn
+comes from mainland providers, so a new offer added without a correct `reach` value is worse than
+useless — it wastes the reader's time on a signup they cannot complete.
+
+- **`cn-only`** — a mainland account, phone number or real-name verification (实名认证) is required.
+  Baidu, Tencent/WorkBuddy, ByteDance/Doubao, Volcengine, Alibaba Cloud mainland, WeChat developer
+  programmes, and anything on a `.cn` account system. **ModelScope and SiliconFlow both require
+  real-name verification** despite looking open — do not assume an English-language UI means global.
+- **`cn-direct`** — a Chinese vendor whose product *is* reachable from outside. Z.ai/GLM (region-aware
+  routing, no KYC), MiniMax's `.io` platform, Qoder's international programme, AMD's EN portal.
+  **A gateway promotion also counts**: Ling 3.1 Flash is classed `cn-direct` because the free access
+  runs through Vercel AI Gateway, a US platform, even though the vendor is Ant.
+- **`global`** — everything else. Western providers, keyless endpoints, cloud grants.
+
+Two guard rails enforce this, so a mistake fails the build rather than shipping:
+
+- `validate.js` **fails if `reach` is missing or not one of the three values**, and fails if a
+  `cn-only` offer carries `china: false` (the two fields contradicting each other).
+- `test-ui.js` asserts that the "Sign up anywhere" chip hides **every** cn-only offer, that
+  "China-only" shows exactly those and nothing else, and that both OR within the dimension and AND
+  with `kind`. If you add a `reach` value, extend those assertions.
+
+`china` is the **legacy boolean** and is kept only for compatibility. Do not delete it, do not add
+new logic that reads it — `reach` supersedes it. When they disagree, `reach` is right.
 
 ### Steps
 

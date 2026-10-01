@@ -544,7 +544,8 @@ function renderPage(o, all) {
     <span class="tag ${esc(o.kind)}">${esc(KIND_LABEL[o.kind] || o.kind)}</span>
     ${o.status && o.status !== 'active' ? `<span class="tag ${esc(o.status)}">${esc(o.status)}</span>` : ''}
     ${o.card ? '<span class="tag card">Card required</span>' : '<span class="tag">No card</span>'}
-    ${o.china ? '<span class="tag">Serves China</span>' : ''}
+    ${o.reach === 'cn-only' ? '<span class="tag">China-only — mainland account required</span>' : ''}
+    ${o.reach === 'cn-direct' ? '<span class="tag">Serves China · also open internationally</span>' : ''}
   </div>
 
   <dl class="facts">

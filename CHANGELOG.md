@@ -13,7 +13,57 @@ Format per entry:
 
 ---
 
-## 2026-10-02 (eleventh pass — one material correction, two additions)
+## 2026-10-02 (b) — new `reach` field: is an offer claimable from outside China?
+
+**Not a refresh — a schema and UI change**, made deliberately rather than by the daily job. The
+offer count is unchanged at 49.
+
+**Why.** The audience for this list is not primarily Chinese, but 21 of 49 offers (43%) were
+mainland-oriented, and 14 of the 28 client-bound/credit rows were China-gated. Worse, the dated rows
+skewed that way: 13 of 21 CN rows carried an `end` date against 7 of 28 international ones — so the
+expiry rail, which is the first thing a reader sees, was disproportionately full of promotions they
+could not claim. The only signal was a passive "CN direct" tag, and nothing in the sort or filter
+could act on it.
+
+**The change.**
+
+- **`reach` added to every offer** — `global` (28) | `cn-direct` (10) | `cn-only` (11). `cn-only`
+  means a mainland account, phone number or real-name verification is required, so the offer is
+  effectively unclaimable from outside. The old `china` boolean is **kept for compatibility** but no
+  longer drives anything. Documented in the `data.js` schema header and in `AGENTS.md`.
+- **Two new filter chips** on the dashboard: **"Sign up anywhere"** and **"China-only"**. They form a
+  `reach` dimension that ORs internally and ANDs with everything else, like every other dimension.
+  *Default behaviour is unchanged* — nothing is hidden unless the reader asks for it.
+- **The row badge is now honest.** Previously `china: true` rendered "CN direct" even for
+  mainland-gated rows, so Baidu Wenxin and Doubao were labelled as though reachable. Now `cn-only`
+  rows carry a red **"CN only"** badge with a tooltip, and `cn-direct` rows keep the neutral one.
+- **Offer pages state reach as a fact** ("China-only — mainland account required").
+- **`validate.js`** requires `reach` on every offer, rejects unknown values, and fails if a `cn-only`
+  offer carries `china: false`.
+- **`test-ui.js`** gained 7 assertions covering the new dimension, including the one that matters:
+  *no cn-only offer survives the "sign up anywhere" filter*. 93/94 now (the one failure is the
+  pre-existing `dropdown name sort is alphabetical` harness bug — unchanged from before this work).
+- **`test-validate.js`** gained 3 breakage cases: unknown `reach`, missing `reach`, and the
+  `cn-only` + `china:false` contradiction. **16/16 → 19/19 caught.**
+
+**Classification notes, for the next person setting `reach` by hand.** Z.ai/GLM is `cn-direct`
+(region-aware routing, no KYC — verified). ModelScope and SiliconFlow are `cn-only` despite having
+English UIs: both require **real-name verification (实名认证)**. Ling 3.1 Flash is `cn-direct` even
+though Ant is the vendor, because the free access runs through **Vercel AI Gateway**, a US platform.
+
+**One regression introduced and fixed during this work.** The two extra chips cost a wrapped row on
+narrow screens, pushing the first offer from ~1119px to 1173px and tripping
+`mobile 360px: the first offer is within 1.5 screens` (threshold 1152px). Fixed by hiding the
+`.chiphint` line below the mobile breakpoint, which is explanatory text rather than a control —
+measured back down to 1119px. Caught by the test, not by review.
+
+**Not changed:** `index.html`'s default sort and default filter state. The CN rows still appear on
+load; the reader opts out rather than in. If the operator wants global-first by default, that is a
+one-line change to `PRESETS.fresh` or the initial `activeFilters` — but it is a product decision and
+was left alone.
+
+---
+
 
 47 → 49 offers. 49 pages generated. `validate.js` exit 0, `test-validate.js` 16/16.
 

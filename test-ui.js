@@ -116,6 +116,10 @@ try {
 // The offer with the largest published allowance — used to check header sorting.
 const MAX_BUDGET_ID = OFFERS.filter(o => o.budget > 0)
   .sort((a, b) => b.budget - a.budget)[0].id;
+// Reach counts, derived from the same data file. "Sign up anywhere" must hide every
+// cn-only offer; "China-only" must show exactly those and nothing else.
+const CN_ONLY = OFFERS.filter(o => o.reach === 'cn-only').map(o => o.id);
+const REACHABLE = OFFERS.filter(o => o.reach !== 'cn-only').length;
 // A floor, not an equality: offers legitimately come and go. A drop below this means
 // something deleted a large slice of the dataset without anyone noticing.
 const FLOOR = 35;
@@ -188,6 +192,36 @@ const check = (label, actual, expected, cmp = '==') => {
   // ---- complementary pair ----
   await reset(); await click('refonly'); await click('noref');
   check('complementary: refonly + noref = everything', await count(), total);
+
+  // ---- reach: a split, not a complement ----
+  // "Sign up anywhere" means anything a reader outside mainland China can claim,
+  // so it includes cn-direct. It must exclude every cn-only offer.
+  await reset(); await click('global');
+  check('reach: "sign up anywhere" = everything except cn-only', await count(), REACHABLE);
+  const leaked = await page.evaluate(ids =>
+    [...document.querySelectorAll('#list .row')].map(r => r.dataset.id).filter(id => ids.includes(id)),
+    CN_ONLY);
+  check('reach: no cn-only offer survives the "sign up anywhere" filter', leaked.length, 0);
+
+  await reset(); await click('cnonly');
+  check('reach: "china-only" shows exactly the cn-only offers', await count(), CN_ONLY.length);
+  const onlyCn = await page.evaluate(len => {
+    const rows = [...document.querySelectorAll('#list .row')];
+    return rows.length === len;
+  }, CN_ONLY.length);
+  check('reach: the china-only view contains nothing else', onlyCn, true);
+
+  // The chip must be labelled honestly — "CN only", not the old "CN direct".
+  const reachBadges = await page.evaluate(() =>
+    [...new Set([...document.querySelectorAll('#list .row .tag')].map(e => e.textContent.trim()))]);
+  check('reach: cn-only rows carry a "CN only" badge', reachBadges.includes('CN only'), true);
+
+  // Reach ORs within its own dimension and ANDs with kind.
+  await reset(); await click('global'); await click('cnonly');
+  check('reach OR: both selected = everything', await count(), total);
+  await reset(); await click('global'); await click('portable');
+  check('reach AND kind: reachable portables <= all portables',
+        await count(), single.portable, '<=');
 
   // ---- three dimensions at once ----
   await reset(); await click('portable'); await click('nocard'); await click('noref');

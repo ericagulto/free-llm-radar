@@ -359,6 +359,10 @@ footer b{color:var(--tx2)}
   .count{margin-left:0;flex-basis:100%}
   .chips{gap:5px}
   .chipbtn{padding:5px 9px}
+  /* On narrow screens the chip block is the tallest thing above the list, and
+     every new filter dimension costs another wrapped row — which pushes the
+     first offer down. Tighten the chips rather than the rows. */
+  .chiphint{display:none}
   .feat{margin:10px 16px 2px;padding:13px 14px}
   .fcards{grid-template-columns:1fr}
   .rows{padding:8px 16px 0}
@@ -428,9 +432,11 @@ footer b{color:var(--tx2)}
         <button class="chipbtn" data-f="credit" aria-pressed="false">Cloud credit</button>
         <button class="chipbtn" data-f="nocard" aria-pressed="false">No card</button>
         <button class="chipbtn" data-f="expiring" aria-pressed="false">Expiring ≤7d</button>
+        <button class="chipbtn" data-f="global" aria-pressed="false">Sign up anywhere</button>
+        <button class="chipbtn" data-f="cnonly" aria-pressed="false">China-only</button>
         <button class="chipbtn" data-f="refonly" aria-pressed="false">Referral-linked</button>
         <button class="chipbtn" data-f="noref" aria-pressed="false">No referral</button>
-        <div class="chiphint">Multi-select — pick several. <b>Portable key + No card</b> shows portables that need no card.</div>
+        <div class="chiphint">Multi-select — pick several. <b>Portable key + No card</b> shows portables that need no card. <b>Sign up anywhere</b> hides offers that need a mainland Chinese account.</div>
       </div>
       <div class="grp">
         <input type="search" id="q" placeholder="search provider or model…">
@@ -653,6 +659,7 @@ if (typeof RADAR === 'undefined') {
     kind: ['portable','client','keyless','credit'],
     card: ['nocard'],
     time: ['expiring'],
+    reach:['global','cnonly'],
     ref:  ['refonly','noref']
   };
   const activeFilters = new Set();
@@ -680,6 +687,10 @@ if (typeof RADAR === 'undefined') {
         if(f==='expiring'){ const n=daysTo(o.end); return n!==null && n>=0 && n<=7; }
         if(f==='refonly')  return !!refFor(o);
         if(f==='noref')    return !refFor(o);
+        // "Sign up anywhere" = global OR cn-direct, i.e. anything a reader outside
+        // mainland China can actually claim. Only cn-only is excluded.
+        if(f==='global')   return o.reach !== 'cn-only';
+        if(f==='cnonly')   return o.reach === 'cn-only';
         return o.kind===f;                            // kind dimension
       });
       if(!hit) return false;                          // AND across dimensions
@@ -795,7 +806,8 @@ if (typeof RADAR === 'undefined') {
             ${o.status==='extended'?'<span class="tag" style="background:rgba(123,167,204,.12);color:var(--blue);border-color:rgba(123,167,204,.35)">extended</span>':''}
             ${o.status==='expiring'?'<span class="tag" style="background:rgba(224,108,90,.12);color:var(--red);border-color:rgba(224,108,90,.35)">expiring</span>':''}
             ${o.card?'<span class="tag" style="background:var(--bg4);color:var(--tx3);border-color:var(--line2)">card</span>':''}
-            ${o.china?'<span class="tag" style="background:var(--bg4);color:var(--tx2);border-color:var(--line2)">CN direct</span>':''}
+            ${o.reach==='cn-only'?'<span class="tag" style="background:rgba(224,108,90,.12);color:var(--red);border-color:rgba(224,108,90,.35)" title="Needs a mainland Chinese account, phone number or real-name verification — you cannot sign up from outside China.">CN only</span>':''}
+            ${o.reach==='cn-direct'?'<span class="tag" style="background:var(--bg4);color:var(--tx2);border-color:var(--line2)" title="Chinese vendor, but reachable from outside China.">CN direct</span>':''}
             ${refBadge}
           </span>
           <span class="metarow">

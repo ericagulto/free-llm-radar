@@ -143,6 +143,25 @@ const CASES = [
     const f = path.join(TMP, 'content.js');
     fs.writeFileSync(f, fs.readFileSync(f, 'utf8').replace("forever: 'standing'", "forever: 'eternal'"));
   }],
+  ['an offer has an unknown reach value', () => {
+    const f = path.join(TMP, 'data.js');
+    fs.writeFileSync(f, fs.readFileSync(f, 'utf8')
+      .replace('"reach": "global"', '"reach": "everywhere"'));
+  }],
+  ['an offer loses its reach field entirely', () => {
+    const f = path.join(TMP, 'data.js');
+    fs.writeFileSync(f, fs.readFileSync(f, 'utf8')
+      .replace(/ *"reach": "(?:global|cn-direct|cn-only)",\n/, ''));
+  }],
+  ['a cn-only offer is marked china:false', () => {
+    // The legacy boolean and the new enum must not drift apart in this direction:
+    // a mainland-gated offer claiming it does not serve China is a contradiction.
+    const f = path.join(TMP, 'data.js');
+    const d = fs.readFileSync(f, 'utf8');
+    const i = d.indexOf('"reach": "cn-only"');
+    const start = d.lastIndexOf('"china": true', i);
+    fs.writeFileSync(f, d.slice(0, start) + '"china": false' + d.slice(start + '"china": true'.length));
+  }],
   // Rewrites an existing citation rather than appending a second `documented` key.
   // Appending would be silently discarded: the entry already has its own `documented`
   // later in the object literal, so the injected array is overridden and no
