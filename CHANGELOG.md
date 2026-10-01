@@ -13,6 +13,66 @@ Format per entry:
 
 ---
 
+## 2026-10-01 (tenth pass — two deadline corrections, one closure, one addition)
+
+46 → 47 offers. **Two previously published deadlines were wrong as of this morning** — both moved
+in the vendors' favour, which is the direction that gets missed.
+
+- **CORRECTION — WorkBuddy invite bonus extended, 30 Sep → 31 Oct.** The ninth pass recorded the
+  2,000-point new-user bonus as closing 30 September and left `workbuddy` at `status: expiring`.
+  The vendor's own invite page now reads 即日起至 2026年10月31日, and the bonus itself carries a
+  31 October deadline. Source: `workbuddy.cn/events/invite` (read directly). `end` → `2026-10-31`,
+  `status` → `extended`, `added` → `2026-10-01`. The ¥0 体验版 tier is still marked 限时免费 on
+  `workbuddy.cn/pricing/` — re-checked, not assumed dead.
+- **CORRECTION — Hunyuan Hy3 限免 and Hy4 preview night-free extended, 30 Sep → 31 Oct.** The ninth
+  pass recorded "both Wenxin 4.0 and Hunyuan Hy3 close tonight, 30 Sep". They did not both close.
+  A joint WorkBuddy/Hunyuan announcement on 30 September pushed the Hy3 限免 window and the Hy4
+  preview night-free window to **31 October**. `hunyuan` `end` → `2026-10-31`, `added` → `2026-10-01`.
+  The 10 October last-start date for the new-user 14-day quota is unchanged, and the night window is
+  still 23:00–08:00. Verification level: **multi-source** — the announcement as carried by Tencent
+  News (`news.qq.com/rain/a/20260930A0B2GF00`), inews.qq.com, MSN China and Sohu. The vendor's own
+  event page was not reachable directly, so this rests on reporting of the announcement.
+- **EXPIRED — Baidu Wenxin 4.0 (`wenxin`).** The free window on the Wenxin 4.0 line ran through
+  30 September and reverted to paid on 1 October. Source: Chinese-language round-ups of the 30 Sep
+  expiry wave, plus the September free-quota calendars. The offer row is **kept**, not deleted —
+  `warn` and `budgetNote` now state the closure plainly and point the Hunyuan Hy3 half at the
+  `hunyuan` row, where it is still live. Recorded in the rail `closed` group as `dead`.
+- **ADDED — Doubao (`doubao`)** — 30 free days of the Standard plan for every user, free and paying
+  alike, claimed by downloading or upgrading the desktop client. Campaign reported to run to
+  17 October 2026. Client-bound consumer app; **no API key**. Verification level: **multi-source**
+  (ByteDance's 24 September announcement as carried by Tencent News, Sohu, Chinaz and others). The
+  vendor's own campaign page was not read directly, and the `warn` field says so. New `content.js`
+  entry added.
+- **CHANGED — `glmnight`** gained the precise window and the eligibility rule that was previously
+  only in the rail: **23:00–09:00 Beijing time, paid Coding Plan subscribers only, ZCode 3.10+ or
+  AutoClaw, 5-hour/week cap**. Source: `docs.bigmodel.cn/cn/coding-plan/notice/event-glm-5.3-flash`.
+  This matters — the row read as though any user could use it. No date moved (7 Oct confirmed).
+- **RE-VERIFIED, no change** — Qoder Qwen3.8-Flash (still free, still no announced end date,
+  `docs.qoder.com/events/flashoffer`); GMI Hy Image 3.5 free week (25 Sep → 1 Oct, closing today,
+  `gmicloud.ai/hy-week`); ZCode Trust Build (28 Sep → 7 Oct); MiniMax Code (to 7 Oct); AI21 (to 6 Oct).
+- **RAIL** — new `today` group for 1 Oct; 30 Sep shifted to `yesterday`; 29 Sep shifted to `week`.
+  Two items were dropped from the shifted 30 Sep group because their claim ("both close tonight")
+  is now known to be false — the corrected outcomes are in today's group.
+
+**Next run needs to know.** (1) `wenxin` is closed but **kept in `offers[]`** because the status
+enum has no `closed` value; it carries `status: 'expiring'` with a past `end`. If a cleaner
+convention is wanted, that is an operator decision, not a refresh decision. (2) **`content.js`'s
+`wenxin` entry needs a hand edit** — its `foreverNote` still says "Both halves close 30 September"
+and its `what` still describes Hy3 as an overflow option. The refresh job does not rewrite prose, so
+this was left alone deliberately. (3) GMI closes today; ZCode Trust Build, MiniMax Code and GLM
+night-free all end 7 Oct; AI21 ends 6 Oct; Hunyuan's last-start date is 10 Oct. (4) Not added, on
+purpose: Anthropic's Claude Code cloud-session credits (Pro $100 / Max $250, claim by 7 Oct, balance
+expires 4 Nov) — real and well-sourced, but **restricted to Pro/Max subscribers who already held a
+subscription on 23 September**, so a free-tier reader cannot act on it. Operator's call whether the
+directory should carry paid-subscriber-gated offers.
+
+**Trap re-confirmed.** Three independent trackers (igetoken, freetokens.custats.info, the Zhihu
+round-up) now describe ZCode Trust Build as "100M tokens **per day**". Zhipu's own page describes a
+**single** ~100M allocation with a daily claim cap of 100,000 users. Vendor wins; the stored figure
+is unchanged for the third run running.
+
+---
+
 ## 2026-09-30 (ninth pass — three new offers, two date confirmations)
 
 43 → 46 offers. Three additions, no removals, no deadline corrections.

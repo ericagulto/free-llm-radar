@@ -37,8 +37,8 @@
    ============================================================ */
 
 window.RADAR = {
-  updated: '2026-09-30T10:30:00+08:00',
-  verifiedBy: 'Vendor primary docs: docs.qoder.com/events/flashoffer, docs.bigmodel.cn coding-plan notice, kilo.ai/landing/free-models, opencode.ai/docs/zen, console.groq.com/docs/rate-limits, developer.amd.com.cn/radeon/tokenfactory, workbuddy.cn/events/invite, gmicloud.ai/hy-week, platform.stepfun.com',
+  updated: '2026-10-01T08:45:00+08:00',
+  verifiedBy: 'Vendor primary pages: workbuddy.cn/events/invite (invite bonus now to 31 Oct), workbuddy.cn/pricing (体验版 still 限时免费), docs.bigmodel.cn/cn/coding-plan/notice/event-glm-5.3-flash (night-free to 7 Oct), docs.qoder.com/events/flashoffer (still free, no end date), gmicloud.ai/hy-week (window 25 Sep-1 Oct), zcode.z.ai/en/changelog. Tencent/WorkBuddy-Hunyuan joint announcement 30 Sep 2026 (Hy3 限免 and Hy4 preview night-free both extended to 31 Oct). Multi-source: ByteDance Doubao 30-day grant, 24 Sep 2026.',
   offers: [
   {
     "id": "amd",
@@ -949,7 +949,7 @@ window.RADAR = {
     "china": true,
     "link": "https://wenxiaoyan.baidu.com",
     "linkLabel": "Open",
-    "budgetNote": "Free access to the full Wenxin 4.0 line · Hunyuan Hy3 as the overflow option when Hy4 queues",
+    "budgetNote": "Free access to the full Wenxin 4.0 line · <b>ended 30 September 2026</b> · the Hunyuan Hy3 overflow option on this row was separately extended to 31 October — see the Hunyuan Hy4 row",
     "models": [
       "Wenxin 4.0 Turbo",
       "Wenxin 4.0",
@@ -963,7 +963,7 @@ window.RADAR = {
       "For Hunyuan Hy3, switch models in the WorkBuddy or CodeBuddy model menu."
     ],
     "test": "— client-bound.",
-    "warn": "Both close <b>30 September</b>."
+    "warn": "<b>Closed 30 September 2026.</b> Baidu's free window on the Wenxin 4.0 line ran through 30 September and reverted to paid on 1 October. The Hunyuan Hy3 half of this row was <b>extended to 31 October</b> and now lives on the Hunyuan Hy4 row — switch models inside WorkBuddy or CodeBuddy rather than claiming anything here."
   },
   {
     "id": "manus",
@@ -993,20 +993,50 @@ window.RADAR = {
     "note": "Personal agent app, not a coding tool."
   },
   {
+    "id": "doubao",
+    "name": "Doubao (豆包)",
+    "sub": "Free 30-day Standard plan",
+    "kind": "client",
+    "budget": 0,
+    "unit": "30 days free",
+    "end": "2026-10-17",
+    "added": "2026-10-01",
+    "status": "new",
+    "card": false,
+    "china": true,
+    "link": "https://www.doubao.com/",
+    "linkLabel": "Open",
+    "budgetNote": "30 days of the <b>Standard</b> plan free · every user qualifies, free and paying alike · claimed by downloading or upgrading the desktop client · campaign reported to run to <b>17 October 2026</b>",
+    "models": [
+      "Doubao Seed series"
+    ],
+    "base": "— client-bound",
+    "auth": "—",
+    "steps": [
+      "Download or upgrade the <b>Doubao PC app</b> (or Doubao Work PC). The grant is attached to the desktop client.",
+      "Sign in. Both free and paying accounts are eligible — no card, no code, no invitation.",
+      "The 30-day Standard entitlement applies automatically. It covers the cloud computer, task mode and multi-Agent parallelism.",
+      "Already claimed the previous round? The next 30 days are granted as the current one expires — no action needed."
+    ],
+    "test": "— client-bound.",
+    "warn": "<b>Thirty days from claim, not a tier.</b> The Standard plan reverts to paid when the entitlement lapses. This is ByteDance's consumer assistant, not the Volcano Ark API platform — <b>there is no key here</b> and nothing on this row can be wired into your own stack. Verification level: <b>multi-source</b> — ByteDance's 24 September announcement as carried by Tencent News, Sohu, Chinaz and others; the vendor's own campaign page was not read directly, so treat 17 October as approximate.",
+    "note": "Paid subscribers are not downgraded — their existing term is extended instead, and they keep peak-hour priority. This is the second round in a month: an identical 30-day grant ran from 25 August."
+  },
+  {
     "id": "hunyuan",
     "name": "Tencent Hunyuan Hy4",
     "sub": "Preview",
     "kind": "client",
     "budget": 0,
     "unit": "14 days daily",
-    "end": "2026-10-10",
-    "added": "2026-09-29",
+    "end": "2026-10-31",
+    "added": "2026-10-01",
     "status": "extended",
     "card": false,
     "china": true,
     "link": "https://console.cloud.tencent.com/hunyuan",
     "linkLabel": "Open",
-    "budgetNote": "New or never-tried users: <b>14 days of daily free quota from first use</b> · existing users: free 23:00–08:00",
+    "budgetNote": "New or never-tried users: <b>14 days of daily free quota from first use</b> — first conversation must start by <b>10 October</b> · existing users: free <b>23:00–08:00</b> nightly, <b>extended to 31 October</b> · Hunyuan Hy3 限免 likewise extended to 31 October",
     "models": [
       "Hunyuan Hy4 preview",
       "Hunyuan Hy3"
@@ -1016,11 +1046,12 @@ window.RADAR = {
     "steps": [
       "Open WorkBuddy or CodeBuddy.",
       "Switch to <b>Hunyuan Hy4 preview</b> in the model menu — no API wiring needed.",
-      "Start your first conversation before <b>10 October</b>; the 14-day clock runs from that first use.",
-      "Already tried it? You get free usage during off-peak hours, 23:00–08:00."
+      "Never used it? Start your first conversation before <b>10 October</b>; the 14-day clock runs from that first use.",
+      "Already tried it? Night-time usage is free at <b>23:00–08:00</b> — extended to <b>31 October</b>. Outside those hours usage consumes points normally.",
+      "Hy3 (限免) is free to switch to inside the same client, also extended to <b>31 October</b>."
     ],
     "test": "— client-bound.",
-    "note": "770B MoE with 1M context. <b>Text-only</b> — image and video tasks route to other models and bill normally. Tencent Cloud TokenHub also gives new users 1M tokens for the Hy4 preview API if you want the API route."
+    "note": "770B MoE with 1M context. <b>Text-only</b> — image and video tasks route to other models and bill normally. <b>Extended:</b> a joint WorkBuddy/Hunyuan announcement on 30 September pushed both the Hy3 限免 window and the Hy4 preview night-free window from 30 September to <b>31 October</b>; the 10 October last-start date for the new-user 14 days is unchanged. Tencent Cloud TokenHub also gives new users 1M tokens for the Hy4 preview API if you want the API route."
   },
   {
     "id": "glmnight",
@@ -1036,18 +1067,20 @@ window.RADAR = {
     "china": true,
     "link": "https://z.ai",
     "linkLabel": "Open",
-    "budgetNote": "Free usage during night hours · <b>GLM-5.3-Flash only</b>",
+    "budgetNote": "Free usage <b>23:00–09:00</b> Beijing time · <b>GLM-5.3-Flash only</b> · <b>paid Coding Plan subscribers only</b> · via ZCode 3.10+ or AutoClaw · a 5-hour/week cap still applies",
     "models": [
       "GLM-5.3-Flash"
     ],
     "base": "— client-bound",
     "auth": "—",
     "steps": [
-      "Use ZCode or the GLM coding client during night hours.",
-      "Select GLM-5.3-Flash specifically — other models are not covered."
+      "You need an active <b>paid GLM Coding Plan</b> — the campaign covers paying subscribers only, not free accounts.",
+      "Use <b>ZCode 3.10 or later</b> (or AutoClaw) during the window. The discount applies automatically inside 23:00–09:00 Beijing time; there is nothing to claim.",
+      "Select GLM-5.3-Flash specifically — every other model keeps consuming quota normally.",
+      "Plan around the <b>5-hour/week</b> cap: once you hit it, the night window is closed to you until the limit resets."
     ],
     "test": "— client-bound.",
-    "note": "Extended to <b>7 October</b>."
+    "note": "Extended to <b>7 October</b>. The vendor notice also doubles quota for GLM-5.3-Flash when used through other plan-supported agents outside ZCode and AutoClaw."
   },
   {
     "id": "minimaxplat",
@@ -1406,14 +1439,14 @@ window.RADAR = {
     "kind": "client",
     "budget": 0,
     "unit": "points · not tokens",
-    "end": "2026-09-30",
-    "added": "2026-09-29",
-    "status": "expiring",
+    "end": "2026-10-31",
+    "added": "2026-10-01",
+    "status": "extended",
     "card": false,
     "china": true,
     "link": "https://www.workbuddy.cn/",
     "linkLabel": "Open",
-    "budgetNote": "体验版 (Experience) tier costs <b>¥0</b> and gives <b>500 points/month</b> with Auto model scheduling across all models. Register through this page's link and you also get <b>2,000 bonus points</b>.",
+    "budgetNote": "体验版 (Experience) tier costs <b>¥0</b> and gives <b>500 points/month</b> with Auto model scheduling across all models. Register through this page's link and you also get <b>2,000 bonus points</b>. Invite campaign runs <b>to 31 October 2026</b>.",
     "models": [
       "Auto — all models during the promo",
       "Hunyuan Hy4 preview",
@@ -1425,17 +1458,58 @@ window.RADAR = {
       "Install WorkBuddy and register. No card needed.",
       "The <b>体验版 / Experience</b> tier is ¥0/month — 500 points, 5 projects, 5 GB library, 10 hosted apps.",
       "Leave the model on <b>Auto</b> — scheduling across all models is currently free on this tier.",
-      "Registered via the link on this page? The 2,000 new-user points should land on signup."
+      "Registered via the link on this page? The 2,000 new-user points should land on signup — the bonus now runs <b>to 31 October 2026</b>."
     ],
     "test": "— client-bound.",
-    "warn": "<b>The 2,000-point new-user bonus runs to 30 September 2026.</b> Re-check that it is still live before relying on it. The 500/month tier is separately marked 限时免费 (limited-time free).",
+    "warn": "<b>Extended.</b> The 2,000-point new-user bonus was due to close on 30 September; the vendor's invite page now states 即日起至 2026年10月31日, and the bonus itself carries a 31 October deadline. Re-check before relying on it. The 500/month tier is separately marked 限时免费 (limited-time free) and is still shown as such on the pricing page.",
     "note": "Points are WorkBuddy's internal unit, <b>not tokens</b> — a task costs points depending on model and length, so there is no honest token figure to quote. That is why this row shows no token allowance. Included here because the free tier is genuinely ¥0 and the invite bonus is real, not because it ranks well."
   }
 ],
   rail: [
   {
     "d": "today",
-    "label": "Today · 30 Sep",
+    "label": "Today · 1 Oct",
+    "items": [
+      {
+        "c": "ext",
+        "n": "WorkBuddy invite bonus — extended to 31 Oct",
+        "t": "The vendor's own invite page now reads 即日起至 2026年10月31日, and the 2,000-point new-user bonus carries the same 31 October deadline. Confirmed on workbuddy.cn/events/invite. The ¥0 体验版 is still shown as 限时免费."
+      },
+      {
+        "c": "ext",
+        "n": "Hunyuan Hy3 限免 + Hy4 night-free — extended to 31 Oct",
+        "t": "Joint WorkBuddy/Hunyuan announcement, 30 Sep: both windows pushed from 30 Sep to 31 October. Night hours stay 23:00–08:00; the last start date for the new-user 14-day quota is still 10 October."
+      },
+      {
+        "c": "new",
+        "n": "Doubao — 30 free days of the Standard plan",
+        "t": "Every user qualifies, free and paying. Download or upgrade the desktop client and the entitlement applies automatically. No key — this is the consumer app, not the Volcano Ark API."
+      },
+      {
+        "c": "dead",
+        "n": "Wenxin 4.0 free series — closed",
+        "t": "Baidu's free window on the Wenxin 4.0 line ran through 30 September and reverted to paid on 1 October. The Hunyuan Hy3 half of that row was extended instead — it now lives on the Hunyuan Hy4 entry."
+      },
+      {
+        "c": "exp",
+        "n": "GMI Hy Image 3.5 — free week ends today",
+        "t": "Window is 25 Sep → 1 Oct. Verified on gmicloud.ai/hy-week: \"Free for 7 days. Standard pricing applies afterward.\""
+      },
+      {
+        "c": "exp",
+        "n": "ZCode Trust Build / MiniMax Code / GLM night-free — 7 Oct",
+        "t": "All three end 7 October. GLM night-free is paid Coding Plan subscribers only; Trust Build tokens land late and expire the next midnight."
+      },
+      {
+        "c": "exp",
+        "n": "AI21 $10 credit — 6 Oct",
+        "t": "A 7-day window. Claim it only if you will use it this week."
+      }
+    ]
+  },
+  {
+    "d": "yesterday",
+    "label": "Yesterday · 30 Sep",
     "items": [
       {
         "c": "new",
@@ -1464,16 +1538,6 @@ window.RADAR = {
       },
       {
         "c": "exp",
-        "n": "Wenxin 4.0 + Hunyuan Hy3",
-        "t": "Both close tonight, 30 Sep."
-      },
-      {
-        "c": "exp",
-        "n": "WorkBuddy 2,000-point new-user bonus",
-        "t": "Invite campaign closes tonight, 30 Sep. Tier itself is 限时免费."
-      },
-      {
-        "c": "exp",
         "n": "GMI Cloud Hy Image 3.5",
         "t": "Free week closes 1 Oct. Verified: gmicloud.ai/hy-week."
       },
@@ -1485,8 +1549,8 @@ window.RADAR = {
     ]
   },
   {
-    "d": "yesterday",
-    "label": "Yesterday · 29 Sep",
+    "d": "week",
+    "label": "Earlier this week · 29 Sep",
     "items": [
       {
         "c": "ext",
@@ -1526,7 +1590,7 @@ window.RADAR = {
       {
         "c": "new",
         "n": "WorkBuddy added — free tier",
-        "t": "¥0 Experience tier, 500 points/month. Invite bonus 2,000 points runs to 30 Sep."
+        "t": "¥0 Experience tier, 500 points/month. The 2,000-point invite bonus has since been extended to 31 October — see today's entry."
       }
     ]
   },
@@ -1536,8 +1600,8 @@ window.RADAR = {
     "items": [
       {
         "c": "dead",
-        "n": "Wenxin 4.0 + Hunyuan Hy3 (client)",
-        "t": "Free client access closes 30 Sep. API routes remain."
+        "n": "Baidu Wenxin 4.0 (client)",
+        "t": "Free access to the Wenxin 4.0 line ended 30 Sep and reverted to paid on 1 Oct. The Hunyuan Hy3 overflow option on that row was extended to 31 Oct instead."
       },
       {
         "c": "dead",
