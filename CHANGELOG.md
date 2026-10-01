@@ -13,7 +13,63 @@ Format per entry:
 
 ---
 
-## 2026-10-01 (tenth pass — two deadline corrections, one closure, one addition)
+## 2026-10-02 (eleventh pass — one material correction, two additions)
+
+47 → 49 offers. 49 pages generated. `validate.js` exit 0, `test-validate.js` 16/16.
+
+- **CORRECTION — Cerebras was never a recurring 1M-tokens/day free tier.** This is the important
+  line. The row has carried `budget: 1000000 / unit: tokens/day` and a placeholder `end: 2026-10-29`
+  since the first pass, sourced from third-party trackers. Cerebras' own documentation says
+  otherwise: the open rate-limited free tier was **replaced by a $5 trial credit that expires 30 days
+  after the grant**, requires a **verified payment method** before Playground or API access
+  activates, and the vendor states outright that it *"doesn't currently offer a no-cost tier that
+  renews automatically or a per-model always-free allowance."* Sources: `inference-docs.cerebras.ai/support/rate-limits`
+  (read directly) and the change-log entry dated **2026-07-16**. The change was live for two and a
+  half months before this run — a reminder that the tracker lists this project uses for breadth are
+  unreliable on exactly the retirements they should catch (cf. GitHub Models, retired 30 July 2026,
+  still listed). `budget` → `0`, `unit` → `$5 one-time`, `end` → `null` (the 30-day clock starts at
+  the *grant*, so a calendar date is meaningless), `status` → `expiring`, `added` → `2026-10-02`,
+  and the model roster trimmed to the two models the vendor's free-trial table actually lists.
+  `content.js`'s `cerebras` entry rewritten to match — its `documented` citations had been asserting
+  the retired allowance as fact.
+- **ADDED — Ling 3.1 Flash (`ling31`).** Ant InclusionAI's new coding/agent model (~560B total, ~25B
+  active), released 30 September 2026, free at $0.00 in and out through **Vercel AI Gateway** and
+  **Command Code** to **13 October 2026**. Verification level: **official** for the gateway promo —
+  read from Vercel's own changelog, which also states the two-ID behaviour (standard ID begins
+  billing at the end; `-free` ID stops serving). Command Code's model page confirms $0.00 pricing and
+  a ~300 req/day/account cap. Note this is a *gateway* promotion of a vendor model, not an Ant
+  first-party free tier — Ant has published no free allowance of its own. New `content.js` entry added.
+- **ADDED — DeepSeek Harness (`dsharness`).** ¥6 credit on login to DeepSeek's own desktop harness,
+  released 29 September 2026, Windows and macOS only. Window reported to about 6 October.
+  Verification level: **multi-source** — the 29 Sep launch announcement as carried by Sina Tech,
+  Sohu and Chinese tech press; **not** documented on DeepSeek's own pricing page. New `content.js`
+  entry added, flagged as thin coverage.
+- **Idempotency:** `doubao` cleared from `status: 'new'` to `active` — it was added on the tenth pass,
+  so `new` no longer applies. Rail's `today` group replaced with 2 Oct and the previous groups
+  shifted down; the 1 Oct entries were consolidated into the `yesterday` group.
+- **Re-verified, unchanged:** `glmnight` night-free still confirmed **23:00–09:00 to 7 Oct** on
+  `docs.bigmodel.cn/cn/coding-plan/notice/event-glm-5.3-flash` (read directly). `qoder` still free
+  with no published end date on `docs.qoder.com/events/flashoffer`. `workbuddy` invite page still
+  reads 即日起至2026年10月31日 and the ¥0 体验版 is still 限时免费 on `/pricing/`. `minimaxcode`
+  double check-in still 28 Sep–7 Oct. `ai21` $10/7-day trial unchanged. `zcode-trust` claim window
+  still 28 Sep–7 Oct.
+- **Referral terms:** no changes to report. `referrals.js` **not** touched. The two previously
+  reported issues stand: the `workbuddy` note in `referrals.js` still says the event runs to 30 Sep
+  (now stale — vendor says 31 Oct), and `qoderwork_cn`'s terms page is still titled 【7月30日截止】
+  and points at a moved docs site. Both are operator decisions.
+- **Not added, deliberately:** Baidu Qianfan's National Day Token Plan packages (¥49.9/¥99.9 to
+  7 Oct) — a paid discount, not a free tier, and this dataset does not track those. ChatGPT Pro 200
+  compensation credits (to 31 Dec) — subscriber-gated, no free route in. MiniMax M Plan half-price
+  first month (to 14 Oct) — again a paid discount.
+- **Next run must handle:** AI21 $10 closes 6 Oct; DeepSeek Harness ~6 Oct; ZCode Trust Build,
+  MiniMax Code and GLM night-free all close 7 Oct; Ling 3.1 Flash closes 13 Oct; Hunyuan Hy4 last
+  start date 10 Oct; Doubao ~17 Oct; Hunyuan night-free and WorkBuddy invite 31 Oct.
+  **`content.js`'s `wenxin` entry still needs a hand edit** — it says "Both halves close 30 September",
+  which stopped being true on 30 Sep. Carrier from earlier: the `oci`/`azure` `end: 2026-10-29` dates
+  are activation-relative placeholders, not per-user deadlines — do not report them as deadlines.
+
+---
+
 
 46 → 47 offers. **Two previously published deadlines were wrong as of this morning** — both moved
 in the vendors' favour, which is the direction that gets missed.

@@ -37,8 +37,8 @@
    ============================================================ */
 
 window.RADAR = {
-  updated: '2026-10-01T08:45:00+08:00',
-  verifiedBy: 'Vendor primary pages: workbuddy.cn/events/invite (invite bonus now to 31 Oct), workbuddy.cn/pricing (体验版 still 限时免费), docs.bigmodel.cn/cn/coding-plan/notice/event-glm-5.3-flash (night-free to 7 Oct), docs.qoder.com/events/flashoffer (still free, no end date), gmicloud.ai/hy-week (window 25 Sep-1 Oct), zcode.z.ai/en/changelog. Tencent/WorkBuddy-Hunyuan joint announcement 30 Sep 2026 (Hy3 限免 and Hy4 preview night-free both extended to 31 Oct). Multi-source: ByteDance Doubao 30-day grant, 24 Sep 2026.',
+  updated: '2026-10-02T01:35:00+08:00',
+  verifiedBy: 'Vendor primary pages: inference-docs.cerebras.ai/support/rate-limits + /support/change-log (free tier REPLACED by a $5 / 30-day trial, changelog 2026-07-16), vercel.com/changelog/ling-3-1-flash-is-now-available-on-ai-gateway (free through 13 Oct), docs.bigmodel.cn/cn/coding-plan/notice/event-glm-5.3-flash (night-free still confirmed to 7 Oct), docs.qoder.com/events/flashoffer (still free, no end date), workbuddy.cn/events/invite (10月31日 deadline in the vendor text), workbuddy.cn/pricing (体验版 限时免费 ¥0, still shown). Re-verified unchanged: AI21 $10/7-day trial terms, MiniMax Code double-check-in (28 Sep-7 Oct), ZCode Trust Build (28 Sep-7 Oct). Multi-source: Tencent/WorkBuddy-Hunyuan Hy3+Hy4 extension to 31 Oct (30 Sep 2026); DeepSeek Harness ¥6 desktop credit (29 Sep 2026).',
   offers: [
   {
     "id": "amd",
@@ -451,30 +451,31 @@ window.RADAR = {
     "name": "Cerebras",
     "sub": "Wafer-scale inference",
     "kind": "portable",
-    "budget": 1000000,
-    "unit": "tokens/day",
-    "end": "2026-10-29",
-    "added": "2026-09-28",
-    "status": "active",
+    "budget": 0,
+    "unit": "$5 one-time",
+    "end": null,
+    "added": "2026-10-02",
+    "status": "expiring",
     "card": true,
     "china": false,
     "link": "https://cloud.cerebras.ai",
     "linkLabel": "Get key",
-    "budgetNote": "5–10 req/min · 30K tokens/min · 1M tokens/day · <b>$5 signup credit</b>",
+    "budgetNote": "<b>$5 trial credit, one-time</b> · expires <b>30 days after it is granted</b> · requires a verified payment method before API access works at all · trial limits ~5 RPM / 30K uncached TPM / 1M TPD per model",
     "models": [
       "gpt-oss-120b",
-      "gemma-4-31b",
-      "zai-glm-4.7"
+      "qwen-3.8-27b"
     ],
     "base": "https://api.cerebras.ai/v1",
     "auth": "Authorization: Bearer",
     "steps": [
-      "Sign up at <b>cloud.cerebras.ai</b>.",
-      "$5 of credit is auto-credited to the account.",
-      "Create an API key."
+      "Sign up at <b>cloud.cerebras.ai</b>. Playground and API stay locked until you add a payment method.",
+      "<b>Add a verified payment method.</b> The $5 credit is only granted after this step — unusual for a free tier.",
+      "Create an API key. The $5 is now on the clock: it expires 30 days from the grant.",
+      "Spend it deliberately. There is no renewal — once the credit is gone or expired, access stops until you buy credits."
     ],
     "test": "curl https://api.cerebras.ai/v1/chat/completions \\\n  -H \"Authorization: Bearer $CEREBRAS_API_KEY\" \\\n  -H \"Content-Type: application/json\" \\\n  -d '{\"model\":\"gpt-oss-120b\",\"messages\":[{\"role\":\"user\",\"content\":\"Hello\"}]}'",
-    "warn": "This is a <b>finite $5 trial</b>, not a recurring free tier. 5 req/min is genuinely restrictive; the Developer plan from $10 lifts limits roughly tenfold."
+    "warn": "<b>CORRECTION — this is not a 1M-tokens/day free tier and never now will be.</b> Cerebras replaced its open free tier with a <b>$5 free trial</b> that expires 30 days after the grant, and the vendor states plainly that it <b>does not offer a no-cost tier that renews automatically</b>. Earlier runs of this list quoted the old 1M tokens/day figure from third-party trackers; the vendor's own change log (2026-07-16) and rate-limit page now say otherwise. A card is required, and the countdown starts at the grant, not at first use.",
+    "note": "Still the fastest tokens-per-second you can get for free — the hardware claim is genuine. But treat it as a one-month evaluation, not a standing allowance. A first pay-as-you-go purchase moves you to the Developer tier, which removes the hourly and daily caps."
   },
   {
     "id": "hf",
@@ -1001,7 +1002,7 @@ window.RADAR = {
     "unit": "30 days free",
     "end": "2026-10-17",
     "added": "2026-10-01",
-    "status": "new",
+    "status": "active",
     "card": false,
     "china": true,
     "link": "https://www.doubao.com/",
@@ -1463,58 +1464,155 @@ window.RADAR = {
     "test": "— client-bound.",
     "warn": "<b>Extended.</b> The 2,000-point new-user bonus was due to close on 30 September; the vendor's invite page now states 即日起至 2026年10月31日, and the bonus itself carries a 31 October deadline. Re-check before relying on it. The 500/month tier is separately marked 限时免费 (limited-time free) and is still shown as such on the pricing page.",
     "note": "Points are WorkBuddy's internal unit, <b>not tokens</b> — a task costs points depending on model and length, so there is no honest token figure to quote. That is why this row shows no token allowance. Included here because the free tier is genuinely ¥0 and the invite bonus is real, not because it ranks well."
+  },
+  {
+    "id": "ling31",
+    "name": "Ling 3.1 Flash",
+    "sub": "Ant InclusionAI · gateway promo",
+    "kind": "portable",
+    "budget": 0,
+    "unit": "free until 13 Oct",
+    "end": "2026-10-13",
+    "added": "2026-10-02",
+    "status": "new",
+    "card": false,
+    "china": true,
+    "link": "https://vercel.com/ai-gateway/models/ling-3.1-flash",
+    "linkLabel": "Open",
+    "budgetNote": "<b>$0.00 input and output</b> through Vercel AI Gateway and Command Code · free window to <b>13 October 2026</b> · 262K context on the gateway (the model itself supports 1M) · Command Code caps at 300 requests/day/account",
+    "models": [
+      "inclusionai/ling-3.1-flash",
+      "inclusionai/ling-3.1-flash-free"
+    ],
+    "base": "https://ai-gateway.vercel.sh/v1",
+    "auth": "Authorization: Bearer (AI Gateway key or BYOK)",
+    "steps": [
+      "Easiest route: sign in to <b>Vercel AI Gateway</b> and pick <b>inclusionai/ling-3.1-flash</b> from the model list. No separate vendor signup.",
+      "In code, use <b>inclusionai/ling-3.1-flash-free</b> — the <b>-free</b> ID <b>stops serving</b> when the promotion ends instead of silently billing you.",
+      "Coding-agent route: install Command Code, subscribe to <b>Go</b> or above, then run <b>cmdc --model inclusionai/ling-3.1-flash:free</b>.",
+      "<b>Use it before 13 October.</b> After that the plain model ID starts billing and the <b>-free</b> ID is switched off."
+    ],
+    "test": "curl https://ai-gateway.vercel.sh/v1/chat/completions \\\n  -H \"Authorization: Bearer $AI_GATEWAY_API_KEY\" \\\n  -H \"Content-Type: application/json\" \\\n  -d '{\"model\":\"inclusionai/ling-3.1-flash-free\",\"messages\":[{\"role\":\"user\",\"content\":\"Hello\"}]}'",
+    "warn": "<b>Two IDs, two different endings.</b> The standard ID begins billing the moment the promotion ends; the <b>-free</b> ID simply stops serving. Use the <b>-free</b> ID if you do not want a surprise charge. Note also that <b>Command Code needs a paid Go-tier subscription</b> — the free window is on the model, not on the client.",
+    "note": "A genuinely new model — Ant's InclusionAI released Ling-3.1-flash on 30 September 2026: ~560B total parameters, ~25B active per token, coding- and agent-oriented. The gateway is the zero-friction way to try it; the model is also carried free on Command Code. This is a <b>third-party gateway</b> promotion of a vendor model, not an Ant first-party free tier — Ant has not published a public free allowance of its own."
+  },
+  {
+    "id": "dsharness",
+    "name": "DeepSeek Harness",
+    "sub": "Desktop launch credit",
+    "kind": "client",
+    "budget": 0,
+    "unit": "¥6 credit",
+    "end": "2026-10-06",
+    "added": "2026-10-02",
+    "status": "new",
+    "card": false,
+    "china": true,
+    "link": "https://github.com/deepseek-ai/deepseek-harness",
+    "linkLabel": "Download",
+    "budgetNote": "<b>¥6 credit</b> on login to the official DeepSeek Harness desktop app · Windows and macOS (Apple Silicon) · campaign reported to run to about <b>6 October 2026</b>, or until the allocation is exhausted",
+    "models": [
+      "DeepSeek V4 series"
+    ],
+    "base": "— client-bound, no portable key",
+    "auth": "—",
+    "steps": [
+      "Download the official <b>DeepSeek Harness</b> desktop build — Windows x64 or macOS arm64. Linux is not available yet.",
+      "Sign in with your DeepSeek account.",
+      "If no credit appears, <b>sign out and sign in again</b> — that is the widely reported workaround.",
+      "Spend it inside the app. It is a balance, not a key, and it does not transfer to the API."
+    ],
+    "test": "— client-bound. The credit is a balance inside the desktop app, not an API key.",
+    "warn": "<b>Small and short.</b> ¥6 is a rounding error against real coding work, and the window closes around 6 October, or earlier if the allocation runs out. Verification level: <b>multi-source</b> — DeepSeek's 29 September launch announcement as carried by Sina Tech, Sohu and Chinese tech press; the credit is not documented on DeepSeek's own pricing page.",
+    "note": "The value here is the <b>app</b>, not the ¥6 — this is DeepSeek's official desktop client for its coding harness. Treat the credit as a nudge to install it, and evaluate the tool rather than the grant."
   }
 ],
   rail: [
   {
     "d": "today",
-    "label": "Today · 1 Oct",
+    "label": "Today · 2 Oct",
     "items": [
       {
-        "c": "ext",
-        "n": "WorkBuddy invite bonus — extended to 31 Oct",
-        "t": "The vendor's own invite page now reads 即日起至 2026年10月31日, and the 2,000-point new-user bonus carries the same 31 October deadline. Confirmed on workbuddy.cn/events/invite. The ¥0 体验版 is still shown as 限时免费."
-      },
-      {
-        "c": "ext",
-        "n": "Hunyuan Hy3 限免 + Hy4 night-free — extended to 31 Oct",
-        "t": "Joint WorkBuddy/Hunyuan announcement, 30 Sep: both windows pushed from 30 Sep to 31 October. Night hours stay 23:00–08:00; the last start date for the new-user 14-day quota is still 10 October."
+        "c": "exp",
+        "n": "CORRECTION — Cerebras is not a 1M-token/day free tier",
+        "t": "The vendor replaced its open free tier with a $5 trial credit that expires 30 days after the grant, and states it offers no free tier that renews. A card is required before API access works at all. Confirmed on inference-docs.cerebras.ai rate-limits and the 2026-07-16 change-log entry. The old 1M/day figure came from third-party trackers and should not have been published."
       },
       {
         "c": "new",
-        "n": "Doubao — 30 free days of the Standard plan",
-        "t": "Every user qualifies, free and paying. Download or upgrade the desktop client and the entitlement applies automatically. No key — this is the consumer app, not the Volcano Ark API."
+        "n": "Ling 3.1 Flash — free to 13 Oct",
+        "t": "Ant's InclusionAI model, $0.00 in and out through Vercel AI Gateway and Command Code. Use the -free model ID: it stops serving at the end rather than billing you. Confirmed on Vercel's own changelog."
       },
       {
-        "c": "dead",
-        "n": "Wenxin 4.0 free series — closed",
-        "t": "Baidu's free window on the Wenxin 4.0 line ran through 30 September and reverted to paid on 1 October. The Hunyuan Hy3 half of that row was extended instead — it now lives on the Hunyuan Hy4 entry."
+        "c": "new",
+        "n": "DeepSeek Harness — ¥6 desktop credit",
+        "t": "Official desktop client launched 29 Sep. Sign in, and sign out/in again if the credit does not show. Small grant, short window (about 6 Oct) — the app is the point."
       },
       {
-        "c": "exp",
-        "n": "GMI Hy Image 3.5 — free week ends today",
-        "t": "Window is 25 Sep → 1 Oct. Verified on gmicloud.ai/hy-week: \"Free for 7 days. Standard pricing applies afterward.\""
+        "c": "ext",
+        "n": "Qoder Qwen3.8-Flash — still free, no end date",
+        "t": "Re-read on docs.qoder.com/events/flashoffer today: extended past 30 Sep, end date to be announced on that page. No action needed."
       },
       {
         "c": "exp",
         "n": "ZCode Trust Build / MiniMax Code / GLM night-free — 7 Oct",
-        "t": "All three end 7 October. GLM night-free is paid Coding Plan subscribers only; Trust Build tokens land late and expire the next midnight."
+        "t": "All three still listed as running to 7 October. GLM night-free is paid Coding Plan subscribers only; Trust Build tokens land late and expire next midnight."
       },
       {
         "c": "exp",
         "n": "AI21 $10 credit — 6 Oct",
-        "t": "A 7-day window. Claim it only if you will use it this week."
+        "t": "7-day window. Still a poor claim unless you will use Jamba this week."
+      },
+      {
+        "c": "exp",
+        "n": "Doubao 30-day Standard — ~17 Oct",
+        "t": "Second round of the desktop grant. Date rests on reporting of the 24 Sep announcement, not the vendor campaign page, so it stays approximate."
       }
     ]
   },
   {
     "d": "yesterday",
-    "label": "Yesterday · 30 Sep",
+    "label": "Yesterday · 1 Oct",
+    "items": [
+      {
+        "c": "ext",
+        "n": "WorkBuddy invite bonus — 31 Oct",
+        "t": "Vendor page still reads 即日起至2026年10月31日; the 2,000-point new-user bonus carries the same deadline. The ¥0 体验版 is still shown as 限时免费."
+      },
+      {
+        "c": "ext",
+        "n": "Hunyuan Hy3 限免 + Hy4 night-free — 31 Oct",
+        "t": "Joint WorkBuddy/Hunyuan announcement, 30 Sep. Night hours 23:00–08:00; last start date for the new-user 14-day quota is still 10 October."
+      },
+      {
+        "c": "new",
+        "n": "Doubao — 30 free days of the Standard plan",
+        "t": "Every user qualifies. Client-bound; no key. Now marked active rather than new — status 'new' applies only on the run an offer first appears."
+      },
+      {
+        "c": "dead",
+        "n": "Wenxin 4.0 free series — closed",
+        "t": "Baidu's free window ran through 30 September. The Hunyuan Hy3 half was extended instead and now lives on the Hunyuan Hy4 row."
+      },
+      {
+        "c": "exp",
+        "n": "GMI Hy Image 3.5 — free week ended",
+        "t": "Window was 25 Sep → 1 Oct. Image generation only."
+      },
+      {
+        "c": "exp",
+        "n": "ZCode Trust Build / MiniMax Code / GLM night-free — 7 Oct",
+        "t": "All three end 7 October."
+      }
+    ]
+  },
+  {
+    "d": "week",
+    "label": "Earlier this week · 30 Sep",
     "items": [
       {
         "c": "new",
         "n": "Kilo Code — Auto Free tier",
-        "t": "Free hosted models, no card, no provider key. 5 models listed at $0 as of today."
+        "t": "Free hosted models, no card, no provider key. Rotating catalogue."
       },
       {
         "c": "new",
@@ -1532,32 +1630,6 @@ window.RADAR = {
         "t": "Confirmed on docs.qoder.com/events/flashoffer: free continues past 30 Sep, end date TBA on that page."
       },
       {
-        "c": "ext",
-        "n": "GLM night-free to 7 Oct",
-        "t": "Confirmed on docs.bigmodel.cn: 23:00–09:00, ZCode 3.10+ only, GLM-5.3-Flash only, paid plans only."
-      },
-      {
-        "c": "exp",
-        "n": "GMI Cloud Hy Image 3.5",
-        "t": "Free week closes 1 Oct. Verified: gmicloud.ai/hy-week."
-      },
-      {
-        "c": "exp",
-        "n": "AI21 $10 credit",
-        "t": "7-day window closes 6 Oct — claim only if you will use it this week."
-      }
-    ]
-  },
-  {
-    "d": "week",
-    "label": "Earlier this week · 29 Sep",
-    "items": [
-      {
-        "c": "ext",
-        "n": "Qoder — free period extended",
-        "t": "Qwen3.8-Flash no longer ends 30 Sep. Confirmed on both international and CN pages."
-      },
-      {
         "c": "new",
         "n": "ZCode Trust Build opens",
         "t": "~100M GLM-5.3-Flash tokens. Claim 28 Sep → 7 Oct. Tokens expire next midnight."
@@ -1573,24 +1645,9 @@ window.RADAR = {
         "t": "Monthly free token allowance during beta. 1 ink point ≈ 50M tokens."
       },
       {
-        "c": "new",
-        "n": "Alibaba Bailian — 70M tokens",
-        "t": "Correction: far larger than first reported. ~90-day expiry."
-      },
-      {
-        "c": "ext",
-        "n": "GLM night-free extended",
-        "t": "GLM-5.3-Flash only. Now runs to 7 Oct."
-      },
-      {
         "c": "ext",
         "n": "Hunyuan Hy4 preview",
         "t": "14 days daily free from first use. Start by 10 Oct."
-      },
-      {
-        "c": "new",
-        "n": "WorkBuddy added — free tier",
-        "t": "¥0 Experience tier, 500 points/month. The 2,000-point invite bonus has since been extended to 31 October — see today's entry."
       }
     ]
   },
@@ -1602,6 +1659,11 @@ window.RADAR = {
         "c": "dead",
         "n": "Baidu Wenxin 4.0 (client)",
         "t": "Free access to the Wenxin 4.0 line ended 30 Sep and reverted to paid on 1 Oct. The Hunyuan Hy3 overflow option on that row was extended to 31 Oct instead."
+      },
+      {
+        "c": "dead",
+        "n": "GMI Cloud Hy Image 3.5",
+        "t": "Free week ran 25 Sep → 1 Oct."
       },
       {
         "c": "dead",
