@@ -46,8 +46,8 @@
    ============================================================ */
 
 window.RADAR = {
-  updated: '2026-10-02T01:35:00+08:00',
-  verifiedBy: 'Vendor primary pages: inference-docs.cerebras.ai/support/rate-limits + /support/change-log (free tier REPLACED by a $5 / 30-day trial, changelog 2026-07-16), vercel.com/changelog/ling-3-1-flash-is-now-available-on-ai-gateway (free through 13 Oct), docs.bigmodel.cn/cn/coding-plan/notice/event-glm-5.3-flash (night-free still confirmed to 7 Oct), docs.qoder.com/events/flashoffer (still free, no end date), workbuddy.cn/events/invite (10月31日 deadline in the vendor text), workbuddy.cn/pricing (体验版 限时免费 ¥0, still shown). Re-verified unchanged: AI21 $10/7-day trial terms, MiniMax Code double-check-in (28 Sep-7 Oct), ZCode Trust Build (28 Sep-7 Oct). Multi-source: Tencent/WorkBuddy-Hunyuan Hy3+Hy4 extension to 31 Oct (30 Sep 2026); DeepSeek Harness ¥6 desktop credit (29 Sep 2026).',
+  updated: '2026-10-02T08:20:00+08:00',
+  verifiedBy: 'Run 2 of 2026-10-02. Vendor primary pages read directly: workbuddy.cn/events/invite (即日起至2026年10月31日 + 受邀好友 2,000 积分 截止日期 2026年10月31日 — both unchanged), docs.qoder.com/events/flashoffer (still free, end date still TBA), vercel.com/changelog/ling-3-1-flash-is-now-available-on-ai-gateway (free to 13 Oct, unchanged), vercel.com/ai-gateway/models/laya (Laya, free, promo ends 31 Oct — NOT added, out of scope), opencode.ai/docs/zen (all ten free models still "limited time", NO published end dates — tracker-claimed 5/10 Oct expiries rejected), inference-docs.cerebras.ai/support/change-log ($5 trial credit after a verified payment method — correction of 2026-10-02 stands), ai21.com/pricing vs docs.ai21.com/docs/usage-cost (AI21 own pages DISAGREE on trial length: 7 days vs three months — see the ai21 note). Tracker-corroborated, not vendor-read: MiniMax Code double check-in + ZCode Trust Build + GLM night-free all still to 7 Oct (aipromonow, igetoken); Hunyuan Hy3 限免 + Hy4 night-free to 31 Oct, night hours 23:00-08:00, Hy4 last start 10 Oct (aipromonow).',
   offers: [
   {
     "id": "amd",
@@ -1409,7 +1409,7 @@ window.RADAR = {
     "budget": 0,
     "unit": "$10",
     "end": "2026-10-06",
-    "added": "2026-09-28",
+    "added": "2026-10-02",
     "status": "expiring",
     "card": true,
     "china": false,
@@ -1428,7 +1428,8 @@ window.RADAR = {
       "The $10 credit is applied automatically."
     ],
     "test": "curl https://api.ai21.com/studio/v1/chat/completions \\\n  -H \"Authorization: Bearer $AI21_API_KEY\" \\\n  -H \"Content-Type: application/json\" \\\n  -d '{\"model\":\"jamba-large-1-7\",\"messages\":[{\"role\":\"user\",\"content\":\"Hello\"}]}'",
-    "warn": "<b>7-day window.</b> Only worth claiming if you will use it this week."
+    "warn": "<b>7-day window.</b> Only worth claiming if you will use it this week.",
+    "note": "<b>Rolling trial, not a shared deadline — and AI21's own pages disagree on its length.</b> Read on 2 October 2026: <b>ai21.com/pricing</b> states the $10 credit is good for <b>7 days</b>, while <b>docs.ai21.com/docs/usage-cost</b> states new accounts get a $10 credit <b>good for three months</b>. The two have not been reconciled, so treat the length as uncertain and confirm it in your own account after registering. What is certain is that the clock runs from <b>your</b> signup, not from a campaign date — the date on this row is a placeholder carried from the last refresh, not a deadline anyone can miss. No card is needed to start."
   },
   {
     "id": "stability",
@@ -1590,6 +1591,11 @@ window.RADAR = {
     "d": "today",
     "label": "Today · 2 Oct",
     "items": [
+      {
+        "c": "exp",
+        "n": "AI21 $10 trial — AI21's own pages disagree on the length",
+        "t": "ai21.com/pricing says 7 days; docs.ai21.com/docs/usage-cost says three months. Not reconciled, so the length is uncertain. The 6 Oct date on that row is a placeholder — the clock runs from your own signup either way. No card needed to start."
+      },
       {
         "c": "exp",
         "n": "CORRECTION — Cerebras is not a 1M-token/day free tier",

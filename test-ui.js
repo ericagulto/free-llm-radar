@@ -102,7 +102,7 @@ const URL = 'file:///' + path.resolve(__dirname, 'index.html').replace(/\\/g, '/
 
 // Read the offer count straight out of data.js so this test does not need editing every
 // time an offer is added — while still catching a silent data loss via the floor below.
-let EXPECTED = null, OFFERS = null;
+let EXPECTED = null, EXPECTED_MAIN = null, OFFERS = null;
 try {
   const vm = require('vm');
   const box = { window: {} };
@@ -110,11 +110,16 @@ try {
   vm.runInContext(fs.readFileSync(path.join(__dirname, 'data.js'), 'utf8'), box);
   OFFERS = box.window.RADAR.offers;
   EXPECTED = OFFERS.length;
+  // The dashboard opens on the main tab, which excludes cn-only offers. "Everything"
+  // for the assertions below means what the default view renders, not the raw data.
+  EXPECTED_MAIN = OFFERS.filter(o => o.reach !== 'cn-only').length;
 } catch (e) {
   skip('could not read data.js to establish the expected count — ' + e.message);
 }
 // The offer with the largest published allowance — used to check header sorting.
-const MAX_BUDGET_ID = OFFERS.filter(o => o.budget > 0)
+// Scoped to the main tab: the overall largest grant (wechat) is cn-only and so is
+// not rendered on the tab the dashboard opens on.
+const MAX_BUDGET_ID = OFFERS.filter(o => o.budget > 0 && o.reach !== 'cn-only')
   .sort((a, b) => b.budget - a.budget)[0].id;
 // Reach counts, derived from the same data file. "Sign up anywhere" must hide every
 // cn-only offer; "China-only" must show exactly those and nothing else.
@@ -158,9 +163,10 @@ const check = (label, actual, expected, cmp = '==') => {
   const reset = async () => { await click('all'); };
 
   // ---- baseline ----
+  // The dashboard opens on the main tab, which hides cn-only offers.
   const total = await count();
-  check('baseline: rendered count matches data.js', total, EXPECTED);
-  check('baseline: dataset has not silently shrunk', total, FLOOR, '>=');
+  check('baseline: rendered count matches the main tab of data.js', total, EXPECTED_MAIN);
+  check('baseline: dataset has not silently shrunk', total + CN_ONLY.length, FLOOR, '>=');
 
   // ---- measure each chip on its own ----
   const single = {};
@@ -193,35 +199,57 @@ const check = (label, actual, expected, cmp = '==') => {
   await reset(); await click('refonly'); await click('noref');
   check('complementary: refonly + noref = everything', await count(), total);
 
-  // ---- reach: a split, not a complement ----
-  // "Sign up anywhere" means anything a reader outside mainland China can claim,
-  // so it includes cn-direct. It must exclude every cn-only offer.
-  await reset(); await click('global');
-  check('reach: "sign up anywhere" = everything except cn-only', await count(), REACHABLE);
-  const leaked = await page.evaluate(ids =>
-    [...document.querySelectorAll('#list .row')].map(r => r.dataset.id).filter(id => ids.includes(id)),
+  // ---- reach: a tab, not a filter ----
+  // China-only offers live on their own tab. The main tab must exclude every one of
+  // them, and the count in the tab label must agree with what is rendered.
+  const tabIds = async () => page.evaluate(() =>
+    [...document.querySelectorAll('#list .row')].map(r => r.dataset.id));
+  const switchTab = async t => {
+    await page.click(`.tab[data-tab="${t}"]`);
+    await page.waitForTimeout(60);
+  };
+  const tabLabel = async t =>
+    (await page.textContent(`.tab[data-tab="${t}"] .tct`)).trim();
+
+  await switchTab('main');
+  const mainTotal = await count();
+  check('reach tab: main excludes every cn-only offer', mainTotal, EXPECTED - CN_ONLY.length);
+  check('reach tab: main tab label matches the rendered count', await tabLabel('main'), String(mainTotal));
+  const leakedMain = (await tabIds()).filter(id => CN_ONLY.includes(id));
+  check('reach tab: no cn-only offer appears on the main tab', leakedMain.length, 0);
+
+  await switchTab('cn');
+  const cnTotal = await count();
+  check('reach tab: china-only tab shows exactly the cn-only offers', cnTotal, CN_ONLY.length);
+  check('reach tab: china tab label matches the rendered count', await tabLabel('cn'), String(cnTotal));
+  const notCn = (await tabIds()).filter(id => !CN_ONLY.includes(id));
+  check('reach tab: the china tab contains nothing else', notCn.length, 0);
+
+  // The two tabs must partition the dataset — no offer lost, none duplicated.
+  check('reach tab: the two tabs partition the dataset', mainTotal + cnTotal, EXPECTED);
+
+  // Metrics must follow the tab, or the strip contradicts the table.
+  await switchTab('main');
+  const mainStrip = await page.textContent('#strip');
+  await switchTab('cn');
+  const cnStrip = await page.textContent('#strip');
+  check('reach tab: the metric strip changes with the tab', mainStrip === cnStrip, false);
+
+  // The main tab must say plainly what it is hiding.
+  await switchTab('main');
+  const note = (await page.textContent('#tabnote')).trim();
+  check('reach tab: the main tab explains the hidden count',
+        note.includes(String(CN_ONLY.length)), true);
+
+  // A referral card for a cn-only offer must not sit on the main tab, where the
+  // reader cannot claim it. workbuddy is both cn-only and the live referral.
+  const cnRefOnMain = await page.evaluate(cnOnlyIds =>
+    [...document.querySelectorAll('#feat .fcard')].length > 0 &&
+    [...document.querySelectorAll('#list .row')].some(r => cnOnlyIds.includes(r.dataset.id)),
     CN_ONLY);
-  check('reach: no cn-only offer survives the "sign up anywhere" filter', leaked.length, 0);
+  check('reach tab: no cn-only referral block on the main tab', cnRefOnMain, false);
 
-  await reset(); await click('cnonly');
-  check('reach: "china-only" shows exactly the cn-only offers', await count(), CN_ONLY.length);
-  const onlyCn = await page.evaluate(len => {
-    const rows = [...document.querySelectorAll('#list .row')];
-    return rows.length === len;
-  }, CN_ONLY.length);
-  check('reach: the china-only view contains nothing else', onlyCn, true);
-
-  // The chip must be labelled honestly — "CN only", not the old "CN direct".
-  const reachBadges = await page.evaluate(() =>
-    [...new Set([...document.querySelectorAll('#list .row .tag')].map(e => e.textContent.trim()))]);
-  check('reach: cn-only rows carry a "CN only" badge', reachBadges.includes('CN only'), true);
-
-  // Reach ORs within its own dimension and ANDs with kind.
-  await reset(); await click('global'); await click('cnonly');
-  check('reach OR: both selected = everything', await count(), total);
-  await reset(); await click('global'); await click('portable');
-  check('reach AND kind: reachable portables <= all portables',
-        await count(), single.portable, '<=');
+  await switchTab('main');
 
   // ---- three dimensions at once ----
   await reset(); await click('portable'); await click('nocard'); await click('noref');
@@ -262,8 +290,13 @@ const check = (label, actual, expected, cmp = '==') => {
 
   // ---- rel="sponsored" must be limited to links that actually carry a referral ----
   // Reset first: a filter left active would hide most rows and make this vacuously pass.
+  // Switch to the china-only tab first — the live referral (workbuddy) is cn-only, so
+  // the referral links only exist on that tab. Asserting on the main tab would silently
+  // pass with zero sponsored links and prove nothing.
   await reset();
-  check('rel check runs against the full list', await count(), EXPECTED);
+  await page.click('.tab[data-tab="cn"]');
+  await page.waitForTimeout(60);
+  check('rel check runs against the full list', await count(), CN_ONLY.length);
   const relTally = await page.$$eval('a[rel]', as => {
     const t = { sponsored: [], plain: 0 };
     for (const a of as) {
@@ -277,10 +310,21 @@ const check = (label, actual, expected, cmp = '==') => {
   check('only referral links are marked sponsored', relTally.sponsored.length, 2);
   check('every sponsored link points at the referral URL',
         relTally.sponsored.every(h => h.includes('workbuddy.ai/invite')), true);
-  check('all other provider links are unmarked', relTally.plain, EXPECTED - 1);
+  check('all other provider links are unmarked', relTally.plain, CN_ONLY.length - 1);
+  // Back to the main tab for the remaining assertions.
+  await page.click('.tab[data-tab="main"]');
+  await page.waitForTimeout(60);
 
   // ================= featured block =================
+  // The live referral (workbuddy) is cn-only, so the featured block only exists on
+  // the china-only tab. On the main tab it must be absent — a referral card the
+  // reader cannot act on is worse than no card.
   await reset();
+  check('featured block is hidden on the main tab when the referral is cn-only',
+        await page.getAttribute('#feat', 'hidden'), '');
+
+  await page.click('.tab[data-tab="cn"]');
+  await page.waitForTimeout(60);
   const featHidden = await page.getAttribute('#feat', 'hidden');
   check('featured block is visible when a referral link is active', featHidden, null);
 
@@ -304,6 +348,8 @@ const check = (label, actual, expected, cmp = '==') => {
   check('featured empties when referral offers are filtered out',
         await page.getAttribute('#feat', 'hidden'), '');
   await reset();
+  await page.click('.tab[data-tab="main"]');
+  await page.waitForTimeout(60);
 
   // ================= header multi-sort =================
   const firstId = () => page.$eval('.row', e => e.dataset.id);
@@ -399,13 +445,16 @@ const check = (label, actual, expected, cmp = '==') => {
         links.every(l => l.name === `offers/${l.id}.html`), true);
   check('every row has a full-guide link in its panel',
         links.every(l => l.full === `offers/${l.id}.html`), true);
-  check('cross-links cover every rendered row', links.length, EXPECTED);
+  check('cross-links cover every rendered row', links.length, EXPECTED_MAIN);
   const missing = links.filter(l => !fs.existsSync(path.join(__dirname, 'offers', l.id + '.html')));
   check('every linked detail page exists on disk', missing.length, 0);
 
   // ---- referral styling and support note ----
   // The referral CTA must be the green one, and the support note must exist whenever a
   // referral is live — it is the only place the reader is told they can help.
+  // The live referral is cn-only, so this has to run on the china-only tab.
+  await page.click('.tab[data-tab="cn"]');
+  await page.waitForTimeout(60);
   const refStyle = await page.evaluate(() => {
     const ref = document.querySelector('.go.ref');
     const plain = document.querySelector('.go:not(.ref)');
@@ -432,6 +481,8 @@ const check = (label, actual, expected, cmp = '==') => {
   check('the referral CTA is actually green', isGreen(refStyle.refBg), true);
   check('the featured ribbon is actually green', isGreen(refStyle.ribbon), true);
   check('a support note is shown near the referral links', refStyle.support >= 1, true);
+  await page.click('.tab[data-tab="main"]');
+  await page.waitForTimeout(60);
 
   // ---- mobile layout ----
   // The bugs this guards: the summary grid once forced the allowance and type tag into a 22px

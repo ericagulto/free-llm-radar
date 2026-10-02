@@ -13,7 +13,118 @@ Format per entry:
 
 ---
 
-## 2026-10-02 (b) — new `reach` field: is an offer claimable from outside China?
+## 2026-10-02 (d) — second refresh of the day; no new offers, one flagged discrepancy
+
+**Offer count unchanged at 49.** No offer added, removed, extended or closed. This is the 08:00
+scheduled run; the 01:35 run earlier today was (b). All existing `end` dates were re-checked before
+looking for anything new.
+
+**FLAGGED — `ai21` trial length is contested by AI21's own pages.** `ai21.com/pricing` says the $10
+free trial is good for **7 days**; `docs.ai21.com/docs/usage-cost` says new accounts get a $10 credit
+**good for three months**. Both read directly on 2 Oct. The two have not been reconciled, so the
+published 7-day figure is left **unchanged** rather than flipped on one page — flipping it would turn
+a row that reads "expiring" into one that does not, on evidence that contradicts itself. A `note` was
+added recording both readings and stating what is certain: the clock runs from the reader's own
+signup, so the row's `2026-10-06` is a **placeholder, not a deadline**. `added` bumped to 2026-10-02.
+**Operator decision wanted:** `oci`, `azure` and `ai21` all now carry a placeholder date plus a note
+saying so. That is three rows where `end` looks like a deadline and is not. Either the convention
+needs a real `end: null` treatment or the rail needs to suppress placeholder dates — a refresh job
+should not keep making that call per-row.
+
+**Verified, no change.** `workbuddy.cn/events/invite` — still 即日起至2026年10月31日, and the invitee
+bonus still reads 截止日期：2026年10月31日 (read directly). `docs.qoder.com/events/flashoffer` — still
+free, end date still TBA. `vercel.com/changelog/…ling-3-1-flash…` — free to 13 Oct, unchanged.
+`inference-docs.cerebras.ai/support/change-log` — the $5/30-day trial correction of this morning
+still holds. Tracker-corroborated only (vendor pages not re-read this run): ZCode Trust Build,
+MiniMax Code and GLM night-free all still to 7 Oct; Hunyuan Hy3 限免 + Hy4 night-free to 31 Oct with
+night hours 23:00–08:00 and a 10 Oct last-start date.
+
+**Tracker claim rejected — vendor wins.** Two CN trackers publish end dates for OpenCode Zen's free
+models (Space Bunny "to 5 Oct", LongCat 2.5 "to ~10 Oct"). `opencode.ai/docs/zen` states only
+"limited time" for all ten free models and gives **no** end date. The data is left as-is.
+
+**Considered and deliberately NOT added (4).** (1) **apmix `gpt-6-luna-free`** — a 10B-token *shared*
+pool opening 2 Oct 17:00 UTC, from a reseller. No per-user allocation, and nothing outside the
+reseller's own blog corroborates it. (2) **Laya** (`convaiinnovations/laya`) — genuinely free on
+Vercel AI Gateway to 31 Oct, verified on Vercel's own model page, but it is a structured-decision /
+evaluation model that returns typed answers and does not generate text — outside a free-*LLM* list.
+(3) **xAI Grok $25 signup credit** — reported by trackers, but `docs.x.ai` shows no free credit and
+the secondary sources disagree with each other ($25 signup vs $150–175/month data-sharing). Not
+verifiable from a primary source. (4) **DeepSeek 5M new-user tokens** — `api-docs.deepseek.com`
+pricing mentions a "granted balance" but publishes **no** amount; the 5M figure appears only on
+third-party pages. Also not added: Kuaishou StreamLake KAT-Coder-Air (its free-API claim cites a
+model version the vendor marks 已下线; no free pricing on the vendor's own docs).
+
+**Referral terms re-checked — `referrals.js` NOT touched.** `zai` unchanged (10% / 72h / 3-referral
+payout threshold, terms last updated 15 Mar 2026). `qoderwork_cn` unchanged and still titled
+【7月30日截止】 on a docs site the vendor itself flags as outdated. `workbuddy` — the reward structure
+on the live event page matches `referrals.js` exactly (50 + 100 + 500), so nothing to correct; but the
+programme `note` still says "the event runs to 30 September 2026" and that is now **stale by a
+month**. Third run running that this has been flagged. It is a hand-edit, so it is reported, not made.
+
+**Next run must handle:** AI21 (see above) · DeepSeek Harness ~6 Oct · ZCode Trust Build / MiniMax
+Code / GLM night-free 7 Oct · Ling 3.1 Flash 13 Oct · Hunyuan Hy4 last start 10 Oct · Doubao ~17 Oct ·
+Hunyuan + WorkBuddy 31 Oct · Laya promo 31 Oct. **`content.js`'s `wenxin` entry still needs a human
+hand edit** — it says "Both halves close 30 September". Fourth run running. A refresh is forbidden
+from writing `content.js`, so it will never self-heal.
+
+---
+
+**Not a refresh — a presentation change.** Offer count unchanged at 49.
+
+**Why.** The `reach` work earlier today made the China-only offers *filterable*, but they still
+rendered in the main list by default. For this audience that is still wrong: 11 of 49 offers need a
+mainland account, phone number or real-name verification, so they cannot be claimed at all — and
+because the dated rows skew Chinese, they were dragging the expiry rail down with them. Operator's
+call: put them on a separate tab and open on the main one.
+
+**What changed.**
+
+- **Tab bar above the controls**: `Offers (38)` / `China-only (11)`. The dashboard **opens on
+  `Offers`**, so the cn-only rows are hidden by default. Tab scoping is applied *before* the filters,
+  so the metric strip, the count and the chips all agree with the tab you are looking at.
+- **The `China-only` filter chip is gone** — the tab supersedes it. The `Sign up anywhere` chip
+  remains, and now only ever has work to do when you are on the China tab.
+- **The main tab states what it is hiding** (`Main list hides 11 offers that need a mainland Chinese
+  account`) so the gap between the tab label and the rail is never unexplained.
+- Switching to the China tab **clears the `global` chip**, which would otherwise silently blank the
+  list.
+- The tab hides itself entirely if no cn-only offers exist, rather than showing an empty one.
+
+**Two bugs found and fixed while doing this**, both worth recording:
+
+1. **Temporal dead zone.** `scoped` was declared *after* the metrics block that calls it, so the page
+   threw `ReferenceError: Cannot access 'scoped' before initialization` and rendered an empty
+   dashboard. Moved the tab state above the metrics block. Caught by loading the page in a browser —
+   it would not have been caught by reading the diff.
+2. **The featured referral block followed the wrong tab.** It rendered on the **China-only** tab
+   (where the reader cannot use it) and vanished from the **main** tab (where they can). Fixed by
+   scoping it to the active tab like the table is. This exposed a **product conflict rather than a
+   bug**: the only active referral link belongs to `workbuddy`, which is `cn-only`, so hiding
+   cn-only by default also hides the site's only monetised placement. **Reported to the operator —
+   the resolution is a referral-programme decision, not a code change.** `referrals.js` NOT touched.
+
+**Test fallout, all resolved.** Three assertions had assumed the full dataset was rendered, and one
+referral-block assertion timed out waiting for markup that no longer exists on the default tab:
+
+- `EXPECTED` now means "what the default tab renders"; the raw count is `EXPECTED` and the tab count
+  is `EXPECTED_MAIN`. Both are exposed so the distinction is visible to the next editor.
+- The largest-grant sort assertion was scoped to the main tab (the overall max, WeChat, is cn-only).
+- The `rel="sponsored"` and featured-block assertions now switch to the China tab first — on the main
+  tab they would otherwise have found zero sponsored links and **passed vacuously**.
+- 7 new assertions cover the tab split: main excludes every cn-only offer, china shows exactly those,
+  the two partition the dataset, labels match counts, the strip changes with the tab, the main tab
+  explains the hidden count, and no cn-only referral block sits on the main tab.
+
+`validate.js` exit 0 · `test-validate.js` **19/19** · `test-ui.js` **97/98** (sole failure remains the
+pre-existing `dropdown name sort is alphabetical` harness bug) · mobile fold still passes at 360px
+and 390px.
+
+**Rollback:** restore `index.html` from git (`3160e20` or earlier) and the previous `data.js` from
+`archive/data-2026-10-02.js`. The tab change is entirely in `index.html`; `data.js` is unaffected.
+
+---
+
 
 **Not a refresh — a schema and UI change**, made deliberately rather than by the daily job. The
 offer count is unchanged at 49.

@@ -214,9 +214,31 @@ Two guard rails enforce this, so a mistake fails the build rather than shipping:
 
 - `validate.js` **fails if `reach` is missing or not one of the three values**, and fails if a
   `cn-only` offer carries `china: false` (the two fields contradicting each other).
-- `test-ui.js` asserts that the "Sign up anywhere" chip hides **every** cn-only offer, that
-  "China-only" shows exactly those and nothing else, and that both OR within the dimension and AND
-  with `kind`. If you add a `reach` value, extend those assertions.
+- `test-ui.js` asserts that the **main tab excludes every cn-only offer**, that the **china-only tab
+  shows exactly those and nothing else**, that the two tabs partition the dataset, and that the
+  metric strip and tab labels follow the active tab. If you add a `reach` value, extend those
+  assertions.
+
+### Reach drives a tab, not a chip
+
+`cn-only` offers render on a separate **"China-only" tab**, and the dashboard **opens on the main tab
+with those hidden**. That is deliberate: the offers require a mainland account, phone number or
+real-name ID, so for most readers they are unclaimable noise — and because the dated rows skew
+Chinese, they used to dominate the expiry rail too.
+
+Consequences to keep in mind when editing `index.html`:
+
+- **The main tab is the default, so "the full list" in a test means `EXPECTED_MAIN`**, i.e. the
+  dataset minus the cn-only rows — *not* `RADAR.offers.length`. Three assertions broke on this
+  distinction when the tab was introduced. The UI test exposes both as
+  `EXPECTED_MAIN` and `EXPECTED`.
+- **The largest-grant row is cn-only** (WeChat). A sort assertion that uses the raw maximum will
+  fail on the main tab; scope it to the tab being tested.
+- **The one live referral link is on a cn-only offer** (`workbuddy`). So the featured block renders
+  on the **China-only tab**, not the main one. Any test that looks for `.fcard`, `.ftxt` or `.go.ref`
+  must switch tabs first, or it will either time out or pass vacuously with zero cards.
+- Pressing the China tab **clears the `global` chip** — a filter that would empty the other tab is
+  dropped rather than silently producing a blank list.
 
 `china` is the **legacy boolean** and is kept only for compatibility. Do not delete it, do not add
 new logic that reads it — `reach` supersedes it. When they disagree, `reach` is right.

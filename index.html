@@ -131,6 +131,21 @@ select:focus,input:focus{border-color:var(--amber)}
 .chipbtn.armed:hover{background:var(--amber);color:#1a1206}
 .chiphint{flex-basis:100%;font-family:var(--mono);font-size:10.5px;color:var(--tx3);margin-top:1px}
 .chiphint b{color:var(--tx2);font-weight:600}
+/* Tab bar. Splits the dataset rather than filtering it: the China-only offers are
+   not useful to a reader outside mainland China, so they live on their own tab
+   instead of diluting the main list. */
+.tabs{display:flex;align-items:center;gap:2px;padding:0 22px;margin-top:14px;border-bottom:1px solid var(--line2);flex-wrap:wrap}
+.tab{
+  background:none;border:0;border-bottom:2px solid transparent;color:var(--tx3);
+  font-family:'Archivo',sans-serif;font-size:12.5px;font-weight:600;padding:9px 14px 10px;
+  cursor:pointer;transition:color .14s ease,border-color .14s ease;margin-bottom:-1px;
+}
+.tab:hover{color:var(--tx)}
+.tab.on{color:var(--amber);border-bottom-color:var(--amber)}
+.tab:focus-visible{outline:2px solid var(--amber);outline-offset:-2px;border-radius:3px}
+.tct{font-family:var(--mono);font-size:10.5px;color:var(--tx3);margin-left:6px}
+.tab.on .tct{color:var(--amberd)}
+.tabnote{font-family:var(--mono);font-size:10.5px;color:var(--tx3);margin-left:auto;align-self:center}
 .count{margin-left:auto;font-family:var(--mono);font-size:11.5px;color:var(--tx3)}
 
 .rows{padding:8px 30px 0}
@@ -363,6 +378,9 @@ footer b{color:var(--tx2)}
      every new filter dimension costs another wrapped row — which pushes the
      first offer down. Tighten the chips rather than the rows. */
   .chiphint{display:none}
+  .tabs{padding:0 16px;margin-top:10px}
+  .tab{padding:8px 10px 9px;font-size:12px}
+  .tabnote{display:none}
   .feat{margin:10px 16px 2px;padding:13px 14px}
   .fcards{grid-template-columns:1fr}
   .rows{padding:8px 16px 0}
@@ -411,6 +429,12 @@ footer b{color:var(--tx2)}
 
     <div class="strip" id="strip"></div>
 
+    <div class="tabs" id="tabs" role="tablist" aria-label="Offer sets">
+      <button class="tab on" data-tab="main" role="tab" aria-selected="true" aria-controls="list">Offers<span class="tct" id="tct-main"></span></button>
+      <button class="tab" data-tab="cn" role="tab" aria-selected="false" aria-controls="list">China-only<span class="tct" id="tct-cn"></span></button>
+      <span class="tabnote" id="tabnote"></span>
+    </div>
+
     <div class="ctl">
       <div class="grp">
         <label for="sort">Sort</label>
@@ -433,7 +457,6 @@ footer b{color:var(--tx2)}
         <button class="chipbtn" data-f="nocard" aria-pressed="false">No card</button>
         <button class="chipbtn" data-f="expiring" aria-pressed="false">Expiring ≤7d</button>
         <button class="chipbtn" data-f="global" aria-pressed="false">Sign up anywhere</button>
-        <button class="chipbtn" data-f="cnonly" aria-pressed="false">China-only</button>
         <button class="chipbtn" data-f="refonly" aria-pressed="false">Referral-linked</button>
         <button class="chipbtn" data-f="noref" aria-pressed="false">No referral</button>
         <div class="chiphint">Multi-select — pick several. <b>Portable key + No card</b> shows portables that need no card. <b>Sign up anywhere</b> hides offers that need a mainland Chinese account.</div>
@@ -604,19 +627,37 @@ if (typeof RADAR === 'undefined') {
   document.getElementById('meta').textContent =
     `Last refresh ${fmt} GMT+8 · ${D.length} offers tracked`;
 
-  /* ---------- metrics ---------- */
-  const now = upd;
-  const daysTo = d => d ? Math.ceil((new Date(d+'T23:59:59+08:00') - now)/86400000) : null;
-  const withBudget = D.filter(x=>x.budget>0).sort((a,b)=>b.budget-a.budget);
-  const biggest = withBudget[0];
-  const expiring = D.filter(x=>{const n=daysTo(x.end); return n!==null && n>=0 && n<=7;}).length;
-  const portables = D.filter(x=>x.kind==='portable'||x.kind==='keyless').length;
+  /* ---------- tabs ----------
+     The China-only offers need a mainland account, phone number or real-name ID,
+     so for most readers they are unclaimable noise in the main list. They get their
+     own tab instead of a filter chip: the main view is simply *correct* by default,
+     rather than correct only if the reader remembers to tick something.
+     Tab scoping is applied before filters, so the metric strip, the count and the
+     chips all stay consistent with the tab you are looking at.
+     Declared before the metrics block — that block calls scoped() at load. */
+  let activeTab = 'main';
+  const TAB_SETS = {
+    main: () => D.filter(x => x.reach !== 'cn-only'),
+    cn:   () => D.filter(x => x.reach === 'cn-only')
+  };
+  const scoped = () => (TAB_SETS[activeTab] || TAB_SETS.main)();
 
-  document.getElementById('strip').innerHTML = `
-    <div class="mc"><div class="l">Offers tracked</div><div class="v">${D.length}</div><div class="f">across 4 categories</div></div>
+  /* ---------- metrics ---------- */  const now = upd;
+  const daysTo = d => d ? Math.ceil((new Date(d+'T23:59:59+08:00') - now)/86400000) : null;
+  function renderStrip(){
+    const view = scoped();
+    const withBudget = view.filter(x=>x.budget>0).sort((a,b)=>b.budget-a.budget);
+    const biggest = withBudget[0];
+    const expiring = view.filter(x=>{const n=daysTo(x.end); return n!==null && n>=0 && n<=7;}).length;
+    const portables = view.filter(x=>x.kind==='portable'||x.kind==='keyless').length;
+    const scope = activeTab === 'cn' ? 'China-only' : 'Offers tracked';
+    document.getElementById('strip').innerHTML = `
+    <div class="mc"><div class="l">${scope}</div><div class="v">${view.length}</div><div class="f">${activeTab==='cn'?'need a mainland account':'across 4 categories'}</div></div>
     <div class="mc"><div class="l">Portable keys</div><div class="v g">${portables}</div><div class="f">usable anywhere</div></div>
     <div class="mc"><div class="l">Expiring ≤ 7 days</div><div class="v r">${expiring}</div><div class="f">act on these first</div></div>
     <div class="mc"><div class="l">Largest grant</div><div class="v a">${biggest?(biggest.budget/1e6).toFixed(0):'—'}M</div><div class="f">${biggest?biggest.name:'—'}</div></div>`;
+  }
+  renderStrip();
 
   /* ---------- list ---------- */
   const kindLabel = {portable:'Portable key',client:'Client-bound',keyless:'Keyless',credit:'Cloud credit'};
@@ -659,7 +700,7 @@ if (typeof RADAR === 'undefined') {
     kind: ['portable','client','keyless','credit'],
     card: ['nocard'],
     time: ['expiring'],
-    reach:['global','cnonly'],
+    reach:['global'],
     ref:  ['refonly','noref']
   };
   const activeFilters = new Set();
@@ -687,10 +728,8 @@ if (typeof RADAR === 'undefined') {
         if(f==='expiring'){ const n=daysTo(o.end); return n!==null && n>=0 && n<=7; }
         if(f==='refonly')  return !!refFor(o);
         if(f==='noref')    return !refFor(o);
-        // "Sign up anywhere" = global OR cn-direct, i.e. anything a reader outside
-        // mainland China can actually claim. Only cn-only is excluded.
+        // "Sign up anywhere" = anything a reader outside mainland China can claim.
         if(f==='global')   return o.reach !== 'cn-only';
-        if(f==='cnonly')   return o.reach === 'cn-only';
         return o.kind===f;                            // kind dimension
       });
       if(!hit) return false;                          // AND across dimensions
@@ -725,6 +764,8 @@ if (typeof RADAR === 'undefined') {
      It does NOT reorder the table below. The table still lists every offer on equal terms. */
   function renderFeatured(matched){
     const el = document.getElementById('feat');
+    // Scoped to the active tab, like the table is: a referral card for a cn-only
+    // offer must not sit on the main tab, where the reader cannot use it.
     const feat = matched.filter(o => { const r = refFor(o); return !!(r && r.active); });
     if(!feat.length){ el.hidden = true; el.innerHTML = ''; return; }
     el.hidden = false;
@@ -755,12 +796,13 @@ if (typeof RADAR === 'undefined') {
   }
 
   function render(){
-    const matched = D.filter(passes);
+    const view = scoped();
+    const matched = view.filter(passes);
     const list = matched.slice().sort(cmp);
     renderFeatured(matched);
     const nf = activeFilters.size;
     document.getElementById('count').textContent =
-      `${list.length} / ${D.length} shown` + (nf ? ` · ${nf} filter${nf>1?'s':''}` : '');
+      `${list.length} / ${view.length} shown` + (nf ? ` · ${nf} filter${nf>1?'s':''}` : '');
     const el = document.getElementById('list');
     if(!list.length){
       el.innerHTML = `<div class="empty"><b>Nothing matches</b>` +
@@ -917,7 +959,39 @@ if (typeof RADAR === 'undefined') {
     else activeFilters.has(f) ? activeFilters.delete(f) : activeFilters.add(f);
     syncChips(); render();
   });
+
+  /* ---------- tabs ---------- */
+  const cnCount = D.filter(x => x.reach === 'cn-only').length;
+  const anyCn = cnCount > 0;
+  document.getElementById('tct-main').textContent = String(D.length - cnCount);
+  document.getElementById('tct-cn').textContent = String(cnCount);
+  // If there are no China-only offers there is nothing to switch to — hide the tab
+  // rather than leaving an empty one that reads as a bug.
+  const cnTabBtn = document.querySelector('.tab[data-tab="cn"]');
+  if(!anyCn) cnTabBtn.hidden = true;
+
+  function syncTabs(){
+    document.querySelectorAll('.tab').forEach(t=>{
+      const on = t.dataset.tab === activeTab;
+      t.classList.toggle('on', on);
+      t.setAttribute('aria-selected', on ? 'true' : 'false');
+    });
+    // Say plainly what the main tab is hiding, so the number is never unexplained.
+    document.getElementById('tabnote').textContent =
+      activeTab === 'cn'
+        ? 'Not claimable without a mainland Chinese account.'
+        : (anyCn ? `Main list hides ${cnCount} offer${cnCount>1?'s':''} that need a mainland Chinese account.` : '');
+  }
+  document.getElementById('tabs').addEventListener('click', e=>{
+    const t=e.target.closest('.tab'); if(!t || t.hidden) return;
+    if(t.dataset.tab === activeTab) return;
+    activeTab = t.dataset.tab;
+    // A filter that only makes sense on one tab would silently empty the other.
+    if(activeTab === 'cn') activeFilters.delete('global');
+    syncChips(); syncTabs(); renderStrip(); render();
+  });
   syncChips();
+  syncTabs();
   syncSort();
   render();
 })();
