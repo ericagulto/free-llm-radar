@@ -62,6 +62,25 @@ on the live event page matches `referrals.js` exactly (50 + 100 + 500), so nothi
 programme `note` still says "the event runs to 30 September 2026" and that is now **stale by a
 month**. Third run running that this has been flagged. It is a hand-edit, so it is reported, not made.
 
+**Tooling anomaly — the publisher's own log line lied, in the reassuring direction.** `publish.sh`
+step 3 printed `No data change — nothing to push.` on this run **while the same run created and pushed
+data commit `d63dfa6`**. Cause: Windows `core.autocrlf` — `git diff` is blind to line-ending-only
+differences that `git add`/`commit` still record, so `sync-data.sh`'s idempotency check can report a
+no-op that did not happen. The dangerous direction is exactly this one: a future run reads "nothing to
+push", concludes the refresh never landed, and either re-does it or reports a failure that did not
+occur. **Verify publishes from the remote, not from the script's output:**
+
+```bash
+git -C deploy/data-repo log --oneline -1 origin/main     # is the new commit there?
+git -C deploy/data-repo log --oneline origin/main..HEAD  # empty = fully pushed
+curl -s "https://ericagulto.github.io/free-llm-radar-data/data.js?cb=$(date +%s)" \
+  | grep -o "updated: '[^']*'"                           # the deployed value, not the local one
+```
+
+Also noted: `sync-data.sh`'s header comment still says a data push means "the site never has to be
+redeployed". That was true before the per-offer pages existed and is **not** true now — AGENTS.md
+corrects it, the script comment was never updated. Left alone rather than edited on a refresh run.
+
 **Next run must handle:** AI21 (see above) · DeepSeek Harness ~6 Oct · ZCode Trust Build / MiniMax
 Code / GLM night-free 7 Oct · Ling 3.1 Flash 13 Oct · Hunyuan Hy4 last start 10 Oct · Doubao ~17 Oct ·
 Hunyuan + WorkBuddy 31 Oct · Laya promo 31 Oct. **`content.js`'s `wenxin` entry still needs a human
