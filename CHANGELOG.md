@@ -13,6 +13,117 @@ Format per entry:
 
 ---
 
+## 2026-10-04
+
+- **NO DEADLINE CHANGES.** Every published `end` date re-verified and unchanged. 49 → **50 offers**,
+  50 pages, `validate.js` exit 0, `test-validate.js` 19/19.
+- **ADDED — `orcarouter` (OrcaRouter, free-model gateway, `portable`, `reach: global`).** Verified
+  directly against the vendor, not a tracker: `docs.orcarouter.ai/routing/free-models`,
+  `orcarouter.ai/offers`, and the vendor's own public API `api.orcarouter.ai/api/free-package/public`
+  (read this run — free ids live today are `deepseek/deepseek-v4-flash-free`,
+  `z-ai/glm-5.3-flash-free`, `tencent/hy3-free`, `tencent/hy4-preview-free`, plus a built-in
+  `orcarouter/free` difficulty router). Free ids are $0/token with **no expiry**; unpaid-tier limits
+  **10 rpm / 50 rpd** rising to 20/800 after $20 lifetime spend. Gated on an **established GitHub
+  account**; an unpublished per-request prompt cap returns **400, not 429**. New `content.js` entry
+  added (the refresh may add a `content.js` entry for a *new* offer; it never rewrites existing prose).
+- **CHANGED — `kilo`.** The vendor's free-model page (`kilo.ai/landing/free-models`) now lists
+  **Space Bunny Alpha as retiring 5 October** and **Ling 3.1 Flash as added 2 October**. The row's
+  illustrative `models` array was corrected (Space Bunny out, Ling 3.1 Flash / Nemotron 3 Ultra /
+  Dots3-Note in) and the `warn`/`note` updated. `added` deliberately **not** bumped: the offer's terms
+  did not change, only the rotating roster the row already describes as rotating.
+- **CHANGED — `opencodezen`.** Added a sentence to the existing `note` recording that **Space Bunny's
+  free window is reported to close 5 October** and **LongCat 2.5 preview around 10 October**. Zen's own
+  docs publish neither date, so both are marked approximate. `end` left `null` — no offer-level end.
+- Verified (vendor primary, read directly):
+  - `glmnight` — docs.bigmodel.cn **and** docs.z.ai: campaign 3 Sep → **7 Oct**, 23:00–09:00,
+    GLM-5.3-Flash only, free in ZCode/AutoClaw, 2× in other plan agents, 5-hour/week cap. Unchanged.
+    (Separate fact, not new: an all-day off-peak rate also runs 25 Sep → 7 Oct.)
+  - `workbuddy` — workbuddy.cn/events/invite: 即日起至2026年10月31日, invitee 2,000 积分 截止
+    2026年10月31日. Unchanged.
+  - `qoder` — docs.qoder.com/events/flashoffer: still free past 30 Sep, **end date still TBA**. Unchanged.
+  - `ling31` — vercel.com/changelog: free to **13 Oct**. Unchanged.
+  - `ai21` — **still contested, NOT flipped.** docs.ai21.com/docs/usage-cost still says the $10 trial is
+    good for **three months**; ai21.com/pricing still says **7 days**. Third run carrying this open.
+  - `kilo` — roster as above.
+  - api-docs.deepseek.com/quick_start/pricing — **no new-user grant amount published**; the "5M free
+    tokens" claim circulating on CN trackers stays **tracker-only** and was **not** added (same call as
+    run 4). The vendor page mentions only a "granted balance" in its deduction rules.
+- Verified (multi-source, not vendor-read): `hunyuan` Hy3 限免 + Hy4 preview night-free 23:00–08:00 to
+  **31 Oct**, Hy4 new-user 14-day first start by **10 Oct 23:59** (Tencent 30 Sep announcement via
+  Tencent News / Sohu / MSN) — unchanged. `dsharness` ¥6 credit usable to **6 Oct 21:00**
+  (Sohu / 17173 / AI Promo Now). `minimaxcode` double check-in **28 Sep → 7 Oct**. `zcode-trust`
+  claim window **28 Sep → 7 Oct**, ~100M tokens, ~100k daily allocations. `doubao` 30-day Standard to
+  **17 Oct** (ByteDance 24 Sep announcement).
+- **REJECTED — tracker claims.** (1) "Vercel Ling 3.0 Flash Sante free ends 4 Oct" — that is **Ling 3.0**,
+  a different model from the `ling31` row (Ling **3.1** Flash, free to 13 Oct); no edit made.
+  (2) "Kilo Code free models, 200 req/hr per IP, no signup" — the vendor's own page requires a Kilo Cloud
+  account and publishes **no** free-tier rate limit. Vendor wins; nothing recorded.
+- **CONSIDERED, NOT ADDED (2):** **SenseNova (商汤日日新) Token Plan** — 1.2M credits/week free during
+  public beta, CN-gated; live since May 2026, not new this week, and not vendor-verified this run.
+  **B.AI** and **TokenRouter** — both flagged 随时可能下线 by the tracker that lists them and neither is
+  vendor-documented. Carry SenseNova forward as a standing candidate.
+- Idempotency: **no stale `status: 'new'` found this run** (first clean run since the drift started).
+  `orcarouter` correctly carries `status: 'new'` — the run it first appears. Rail rolled: 4 Oct today,
+  3 Oct yesterday, 2 Oct and 1 Oct week; the 30 Sep group was dropped as out of window.
+- Referral terms: `referrals.js` **untouched**. Live WorkBuddy reward structure (50 / +100 / +500) still
+  matches the file exactly. Known stale items stand, **sixth run**: the `workbuddy` programme `note`
+  still says the event runs to 30 September; `qoderwork_cn` terms page still titled 【7月30日截止】.
+  Both **reported, not edited**.
+- **Next run must handle:** Space Bunny window ends 5 Oct · DeepSeek Harness ~6 Oct 21:00 · AI21 6 Oct
+  (contested — do not flip) · ZCode Trust Build / MiniMax Code / GLM night-free / OpenCode LongCat 2.5
+  preview **7 Oct** · Hunyuan Hy4 new-user first start **10 Oct** · Ling 3.1 Flash 13 Oct · Doubao ~17 Oct ·
+  Hunyuan + WorkBuddy 31 Oct. **`content.js`'s `wenxin` entry still needs a human hand edit** — says
+  "Both halves close 30 September"; **sixth run running**, and a refresh is forbidden from rewriting
+  existing `content.js` prose, so it will never self-heal. `oci`/`azure`/`ai21` dates are
+  activation-relative placeholders — never report as deadlines.
+
+---
+
+## 2026-10-03
+
+- **NO DEADLINE CHANGES.** Every published `end` date re-verified and unchanged. 49 offers, 49 pages,
+  `validate.js` exit 0. No offers added or removed.
+- Verified (vendor primary, read directly):
+  - `glmnight` — docs.bigmodel.cn/cn/coding-plan/notice/event-glm-5.3-flash: event 3 Sep → **7 Oct**,
+    23:00–09:00, GLM-5.3-Flash only, free in ZCode/AutoClaw, 2× quota in other plan agents,
+    5-hour/week cap. Unchanged.
+  - `workbuddy` — workbuddy.cn/events/invite: 即日起至2026年10月31日, invitee 2,000 积分 截止
+    2026年10月31日. Unchanged.
+  - `qoder` — docs.qoder.com/events/flashoffer **and** docs.qoder.cn/events/flashoffer: still free past
+    30 Sep, **end date still TBA on the page**. Unchanged.
+  - `ling31` — vercel.com/changelog/ling-3-1-flash-is-now-available-on-ai-gateway: free to **13 Oct**.
+    Unchanged.
+  - `workbuddy.ai/pricing` (intl) — Free $0/mo, 100 credits/month + 30/day.
+- **REJECTED — tracker claim.** Two CN trackers now assert Qoder CN's Qwen3.8-Flash free window runs
+  to **31 October**. Qoder's own CN page says only that the period was extended past 30 September and
+  the end date will be announced there. **Vendor wins.** `qoder` keeps `end: null`. Same failure class
+  as the OpenCode Zen tracker claims (run of 2026-10-02).
+- **CONSIDERED, NOT ADDED (2):**
+  - WorkBuddy **international** DeepSeek-V4.1-Flash free to **9 Oct** — real, but **multi-source only**
+    (Tencent/MSN/CSDN, 26 Sep). `workbuddy.ai` returns a region block from here and the offer is not
+    documented on the pricing page. Left out per "vendor page unreachable → leave it and say so."
+  - **Laya** (`convaiinnovations/laya`) — vercel.com/changelog confirms free to **31 Oct**. Re-confirmed
+    **out of scope**: it is an evaluation/decision classifier returning structured yes/no answers, not
+    text generation. Same call as run 4.
+- Verified (multi-source, not vendor-read): `hunyuan` Hy3 限免 + Hy4 night-free 23:00–08:00 extended to
+  **31 Oct**, Hy4 new-user 14-day first conversation by **10 Oct 23:59** (Tencent 30 Sep announcement,
+  via Sina/Tencent News) — unchanged. `dsharness` ¥6 credit to **~6 Oct 21:00** (Sohu/17173). `minimaxcode`
+  double check-in to **7 Oct**. `zcode-trust` claim window **28 Sep → 7 Oct**.
+- Idempotency: cleared stale `status: 'new'` on `ling31` and `dsharness` (the fifth run this has drifted —
+  **check every run**). Rail rolled: 3 Oct → today, 2 Oct → yesterday, 1 Oct and 30 Sep → week.
+- Referral terms: `referrals.js` untouched. Live WorkBuddy reward structure (50 / +100 / +500) still
+  matches the file. Known stale items stand: the `workbuddy` programme `note` still says the event runs
+  to 30 September; `qoderwork_cn` terms page still titled 【7月30日截止】. Both **reported, not edited**.
+- **Next run must handle:** DeepSeek Harness ~6 Oct · AI21 6 Oct (length still contested) · ZCode Trust
+  Build / MiniMax Code / GLM night-free / OpenCode LongCat 2.5 preview **7 Oct** · WorkBuddy intl
+  DeepSeek V4.1-Flash 9 Oct · Hunyuan Hy4 new-user first start **10 Oct** · Ling 3.1 Flash 13 Oct ·
+  Doubao ~17 Oct · Hunyuan + WorkBuddy 31 Oct · Laya 31 Oct. **`content.js`'s `wenxin` entry still needs a
+  human hand edit** — says "Both halves close 30 September"; **fifth run running**, and a refresh is
+  forbidden from writing `content.js`, so it will never self-heal. `oci`/`azure`/`ai21` dates are
+  activation-relative placeholders — never report as deadlines.
+
+---
+
 ## 2026-10-02 (d) — second refresh of the day; no new offers, one flagged discrepancy
 
 **Offer count unchanged at 49.** No offer added, removed, extended or closed. This is the 08:00

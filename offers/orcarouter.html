@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%2312100d'/%3E%3Ccircle cx='16' cy='16' r='9.5' fill='none' stroke='%23e8a33d' stroke-width='2.2'/%3E%3Ccircle cx='16' cy='16' r='3' fill='%23e8a33d'/%3E%3Cpath d='M16 16 L25 9' stroke='%23e8a33d' stroke-width='2.2' stroke-linecap='round'/%3E%3C/svg%3E">
+<title>OrcaRouter free tier — limits, base URL and setup | Free LLM Radar</title>
+<meta name="description" content="OrcaRouter free tier: Standing free tier · no card required. Free ids at $0 per token — no trial clock, no credit balance to burn · 10 req/min · 50…">
+<link rel="canonical" href="https://ericagulto.github.io/free-llm-radar/offers/orcarouter.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="OrcaRouter free tier — limits, base URL and setup">
+<meta property="og:description" content="OrcaRouter free tier: Standing free tier · no card required. Free ids at $0 per token — no trial clock, no credit balance to burn · 10 req/min · 50…">
+<meta property="og:url" content="https://ericagulto.github.io/free-llm-radar/offers/orcarouter.html">
+<meta name="twitter:card" content="summary">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,400;0,500;0,600;0,700;0,800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/offer.css">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Free LLM Radar","item":"https://ericagulto.github.io/free-llm-radar/"},{"@type":"ListItem","position":2,"name":"Offers","item":"https://ericagulto.github.io/free-llm-radar/offers/"},{"@type":"ListItem","position":3,"name":"OrcaRouter","item":"https://ericagulto.github.io/free-llm-radar/offers/orcarouter.html"}]}</script>
+</head>
+<body>
+
+<div class="bar">
+  <a href="../index.html">← Free LLM Radar</a>
+  <span class="sp">Verified 2026-10-04</span>
+</div>
+
+<main>
+  <div class="crumb"><a href="../index.html">Radar</a> / <a href="index.html">Offers</a> / OrcaRouter</div>
+
+  <h1>OrcaRouter</h1>
+  <p class="sub">Free-model gateway</p>
+  <div class="tags">
+    <span class="tag portable">Portable API key</span>
+    <span class="tag new">new</span>
+    <span class="tag">No card</span>
+    
+    
+  </div>
+
+  <dl class="facts">
+    <div><dt>Allowance</dt><dd class="bad">Not published</dd></div>
+    <div><dt>Metered in</dt><dd class="mono">50</dd></div>
+    <div><dt>Promotion</dt><dd class="ok">Ongoing — no published end date</dd></div>
+    <div><dt>Last changed</dt><dd class="mono">2026-10-04</dd></div>
+  </dl>
+
+  <p class="lead">Free ids at <b>$0 per token</b> — no trial clock, no credit balance to burn · <b>10 req/min · 50 req/day</b> on an account that has never topped up, rising to 20/800 after <b>$20 of lifetime spend</b> · some models carry their own ladder (Hunyuan Hy4 preview: 50/250, then 100/4000) · a per-request prompt cap applies on the unpaid tier and is <b>not published as a number</b></p>
+  <p>You get a real API key you can point any OpenAI-compatible client at.</p>
+
+  <div class="verdict ok">
+    <div class="k">Is it free forever?</div>
+    <div class="v">Standing free tier</div>
+    <p>The vendor states free models carry no trial clock and no expiry — but any individual model stays free only while it remains in a rotating lineup, so the tier is standing while the models in it are not.</p>
+  </div>
+  <a class="cta" href="https://www.orcarouter.ai/register" target="_blank" rel="noopener">Get key →</a>
+
+
+  <div class="preflight">
+    <span title="The provider does not publish a numeric allowance, so this page cannot quote one. Check the provider's own page for current limits.">No published figure</span>
+  </div>
+
+  <div class="callout warn"><div class="h">Watch out</div><b>Small and gated.</b> An account that has never paid gets <b>10 req/min and 50 req/day</b> — enough to evaluate, not to build on. Free models are also gated on an <b>established GitHub account</b>. A per-request <b>prompt-size cap</b> applies on the unpaid tier and the vendor deliberately does not publish the number: an oversized prompt fails with a <b>400</b>, not a 429, and retrying it unchanged fails forever — a long document or a full conversation history will hit it. Free ids also <b>never fall back to a paid model</b>, so a saturated free model simply returns 429 rather than quietly billing you, and no <b>X-RateLimit-*</b> headers are sent, so you cannot read the remaining window.</div>
+
+  <div class="callout note"><div class="h">Worth knowing</div>Two things lift this above a typical reseller promo. The free ids shadow real catalog models — <b>DeepSeek V4 Flash</b>, <b>GLM-5.3-Flash</b>, <b>Tencent Hunyuan Hy3</b> and <b>Hy4 preview</b> — and cost $0 per token with no expiry: the vendor states free models do not expire while they stay in the lineup. And the endpoint is OpenAI-compatible while also accepting the <b>Anthropic and Gemini</b> request shapes, so the same key drops into Claude Code or the Google SDK without a translation proxy. Verified 4 Oct 2026 directly against docs.orcarouter.ai and the vendor's own public free-tier API.</div>
+
+  <h2>What this is</h2>
+  <p>OrcaRouter is a model gateway that keeps a rotating set of model ids priced at $0 per token. The free ids shadow real catalog models — DeepSeek V4 Flash, GLM-5.3-Flash and Tencent's Hunyuan Hy3 and Hy4 preview among them — and the vendor states they carry no trial clock and do not expire while they stay in the lineup. What matters here is the key: unlike a client-bound coding tool, this one can be pointed at your own software.</p>
+
+  <h2>What it's good for</h2>
+  <ul>
+    <li>Pointing an existing OpenAI-compatible client at a free DeepSeek or GLM model without opening an account with either vendor</li>
+    <li>Claude Code and other Anthropic-protocol tools — the endpoint accepts the Anthropic and Gemini request shapes as well as OpenAI</li>
+    <li>One router id, orcarouter/free, that picks a light or a strong free model per request instead of you choosing each time</li>
+    <li>Cross-checking a model you already pay for elsewhere, at zero cost</li>
+  </ul>
+
+  <h2>Caveats and red flags</h2>
+  <ul class="flags">
+    <li>An account that has never topped up gets 10 requests per minute and 50 per day — an evaluation allowance, not a working one.</li>
+    <li>The always-free ids are gated on the workspace owner linking an established GitHub account. A freshly created GitHub account has a waiting period.</li>
+    <li>A per-request prompt-size cap applies on the unpaid tier and the vendor does not publish the number. A long prompt fails with a 400, not a 429, and retrying it unchanged fails forever — so a script that works on short prompts and fails on long ones has hit this, not a rate limit.</li>
+    <li>Free ids never fall back to the paid model. That is a feature — no surprise billing — but it also means no graceful degradation when free capacity is saturated.</li>
+    <li>No X-RateLimit headers are sent on free traffic, so there is no way to read how much of a window is left.</li>
+    <li>The lineup rotates. A model can leave without notice, and only the vendor's public list says what is free today.</li>
+  </ul>
+
+  <h2>Reviews and reputation</h2>
+  <div class="coverage">
+    <span class="badge warn">Thin independent coverage</span>
+    <span>A few gateway-comparison write-ups appeared in late September 2026, but there is no sustained independent review of the free tier, the unpublished prompt cap, or reliability under load.</span>
+  </div>
+  
+  <h3>What we could verify</h3>
+  <ul class="docs">
+    <li>Free model ids cost $0 per token with no trial clock, and the vendor states free models do not expire while they remain in the lineup.
+      <span class="src">Source: <a href="https://www.orcarouter.ai/offers" target="_blank" rel="noopener">OrcaRouter offers page</a></span></li>
+    <li>Always-free models are open only to accounts whose owner has linked a GitHub account with some history, or which have made a paid purchase of any amount.
+      <span class="src">Source: <a href="https://www.orcarouter.ai/offers" target="_blank" rel="noopener">OrcaRouter offers page</a></span></li>
+    <li>Free traffic is capped by requests per minute and per day, tiered by lifetime spend, and by an unpublished per-request prompt cap that returns a 400 rather than a 429.
+      <span class="src">Source: <a href="https://docs.orcarouter.ai/routing/free-models" target="_blank" rel="noopener">OrcaRouter free-models documentation</a></span></li>
+    <li>The free ids live today are deepseek/deepseek-v4-flash-free, z-ai/glm-5.3-flash-free, tencent/hy3-free and tencent/hy4-preview-free, with an unpaid-tier limit of 10 req/min and 50 req/day.
+      <span class="src">Source: <a href="https://api.orcarouter.ai/api/free-package/public" target="_blank" rel="noopener">OrcaRouter public free-package API, read 4 October 2026</a></span></li>
+    <li>Free ids never fall back to the paid model, and free-tier limits are counted against free ids only, so exhausting them does not affect paid traffic.
+      <span class="src">Source: <a href="https://docs.orcarouter.ai/routing/free-models" target="_blank" rel="noopener">OrcaRouter free-models documentation</a></span></li>
+  </ul>
+  <div class="ourtake">
+    <div class="k">Our take <em>opinion</em></div>
+    <p>Worth listing for one reason: it is a free tier that hands you a key instead of trapping the models inside somebody else's editor, and it carries the Hunyuan Hy3 and Hy4 models that are otherwise locked to Tencent's own clients. The 50-requests-a-day unpaid tier is honest about what it is — enough to decide whether a model suits you, not enough to lean on. Read the live list before you build against a specific id, and treat the unpublished prompt cap as the limit that will actually surprise you.</p>
+  </div>
+  <h2>Mechanics</h2>
+  <table>
+    <tr><th>Base URL</th><td class="mono">https://api.orcarouter.ai/v1</td></tr>
+    <tr><th>Auth</th><td>Authorization: Bearer</td></tr>
+    <tr><th>Models</th><td class="mono">deepseek/deepseek-v4-flash-free<br>z-ai/glm-5.3-flash-free<br>tencent/hy4-preview-free<br>tencent/hy3-free<br>orcarouter/free</td></tr>
+  </table>
+
+  <h2>Set it up</h2>
+  <ol>
+    <li>Create an account at <b>orcarouter.ai/register</b> — no card required for the free models.</li>
+    <li><b>Link a GitHub account with some history</b>, or sign in with one. The always-free ids are gated on this; a freshly created GitHub account needs a waiting period, and a paid top-up of any amount also unlocks them.</li>
+    <li>Copy the API key and point any OpenAI-compatible client at the base URL.</li>
+    <li>Call a model id ending in <b>-free</b> — or <b>orcarouter/free</b>, a single router id that picks a light or a strong free model per request by scoring difficulty.</li>
+    <li>Read the live list rather than hardcoding ids: <b>GET /api/free-package/public</b> is public and needs no key.</li>
+  </ol>
+
+  <h2>Test it</h2>
+  <pre># the free-tier list is public — this call needs no key curl -s https://api.orcarouter.ai/api/free-package/public \ | python3 -m json.tool | head -40</pre>
+
+    <h2>Other portable API key options</h2>
+    <div class="alts">
+      <a class="alt" href="amd.html">
+        <span class="n">AMD Radeon Cloud</span>
+        <span class="m">Token Factory</span>
+      </a>
+      <a class="alt" href="groq.html">
+        <span class="n">Groq</span>
+        <span class="m">LPU inference</span>
+      </a>
+      <a class="alt" href="gemini.html">
+        <span class="n">Google Gemini</span>
+        <span class="m">Flash / Flash-Lite line</span>
+      </a>
+      <a class="alt" href="openrouter.html">
+        <span class="n">OpenRouter</span>
+        <span class="m">Model aggregator</span>
+      </a>
+    </div>
+</main>
+
+<footer>
+  <p><b>Verified 2026-10-04.</b>
+  Free tiers change without notice — re-check the provider's own page before you build on this.
+  This page was generated from the radar's dataset; the offer <code>id</code> is
+  <code>orcarouter</code>.</p>
+  <p><a href="../index.html">← Back to the full radar</a> · <a href="index.html">All offers</a></p>
+</footer>
+
+</body>
+</html>
