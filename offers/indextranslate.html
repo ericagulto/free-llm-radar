@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%2312100d'/%3E%3Ccircle cx='16' cy='16' r='9.5' fill='none' stroke='%23e8a33d' stroke-width='2.2'/%3E%3Ccircle cx='16' cy='16' r='3' fill='%23e8a33d'/%3E%3Cpath d='M16 16 L25 9' stroke='%23e8a33d' stroke-width='2.2' stroke-linecap='round'/%3E%3C/svg%3E">
+<title>Bilibili Index-Translate free tier — limits, base URL and setup | Free LLM Radar</title>
+<meta name="description" content="Bilibili Index-Translate free tier: Not committed · no card required. Free public API, no key and no signup · OpenAI-compatible · one model:…">
+<link rel="canonical" href="https://ericagulto.github.io/free-llm-radar/offers/indextranslate.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Bilibili Index-Translate free tier — limits, base URL and setup">
+<meta property="og:description" content="Bilibili Index-Translate free tier: Not committed · no card required. Free public API, no key and no signup · OpenAI-compatible · one model:…">
+<meta property="og:url" content="https://ericagulto.github.io/free-llm-radar/offers/indextranslate.html">
+<meta name="twitter:card" content="summary">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,400;0,500;0,600;0,700;0,800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/offer.css">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Free LLM Radar","item":"https://ericagulto.github.io/free-llm-radar/"},{"@type":"ListItem","position":2,"name":"Offers","item":"https://ericagulto.github.io/free-llm-radar/offers/"},{"@type":"ListItem","position":3,"name":"Bilibili Index-Translate","item":"https://ericagulto.github.io/free-llm-radar/offers/indextranslate.html"}]}</script>
+</head>
+<body>
+
+<div class="bar">
+  <a href="../index.html">← Free LLM Radar</a>
+  <span class="sp">Verified 2026-10-06</span>
+</div>
+
+<main>
+  <div class="crumb"><a href="../index.html">Radar</a> / <a href="index.html">Offers</a> / Bilibili Index-Translate</div>
+
+  <h1>Bilibili Index-Translate</h1>
+  <p class="sub">Free public translation API</p>
+  <div class="tags">
+    <span class="tag keyless">Keyless</span>
+    <span class="tag new">new</span>
+    <span class="tag">No card</span>
+    
+    <span class="tag">Serves China · also open internationally</span>
+  </div>
+
+  <dl class="facts">
+    <div><dt>Allowance</dt><dd class="bad">Not published</dd></div>
+    <div><dt>Metered in</dt><dd class="mono">per-request</dd></div>
+    <div><dt>Promotion</dt><dd class="ok">Ongoing — no published end date</dd></div>
+    <div><dt>Last changed</dt><dd class="mono">2026-10-06</dd></div>
+  </dl>
+
+  <p class="lead"><b>Free public API, no key and no signup</b> · OpenAI-compatible · one model: <b>Index-Translate-35B-A3B</b> · the vendor publishes <b>no rate limit and no end date</b></p>
+  <p>No key at all. Call the endpoint directly, subject to rate limits.</p>
+
+  <div class="verdict muted">
+    <div class="k">Is it free forever?</div>
+    <div class="v">Not committed</div>
+    <p>Nothing to claim and nothing to cancel, but Bilibili publishes no end date and no rate limit, so there is no commitment that it will still be answering next month.</p>
+  </div>
+  <a class="cta" href="https://github.com/bilibili/Index-Translate" target="_blank" rel="noopener">Read the docs →</a>
+
+
+  <div class="preflight">
+    <span title="The provider does not publish a numeric allowance, so this page cannot quote one. Check the provider's own page for current limits.">No published figure</span>
+  </div>
+
+  <div class="callout warn"><div class="h">Watch out</div><b>Two things to know before you build on it.</b> It is a <b>translation model, not a general chat model</b> — send it an ordinary coding or reasoning prompt and you will get poor output; that is the design, not a bug. And Bilibili publishes <b>no rate limit and no end date</b>: the vendor's own page says only that the API is free and open, so treat both as unknown and add your own retry/backoff rather than assuming a quota. No SLA, no support channel, and no key means no way to appeal a block.</div>
+
+  <div class="callout note"><div class="h">Worth knowing</div>A rare thing on this list: genuinely <b>keyless</b>. There is nothing to sign up for, nothing to claim and no card — the same zero-friction shape as Pollinations. Bilibili's Index team opened it on <b>4 October 2026</b>, built on Qwen3.5 and covering <b>150 languages</b> with terminology and formatting control. The 2B and 9B weights are also released on Hugging Face and ModelScope if you would rather self-host. Verified 6 Oct 2026 against the vendor's own README and site.</div>
+
+  <h2>What this is</h2>
+  <p>Bilibili's Index team opened a free public API for Index-Translate-35B-A3B, a translation model built on Qwen3.5 and covering 150 languages, with terminology and formatting control. It is OpenAI-compatible at index-translate.bilibili.com/v1 and — unusually — needs no account and no API key at all. The vendor states the API is free and open, and publishes neither a rate limit nor an end date.</p>
+
+  <h2>What it's good for</h2>
+  <ul>
+    <li>Translating documents, subtitles or product copy in bulk without wiring up a paid provider or even an API key</li>
+    <li>A drop-in replacement for the translation half of a pipeline that already speaks the OpenAI chat-completions format</li>
+    <li>Long-document translation — the Index family ships a dedicated long-context variant, and the API's 150-language coverage includes terminology and formatting preservation</li>
+    <li>A zero-setup way to check whether a translation model is good enough before paying for one</li>
+  </ul>
+
+  <h2>Caveats and red flags</h2>
+  <ul class="flags">
+    <li>It is a translation model, not a general assistant. Send it an ordinary coding or reasoning prompt and the output will be poor — that is the design, not a fault.</li>
+    <li>No published rate limit and no published end date. Both are genuinely unknown, so build in retry and backoff rather than assuming a quota, and do not put it on a critical path.</li>
+    <li>No key means no account, no support channel and no way to appeal a block. If the endpoint decides to refuse you, there is nothing to raise.</li>
+    <li>A third-party dependency on a mainland Chinese host with no SLA, no status page and no uptime commitment.</li>
+    <li>It is new — opened 4 October 2026 — so there is no track record for stability or for whether the free access is a launch promotion that quietly narrows.</li>
+  </ul>
+
+  <h2>Reviews and reputation</h2>
+  <div class="coverage">
+    <span class="badge warn">Thin independent coverage</span>
+    <span>Only deal-tracker write-ups exist so far, all from early October 2026 and all restating the vendor announcement. There is no independent evaluation of translation quality, throughput or reliability, and no long-running report because the API is days old.</span>
+  </div>
+  
+  <h3>What we could verify</h3>
+  <ul class="docs">
+    <li>The vendor states the official free API is now open, requires no local GPU, and is fully compatible with the OpenAI interface specification at base URL https://index-translate.bilibili.com/v1.
+      <span class="src">Source: <a href="https://github.com/bilibili/Index-Translate/blob/main/README_zh.md" target="_blank" rel="noopener">Bilibili Index-Translate README</a></span></li>
+    <li>The free public API for Index-Translate-35B-A3B was opened on 4 October 2026, and the vendor's own example calls send no Authorization header.
+      <span class="src">Source: <a href="https://index-translate.bilibili.com/" target="_blank" rel="noopener">Bilibili Index-Translate README and site</a></span></li>
+    <li>The model is built on Qwen3.5 and covers 150 languages; 2B and 9B weights are released on Hugging Face and ModelScope for self-hosting.
+      <span class="src">Source: <a href="https://index-translate.bilibili.com/" target="_blank" rel="noopener">Bilibili Index-Translate project site</a></span></li>
+    <li>The free API carries no published rate limit and no published expiry date — both are absent from the vendor documentation.
+      <span class="src">Source: <a href="https://github.com/bilibili/Index-Translate/blob/main/README_zh.md" target="_blank" rel="noopener">Bilibili Index-Translate README</a></span></li>
+  </ul>
+  <div class="ourtake">
+    <div class="k">Our take <em>opinion</em></div>
+    <p>The interesting thing here is the shape of the offer, not the model. A free, keyless, OpenAI-compatible endpoint from a major platform is vanishingly rare — it is the same frictionless pattern as Pollinations, and it costs you one environment variable to try. Judge it on the translation task it is built for: for a translation workload it is an easy yes; as a general-purpose model it is the wrong tool and will disappoint you. The absence of a published rate limit is the honest reason to treat it as a convenience rather than a dependency.</p>
+  </div>
+  <h2>Mechanics</h2>
+  <table>
+    <tr><th>Base URL</th><td class="mono">https://index-translate.bilibili.com/v1</td></tr>
+    <tr><th>Auth</th><td>None — no API key required</td></tr>
+    <tr><th>Models</th><td class="mono">Index-Translate-35B-A3B</td></tr>
+  </table>
+
+  <h2>Set it up</h2>
+  <ol>
+    <li>No account, no key, no card. Point any OpenAI-compatible client at <b>https://index-translate.bilibili.com/v1</b>.</li>
+    <li>Use the model id <b>Index-Translate-35B-A3B</b>. There is no other model on this endpoint.</li>
+    <li>Send your text with a translation instruction — e.g. <i>请将以下文本翻译为英语，直接输出翻译结果</i> — the model is tuned for translation, not open-ended chat.</li>
+    <li>The vendor ships a zero-dependency script for a quick check: <b>python inference/llm/call_api.py "你好，世界" --target en</b>.</li>
+  </ol>
+
+  <h2>Test it</h2>
+  <pre>curl https://index-translate.bilibili.com/v1/chat/completions \ -H &quot;Content-Type: application/json&quot; \ -d '{&quot;model&quot;:&quot;Index-Translate-35B-A3B&quot;,&quot;messages&quot;:[{&quot;role&quot;:&quot;user&quot;,&quot;content&quot;:&quot;请将以下文本翻译为英语，直接输出翻译结果，不要进行任何解释。\n\n你好，世界。&quot;}]}'</pre>
+
+    <h2>Other keyless endpoints</h2>
+    <div class="alts">
+      <a class="alt" href="pollinations.html">
+        <span class="n">Pollinations</span>
+        <span class="m">Anonymous endpoint</span>
+      </a>
+      <a class="alt" href="ovh.html">
+        <span class="n">OVHcloud AI Endpoints</span>
+        <span class="m">EU-hosted</span>
+      </a>
+    </div>
+</main>
+
+<footer>
+  <p><b>Verified 2026-10-06.</b>
+  Free tiers change without notice — re-check the provider's own page before you build on this.
+  This page was generated from the radar's dataset; the offer <code>id</code> is
+  <code>indextranslate</code>.</p>
+  <p><a href="../index.html">← Back to the full radar</a> · <a href="index.html">All offers</a></p>
+</footer>
+
+</body>
+</html>

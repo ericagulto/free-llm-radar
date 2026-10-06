@@ -13,6 +13,105 @@ Format per entry:
 
 ---
 
+## 2026-10-06
+
+- **NO DEADLINE CHANGES.** Every published `end` date re-verified and unchanged. 50 → **51 offers**,
+  51 pages, `validate.js` exit 0, `test-validate.js` 19/19.
+- **ADDED — `indextranslate` (Bilibili Index-Translate).** A free public translation API with **no key
+  and no signup**, OpenAI-compatible at `https://index-translate.bilibili.com/v1`, serving one model,
+  `Index-Translate-35B-A3B`. Opened **4 October 2026**. Verification level: **official** — read from
+  the vendor's own README (`github.com/bilibili/Index-Translate`) and `index-translate.bilibili.com`,
+  which state 官方免费 API 现已开放, 无需本地显卡环境, 直接免费调用. The vendor publishes **no rate limit
+  and no end date**; both are recorded as unpublished rather than guessed. `kind: 'keyless'`,
+  `reach: 'cn-direct'` (Chinese vendor, no account or KYC needed). New `content.js` entry added — a
+  *new* offer may have one written; existing prose is never rewritten.
+- **CHANGED — `kilo`.** The vendor page's free-model counter fell **six → five** (Ling 3.1 Flash,
+  Dots3-Note Preview, Laguna S 2.1, Nemotron 3 Ultra, Nemotron 3 Super). All five were already in the
+  row's `models` array, so no roster edit was needed; `warn`/`note` re-worded to say five and re-dated
+  6 Oct. `added` **not** bumped — this is the rotating roster, not a change in terms, the same call as
+  5 Oct.
+- **Verified — `verifiedBy` names each page read.** `docs.bigmodel.cn/cn/coding-plan/notice/event-glm-5.3-flash`
+  (night-free 23:00–09:00, GLM-5.3-Flash only, 0 consumption in ZCode/AutoClaw, 2× elsewhere,
+  5-hour/week cap — **2026-09-03 → 2026-10-07, unchanged**), `docs.qoder.com/events/flashoffer` (still
+  free past 30 Sep, end date still to be announced — **unchanged**), `workbuddy.cn/events/invite`
+  (即日起至2026年10月31日; invitee 2,000 积分 截止 2026年10月31日 — **unchanged**),
+  `vercel.com/changelog/…ling-3-1-flash…` (free through **13 October** — **unchanged**),
+  `inference-docs.cerebras.ai/support/rate-limits` (**still** a $5 trial credit expiring 30 days after
+  the grant, card required, "no permanently free tier" — the 2 Oct correction holds),
+  `opencode.ai/docs/zen` (still 12 free models, no published end date on any).
+- **Still contested — `ai21`.** Sixth check: `ai21.com/pricing` says **7 days**, `docs.ai21.com/docs/usage-cost`
+  says **three months**. Not flipped. The row's 6 Oct is a placeholder either way — the clock runs from
+  the reader's own signup.
+- **Considered, NOT added.** MiMo (Xiaomi) signup credit, Atria Dawn Preview (100M tokens), SenseNova
+  (1.2M credits/week), DTMaaS (1,000 Credits), Cline free Space Bunny Alpha, GitHub Copilot Pro for
+  teachers/OSS maintainers (eligibility-gated), Cursor $35 event credits, ChatGPT Plus 3-month
+  half-price (a discount, not a free tier). All were tracker-only this run, gated, or discounts rather
+  than free tiers. **Carry forward:** SenseNova, MiMo and Atria Dawn as standing candidates pending a
+  vendor read.
+- **Tracker note.** `china-ai-arbitrage.xyz/free-tokens` — listed in `AGENTS.md` as the best English
+  tracker — now **redirects to a casino site**. The domain has been lost or hijacked; do not treat it
+  as a source. `AGENTS.md` should be updated by hand (a refresh must not rewrite the runbook).
+- **Idempotency:** **no stale `status: 'new'` found — second consecutive clean run.** Rail rolled:
+  6 Oct `today`, 5 Oct `yesterday`, 4 Oct `week`, 3 Oct `week`, `closed` retained; the oldest 2 Oct
+  group dropped.
+- **Referral terms:** `referrals.js` **NOT touched**. WorkBuddy reward structure (50 / +100 / +500,
+  2,000 invitee, 31 Oct) still matches the file exactly. Two known stale items stand, **reported not
+  edited**: the `workbuddy` programme note says the event runs to 30 September; the `qoderwork_cn`
+  terms page is still titled 【7月30日截止】.
+- **Next run must handle:** DeepSeek Harness ~6 Oct (expect **closed** — last day today) · AI21 6 Oct
+  (contested — do not flip) · ZCode Trust Build / MiniMax Code / GLM night-free **7 Oct** · Hunyuan Hy4
+  new-user first start **10 Oct** · Ling 3.1 Flash **13 Oct** · Doubao ~17 Oct · Hunyuan + WorkBuddy
+  **31 Oct**. **`content.js`'s `wenxin` entry still says "Both halves close 30 September" — eighth run
+  flagged**; a refresh cannot write `content.js`, so it will never self-heal. `oci`/`azure`/`ai21`
+  dates are activation-relative placeholders — never report as deadlines. `deploy/verify-live.js`
+  still needs a tab switch before its featured-block step.
+
+---
+
+## 2026-10-05
+
+- **NO DEADLINE CHANGES.** Every published `end` date re-verified and unchanged. 50 → **50 offers**
+  (no additions, no removals), 50 pages, `validate.js` exit 0, `test-validate.js` 19/19.
+- **Verified — `verifiedBy` names each page read.** Vendor primary sources read directly this run:
+  `docs.bigmodel.cn/cn/coding-plan/notice/event-glm-5.3-flash` (night-free 23:00–09:00,
+  GLM-5.3-Flash only, 0 consumption in ZCode/AutoClaw, 2× in other plan agents, 5-hour/week cap —
+  campaign 3 Sep → 7 Oct, **unchanged**, and the page still records the earlier 20 Sep → 7 Oct
+  extension), `docs.qoder.com` **and** `docs.qoder.cn` `/events/flashoffer` (both still say the free
+  period runs past 30 Sep with the end date to be announced on the page — **unchanged**, both
+  locales now agree), `workbuddy.cn/events/invite` (即日起至2026年10月31日; invitee 2,000 积分
+  截止日期 2026年10月31日 — **unchanged**), `vercel.com/changelog/…ling-3-1-flash…` (free through
+  13 Oct — **unchanged**).
+- **CHANGED — `kilo`.** Space Bunny Alpha **retired 5 October exactly as scheduled**; it has left the
+  live free catalog. The vendor page still lists **six** free models at $0 in and out, so the slot
+  was backfilled by the rotating catalog rather than lost. `warn` rewritten from "retires 5 Oct" to
+  "retired", roster re-read 5 Oct.
+- **CHANGED — `opencodezen`.** Roster grew **10 → 12 free models**; `fledge-alpha-free` and
+  `nemotron-3.5-lightning-free` added, `ling-3.1-flash-free` now present. Still **no published end
+  date on any model** — the vendor's own page omits firm deadlines deliberately even where trackers
+  report one (LongCat 2.5 preview, ~10 Oct). `budgetNote` count corrected to 12.
+- **Rejected — tracker claim.** A CN tracker states Kilo's free tier is "12 models, ~200 req/hour,
+  no signup". The vendor page requires an account and publishes **no** free-tier rate limit, so no
+  rate-limit figure was added. Same class as the rejected Qoder-31-Oct (3 Oct) and OpenCode-Zen
+  (2 Oct) claims.
+- **Idempotency:** cleared a stale `status: 'new'` on **`orcarouter`** (first appeared 4 Oct; still
+  carried `new` this morning — check this every run). Rail rolled: 5 Oct `today`, 4 Oct `yesterday`,
+  3 Oct `week`, 2 Oct `week`, `closed` retained; the oldest 1 Oct group dropped. Space Bunny's
+  retirement recorded under `closed`.
+- **Referral terms:** `referrals.js` **NOT touched**. Live WorkBuddy reward structure
+  (50 / +100 / +500, 2,000 invitee, 31 Oct) still matches the file exactly. Two known stale items
+  stand and are **reported, not edited**: the `workbuddy` programme `note` says the event runs to
+  30 September; `qoderwork_cn`'s terms page is still titled 【7月30日截止】.
+- **Notes for next run:** Space Bunny window gone · DeepSeek Harness ~6 Oct 21:00 · AI21 6 Oct
+  (**length still contested — do not flip**, fifth check) · ZCode Trust Build / MiniMax Code /
+  GLM night-free **7 Oct** · Hunyuan Hy4 new-user first start **10 Oct** · Ling 3.1 Flash 13 Oct ·
+  Doubao ~17 Oct · Hunyuan + WorkBuddy 31 Oct. **`content.js`'s `wenxin` entry still needs a human
+  hand edit** — it still says "Both halves close 30 September"; **seventh run running** and it will
+  never self-heal, because a refresh is forbidden from writing `content.js`.
+  `oci`/`azure`/`ai21` dates remain activation-relative placeholders — never report them as
+  deadlines. `deploy/verify-live.js` still needs its tab-switch fix before the featured-block step.
+
+---
+
 ## 2026-10-04
 
 - **NO DEADLINE CHANGES.** Every published `end` date re-verified and unchanged. 49 → **50 offers**,
