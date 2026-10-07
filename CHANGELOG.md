@@ -13,6 +13,54 @@ Format per entry:
 
 ---
 
+## 2026-10-07
+
+- **NO DEADLINE CHANGES.** Every published `end` date re-verified and unchanged. 51 → **51 offers**
+  (no additions, no removals), 51 pages, `validate.js` exit 0, `test-validate.js` 19/19.
+- **CHANGED — `mistral`.** The row read "Mistral stopped publishing free-tier numbers". That is no
+  longer true: `mistral.ai/pricing`, read directly today, states the **Free plan includes $10/month
+  in API credits**, shared across Studio, the API and Vibe. `unit` changed `unpublished` →
+  `$10/month`; `budgetNote` and `note` rewritten; `added` bumped to 2026-10-07 (material change).
+  Email + phone verification, no card; Free-plan traffic is **not** opt-out of training.
+- **CHANGED — `opencodezen`.** Roster grew **12 → 13 free models**. New: **Exo Free** (`exo-free`), a
+  stealth listing that appeared 6 October — free for a limited time, and its data **may be used to
+  improve the model**. Still **no published end date** on any free model. `budgetNote` count
+  corrected; `note` re-dated. `added` **not** bumped — rotating roster, same call as 5–6 Oct.
+- **Verified — `verifiedBy` names each page read.** `docs.bigmodel.cn/cn/coding-plan/notice/event-glm-5.3-flash`
+  (night-free **2026-09-03 → 2026-10-07**, unchanged), `docs.qoder.com/events/flashoffer` (still
+  free, end date still to be announced — unchanged), `workbuddy.cn/events/invite` (即日起至
+  2026年10月31日; invitee 2,000 积分 截止 2026年10月31日 — unchanged), `vercel.com/changelog`
+  (Ling 3.1 Flash free through 13 October — unchanged), `kilo.ai/landing/free-models` (still
+  **five** free models, all already in the row — unchanged), `opencode.ai/docs/zen` (13 free models).
+- **Still contested — `ai21`.** Seventh check: `ai21.com/pricing` says **7 days**, `docs.ai21.com`
+  says **three months**. Not flipped. The row's 6 Oct is a placeholder either way — the clock runs
+  from the reader's own signup.
+- **Left in place, flagged:** `dsharness` — the reported window closed ~6 Oct; DeepSeek publishes no
+  date of its own, so the row is flagged rather than moved to `closed` on assumption. `gmi` and
+  `wenxin` rows stay `expiring` with past `end` dates (the status enum has no `closed` value).
+- **Referral terms:** `referrals.js` **NOT touched**. Re-read the live WorkBuddy reward structure
+  (50 / +100 / +500, invitee 2,000, 31 Oct) — still matches the file. Two known stale items stand,
+  **reported not edited**: `workbuddy` programme note says the event runs to 30 September;
+  `qoderwork_cn` terms page still titled 【7月30日截止】.
+- **Considered, NOT added:** Poolside Laguna S 2.1 free on OpenRouter/Vercel (already carried in the
+  Kilo and OpenCode Zen rosters; no per-user allocation claim), Cline free Solar Mini 4 (tracker-only
+  — Cline's own provider doc 404s, so unverified), Claude Startups Program (eligibility-gated). MiMo
+  (Xiaomi), Atria Dawn Preview and SenseNova remain standing candidates pending a vendor read.
+- **Tooling:** `deploy/publish.sh` step 4 (`sync-site.sh`) was **blocked by the bulk-delete guard** on
+  its `rm -rf` of the generated tree (53 files > 50 threshold). The data push (step 3) succeeded
+  first. No offers were added or removed this run, so the generated and deployed file sets are
+  identical and the site was completed with an equivalent overwrite copy rather than a delete+copy.
+  **Next run: expect the same block if the file count stays over 50** — either raise the guard
+  threshold or split the copy.
+
+**Next run must handle:** ZCode Trust Build / MiniMax Code / GLM night-free ended **7 Oct** (expect
+closed) · Hunyuan Hy4 new-user first start **10 Oct 23:59** · Ling 3.1 Flash **13 Oct** · Doubao
+~17 Oct · Hunyuan + WorkBuddy **31 Oct** · AI21 contested (eighth check — do not flip).
+**`content.js`'s `wenxin` entry still says "Both halves close 30 September" — 9th run flagged**, will
+never self-heal (a refresh cannot write `content.js`). `oci`/`azure`/`ai21` dates are
+activation-relative placeholders — never report as deadlines. `deploy/verify-live.js` still needs a
+tab switch before its featured-block step.
+
 ## 2026-10-06
 
 - **NO DEADLINE CHANGES.** Every published `end` date re-verified and unchanged. 50 → **51 offers**,

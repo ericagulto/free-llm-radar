@@ -46,8 +46,8 @@
    ============================================================ */
 
 window.RADAR = {
-  updated: '2026-10-06T08:00:00+08:00',
-  verifiedBy: 'Run of 2026-10-06. NO DEADLINE CHANGES — every published end date re-verified unchanged. Vendor primary pages read directly: docs.bigmodel.cn/cn/coding-plan/notice/event-glm-5.3-flash (GLM Coding Plan night-free 23:00-09:00, GLM-5.3-Flash only, 0 consumption in ZCode/AutoClaw, 2x in other plan agents, 5-hour/week cap — campaign 2026-09-03 to 2026-10-07, UNCHANGED), docs.qoder.com/events/flashoffer (Qwen3.8-Flash still free past 30 Sep, end date still to be announced on the page, UNCHANGED), workbuddy.cn/events/invite (即日起至2026年10月31日, invitee 2,000 积分 截止日期 2026年10月31日, tiers 50/+100/+500 all unchanged), vercel.com/changelog/ling-3-1-flash-is-now-available-on-ai-gateway (free through 13 October 2026 — UNCHANGED), inference-docs.cerebras.ai/support/rate-limits (still $5 trial credit expiring 30 days after grant, card required, no auto-renewing free tier — the 2 Oct correction holds), opencode.ai/docs/zen (still 12 free models, no published end date on any), kilo.ai/landing/free-models (free-model count now FIVE, down from six at the last check; the five listed are Ling 3.1 Flash, Dots3-Note Preview, Laguna S 2.1, Nemotron 3 Ultra and Nemotron 3 Super — all five still in our models array). ADDED — indextranslate (Bilibili Index-Translate): a free public translation API, no key and no signup, OpenAI-compatible at https://index-translate.bilibili.com/v1, model Index-Translate-35B-A3B, opened 2026-10-04. Verified OFFICIAL against the vendor\'s own GitHub README (github.com/bilibili/Index-Translate) and index-translate.bilibili.com — the vendor states 官方免费 API 现已开放, 无需本地显卡环境, 直接免费调用. No rate limit and no end date are published by the vendor; both are recorded as unpublished rather than guessed. Multi-source only, not vendor-read: Hunyuan Hy3 限免 + Hy4 preview night-free 23:00-08:00 to 31 Oct with Hy4 new-user 14-day first start by 10 Oct 23:59 (Tencent WorkBuddy 30 Sep announcement via Sohu/IT之家/Sina/Tencent News, re-read today); DeepSeek Harness ¥6 desktop credit to 6 Oct (aipromonow detail page read directly, 76 community votes at 89% valid); MiniMax Code double check-in 28 Sep-7 Oct; ZCode Trust Build 28 Sep-7 Oct. Considered and deliberately NOT added: MiMo (Xiaomi) signup credit, Atria Dawn Preview 100M tokens, SenseNova 1.2M credits/week, DTMaaS 1,000 Credits, Cline free Space Bunny Alpha, GitHub Copilot Pro for teachers/OSS maintainers (eligibility-gated), Cursor $35 event credits, ChatGPT Plus 3-month half-price (a discount, not a free tier) — all tracker-only this run, or gated, or discounts rather than free tiers. Idempotency: no stale status:new found (second consecutive clean run); rail rolled 6 Oct today / 5 Oct yesterday / 4 Oct + 3 Oct week; oldest 2 Oct group dropped.',
+  updated: '2026-10-07T08:57:00+08:00',
+  verifiedBy: 'Run of 2026-10-07. NO DEADLINE CHANGES — every published end date re-verified unchanged. Vendor primary pages read directly: docs.bigmodel.cn/cn/coding-plan/notice/event-glm-5.3-flash (GLM Coding Plan night-free 23:00-09:00, GLM-5.3-Flash only, 0 consumption in ZCode/AutoClaw, 2x in other plan agents, 5-hour/week cap — campaign 2026-09-03 to 2026-10-07, UNCHANGED), docs.qoder.com/events/flashoffer (Qwen3.8-Flash still free past 30 Sep, end date still to be announced, UNCHANGED), workbuddy.cn/events/invite (即日起至2026年10月31日, invitee 2,000 积分 截止日期 2026年10月31日, tiers 50/+100/+500 all unchanged), vercel.com/changelog (Ling 3.1 Flash free through 13 October 2026, UNCHANGED), kilo.ai/landing/free-models (still FIVE free models — Ling 3.1 Flash, Dots3-Note Preview, Laguna S 2.1, Nemotron 3 Ultra, Nemotron 3 Super — all already in our models array, UNCHANGED). CHANGED — opencodezen: roster grew 12 to 13 free models, Exo Free (exo-free) listed 6 Oct, no published end date on any. CHANGED — mistral: mistral.ai/pricing now states the Free plan includes $10/month in API credits, shared across Studio, API and Vibe; earlier runs recorded Mistral as no longer publishing free-tier numbers, which is no longer true. Still contested and NOT flipped: ai21 (ai21.com/pricing 7 days vs docs.ai21.com three months, seventh check). Multi-source only, not vendor-read: Hunyuan Hy3 限免 + Hy4 preview night-free 23:00-08:00 to 31 Oct with Hy4 new-user 14-day first start by 10 Oct 23:59. Referral terms re-checked, referrals.js NOT touched.',
   offers: [
   {
     "id": "amd",
@@ -289,16 +289,16 @@ window.RADAR = {
     "sub": "Experiment mode",
     "kind": "portable",
     "budget": 0,
-    "unit": "unpublished",
+    "unit": "$10/month",
     "end": null,
-    "added": "2026-09-28",
+    "added": "2026-10-07",
     "status": "active",
     "card": false,
     "china": false,
     "reach": "global",
     "link": "https://console.mistral.ai",
     "linkLabel": "Get key",
-    "budgetNote": "~1 req/sec · 500K tokens/min · Mistral stopped publishing free-tier numbers",
+    "budgetNote": "<b>$10/month in API credits</b> on the Free plan · shared across Studio, the API and Vibe · Mistral no longer publishes token-level free-tier limits",
     "models": [
       "mistral-medium-3-5-128b",
       "open-mistral-7b",
@@ -312,7 +312,8 @@ window.RADAR = {
       "Create a key under <b>API Keys</b>. Read your numeric limits in the admin console — they are not in the docs."
     ],
     "test": "curl https://api.mistral.ai/v1/chat/completions \\\n  -H \"Authorization: Bearer $MISTRAL_API_KEY\" \\\n  -H \"Content-Type: application/json\" \\\n  -d '{\"model\":\"mistral-medium-3-5-128b\",\"messages\":[{\"role\":\"user\",\"content\":\"Hello\"}]}'",
-    "warn": "Experiment-mode traffic <b>may be used for training</b>. Treat it like the Gemini free tier — not for confidential material."
+    "warn": "Experiment-mode traffic <b>may be used for training</b>. Treat it like the Gemini free tier — not for confidential material.",
+    "note": "Mistral's Free plan now publishes a figure: <b>$10/month in API credits</b>, usable across Mistral Studio, the API and Vibe — read directly at <b>mistral.ai/pricing</b> on 7 October 2026. Earlier checks recorded Mistral as no longer publishing free-tier numbers; that is no longer true, so the row now carries the published figure instead of 'unpublished'. Email and phone verification are required and no card is needed. Free-plan traffic is not opt-out of training — see the warning."
   },
   {
     "id": "cohere",
@@ -733,11 +734,12 @@ window.RADAR = {
     "reach": "global",
     "link": "https://opencode.ai/docs/zen",
     "linkLabel": "Get key",
-    "budgetNote": "<b>12 models at $0</b> input and output · no per-token charge · an OpenCode Zen API key is required",
+    "budgetNote": "<b>13 models at $0</b> input and output · no per-token charge · an OpenCode Zen API key is required",
     "models": [
       "stealth/space-bunny-free",
       "longcat-2.5-preview-free",
       "fledge-alpha-free",
+      "exo-free",
       "mimo-v2.6-flash-free",
       "nemotron-3-ultra-free",
       "nemotron-3.5-lightning-free",
@@ -758,7 +760,7 @@ window.RADAR = {
     ],
     "test": "curl https://opencode.ai/zen/v1/chat/completions \\\n  -H \"Authorization: Bearer $OPENCODE_ZEN_KEY\" \\\n  -H \"Content-Type: application/json\" \\\n  -d '{\"model\":\"nemotron-3-ultra-free\",\"messages\":[{\"role\":\"user\",\"content\":\"Hello\"}]}'",
     "warn": "<b>Billing details are collected at signup</b>, and auto-reload will top the account up by $20 whenever the balance drops below $5. Disable auto-reload unless you intend to pay. Also check each model: most of the free ones <b>train on your prompts</b>; only Space Bunny and LongCat 2.5 are zero-retention.",
-    "note": "Unlike a client-bound list, Zen issues a <b>portable key</b> — the free models can be wired into any OpenAI-compatible tool, not just OpenCode. The roster has grown every check: <b>12 free models live as of 5 Oct 2026</b>, up from 10 on 30 Sep, with <b>Fledge Alpha Free</b> and <b>Nemotron 3.5 Lightning</b> the newest additions (Ling 3.1 Flash Free has also joined). None publish an end date — all are 'limited time', and Zen's own docs deliberately omit firm deadlines even where, as with <b>LongCat 2.5 preview</b>, trackers report one of about <b>10 October</b>. Treat any date as approximate and read the live model list before relying on it. Verified 5 Oct 2026 at opencode.ai/docs/zen."
+    "note": "Unlike a client-bound list, Zen issues a <b>portable key</b> — the free models can be wired into any OpenAI-compatible tool, not just OpenCode. The roster has grown every check: <b>13 free models live as of 7 Oct 2026</b>, up from 12 on 5 Oct and 10 on 30 Sep, with <b>Exo Free</b> (<b>exo-free</b>) the newest addition — a stealth listing that appeared 6 October, free for a limited time, and whose data <b>may be used to improve the model</b>. None publish an end date — all are 'limited time', and Zen's own docs deliberately omit firm deadlines even where, as with <b>LongCat 2.5 preview</b>, trackers report one of about <b>10 October</b>. Treat any date as approximate and read the live model list before relying on it. Verified 7 Oct 2026 at opencode.ai/docs/zen."
   },
   {
     "id": "zcode-trust",
@@ -1660,7 +1662,53 @@ window.RADAR = {
   rail: [
   {
     "d": "today",
-    "label": "Today · 6 Oct",
+    "label": "Today · 7 Oct",
+    "items": [
+      {
+        "c": "ext",
+        "n": "OpenCode Zen — Exo Free joins, roster now 13 free models",
+        "t": "The vendor page now lists 13 free models at $0 input and output, up from 12 on 5 Oct and 10 on 30 Sep. Newest is <b>Exo Free</b> (<b>exo-free</b>), a stealth listing that appeared 6 October — free for a limited time, and its data <b>may be used to improve the model</b>. No free model publishes an end date. Read directly at opencode.ai/docs/zen."
+      },
+      {
+        "c": "ext",
+        "n": "Mistral Free plan now publishes $10/month API credits",
+        "t": "This row previously read 'Mistral stopped publishing free-tier numbers' — no longer true. <b>mistral.ai/pricing</b>, read today, states the Free plan includes <b>$10/month in API credits</b>, shared across Studio, the API and Vibe. Email and phone verification, no card; Free-plan traffic may be used for training."
+      },
+      {
+        "c": "exp",
+        "n": "No deadline changes — every published end date re-verified unchanged",
+        "t": "Vendor pages read directly this morning: GLM Coding Plan night-free still 2026-09-03 → 2026-10-07 (docs.bigmodel.cn), WorkBuddy invite still 即日起至 2026年10月31日 with the invitee 2,000 积分 截止 2026年10月31日, Qoder Qwen3.8-Flash still free with the end date still to be announced, Ling 3.1 Flash still free through 13 October (Vercel changelog), Cerebras still a $5/30-day card-backed trial. Nothing moved."
+      },
+      {
+        "c": "exp",
+        "n": "ZCode Trust Build / MiniMax Code / GLM night-free — final day (7 Oct)",
+        "t": "All three end today. GLM night-free is paid Coding Plan subscribers only; Trust Build tokens land late and expire the next midnight, so claim on a day you can actually work."
+      },
+      {
+        "c": "exp",
+        "n": "DeepSeek Harness ¥6 credit — reported window ended 6 Oct",
+        "t": "The campaign was reported to run to about 6 October, or until the allocation ran out. DeepSeek publishes no date of its own, so the row is left in place and flagged rather than moved to closed on assumption."
+      },
+      {
+        "c": "exp",
+        "n": "AI21 $10 credit — 6 Oct (length still contested, seventh check)",
+        "t": "docs.ai21.com still says the $10 trial is good for three months; ai21.com/pricing still says 7 days. Unresolved and deliberately not flipped — the date is a placeholder either way, since the clock runs from your own signup, not a shared deadline."
+      },
+      {
+        "c": "exp",
+        "n": "Hunyuan Hy4 new users — first conversation by 10 Oct",
+        "t": "The 31 Oct night-free extension is unchanged; a user who has never opened Hy4 must start their first conversation by 10 October 23:59 to trigger the 14-day daily quota."
+      },
+      {
+        "c": "exp",
+        "n": "Ling 3.1 Flash — free to 13 Oct",
+        "t": "Vercel changelog re-read: free through 13 October. Use the -free model ID — it stops serving at the end rather than billing you."
+      }
+    ]
+  },
+  {
+    "d": "yesterday",
+    "label": "Yesterday · 6 Oct",
     "items": [
       {
         "c": "new",
@@ -1705,8 +1753,8 @@ window.RADAR = {
     ]
   },
   {
-    "d": "yesterday",
-    "label": "Yesterday · 5 Oct",
+    "d": "week",
+    "label": "Earlier this week · 5 Oct",
     "items": [
       {
         "c": "exp",
@@ -1793,47 +1841,6 @@ window.RADAR = {
         "c": "exp",
         "n": "Ling 3.1 Flash — free to 13 Oct",
         "t": "Vercel changelog re-read: free through 13 October. Use the -free model ID — it stops serving at the end rather than billing you. Now also carried free in Kilo Code."
-      }
-    ]
-  },
-  {
-    "d": "week",
-    "label": "Earlier this week · 3 Oct",
-    "items": [
-      {
-        "c": "exp",
-        "n": "No deadline changes today — every published end date re-verified unchanged",
-        "t": "Read vendor pages directly this morning: GLM night-free still to 7 Oct (docs.bigmodel.cn), Qoder Qwen3.8-Flash still free with no end date (docs.qoder.com / docs.qoder.cn), Ling 3.1 Flash still to 13 Oct (Vercel changelog), WorkBuddy invite still to 31 Oct (workbuddy.cn/events/invite), Hunyuan Hy3 + Hy4 night-free still to 31 Oct. Nothing moved."
-      },
-      {
-        "c": "exp",
-        "n": "Tracker claim rejected — Qoder has NOT published a 31 Oct end date",
-        "t": "Two CN trackers now state Qoder CN's Qwen3.8-Flash free window runs to 31 October. Qoder's own CN and international event pages both still say only that the free period was extended past 30 September and the end date will be announced on the page. Vendor wins; the row keeps no end date."
-      },
-      {
-        "c": "exp",
-        "n": "DeepSeek Harness ¥6 credit — closes ~6 Oct",
-        "t": "Desktop-app launch credit, now confirmed by Tencent/Sohu/17173 reporting as usable to 6 October 21:00. Small grant; the app is the point."
-      },
-      {
-        "c": "exp",
-        "n": "ZCode Trust Build / MiniMax Code / GLM night-free — 7 Oct",
-        "t": "All three still end 7 October. GLM night-free is paid Coding Plan subscribers only; Trust Build tokens land late and expire next midnight."
-      },
-      {
-        "c": "exp",
-        "n": "Ling 3.1 Flash — free to 13 Oct",
-        "t": "Vercel changelog re-read: free through 13 October. Use the -free model ID — it stops serving at the end rather than billing you."
-      },
-      {
-        "c": "exp",
-        "n": "Hunyuan Hy4 new users — first conversation by 10 Oct",
-        "t": "The 31 Oct night-free extension is unchanged, but new users must start their first Hy4 conversation by 10 October 23:59 to trigger the 14-day daily quota."
-      },
-      {
-        "c": "exp",
-        "n": "AI21 $10 credit — 6 Oct (length still contested)",
-        "t": "AI21's own two pages still disagree: pricing says 7 days, docs say three months. Unresolved; the date is a placeholder either way since the clock runs from your signup."
       }
     ]
   },
