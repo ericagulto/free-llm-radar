@@ -13,6 +13,52 @@ Format per entry:
 
 ---
 
+## 2026-10-08
+
+- **NO DEADLINE CHANGES.** Every published `end` date re-verified and unchanged. 51 → **51 offers**
+  (no additions, no removals), 51 pages, `validate.js` exit 0, `test-validate.js` 19/19.
+- **THREE CLOSURES — all ended 7 Oct, all now in the `closed` rail.** `zcode-trust` (ZCode Trust
+  Build, claim window 28 Sep – 7 Oct), `minimaxcode` (MiniMax Code double check-in credits,
+  28 Sep – 7 Oct) and `glmnight` (Z.AI GLM Coding Plan night-free, 3 Sep – 7 Oct). GLM's own notice
+  at `docs.bigmodel.cn/cn/coding-plan/notice/event-glm-5.3-flash` still reads 活动时间 **2026-09-03 至
+  2026-10-07** with **no new end date published**, so it is recorded as closed rather than assumed
+  extended. Rows kept with a past `end` and a `warn` (the status enum has no `closed` value — same
+  convention as `wenxin` and `gmi`).
+- **Idempotency:** cleared the stale `status:'new'` on **`indextranslate`** (added 6 Oct, still `new`
+  this morning). Checked every run; worth continuing to.
+- **Verified — `verifiedBy` names each page read.** `docs.bigmodel.cn/cn/coding-plan/notice/event-glm-5.3-flash`
+  (campaign closed 7 Oct, no extension), `docs.qoder.com/events/flashoffer` (Qwen3.8-Flash still
+  free, end date still to be announced — unchanged), `workbuddy.cn/events/invite` (即日起至
+  2026年10月31日; invitee 2,000 积分 截止 2026年10月31日 — unchanged), `kilo.ai/landing/free-models`
+  (still **five** free models — unchanged), `opencode.ai/docs/zen` (still **thirteen** free models,
+  unchanged; re-read the full pricing table), `vercel.com/changelog` (Ling 3.1 Flash free through
+  13 October — unchanged).
+- **Still contested — `ai21`.** Eighth check: `ai21.com/pricing` says **7 days**, `docs.ai21.com`
+  says **three months**. Not flipped. The row's 6 Oct is a placeholder either way.
+- **Left in place, flagged:** `dsharness` (reported window closed ~6 Oct; DeepSeek publishes no date
+  of its own). `gmi` and `wenxin` stay `expiring` with past `end` dates.
+- **Referral terms:** `referrals.js` **NOT touched**. Re-read all three terms pages — `zai`
+  (paid-first-order + 3-referral payout threshold), `qoderwork_cn` (200 Credits/referral, trigger =
+  ≥1 Credit within 14 days, cap 200/40,000) and the live WorkBuddy reward structure (50 / +100 /
+  +500, invitee 2,000, 31 Oct) all **match the recorded findings exactly**. Two known stale items
+  stand, **reported not edited**: the `workbuddy` programme note says the event runs to 30 September;
+  the `qoderwork_cn` terms page is still titled 【7月30日截止】.
+- **Considered, NOT added (5).** **Glyph Cluster** — Vercel AI Gateway stealth reasoning model, free
+  during the stealth period, but **gated to Pro/Enterprise teams that have purchased AI Gateway
+  credits** (`vercel.com/changelog/glyph-cluster-...`, read directly). A paid-plan gate, not a free
+  tier. **AWS new-signup grant** — GitHub/Google signup, $100 + up to $100 for onboarding tasks,
+  6 months: already covered by the existing `bedrock` row. **MiMo (Xiaomi) open platform** and
+  **Atria Dawn Preview** — both standing candidates, both **JS-only consoles**; `platform.xiaomimimo.com`
+  and `atria-asi.ai` could not be read to confirm the grant, so both stay out (AGENTS.md: cannot
+  confirm from the vendor → leave it). Also skipped Claude Max/Team monthly API credits and the
+  Claude Startups Program (subscriber- and eligibility-gated).
+- **Notes:** `kilo` and `opencodezen` notes re-dated to 8 Oct; both rosters confirmed unchanged.
+  `deploy/verify-live.js` still needs its China-tab switch before the featured-block step (known
+  pre-existing). `content.js`'s `wenxin` entry still says "Both halves close 30 September" —
+  **tenth run flagged**, will never self-heal.
+
+---
+
 ## 2026-10-07
 
 - **NO DEADLINE CHANGES.** Every published `end` date re-verified and unchanged. 51 → **51 offers**
