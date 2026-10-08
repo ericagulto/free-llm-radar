@@ -46,8 +46,8 @@
    ============================================================ */
 
 window.RADAR = {
-  updated: '2026-10-07T08:57:00+08:00',
-  verifiedBy: 'Run of 2026-10-07. NO DEADLINE CHANGES — every published end date re-verified unchanged. Vendor primary pages read directly: docs.bigmodel.cn/cn/coding-plan/notice/event-glm-5.3-flash (GLM Coding Plan night-free 23:00-09:00, GLM-5.3-Flash only, 0 consumption in ZCode/AutoClaw, 2x in other plan agents, 5-hour/week cap — campaign 2026-09-03 to 2026-10-07, UNCHANGED), docs.qoder.com/events/flashoffer (Qwen3.8-Flash still free past 30 Sep, end date still to be announced, UNCHANGED), workbuddy.cn/events/invite (即日起至2026年10月31日, invitee 2,000 积分 截止日期 2026年10月31日, tiers 50/+100/+500 all unchanged), vercel.com/changelog (Ling 3.1 Flash free through 13 October 2026, UNCHANGED), kilo.ai/landing/free-models (still FIVE free models — Ling 3.1 Flash, Dots3-Note Preview, Laguna S 2.1, Nemotron 3 Ultra, Nemotron 3 Super — all already in our models array, UNCHANGED). CHANGED — opencodezen: roster grew 12 to 13 free models, Exo Free (exo-free) listed 6 Oct, no published end date on any. CHANGED — mistral: mistral.ai/pricing now states the Free plan includes $10/month in API credits, shared across Studio, API and Vibe; earlier runs recorded Mistral as no longer publishing free-tier numbers, which is no longer true. Still contested and NOT flipped: ai21 (ai21.com/pricing 7 days vs docs.ai21.com three months, seventh check). Multi-source only, not vendor-read: Hunyuan Hy3 限免 + Hy4 preview night-free 23:00-08:00 to 31 Oct with Hy4 new-user 14-day first start by 10 Oct 23:59. Referral terms re-checked, referrals.js NOT touched.',
+  updated: '2026-10-08T08:05:00+08:00',
+  verifiedBy: 'Run of 2026-10-08. NO DEADLINE CHANGES — every published end date re-verified unchanged. Vendor primary pages read directly: docs.bigmodel.cn/cn/coding-plan/notice/event-glm-5.3-flash (GLM Coding Plan night-free campaign states 活动时间 2026-09-03 至 2026-10-07 — NO extension published, so the campaign is now CLOSED), docs.qoder.com/events/flashoffer (Qwen3.8-Flash still free past 30 Sep, end date still to be announced, UNCHANGED), workbuddy.cn/events/invite (即日起至2026年10月31日, invitee 2,000 积分 截止日期 2026年10月31日, tiers 50/+100/+500 all unchanged), kilo.ai/landing/free-models (still FIVE free models — Ling 3.1 Flash, Dots3-Note Preview, Laguna S 2.1, Nemotron 3 Ultra, Nemotron 3 Super — UNCHANGED), opencode.ai/docs/zen (still THIRTEEN free models at $0 input/output — Big Pickle, Space Bunny, LongCat 2.5 Preview, Exo, Fledge Alpha, MiMo-V2.6-Flash, MiMo-V2.5, Ling 3.1 Flash, Ling 3.0 Flash Fin, Nemotron 3 Ultra, Nemotron 3.5 Lightning, Muse Spark 1.3 Contributor, Jev 1.13 — UNCHANGED, no published end date on any), vercel.com/changelog (Ling 3.1 Flash free through 13 October, UNCHANGED). CLOSURES — three campaigns ended 7 Oct and now sit in the closed rail: ZCode Trust Build (claim window 28 Sep - 7 Oct), MiniMax Code double check-in credits (28 Sep - 7 Oct), Z.AI GLM Coding Plan night-free (3 Sep - 7 Oct). Rows kept with a past end date and a warn per the established convention (the status enum has no closed value). Idempotency: cleared the stale status:new on indextranslate (added 6 Oct, still new this morning). Still contested and NOT flipped: ai21 (ai21.com/pricing 7 days vs docs.ai21.com three months, eighth check). Multi-source only, not vendor-read: Hunyuan Hy3 限免 + Hy4 preview night-free 23:00-08:00 to 31 Oct with Hy4 new-user 14-day first start by 10 Oct 23:59. Considered and NOT added: Glyph Cluster (Vercel stealth model, free only for Pro/Enterprise teams with purchased AI Gateway credits — gated, not a free tier), AWS new-signup $200/6-month grant (already covered by the bedrock row), MiMo Xiaomi open platform and Atria Dawn Preview (both JS-only consoles; the vendor pages could not be read to confirm the grant, so left as standing candidates). Referral terms re-checked, referrals.js NOT touched.',
   offers: [
   {
     "id": "amd",
@@ -684,7 +684,7 @@ window.RADAR = {
     ],
     "test": "— free models are client-bound. Kilo accepts external keys if you want portable capacity.",
     "warn": "Free hosted inference is <b>not</b> the same as free-to-download weights. The free catalog updates live and a listing can disappear the moment the upstream provider changes its pricing — the free list is a rotating promotion, not a standing commitment. <b>Space Bunny Alpha retired 5 October</b> as scheduled and is gone from the roster; the vendor page's own counter has since dropped from <b>six free models to five</b>, and the rotating catalog is what decides which.",
-    "note": "Open source (MIT) and model-agnostic: the same client can run free hosted models, your own AMD or Groq key, or a local Ollama model. Roster re-read 6 Oct 2026 at <b>kilo.ai/landing/free-models</b> — <b>five</b> models at $0 input and $0 output: Ling 3.1 Flash, Dots3-Note Preview, Laguna S 2.1, Nemotron 3 Ultra and Nemotron 3 Super. All five are still in this row's model list; the count fell from six as one listing aged out, which is exactly the churn the rotating catalog produces. The vendor page publishes no rate limit for the free tier."
+    "note": "Open source (MIT) and model-agnostic: the same client can run free hosted models, your own AMD or Groq key, or a local Ollama model. Roster re-read 8 Oct 2026 at <b>kilo.ai/landing/free-models</b> — still <b>five</b> models at $0 input and $0 output: Ling 3.1 Flash, Dots3-Note Preview, Laguna S 2.1, Nemotron 3 Ultra and Nemotron 3 Super. All five are still in this row's model list. The count fell from six to five on 6 Oct as one listing aged out, which is exactly the churn the rotating catalog produces. The vendor page publishes no rate limit for the free tier."
   },
   {
     "id": "stepfun",
@@ -760,7 +760,7 @@ window.RADAR = {
     ],
     "test": "curl https://opencode.ai/zen/v1/chat/completions \\\n  -H \"Authorization: Bearer $OPENCODE_ZEN_KEY\" \\\n  -H \"Content-Type: application/json\" \\\n  -d '{\"model\":\"nemotron-3-ultra-free\",\"messages\":[{\"role\":\"user\",\"content\":\"Hello\"}]}'",
     "warn": "<b>Billing details are collected at signup</b>, and auto-reload will top the account up by $20 whenever the balance drops below $5. Disable auto-reload unless you intend to pay. Also check each model: most of the free ones <b>train on your prompts</b>; only Space Bunny and LongCat 2.5 are zero-retention.",
-    "note": "Unlike a client-bound list, Zen issues a <b>portable key</b> — the free models can be wired into any OpenAI-compatible tool, not just OpenCode. The roster has grown every check: <b>13 free models live as of 7 Oct 2026</b>, up from 12 on 5 Oct and 10 on 30 Sep, with <b>Exo Free</b> (<b>exo-free</b>) the newest addition — a stealth listing that appeared 6 October, free for a limited time, and whose data <b>may be used to improve the model</b>. None publish an end date — all are 'limited time', and Zen's own docs deliberately omit firm deadlines even where, as with <b>LongCat 2.5 preview</b>, trackers report one of about <b>10 October</b>. Treat any date as approximate and read the live model list before relying on it. Verified 7 Oct 2026 at opencode.ai/docs/zen."
+    "note": "Unlike a client-bound list, Zen issues a <b>portable key</b> — the free models can be wired into any OpenAI-compatible tool, not just OpenCode. The roster held steady this check: <b>13 free models live as of 8 Oct 2026</b>, unchanged from 7 Oct (it grew from 12 on 5 Oct and 10 on 30 Sep). None publish an end date — all are 'limited time', and Zen's own docs deliberately omit firm deadlines even where, as with <b>LongCat 2.5 preview</b>, trackers report one of about <b>10 October</b>. Treat any date as approximate and read the live model list before relying on it. Verified 8 Oct 2026 at opencode.ai/docs/zen."
   },
   {
     "id": "zcode-trust",
@@ -771,13 +771,13 @@ window.RADAR = {
     "unit": "tokens one-time",
     "end": "2026-10-07",
     "added": "2026-09-29",
-    "status": "active",
+    "status": "expiring",
     "card": false,
     "china": true,
     "reach": "cn-direct",
     "link": "https://zcode.z.ai/en",
     "linkLabel": "Download",
-    "budgetNote": "~100M GLM-5.3-Flash tokens · ~100,000 allocations, first-come first-served · claim window 28 Sep → 7 Oct",
+    "budgetNote": "~100M GLM-5.3-Flash tokens · ~100,000 allocations, first-come first-served · claim window 28 Sep → 7 Oct (CLOSED)",
     "models": [
       "GLM-5.3-Flash"
     ],
@@ -790,7 +790,7 @@ window.RADAR = {
       "<b>Use them the same day.</b> Tokens typically land around 11pm and expire at midnight the following day."
     ],
     "test": "— no API endpoint. Client-bound usage only.",
-    "warn": "<b>The claim window is 10 days; the usable window is roughly one evening.</b> Tokens land late and expire at the next midnight. Claim it on a day you can actually sit down and work, not as a reserve."
+    "warn": "<b>CLOSED 7 October 2026.</b> The claim window ran 28 September to 7 October and ended as scheduled, with no extension published. Kept here as a record: the campaign is no longer claimable. <b>The claim window was 10 days; the usable window was roughly one evening</b> — tokens landed late and expired at the next midnight, so it was never a reserve."
   },
   {
     "id": "zcode-weekend",
@@ -896,13 +896,13 @@ window.RADAR = {
     "unit": "2× daily",
     "end": "2026-10-07",
     "added": "2026-09-29",
-    "status": "active",
+    "status": "expiring",
     "card": false,
     "china": true,
     "reach": "cn-direct",
     "link": "https://www.minimax.io",
     "linkLabel": "Open",
-    "budgetNote": "<b>Double</b> the normal free credits on daily check-in · 28 Sep → 7 Oct",
+    "budgetNote": "<b>Double</b> the normal free credits on daily check-in · 28 Sep → 7 Oct (CLOSED)",
     "models": [
       "M3.1-Flash-Preview"
     ],
@@ -914,7 +914,7 @@ window.RADAR = {
       "New and existing users both qualify."
     ],
     "test": "— client-bound.",
-    "note": "Token Plan subscribers also had their quotas reset in this window."
+    "note": "Token Plan subscribers also had their quotas reset in this window. <b>CLOSED 7 October 2026</b> — the doubled check-in ran 28 September to 7 October and ended with no extension published. The client itself is still free to use; only the 2x check-in bonus has stopped."
   },
   {
     "id": "inkstone",
@@ -1111,13 +1111,13 @@ window.RADAR = {
     "unit": "night hours",
     "end": "2026-10-07",
     "added": "2026-09-29",
-    "status": "extended",
+    "status": "expiring",
     "card": false,
     "china": true,
     "reach": "cn-direct",
     "link": "https://z.ai",
     "linkLabel": "Open",
-    "budgetNote": "Free usage <b>23:00–09:00</b> Beijing time · <b>GLM-5.3-Flash only</b> · <b>paid Coding Plan subscribers only</b> · via ZCode 3.10+ or AutoClaw · a 5-hour/week cap still applies",
+    "budgetNote": "Free usage <b>23:00–09:00</b> Beijing time · <b>GLM-5.3-Flash only</b> · <b>paid Coding Plan subscribers only</b> · via ZCode 3.10+ or AutoClaw · a 5-hour/week cap still applies · campaign 3 Sep → 7 Oct (CLOSED)",
     "models": [
       "GLM-5.3-Flash"
     ],
@@ -1130,7 +1130,7 @@ window.RADAR = {
       "Plan around the <b>5-hour/week</b> cap: once you hit it, the night window is closed to you until the limit resets."
     ],
     "test": "— client-bound.",
-    "note": "Extended to <b>7 October</b>. The vendor notice also doubles quota for GLM-5.3-Flash when used through other plan-supported agents outside ZCode and AutoClaw."
+    "note": "<b>CLOSED 7 October 2026.</b> The campaign ran <b>3 Sep → 7 Oct</b> (already extended once, from 20 Sep) and ended with no new end date published on the vendor's notice page, so it is recorded as closed rather than assumed extended. Kept here as a record: it covered <b>paid Coding Plan subscribers only</b>, and the vendor notice also doubled quota for GLM-5.3-Flash through other plan-supported agents outside ZCode and AutoClaw."
   },
   {
     "id": "minimaxplat",
@@ -1636,7 +1636,7 @@ window.RADAR = {
     "unit": "per-request · unpublished",
     "end": null,
     "added": "2026-10-06",
-    "status": "new",
+    "status": "active",
     "card": false,
     "china": true,
     "reach": "cn-direct",
@@ -1662,7 +1662,48 @@ window.RADAR = {
   rail: [
   {
     "d": "today",
-    "label": "Today · 7 Oct",
+    "label": "Today · 8 Oct",
+    "items": [
+      {
+        "c": "dead",
+        "n": "ZCode Trust Build / MiniMax Code / GLM night-free — all ended 7 Oct",
+        "t": "Three campaigns closed yesterday as scheduled. <b>ZCode Trust Build</b> (claim window 28 Sep - 7 Oct), <b>MiniMax Code</b> double check-in credits (28 Sep - 7 Oct) and the <b>Z.AI GLM Coding Plan</b> night-free window (3 Sep - 7 Oct) all ran out with no extension published. GLM's own notice still reads 活动时间 2026-09-03 至 2026-10-07 — no new end date. Rows kept with a past end date and a warning rather than deleted."
+      },
+      {
+        "c": "exp",
+        "n": "No deadline changes — every published end date re-verified unchanged",
+        "t": "Vendor pages read directly this morning: WorkBuddy invite still 即日起至 2026年10月31日 with the invitee 2,000 积分 截止 2026年10月31日, Qoder Qwen3.8-Flash still free with the end date still to be announced, Ling 3.1 Flash still free through 13 October (Vercel changelog), Kilo still five free models, OpenCode Zen still thirteen free models. Nothing moved."
+      },
+      {
+        "c": "exp",
+        "n": "AI21 $10 credit — length still contested (eighth check)",
+        "t": "docs.ai21.com still says the $10 trial is good for three months; ai21.com/pricing still says 7 days. Unresolved and deliberately not flipped — the date on the row is a placeholder either way, since the clock runs from your own signup, not a shared deadline."
+      },
+      {
+        "c": "exp",
+        "n": "Hunyuan Hy4 new users — first conversation by 10 Oct",
+        "t": "The 31 Oct night-free extension is unchanged; a user who has never opened Hy4 must start their first conversation by 10 October 23:59 to trigger the 14-day daily quota."
+      },
+      {
+        "c": "exp",
+        "n": "Ling 3.1 Flash — free to 13 Oct",
+        "t": "Vercel changelog re-read: free through 13 October. Use the -free model ID — it stops serving at the end rather than billing you. Also carried free in Kilo Code and OpenCode Zen."
+      },
+      {
+        "c": "exp",
+        "n": "Doubao Standard plan — ~17 Oct",
+        "t": "ByteDance's 30-day Standard-plan grant is still reported to run to about 17 October. Multi-source only: the vendor's own campaign page was not read directly, so treat the date as approximate."
+      },
+      {
+        "c": "exp",
+        "n": "Hunyuan Hy3 限免 + Hy4 night-free + WorkBuddy invite — 31 Oct",
+        "t": "All three still end 31 October. Hunyuan is cn-only and points-metered; the WorkBuddy invite reward structure (50 / +100 / +500) is unchanged on the live page."
+      }
+    ]
+  },
+  {
+    "d": "yesterday",
+    "label": "Yesterday · 7 Oct",
     "items": [
       {
         "c": "ext",
@@ -1707,8 +1748,8 @@ window.RADAR = {
     ]
   },
   {
-    "d": "yesterday",
-    "label": "Yesterday · 6 Oct",
+    "d": "week",
+    "label": "Earlier this week · 6 Oct",
     "items": [
       {
         "c": "new",
@@ -1799,55 +1840,24 @@ window.RADAR = {
     ]
   },
   {
-    "d": "week",
-    "label": "Earlier this week · 4 Oct",
-    "items": [
-      {
-        "c": "new",
-        "n": "OrcaRouter — free models behind a portable key",
-        "t": "A gateway carrying DeepSeek V4 Flash, GLM-5.3-Flash and Tencent Hunyuan Hy3/Hy4 preview at $0 per token with no expiry — and unlike most free-model promotions, it issues a key you can point your own tools at. Gated on an established GitHub account; 10 req/min and 50 req/day until you have ever topped up. Verified directly against the vendor's docs and public API."
-      },
-      {
-        "c": "exp",
-        "n": "No deadline changes — every published end date re-verified unchanged",
-        "t": "Vendor pages read directly on 4 Oct: GLM night-free still 3 Sep → 7 Oct, WorkBuddy invite still 至 2026年10月31日, Qoder Qwen3.8-Flash still free with no announced end date, Ling 3.1 Flash still free to 13 Oct. Nothing moved."
-      },
-      {
-        "c": "exp",
-        "n": "Space Bunny's free window closes 5 Oct",
-        "t": "Kilo's own free-model page listed Space Bunny Alpha as retiring 5 October, and the same model's free window on OpenCode Zen was reported to close that day. It appeared on two rows here."
-      },
-      {
-        "c": "exp",
-        "n": "DeepSeek Harness ¥6 credit — closes 6 Oct 21:00",
-        "t": "Desktop-app launch credit, confirmed by Chinese tech press as usable to 6 October 21:00. Small grant; the app is the point."
-      },
-      {
-        "c": "exp",
-        "n": "AI21 $10 credit — 6 Oct (length still contested)",
-        "t": "Both AI21 pages re-read: pricing says 7 days, docs say three months. Unresolved and deliberately not flipped — the date is a placeholder either way, since the clock runs from your own signup."
-      },
-      {
-        "c": "exp",
-        "n": "ZCode Trust Build / MiniMax Code / GLM night-free — 7 Oct",
-        "t": "All three still end 7 October. GLM night-free is paid Coding Plan subscribers only; Trust Build tokens land late and expire the next midnight."
-      },
-      {
-        "c": "exp",
-        "n": "Hunyuan Hy4 new users — first conversation by 10 Oct",
-        "t": "The 31 Oct night-free extension is unchanged, but a user who has never opened Hy4 must start their first conversation by 10 October 23:59 to trigger the 14-day daily quota."
-      },
-      {
-        "c": "exp",
-        "n": "Ling 3.1 Flash — free to 13 Oct",
-        "t": "Vercel changelog re-read: free through 13 October. Use the -free model ID — it stops serving at the end rather than billing you. Now also carried free in Kilo Code."
-      }
-    ]
-  },
-  {
     "d": "closed",
     "label": "Closed this week",
     "items": [
+      {
+        "c": "dead",
+        "n": "ZCode Trust Build (GLM-5.3-Flash)",
+        "t": "Claim window 28 Sep - 7 Oct, ended as scheduled with no extension. ~100M tokens per claim, ~100,000 allocations, first-come. Tokens landed late and expired the next midnight, so the usable window was roughly one evening."
+      },
+      {
+        "c": "dead",
+        "n": "MiniMax Code double check-in credits",
+        "t": "28 Sep - 7 Oct. Doubled the normal daily check-in credits for M3.1-Flash-Preview. Ended with no extension published."
+      },
+      {
+        "c": "dead",
+        "n": "Z.AI GLM Coding Plan night-free",
+        "t": "3 Sep - 7 Oct (already extended once from 20 Sep). GLM-5.3-Flash free 23:00-09:00 Beijing time for paid Coding Plan subscribers via ZCode 3.10+ or AutoClaw. The vendor notice publishes no new end date, so it is closed rather than assumed extended."
+      },
       {
         "c": "dead",
         "n": "Space Bunny Alpha (Kilo Code)",
