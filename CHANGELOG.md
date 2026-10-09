@@ -13,6 +13,52 @@ Format per entry:
 
 ---
 
+## 2026-10-09
+
+- **NO DEADLINE CHANGES.** Every published `end` date re-verified and unchanged. 51 → **51 offers**
+  (no additions, no removals), 51 pages, `validate.js` exit 0.
+- **CHANGED — `opencodezen`.** The free roster rotated: still **13 free models**, but two swapped out
+  and two in. Gone: **`fledge-alpha-free`** and **`mimo-v2.5-free`**. New:
+  **`step-5-preview-free`** and **`muse-spark-1.2-contributor-free`**. The `models` array was
+  corrected to Zen's real IDs (`space-bunny-free`, not `stealth/space-bunny-free`). `added` NOT
+  bumped — rotating roster, same call as runs 7–9.
+- **Source for that change: the vendor's own models endpoint.** `opencode.ai/zen/v1/models` was read
+  directly because `opencode.ai/docs/zen` **would not load this run** (empty body, several attempts;
+  the `opencode.asia` and `open-code.ai` mirrors are stale — they still show only 4 free models and
+  are NOT a usable substitute). The endpoint is vendor-primary and demonstrably current: it already
+  lists `step-5-preview-free`, and Step 5 Preview landed on Vercel AI Gateway on 8 Oct.
+- **Verified — `verifiedBy` names each page read.** `docs.bigmodel.cn/cn/coding-plan/notice/event-glm-5.3-flash`
+  (campaign still **2026-09-03 至 2026-10-07**, no extension — stays closed),
+  `docs.qoder.com/events/flashoffer` **and** `docs.qoder.cn/events/flashoffer` (Qwen3.8-Flash still
+  free, end date still to be announced on both locales — unchanged), `workbuddy.cn/events/invite`
+  (即日起至 2026年10月31日; invitee 2,000 积分 截止 2026年10月31日 — unchanged),
+  `kilo.ai/landing/free-models` (still **five** free models — unchanged),
+  `vercel.com/ai-gateway/models/ling-3.1-flash-free` (promotional pricing ends **13 October** —
+  unchanged), `docs.z.ai/devpack/credit-campaign-rules` (invite programme still paid-first-order +
+  3-referral payout threshold — unchanged).
+- **Still contested — `ai21`.** Ninth check: `ai21.com/pricing` says **7 days**, `docs.ai21.com`
+  says **three months**. Not flipped. The row's 6 Oct is a placeholder either way.
+- **Idempotency:** no stale `status:'new'` found — **fourth consecutive clean run**. Rail rolled
+  9 Oct today / 8 Oct yesterday / 7 Oct + 6 Oct week; the 5 Oct group dropped.
+- **Considered, NOT added (2).** **Tencent LightVela** (腾讯轻量云) — 1 month free + 4,500 AI 积分,
+  but it is a hosted-agent subscription (2 vCPU / 8 GB) gated behind mainland 实名认证, not a free
+  LLM API tier. **WorkBuddy international DeepSeek V4.1-Flash** free to 9 Oct — multi-source only and
+  region-blocked from here; final day, so no point adding a row that dies on publication.
+- **Referral terms:** `referrals.js` **NOT touched**. Re-read `workbuddy.cn/events/invite` (50 / +100
+  / +500, 2,000 invitee, 31 Oct — matches the file exactly), `docs.z.ai/devpack/credit-campaign-rules`
+  (unchanged) and the `qoderwork_cn` terms page. Two known stale items stand, **reported not edited**:
+  the `workbuddy` programme `note` says the event runs to **30 September**; the `qoderwork_cn` terms
+  page is still titled **【7月30日截止】** (last updated 2026-08-11, still describing a live programme
+  — the reward structure itself matches the file).
+- **Next run must handle:** Hunyuan Hy4 new-user first start **10 Oct 23:59** (tomorrow) · Ling 3.1
+  Flash **13 Oct** · Doubao ~17 Oct · Hunyuan + WorkBuddy **31 Oct**. AI21 contested (**tenth check —
+  do not flip**). **`content.js`'s `wenxin` entry still says "Both halves close 30 September" — 11th
+  run flagged**, will never self-heal (a refresh cannot write `content.js`). `oci`/`azure`/`ai21`
+  dates are activation-relative placeholders — never report as deadlines. `deploy/verify-live.js`
+  still needs its China-tab switch before the featured-block step.
+
+---
+
 ## 2026-10-08
 
 - **NO DEADLINE CHANGES.** Every published `end` date re-verified and unchanged. 51 → **51 offers**
