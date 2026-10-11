@@ -46,8 +46,8 @@
    ============================================================ */
 
 window.RADAR = {
-  updated: '2026-10-09T08:10:00+08:00',
-  verifiedBy: 'Run of 2026-10-09. NO DEADLINE CHANGES — every published end date re-verified unchanged. ONE ROSTER CHANGE: OpenCode Zen, read from the vendor own models endpoint (opencode.ai/zen/v1/models), still lists THIRTEEN $0 models but the set has rotated — fledge-alpha-free and mimo-v2.5-free are gone, muse-spark-1.2-contributor-free and step-5-preview-free are new. Vendor primary pages read directly: docs.bigmodel.cn/cn/coding-plan/notice/event-glm-5.3-flash (GLM Coding Plan night-free campaign still reads 活动时间 2026 年 9 月 3 日至 2026 年 10 月 7 日, no extension published — stays CLOSED), docs.qoder.com/events/flashoffer AND docs.qoder.cn/events/flashoffer (Qwen3.8-Flash still free, end date still to be announced on both locales, UNCHANGED), workbuddy.cn/events/invite (即日起至2026年10月31日, invitee 2,000 积分 截止 2026年10月31日, tiers 50/+100/+500 all unchanged), kilo.ai/landing/free-models (still FIVE free models — Nemotron 3 Super, Nemotron 3 Ultra, Ling 3.1 Flash, Dots3-Note Preview, Laguna S 2.1 — UNCHANGED), vercel.com/ai-gateway/models/ling-3.1-flash-free (promotional pricing ends 13 October, UNCHANGED), ai21.com/pricing (still $10 credits for 7 days vs docs.ai21.com three months — ninth check, NOT flipped), docs.z.ai/devpack/credit-campaign-rules (Z.ai invite programme still paid-first-order + 3-referral payout threshold, UNCHANGED). Multi-source only, not vendor-read: Hunyuan Hy3 限免 + Hy4 preview night-free 23:00-08:00 to 31 Oct with Hy4 new-user 14-day first start by 10 Oct 23:59; StepFun Step Plan 15+15+45 days. Idempotency: no stale status:new found (fourth consecutive clean run). Considered and NOT added: Tencent LightVela (腾讯轻量云 cloud Agent host — 1 month free + 4,500 AI 积分, but it is a hosted-agent subscription gated behind mainland 实名认证, not a free LLM API tier), WorkBuddy international DeepSeek V4.1-Flash free to 9 Oct (multi-source only, region-blocked, final day). Referral terms re-checked, referrals.js NOT touched.',
+  updated: '2026-10-11T08:40:00+08:00',
+  verifiedBy: 'Run of 2026-10-11. NO DEADLINE CHANGES: every published end date re-verified and unchanged. ONE ROSTER CORRECTION: OpenRouter. Read from the vendor own model API (openrouter.ai/api/v1/models), 19 models price at $0. inclusionai/ling-3.0-flash-fin, which this row listed as free, has left the free list and now bills ($0.042/M in, $0.123/M out); inclusionai/ling-3.1-flash and apodex/apodex-1.1-mini:free joined it. Row model list corrected. Also corrected the Tencent Hunyuan Hy4 row: the new-user first-conversation window closed 10 October, so that clause now reads as closed rather than upcoming. Vendor primary pages read directly: docs.bigmodel.cn/cn/coding-plan/notice/event-glm-5.3-flash (campaign still reads 2026-09-03 to 2026-10-07, no extension, stays CLOSED), docs.qoder.com/events/flashoffer (Qwen3.8-Flash still free, end date still to be announced, UNCHANGED), workbuddy.cn/events/invite (即日起至2026年10月31日, invitee 2,000 积分 截止 2026年10月31日, tiers 50/+100/+500, UNCHANGED), vercel.com/ai-gateway/models/ling-3.1-flash-free (promotional pricing ends 13 October, UNCHANGED), kilo.ai/landing/free-models (still FIVE free models, UNCHANGED), opencode.ai/zen/v1/models (still THIRTEEN free models, UNCHANGED), inference-docs.cerebras.ai/support/rate-limits ($5 trial expiring 30 days after the grant, card required, no auto-renewing tier, the 2 Oct correction holds), console.groq.com/docs/rate-limits (free plan 30 RPM / 1K RPD / 8K TPM / 200K TPD, UNCHANGED), ai21.com/pricing (still 7 days vs docs.ai21.com three months, tenth check, NOT flipped), docs.z.ai/devpack/credit-campaign-rules (paid-first-order plus 3-referral payout threshold, UNCHANGED). Multi-source only, not vendor-read: Hunyuan Hy3 限免 plus Hy4 preview night-free 23:00-08:00 to 31 Oct; Doubao Standard plan 30 days to about 17 Oct. Idempotency: no stale status:new found (fifth consecutive clean run). Considered and NOT added: Thinking Machines Inkling free models on OpenRouter (already covered by the openrouter row, an aggregator free roster rather than a separate vendor grant), Baidu Qianfan new-user tokens and Alibaba Tongyi Lingma free personal edition (both long-standing and cn-only). Referral terms re-checked, referrals.js NOT touched.',
   offers: [
   {
     "id": "amd",
@@ -177,8 +177,9 @@ window.RADAR = {
     "linkLabel": "Get key",
     "budgetNote": "20 req/min · 50 req/day free → 1,000 req/day after a one-time $10 purchase",
     "models": [
+      "inclusionai/ling-3.1-flash",
+      "apodex/apodex-1.1-mini:free",
       "nvidia/nemotron-3-ultra-550b-a55b:free",
-      "inclusionai/ling-3.0-flash-fin:free",
       "poolside/laguna-s-2.1:free"
     ],
     "base": "https://openrouter.ai/api/v1",
@@ -189,7 +190,7 @@ window.RADAR = {
       "Optional but significant: buy <b>$10 of credit once</b>. It is a lifetime condition, not a balance — the 20× daily limit increase is permanent even after you spend it."
     ],
     "test": "# list what is free right now — do this instead of hardcoding\ncurl https://openrouter.ai/api/v1/models \\\n  -H \"Authorization: Bearer $OPENROUTER_API_KEY\" | grep -o '\"[^\"]*:free\"' | sort -u",
-    "warn": "The free roster rotates weekly. <b>Read model IDs from the API at runtime</b> rather than hardcoding them, or your app breaks on someone else's pricing decision."
+    "warn": "The free roster rotates weekly, so the list on this row is a snapshot, not a contract. <b>Read model IDs from the API at runtime</b> rather than hardcoding them, or your app breaks on someone else's pricing decision. Concrete proof, checked 11 October 2026 against the vendor's own API: <b>inclusionai/ling-3.0-flash-fin</b> has left the free list and now bills ($0.042/M in, $0.123/M out), while <b>inclusionai/ling-3.1-flash</b> and <b>apodex/apodex-1.1-mini:free</b> joined it. Nineteen models currently price at $0."
   },
   {
     "id": "inception",
@@ -1085,7 +1086,7 @@ window.RADAR = {
     "reach": "cn-only",
     "link": "https://console.cloud.tencent.com/hunyuan",
     "linkLabel": "Open",
-    "budgetNote": "New or never-tried users: <b>14 days of daily free quota from first use</b> — first conversation must start by <b>10 October</b> · existing users: free <b>23:00–08:00</b> nightly, <b>extended to 31 October</b> · Hunyuan Hy3 限免 likewise extended to 31 October",
+    "budgetNote": "New or never-tried users: <b>14 days of daily free quota from first use</b>, but the first-conversation window <b>closed on 10 October</b>, so this is no longer claimable · existing users: free <b>23:00–08:00</b> nightly, <b>extended to 31 October</b> · Hunyuan Hy3 限免 likewise extended to 31 October",
     "models": [
       "Hunyuan Hy4 preview",
       "Hunyuan Hy3"
@@ -1095,12 +1096,12 @@ window.RADAR = {
     "steps": [
       "Open WorkBuddy or CodeBuddy.",
       "Switch to <b>Hunyuan Hy4 preview</b> in the model menu — no API wiring needed.",
-      "Never used it? Start your first conversation before <b>10 October</b>; the 14-day clock runs from that first use.",
+      "Never used it? That new-user window has <b>closed</b> — a first Hy4 conversation had to start by 10 October, so the 14-day quota is no longer claimable.",
       "Already tried it? Night-time usage is free at <b>23:00–08:00</b> — extended to <b>31 October</b>. Outside those hours usage consumes points normally.",
       "Hy3 (限免) is free to switch to inside the same client, also extended to <b>31 October</b>."
     ],
     "test": "— client-bound.",
-    "note": "770B MoE with 1M context. <b>Text-only</b> — image and video tasks route to other models and bill normally. <b>Extended:</b> a joint WorkBuddy/Hunyuan announcement on 30 September pushed both the Hy3 限免 window and the Hy4 preview night-free window from 30 September to <b>31 October</b>; the 10 October last-start date for the new-user 14 days is unchanged. Tencent Cloud TokenHub also gives new users 1M tokens for the Hy4 preview API if you want the API route."
+    "note": "770B MoE with 1M context. <b>Text-only</b> — image and video tasks route to other models and bill normally. <b>Extended:</b> a joint WorkBuddy/Hunyuan announcement on 30 September pushed both the Hy3 限免 window and the Hy4 preview night-free window from 30 September to <b>31 October</b>. The new-user 14-day quota is the exception: its 10 October last-start date has now passed (checked 11 October), so only the existing-user night-free window and the Hy3 限免 are still live. Tencent Cloud TokenHub also gives new users 1M tokens for the Hy4 preview API if you want the API route."
   },
   {
     "id": "glmnight",
@@ -1662,7 +1663,48 @@ window.RADAR = {
   rail: [
   {
     "d": "today",
-    "label": "Today · 9 Oct",
+    "label": "Today · 11 Oct",
+    "items": [
+      {
+        "c": "ext",
+        "n": "OpenRouter free roster rotated: ling-3.0-flash-fin has left the free list",
+        "t": "Read from the vendor own model API (openrouter.ai/api/v1/models) this morning: <b>19 models</b> price at $0. <b>inclusionai/ling-3.0-flash-fin</b>, which this row listed as free, is no longer free: it now bills $0.042/M input and $0.123/M output. Two joined the free list, <b>inclusionai/ling-3.1-flash</b> (the same Ling 3.1 Flash that is free on Vercel to 13 Oct) and <b>apodex/apodex-1.1-mini:free</b>. The row model list is corrected; the 50 req/day free limit is unchanged."
+      },
+      {
+        "c": "exp",
+        "n": "No deadline changes: every published end date re-verified unchanged",
+        "t": "Vendor pages read directly: GLM night-free still 3 Sep to 7 Oct with no extension (docs.bigmodel.cn), WorkBuddy invite still 即日起至 2026年10月31日 with the invitee 2,000 积分 截止 2026年10月31日, Qoder Qwen3.8-Flash still free with the end date still to be announced (docs.qoder.com), Ling 3.1 Flash still free through 13 October (vercel.com/ai-gateway/models/ling-3.1-flash-free), Cerebras still a $5/30-day card-backed trial (inference-docs.cerebras.ai), Groq free-plan limits unchanged (console.groq.com/docs/rate-limits), Kilo still five free models, OpenCode Zen still thirteen free models. Nothing moved."
+      },
+      {
+        "c": "exp",
+        "n": "Hunyuan Hy4 new-user window closed on 10 Oct",
+        "t": "The 14-day new-user quota needed a first Hy4 conversation by 10 October 23:59, and that window has now passed. Still live: the existing-user night-free window (23:00-08:00) and the Hy3 限免, both extended to 31 October. The row note is corrected to say so."
+      },
+      {
+        "c": "exp",
+        "n": "AI21 $10 credit: length still contested (tenth check)",
+        "t": "ai21.com/pricing still says the $10 credit is good for 7 days; docs.ai21.com still says three months. Unresolved and deliberately not flipped. The date on the row is a placeholder either way, since the clock runs from your own signup, not a shared deadline."
+      },
+      {
+        "c": "exp",
+        "n": "Ling 3.1 Flash: free to 13 Oct (2 days)",
+        "t": "Vercel gateway re-read: promotional pricing ends 13 October. Use the -free model ID, which stops serving at the end rather than billing you. Also free on OpenRouter and in Kilo Code."
+      },
+      {
+        "c": "exp",
+        "n": "Doubao Standard plan: about 17 Oct",
+        "t": "ByteDance 30-day Standard-plan grant is still reported to run to about 17 October. Multi-source only: the vendor own campaign page was not read directly, so treat the date as approximate."
+      },
+      {
+        "c": "exp",
+        "n": "Hunyuan Hy3 限免 + Hy4 night-free + WorkBuddy invite: 31 Oct",
+        "t": "All three still end 31 October. Hunyuan is cn-only and points-metered; the WorkBuddy invite reward structure (50 / +100 / +500) is unchanged on the live page."
+      }
+    ]
+  },
+  {
+    "d": "week",
+    "label": "Earlier this week · 9 Oct",
     "items": [
       {
         "c": "ext",
@@ -1702,8 +1744,8 @@ window.RADAR = {
     ]
   },
   {
-    "d": "yesterday",
-    "label": "Yesterday · 8 Oct",
+    "d": "week",
+    "label": "Earlier this week · 8 Oct",
     "items": [
       {
         "c": "dead",
@@ -1739,98 +1781,6 @@ window.RADAR = {
         "c": "exp",
         "n": "Hunyuan Hy3 限免 + Hy4 night-free + WorkBuddy invite — 31 Oct",
         "t": "All three still end 31 October. Hunyuan is cn-only and points-metered; the WorkBuddy invite reward structure (50 / +100 / +500) is unchanged on the live page."
-      }
-    ]
-  },
-  {
-    "d": "week",
-    "label": "Earlier this week · 7 Oct",
-    "items": [
-      {
-        "c": "ext",
-        "n": "OpenCode Zen — Exo Free joins, roster now 13 free models",
-        "t": "The vendor page now lists 13 free models at $0 input and output, up from 12 on 5 Oct and 10 on 30 Sep. Newest is <b>Exo Free</b> (<b>exo-free</b>), a stealth listing that appeared 6 October — free for a limited time, and its data <b>may be used to improve the model</b>. No free model publishes an end date. Read directly at opencode.ai/docs/zen."
-      },
-      {
-        "c": "ext",
-        "n": "Mistral Free plan now publishes $10/month API credits",
-        "t": "This row previously read 'Mistral stopped publishing free-tier numbers' — no longer true. <b>mistral.ai/pricing</b>, read today, states the Free plan includes <b>$10/month in API credits</b>, shared across Studio, the API and Vibe. Email and phone verification, no card; Free-plan traffic may be used for training."
-      },
-      {
-        "c": "exp",
-        "n": "No deadline changes — every published end date re-verified unchanged",
-        "t": "Vendor pages read directly this morning: GLM Coding Plan night-free still 2026-09-03 → 2026-10-07 (docs.bigmodel.cn), WorkBuddy invite still 即日起至 2026年10月31日 with the invitee 2,000 积分 截止 2026年10月31日, Qoder Qwen3.8-Flash still free with the end date still to be announced, Ling 3.1 Flash still free through 13 October (Vercel changelog), Cerebras still a $5/30-day card-backed trial. Nothing moved."
-      },
-      {
-        "c": "exp",
-        "n": "ZCode Trust Build / MiniMax Code / GLM night-free — final day (7 Oct)",
-        "t": "All three end today. GLM night-free is paid Coding Plan subscribers only; Trust Build tokens land late and expire the next midnight, so claim on a day you can actually work."
-      },
-      {
-        "c": "exp",
-        "n": "DeepSeek Harness ¥6 credit — reported window ended 6 Oct",
-        "t": "The campaign was reported to run to about 6 October, or until the allocation ran out. DeepSeek publishes no date of its own, so the row is left in place and flagged rather than moved to closed on assumption."
-      },
-      {
-        "c": "exp",
-        "n": "AI21 $10 credit — 6 Oct (length still contested, seventh check)",
-        "t": "docs.ai21.com still says the $10 trial is good for three months; ai21.com/pricing still says 7 days. Unresolved and deliberately not flipped — the date is a placeholder either way, since the clock runs from your own signup, not a shared deadline."
-      },
-      {
-        "c": "exp",
-        "n": "Hunyuan Hy4 new users — first conversation by 10 Oct",
-        "t": "The 31 Oct night-free extension is unchanged; a user who has never opened Hy4 must start their first conversation by 10 October 23:59 to trigger the 14-day daily quota."
-      },
-      {
-        "c": "exp",
-        "n": "Ling 3.1 Flash — free to 13 Oct",
-        "t": "Vercel changelog re-read: free through 13 October. Use the -free model ID — it stops serving at the end rather than billing you."
-      }
-    ]
-  },
-  {
-    "d": "week",
-    "label": "Earlier this week · 6 Oct",
-    "items": [
-      {
-        "c": "new",
-        "n": "Bilibili Index-Translate — free API, no key at all",
-        "t": "A genuinely keyless endpoint: no signup, no card, nothing to claim. OpenAI-compatible at https://index-translate.bilibili.com/v1 serving Index-Translate-35B-A3B, a Qwen3.5-based translation model covering 150 languages, opened 4 October. Verified OFFICIAL against Bilibili's own README and site. The vendor publishes no rate limit and no end date — both are recorded as unpublished rather than guessed."
-      },
-      {
-        "c": "exp",
-        "n": "No deadline changes — every published end date re-verified unchanged",
-        "t": "Vendor pages read directly this morning: GLM Coding Plan night-free still 2026-09-03 → 2026-10-07 (docs.bigmodel.cn, rules re-confirmed: 23:00–09:00, GLM-5.3-Flash only, 0-consumption in ZCode/AutoClaw, 2× elsewhere, 5-hour/week cap), WorkBuddy invite still 即日起至 2026年10月31日 with the invitee 2,000 积分 截止 2026年10月31日, Qoder Qwen3.8-Flash still free past 30 Sep with the end date still to be announced, Ling 3.1 Flash still free through 13 October (Vercel changelog), Cerebras still a $5/30-day trial requiring a card with no auto-renewing free tier. Nothing moved."
-      },
-      {
-        "c": "exp",
-        "n": "DeepSeek Harness ¥6 credit — last day (6 Oct)",
-        "t": "Desktop-app launch credit, multi-source: the vendor tracker's own detail page, read directly this morning, still says 活动大致用到 10 月 6 日 and shows 76 community votes at 89% still valid. Small grant; the app is the point. Expect it to move to closed on the next run."
-      },
-      {
-        "c": "exp",
-        "n": "AI21 $10 credit — 6 Oct (length still contested, sixth check)",
-        "t": "docs.ai21.com still says the $10 trial is good for three months; ai21.com/pricing still says 7 days. Unresolved and deliberately not flipped — the date is a placeholder either way, since the clock runs from your own signup, not a shared deadline."
-      },
-      {
-        "c": "exp",
-        "n": "ZCode Trust Build / MiniMax Code / GLM night-free — 7 Oct",
-        "t": "All three still end 7 October. GLM night-free is paid Coding Plan subscribers only; Trust Build tokens land late and expire the next midnight, so claim on a day you can actually work."
-      },
-      {
-        "c": "ext",
-        "n": "Kilo free roster — now five models",
-        "t": "The vendor page's own counter has fallen from six free models to five: Ling 3.1 Flash, Dots3-Note Preview, Laguna S 2.1, Nemotron 3 Ultra and Nemotron 3 Super. All five were already in this row's model list — one older listing aged out, which is the rotating catalog working as advertised."
-      },
-      {
-        "c": "exp",
-        "n": "Hunyuan Hy4 new users — first conversation by 10 Oct",
-        "t": "The 31 Oct night-free extension is unchanged (23:00–08:00, re-confirmed today via Tencent WorkBuddy's 30 Sep announcement), but a user who has never opened Hy4 must start their first conversation by 10 October 23:59 to trigger the 14-day daily quota."
-      },
-      {
-        "c": "exp",
-        "n": "Ling 3.1 Flash — free to 13 Oct",
-        "t": "Vercel changelog re-read: free through 13 October. Use the -free model ID — it stops serving at the end rather than billing you. Also carried free in Kilo Code."
       }
     ]
   },

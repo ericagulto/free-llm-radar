@@ -13,6 +13,56 @@ Format per entry:
 
 ---
 
+## 2026-10-11
+
+- **NO DEADLINE CHANGES.** Every published `end` date re-verified and unchanged. 51 offers in,
+  51 out (no additions, no removals), 51 pages, `validate.js` exit 0.
+- **CHANGED: `openrouter`.** The illustrative model list on this row had gone stale. Read from the
+  vendor's own API (`openrouter.ai/api/v1/models`): **19 models price at $0**, and
+  **`inclusionai/ling-3.0-flash-fin`**, which this row listed as free, is **no longer free** (it now
+  bills $0.042/M input, $0.123/M output). Two joined the free list: **`inclusionai/ling-3.1-flash`**
+  (the same Ling 3.1 Flash that is free on Vercel to 13 Oct) and **`apodex/apodex-1.1-mini:free`**.
+  The `models` array is corrected. `added` NOT bumped, the same call as the Kilo and OpenCode Zen
+  roster rotations: the offer did not change, only the rotating catalogue it points at.
+- **CHANGED: `hunyuan`.** The row's new-user clause read as an upcoming deadline and no longer is.
+  The 14-day new-user quota required a first Hy4 conversation by **10 October 23:59**, which has now
+  passed, so the clause is reworded to say the window is closed. The `end` (31 October) is unchanged
+  and the existing-user night-free window (23:00-08:00) plus the Hy3 限免 are still live to 31 Oct.
+- **Verified:** `docs.bigmodel.cn/cn/coding-plan/notice/event-glm-5.3-flash` (campaign still reads
+  2026-09-03 to 2026-10-07, no extension, stays CLOSED) · `docs.qoder.com/events/flashoffer`
+  (Qwen3.8-Flash still free, end date still to be announced) · `workbuddy.cn/events/invite`
+  (即日起至 2026年10月31日, invitee 2,000 积分 截止 2026年10月31日, tiers 50/+100/+500) ·
+  `vercel.com/ai-gateway/models/ling-3.1-flash-free` (promotional pricing ends 13 October) ·
+  `kilo.ai/landing/free-models` (still five free models) · `opencode.ai/zen/v1/models` (still
+  thirteen free models) · `inference-docs.cerebras.ai/support/rate-limits` ($5 trial, 30 days from
+  the grant, card required, no auto-renewing tier; the 2 Oct correction holds) ·
+  `console.groq.com/docs/rate-limits` (free plan 30 RPM / 1K RPD / 8K TPM / 200K TPD) ·
+  `ai21.com/pricing` (still 7 days; **tenth** check against `docs.ai21.com`'s three months, NOT
+  flipped) · `docs.z.ai/devpack/credit-campaign-rules` (paid-first-order plus 3-referral payout
+  threshold).
+- **Multi-source only, not vendor-read:** Hunyuan Hy3 限免 plus Hy4 preview night-free 23:00-08:00
+  to 31 Oct (Sohu / Sina / Tencent coverage of the 30 Sep announcement); Doubao Standard plan 30 days
+  to about 17 Oct.
+- **Idempotency:** no stale `status: 'new'` found. Fifth consecutive clean run.
+- **Considered, NOT added:** Thinking Machines **Inkling** free models on OpenRouter (already covered
+  by the `openrouter` row; it is an aggregator free roster, not a separate vendor grant); Baidu
+  Qianfan new-user tokens and Alibaba Tongyi Lingma free personal edition (both long-standing and
+  cn-only, so out of scope for a mainly non-Chinese audience).
+- **Referral terms:** all three pages re-read; the WorkBuddy structure (50 / +100 / +500, 2,000
+  invitee, 31 Oct) still matches the file. `referrals.js` **NOT touched**. Two known stale items
+  stand, reported not edited: the `workbuddy` programme note says 30 September; `qoderwork_cn` is
+  titled 【7月30日截止】.
+- **Notes for the next run:** Ling 3.1 Flash ends **13 Oct** (2 days). Doubao ~**17 Oct**. Hunyuan
+  and WorkBuddy **31 Oct**. AI21 still contested (eleventh check, do not flip). `content.js`'s
+  `wenxin` entry still says "Both halves close 30 September" (twelfth run flagged; a refresh cannot
+  write `content.js`, so it will never self-heal). `oci` / `azure` / `ai21` dates are
+  activation-relative placeholders, never report as deadlines. `deploy/verify-live.js` still needs a
+  China-tab switch before its featured-block step. **The automation prompt still says
+  `bash deploy/sync-data.sh` is "the only step needed"**, which contradicts AGENTS.md rule 7 and
+  trap 9; this run used `deploy/publish.sh` (data + site) as AGENTS.md requires.
+
+---
+
 ## 2026-10-09
 
 - **NO DEADLINE CHANGES.** Every published `end` date re-verified and unchanged. 51 → **51 offers**

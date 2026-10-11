@@ -22,7 +22,7 @@
 
 <div class="bar">
   <a href="../index.html">← Free LLM Radar</a>
-  <span class="sp">Verified 2026-10-09</span>
+  <span class="sp">Verified 2026-10-11</span>
 </div>
 
 <main>
@@ -60,7 +60,7 @@
     <span title="The provider does not publish a numeric allowance, so this page cannot quote one. Check the provider's own page for current limits.">No published figure</span>
   </div>
 
-  <div class="callout warn"><div class="h">Watch out</div>The free roster rotates weekly. <b>Read model IDs from the API at runtime</b> rather than hardcoding them, or your app breaks on someone else's pricing decision.</div>
+  <div class="callout warn"><div class="h">Watch out</div>The free roster rotates weekly, so the list on this row is a snapshot, not a contract. <b>Read model IDs from the API at runtime</b> rather than hardcoding them, or your app breaks on someone else's pricing decision. Concrete proof, checked 11 October 2026 against the vendor's own API: <b>inclusionai/ling-3.0-flash-fin</b> has left the free list and now bills ($0.042/M in, $0.123/M out), while <b>inclusionai/ling-3.1-flash</b> and <b>apodex/apodex-1.1-mini:free</b> joined it. Nineteen models currently price at $0.</div>
 
 
   <h2>What this is</h2>
@@ -101,7 +101,7 @@
   <table>
     <tr><th>Base URL</th><td class="mono">https://openrouter.ai/api/v1</td></tr>
     <tr><th>Auth</th><td>Authorization: Bearer</td></tr>
-    <tr><th>Models</th><td class="mono">nvidia/nemotron-3-ultra-550b-a55b:free<br>inclusionai/ling-3.0-flash-fin:free<br>poolside/laguna-s-2.1:free</td></tr>
+    <tr><th>Models</th><td class="mono">inclusionai/ling-3.1-flash<br>apodex/apodex-1.1-mini:free<br>nvidia/nemotron-3-ultra-550b-a55b:free<br>poolside/laguna-s-2.1:free</td></tr>
   </table>
 
   <h2>Set it up</h2>
@@ -136,7 +136,7 @@
 </main>
 
 <footer>
-  <p><b>Verified 2026-10-09.</b>
+  <p><b>Verified 2026-10-11.</b>
   Free tiers change without notice — re-check the provider's own page before you build on this.
   This page was generated from the radar's dataset; the offer <code>id</code> is
   <code>openrouter</code>.</p>
