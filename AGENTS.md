@@ -81,14 +81,18 @@ write-up exists.
 
 | Source | Use it for | Caveat |
 |---|---|---|
-| `china-ai-arbitrage.xyz/free-tokens` | Best English tracker, well-sourced, per-offer detail | Still check the date on each entry |
-| `aipromonow.com` | Promo tracker with community validation counts and expiry dates | Community-sourced |
-| `aifuli.dev` | Official-source-verified offers, startup credits, student benefits | — |
+| `igetoken.com/deals` | **The best working tracker.** Per-entry CN summaries, every entry dated, claims official-source traceability, keeps expired entries archived | Community-sourced; treat as leads |
+| `igetoken.com/rss.xml` | The same content as a feed. The single cheapest update check in this list | — |
+| `token-fbi.com` | Additional CN tracker | Fresh as of 2026-10-11 |
+| `apirank.vip` | Additional CN tracker | Fresh as of 2026-10-10 |
 | `freetokens.custats.info` | Per-offer detail pages with verification status | — |
-| `allagent.wiki` | Daily briefings (CN) | Calendar page stopped updating 12 Sep 2026 — daily posts only |
+| `aifuli.dev` | Official-source-verified offers, startup credits, student benefits | Small site, thin coverage |
+| `yangmao.ai` | Free-tier comparison tables, CN and EN | Marketing page; the freshness markers in the HTML are unreliable |
 | `github.com/open-free-llm-api/awesome-freellm-apis` | Broad provider list | Frequently stale on retirements |
 | `github.com/0xzr/freellmpool` | Provider catalogue with access signals | — |
-| `token-fbi.com`, `yangmao.ai`, `apirank.vip` | Additional CN trackers | — |
+| `aipromonow.com` | *(recorded for the archive only — does not resolve as of 2026-10-12)* | — |
+| `allagent.wiki` | *(recorded for the archive only — returns 403 as of 2026-10-12)* | Calendar page stopped updating 12 Sep 2026 |
+| `china-ai-arbitrage.xyz/free-tokens` | **DEAD. The domain now redirects to an online casino.** Do not fetch, do not treat any cached copy as current. Removed from the source list 2026-10-12. | — |
 
 ### Vendor primary sources — for truth (verify every number here)
 
@@ -106,11 +110,37 @@ write-up exists.
 | Qoder | `docs.qoder.com` (intl), `docs.qoder.cn` (CN) — check both, they diverge |
 | Z.ai / GLM | `docs.z.ai/devpack/credit-campaign-rules` |
 
+### Keyless model-list endpoints — the cheapest discovery primitive
+
+These need **no API key**, are **vendor-primary**, and answer "what does this vendor serve right
+now". That is the single most useful question for catching rotating free rosters, which is the
+project's most common change class. Sweep them **before** the trackers.
+
+| Endpoint | What it gives you |
+|---|---|
+| `https://openrouter.ai/api/v1/models` | ~458 models; `pricing.prompt` / `pricing.completion` of `"0"` marks the free ones |
+| `https://opencode.ai/zen/v1/models` | Zen's live list. Now **lags** the docs page, so cross-check against `opencode.ai/docs/zen` |
+| `https://integrate.api.nvidia.com/v1/models` | 80 model ids, no key |
+| `https://api.sambanova.ai/v1/models` | 6 model ids, no key, exact casing included |
+| `https://index-translate.bilibili.com/v1/models` | 1 model id, no key |
+
+All five verified reachable and unauthenticated on 2026-10-12. These all **require** a key and cannot
+be swept blind: `api.groq.com`, `api.mistral.ai`, `api.together.xyz`, `api.cerebras.ai`,
+`api.deepseek.com`, `api.siliconflow.cn`, `api.stepfun.com`, `developer.amd.com.cn`.
+
+**Community registries were tested and are not worth adding.** `models.dev/api.json` covers 226
+providers but contains **zero** zero-cost entries. LiteLLM's
+`model_prices_and_context_window.json` returns 137 "zero-cost" keys, but those are mostly `ollama`
+models (local, not an API tier) and unpriced placeholders where 0 means "unknown", not "free".
+Neither models free tiers, which is exactly what this list is about. Do not re-add them.
+
 ### Research method
 
 1. **Re-verify `end` dates FIRST.** Silent extension is the most common change and the easiest to
    miss. Check every offer that has a date before looking for anything new.
-2. **Sweep the trackers** for offers that are not yet in `data.js`.
+2. **Sweep the keyless model-list endpoints**, then the trackers, for offers that are not yet in
+   `data.js`. The endpoints are vendor-primary and free, so they catch a stale roster immediately;
+   the trackers tell you which vendor to check next.
 3. **Confirm each candidate against the vendor's own page** before adding it. If only a tracker
    reports a number, mark it as unverified in the offer's `warn` field and say so in the changelog.
 4. **Label the verification level** of every new claim:

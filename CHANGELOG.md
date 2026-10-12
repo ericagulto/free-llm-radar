@@ -13,6 +13,38 @@ Format per entry:
 
 ---
 
+## 2026-10-12 · mid-day correction (second refresh, same day)
+
+- **NO DEADLINE CHANGES.** Every published `end` date is exactly as verified at 09:56 this morning.
+- **CHANGED: `nvidia`.** Read from the vendor's own keyless endpoint,
+  `integrate.api.nvidia.com/v1/models` (**80 model ids**). **`z-ai/glm-5.2`, which this row listed, is
+  ABSENT** from the live catalogue and has been replaced by **`z-ai/glm-5.3`**.
+  **`moonshotai/kimi-k3`** added. `added` bumped to 2026-10-12 (a listed model left the catalogue).
+  A `note` now carries the endpoint URL, so the staleness cannot recur silently.
+- **CHANGED: `sambanova`.** Read from `api.sambanova.ai/v1/models` (**6 model ids**, exact casing).
+  This row listed **`deepseek-v3-2-preview`** and **`minimax-m2-7`**, **neither of which is live**:
+  **`DeepSeek-V3.2`** and **`MiniMax-M3`** replaced them, and **`Meta-Llama-3.3-70B-Instruct`** and
+  **`gpt-oss-120b`** joined. All three previous ids were also wrong in case. The row now matches the
+  endpoint exactly, `test` command included. `added` bumped to 2026-10-12.
+- **Discovery surface fixed (the real point of this run).** The tracker table in `AGENTS.md` was about
+  a third dead: `china-ai-arbitrage.xyz` now redirects to an online casino, `aipromonow.com` does not
+  resolve, `allagent.wiki` returns 403, and the table **omitted** `igetoken.com/deals` and its working
+  RSS feed, which is where the day's two best leads came from. The table has been rewritten, and a new
+  "Keyless model-list endpoints" section added at the top of the method. `AGENTS.md` and the
+  `free-llm-api-radar` skill are both updated.
+- **The two findings above were the immediate yield of that fix**: both stale rosters were found by
+  sweeping endpoints that need no API key. That is the cheapest stale-roster detector the project has.
+- **Community registries tested and rejected.** `models.dev/api.json` (226 providers) has **zero**
+  zero-cost entries. LiteLLM's `model_prices_and_context_window.json` returns 137 "zero-cost" keys,
+  but they are mostly `ollama` models and unpriced placeholders where 0 means "unknown", not "free".
+  Recorded in both files so a later run does not re-add them.
+- **X and Reddit remain unavailable** (tested again: X 404s, Reddit 403s on every path including
+  `api.reddit.com` and `search.json`; domain-restricted search returns nothing from either). They are
+  not in the source list and are not reachable, so the discovery gain here came from vendor endpoints
+  rather than social sources.
+
+---
+
 ## 2026-10-12
 
 - **NO DEADLINE CHANGES.** Every published `end` date re-verified and unchanged. 51 offers in,

@@ -46,8 +46,8 @@
    ============================================================ */
 
 window.RADAR = {
-  updated: '2026-10-12T09:56:00+08:00',
-  verifiedBy: 'Run of 2026-10-12. NO DEADLINE CHANGES: every published end date re-verified and unchanged. ONE ROSTER CORRECTION: OpenCode Zen. The vendor docs page (opencode.ai/docs/zen) loaded this run where it would not on 9 Oct, and its pricing table lists THIRTEEN free models, unchanged in count but rotated: muse-spark-1.2-contributor-free has dropped off and mimo-v2.5-free has joined. The row models array is corrected. Also corrected the Zen warning: step-5-preview-free is now a zero-retention provider alongside Space Bunny and LongCat 2.5. NOTE: the Zen endpoint (opencode.ai/zen/v1/models) now lags the docs page, still listing muse-spark-1.2-contributor-free and omitting exo-free, ling-3.0-flash-fin-free, nemotron-3-ultra-free and mimo-v2.5-free; the docs page was used as the vendor-primary source. Vendor primary pages read directly: docs.bigmodel.cn/cn/coding-plan/notice/event-glm-5.3-flash (campaign still reads 2026-09-03 to 2026-10-07, no extension, stays CLOSED), docs.qoder.com/events/flashoffer (Qwen3.8-Flash still free, end date still to be announced, UNCHANGED), workbuddy.cn/events/invite (即日起至2026年10月31日, invitee 2,000 积分 截止 2026年10月31日, tiers 50/+100/+500, UNCHANGED), vercel.com/ai-gateway/models/ling-3.1-flash-free (promotional pricing ends 13 October, UNCHANGED), kilo.ai/landing/free-models (still FIVE free models, UNCHANGED), inference-docs.cerebras.ai/support/rate-limits ($5 trial expiring 30 days after the grant, card required, no auto-renewing tier, the 2 Oct correction holds), console.groq.com/docs/rate-limits (free plan 30 RPM / 1K RPD / 8K TPM / 200K TPD, UNCHANGED), openrouter.ai/api/v1/models (still 19 models at $0, UNCHANGED), ai21.com/pricing (still 7 days vs docs.ai21.com three months, eleventh check, NOT flipped), docs.z.ai/devpack/credit-campaign-rules (paid-first-order plus 3-referral payout threshold, UNCHANGED). Multi-source only, not vendor-read: Hunyuan Hy3 限免 plus Hy4 preview night-free 23:00-08:00 to 31 Oct; Doubao Standard plan 30 days to about 17 Oct. Idempotency: no stale status:new found (sixth consecutive clean run). Considered and NOT added: StepFun Step 5 Preview free-week via OpenCode Zen / Cline / Kilo Code / Nous Research from 8 Oct (already represented by the opencodezen row step-5-preview-free, and the window length is contradictory across trackers, one week vs two weeks); Atria Dawn Preview (100M tokens, console JS-only, not vendor-verifiable); Xiaomi MiMo open platform (new-user credit amount not published); DeepSeek 5M new-user tokens (api-docs.deepseek.com still publishes no amount).',
+  updated: '2026-10-12T11:00:00+08:00',
+  verifiedBy: 'Run of 2026-10-12, mid-day correction, prompted by a discovery-surface review. NO DEADLINE CHANGES; every published end date still as verified at 09:56 this morning. TWO ROSTER CORRECTIONS, both found by sweeping vendor model-list endpoints that are reachable without an API key. nvidia: read integrate.api.nvidia.com/v1/models directly, 80 model ids; z-ai/glm-5.2, which this row listed, is ABSENT from the live catalogue and has been replaced by z-ai/glm-5.3; moonshotai/kimi-k3 added. sambanova: read api.sambanova.ai/v1/models directly, 6 model ids; this row listed deepseek-v3-2-preview and minimax-m2-7, neither of which is in the live list (DeepSeek-V3.2 and MiniMax-M3 replaced them), and the ids were wrong in case. Both rows now carry the endpoint URL in a note so the staleness cannot recur silently. A discovery-surface review also found the tracker table in AGENTS.md to be roughly a third dead: china-ai-arbitrage.xyz now redirects to an online casino, aipromonow.com does not resolve, allagent.wiki returns 403, and the table omits igetoken.com/deals plus its working RSS feed, where the two best leads of the day came from. Runbook and skill updated. Everything else is as recorded at 09:56 this morning.',
   offers: [
   {
     "id": "amd",
@@ -229,7 +229,7 @@ window.RADAR = {
     "budget": 0,
     "unit": "~40 req/min",
     "end": null,
-    "added": "2026-09-28",
+    "added": "2026-10-12",
     "status": "active",
     "card": false,
     "china": false,
@@ -238,9 +238,10 @@ window.RADAR = {
     "linkLabel": "Get key",
     "budgetNote": "Up to ~40 req/min, model-specific · phone verification, not a card",
     "models": [
-      "z-ai/glm-5.2",
+      "z-ai/glm-5.3",
       "z-ai/glm-5.3-flash",
-      "moonshotai/kimi-k2.6"
+      "moonshotai/kimi-k2.6",
+      "moonshotai/kimi-k3"
     ],
     "base": "https://integrate.api.nvidia.com/v1",
     "auth": "Authorization: Bearer (nvapi- prefix)",
@@ -250,7 +251,8 @@ window.RADAR = {
       "The same key works across the entire catalogue."
     ],
     "test": "curl https://integrate.api.nvidia.com/v1/chat/completions \\\n  -H \"Authorization: Bearer $NVIDIA_API_KEY\" \\\n  -H \"Content-Type: application/json\" \\\n  -d '{\"model\":\"z-ai/glm-5.2\",\"messages\":[{\"role\":\"user\",\"content\":\"Hello\"}]}'",
-    "warn": "Community reports are mixed — multiple developers describe hitting <b>429 rate limits</b> and occasional unresponsiveness under load. Great catalogue for trying models; do not build a production path on it."
+    "warn": "Community reports are mixed — multiple developers describe hitting <b>429 rate limits</b> and occasional unresponsiveness under load. Great catalogue for trying models; do not build a production path on it.",
+    "note": "Read 12 Oct 2026 from the vendor's own public endpoint, <b>integrate.api.nvidia.com/v1/models</b>, which needs <b>no API key</b> and returns <b>80 model ids</b>. That endpoint is the authoritative answer to <i>what a key can actually call</i>, so prefer it over counting models on the build.nvidia.com page. It confirmed <b>z-ai/glm-5.2 has left the catalogue</b> and been replaced by <b>z-ai/glm-5.3</b>, and it confirmed kimi-k2.6, kimi-k3, the Nemotron 3 line, deepseek-v4.1-flash and poolside/laguna-xs-2.1. Sweep this endpoint on every run: it is the cheapest stale-roster detector in the project."
   },
   {
     "id": "cloudflare",
@@ -448,7 +450,7 @@ window.RADAR = {
     "budget": 200000,
     "unit": "tokens/day",
     "end": null,
-    "added": "2026-09-28",
+    "added": "2026-10-12",
     "status": "active",
     "card": false,
     "china": false,
@@ -457,9 +459,12 @@ window.RADAR = {
     "linkLabel": "Get key",
     "budgetNote": "20 req/min · <b>20 req/day</b> · 200K tokens/day",
     "models": [
-      "deepseek-v3-1",
-      "deepseek-v3-2-preview",
-      "minimax-m2-7"
+      "DeepSeek-V3.1",
+      "DeepSeek-V3.2",
+      "Meta-Llama-3.3-70B-Instruct",
+      "MiniMax-M3",
+      "gemma-4-31B-it",
+      "gpt-oss-120b"
     ],
     "base": "https://api.sambanova.ai/v1",
     "auth": "Authorization: Bearer",
@@ -467,8 +472,9 @@ window.RADAR = {
       "Sign up at <b>cloud.sambanova.ai</b>.",
       "Create an API key in the console."
     ],
-    "test": "curl https://api.sambanova.ai/v1/chat/completions \\\n  -H \"Authorization: Bearer $SAMBANOVA_API_KEY\" \\\n  -H \"Content-Type: application/json\" \\\n  -d '{\"model\":\"deepseek-v3-1\",\"messages\":[{\"role\":\"user\",\"content\":\"Hello\"}]}'",
-    "warn": "<b>20 requests per day</b> is very tight. Useful as an occasional high-capability fallback, not as a primary."
+    "test": "curl https://api.sambanova.ai/v1/chat/completions \\\n  -H \"Authorization: Bearer $SAMBANOVA_API_KEY\" \\\n  -H \"Content-Type: application/json\" \\\n  -d '{\"model\":\"DeepSeek-V3.1\",\"messages\":[{\"role\":\"user\",\"content\":\"Hello\"}]}'",
+    "warn": "<b>20 requests per day</b> is very tight. Useful as an occasional high-capability fallback, not as a primary.",
+    "note": "Read 12 Oct 2026 from the vendor's own public endpoint, <b>api.sambanova.ai/v1/models</b>, which needs <b>no API key</b> and returns <b>6 model ids</b> with exact casing. This row previously listed <b>deepseek-v3-2-preview</b> and <b>minimax-m2-7</b>, neither of which is in the live list (DeepSeek-V3.2 and MiniMax-M3 replaced them), and all three of its ids were wrong in case. The list now matches the endpoint exactly. Sweep this endpoint on every run."
   },
   {
     "id": "cerebras",
@@ -1665,6 +1671,16 @@ window.RADAR = {
     "d": "today",
     "label": "Today · 12 Oct",
     "items": [
+      {
+        "c": "dead",
+        "n": "NVIDIA NIM: z-ai/glm-5.2 has left the catalogue",
+        "t": "Found by sweeping a vendor endpoint that needs no API key, <b>integrate.api.nvidia.com/v1/models</b>, which returns <b>80 model ids</b>. <b>z-ai/glm-5.2</b>, which this row listed, is <b>absent</b>; <b>z-ai/glm-5.3</b> has replaced it. <b>moonshotai/kimi-k3</b> added. This endpoint is the authoritative answer to what a key can actually call, so it is now recorded on the row and is worth sweeping every run."
+      },
+      {
+        "c": "ext",
+        "n": "SambaNova: model list was stale and wrong in case",
+        "t": "Read from <b>api.sambanova.ai/v1/models</b>, also keyless, which returns <b>6 model ids</b>. This row listed <b>deepseek-v3-2-preview</b> and <b>minimax-m2-7</b>, neither of which is live; <b>DeepSeek-V3.2</b> and <b>MiniMax-M3</b> replaced them, and <b>Meta-Llama-3.3-70B-Instruct</b> and <b>gpt-oss-120b</b> joined. The row now matches the endpoint exactly, casing included."
+      },
       {
         "c": "ext",
         "n": "OpenCode Zen free roster rotated: Muse Spark 1.2 out, MiMo-V2.5 in",
