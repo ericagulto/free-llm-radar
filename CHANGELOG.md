@@ -80,6 +80,24 @@ live `history.html` serves 20 runs.
 alongside `build-pages.js` · Ling 3.1 Flash **13 Oct** · Doubao ~**17 Oct** · Hunyuan + WorkBuddy
 **31 Oct** · AI21 contested (**twelfth check, do not flip**).
 
+**Post-publish verification pass.** The five changes above were re-checked against the **deployed**
+site rather than the local build. Two tooling defects surfaced and were fixed:
+
+- **`deploy/verify-live.js` could not start without a hand-exported `NODE_PATH`**, and it hardcoded
+  `chromium-1243/chrome-win64/chrome.exe`. It now resolves `playwright-core` from the managed Node
+  workspace and picks the newest Chromium build itself, the way `test-ui.js` already does. A
+  hardcoded build path breaks on the next Playwright install, and this is the script that proves the
+  deploy is correct. Re-run with `NODE_PATH` unset: **53/53**.
+- **`test-validate.js` now takes about 134 seconds**, because it copies the whole project once per
+  case. Under a 120 second foreground budget it dies at case 18 of 20 with a truncated log and exit
+  1, which reads like a broken test and is not one: run it in the background. The two cases it was
+  dying on were confirmed separately with `deploy/_probe-lastcases.js`. **20/20 in 134s.**
+
+**Live re-check** by cache-busted `curl` against the origin, not the local files: `index.html` 200,
+55,909 bytes, carrying `id="since"`, the `a.ev` rules and the `radar.lastSeen` key · `history.html`
+200, 112,441 bytes, 20 entries, newest 2026-10-12, oldest 2026-09-29 · `data.js` 200, 93,674 bytes,
+23 `ref` fields, `updated: '2026-10-12T11:00:00+08:00'` · `sitemap.xml` 200.
+
 ---
 
 ## 2026-10-12 · mid-day correction (second refresh, same day)

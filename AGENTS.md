@@ -418,6 +418,12 @@ node free-llm-radar/validate.js        # schema + generated-output checks
 node free-llm-radar/test-validate.js   # proves the validator actually fails on breakage
 ```
 
+`test-validate.js` copies the whole project once per case, so it now takes about 134 seconds.
+A foreground command budget of 120 seconds kills it around case 18 of 20: no error, a truncated
+log, and exit 1. That reads exactly like a broken test and is not one. Run it in the background,
+then confirm the last line says `20/20 breakages caught`. To tell the two apart, run the last two
+cases on their own with `deploy/_probe-lastcases.js`.
+
 ---
 
 ## Validate, then publish
@@ -459,6 +465,9 @@ Two things to remember:
   suite once passed 17/17 while the live page was mislabelling every link as sponsored. Pages also
   takes 30–60s to build after a push, and CDN propagation can add another minute — a 404 on a file
   the API reports as present is usually propagation, not a failed deploy.
+  It resolves `playwright-core` and the Chromium build itself, so run it as a plain
+  `node deploy/verify-live.js` with no `NODE_PATH`. It used to need one, and it used to hardcode
+  `chromium-1243`, which breaks on the next Playwright install. Both were fixed after they bit.
 
 ---
 
