@@ -105,6 +105,12 @@ for (const g of RADAR.rail || []) {
   for (const it of g.items) {
     if (!RAIL_KINDS.includes(it.c)) fail(`rail item "${it.n || '(no name)'}" has unknown chip "${it.c}"`);
     if (!it.n || !it.t) fail(`rail item under "${g.d}" is missing a name or text`);
+    // `ref` is optional. It points a rail item at the offer page it concerns, so the rail
+    // stops being a dead end. When present it must resolve, otherwise the dashboard ships a
+    // 404 link, and nothing else in the pipeline would notice.
+    if (it.ref !== undefined && !ids.has(it.ref)) {
+      fail(`rail item "${it.n || '(no name)'}" has ref "${it.ref}" but no offer carries that id`);
+    }
   }
 }
 
@@ -354,7 +360,7 @@ if (!fs.existsSync(OFFERS_DIR)) {
 if (fs.existsSync(path.join(DIR, 'sitemap.xml'))) {
   const sm = read('sitemap.xml');
   const locs = [...sm.matchAll(/<loc>([^<]+)<\/loc>/g)].map(m => m[1]);
-  const wantUrls = new Set([`${SITE}/`, `${SITE}/offers/`, ...[...ids].map(id => `${SITE}/offers/${id}.html`)]);
+  const wantUrls = new Set([`${SITE}/`, `${SITE}/history.html`, `${SITE}/offers/`, ...[...ids].map(id => `${SITE}/offers/${id}.html`)]);
   for (const u of wantUrls) {
     if (!locs.includes(u)) fail(`sitemap.xml is missing ${u}`);
   }
@@ -375,6 +381,21 @@ if (fs.existsSync(path.join(DIR, 'robots.txt'))) {
   }
 } else {
   warn('robots.txt is missing — run build-pages.js');
+}
+
+// history.html is generated from CHANGELOG.md. If a run prepends an entry and forgets to
+// regenerate, the published page silently omits the newest run — the same drift the offer
+// pages are checked for, and invisible without this check.
+const HIST = path.join(DIR, 'history.html');
+if (!fs.existsSync(HIST)) {
+  warn('history.html is missing — run build-history.js');
+} else {
+  const hist = fs.readFileSync(HIST, 'utf8');
+  const heads = [...read('CHANGELOG.md').matchAll(/^##\s+(\d{4}-\d{2}-\d{2})/gm)].map(m => m[1]);
+  if (heads.length && !hist.includes(`<time datetime="${heads[0]}">`)) {
+    fail(`history.html does not contain the newest changelog entry (${heads[0]}) — run build-history.js`);
+  }
+  console.log(`history.html: ${(hist.length / 1024).toFixed(1)} KB · newest entry ${heads[0] || 'n/a'}`);
 }
 
 if (!fs.existsSync(path.join(DIR, 'assets', 'offer.css'))) {

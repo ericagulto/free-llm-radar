@@ -396,7 +396,13 @@ const check = (label, actual, expected, cmp = '==') => {
   await page.waitForTimeout(60);
   check('dropdown resets the stack to one key',
         (await page.$$eval('.sh .pr', els => els.map(e => e.textContent).join(''))), '');
-  const names = await page.$$eval('.row .nm', els => els.map(e => e.textContent.trim()));
+  // Compare the NAME only, not the whole `.nm` cell. `.nm` also contains the subtitle, so
+  // concatenating it does not preserve name order: "OpenCode" + "New-model previews" and
+  // "OpenCode Zen" + "Free model gateway" sort as "OpenCodeN…" vs "OpenCode Z…", and the
+  // space makes the longer name come first. That reported a failure against a table that
+  // was correctly sorted — a red test for the wrong reason, which is how a suite stops
+  // being read. `.nml` is exactly the key the sort uses.
+  const names = await page.$$eval('.row .nml', els => els.map(e => e.textContent.trim()));
   check('dropdown name sort is alphabetical',
         names.join('|') === names.slice().sort((a, b) => a.localeCompare(b)).join('|'), true);
 
@@ -600,6 +606,63 @@ const check = (label, actual, expected, cmp = '==') => {
     }
     await op.close();
   }
+
+  // ---- freshness rail: deep links ----
+  // An item that names one offer links to that offer's page. The href is checked against the
+  // filesystem rather than the DOM: a link to a page that was never generated renders
+  // identically to a working one, and only the filesystem can tell them apart.
+  const railLinks = await page.$$eval('.rail a.ev', els => els.map(e => e.getAttribute('href')));
+  check('rail: some items deep-link to an offer page', railLinks.length > 0, true);
+  check('rail: every linked item points at a page that exists',
+        railLinks.filter(h => !fs.existsSync(path.join(__dirname, h))).join(', '), '');
+  check('rail: whole-list items stay unlinked',
+        (await page.$$eval('.rail div.ev', els => els.length)) > 0, true);
+
+  // ---- returning visitors ----
+  // A dashboard that claims "N changes since your last visit" when nothing changed is lying
+  // to the reader, so both directions are asserted, not just the happy one.
+  const freshPage = async () => {
+    const c = await browser.newContext();
+    const p = await c.newPage();
+    p.on('pageerror', e => errors.push('pageerror: ' + e.message));
+    p.on('console', m => { if (m.type() === 'error') errors.push('console: ' + m.text()); });
+    await p.addInitScript(() => { window.RADAR_DATA_URL = ''; });
+    await p.goto(URL);
+    await p.waitForTimeout(350);
+    return { c, p };
+  };
+  const readSince = p => p.$eval('#since', el => {
+    const a = el.querySelector('a');
+    return { hidden: el.hidden, text: (el.textContent || '').trim(), link: a ? a.getAttribute('href') : null };
+  });
+
+  const fv = await freshPage();
+  check('returning visitor: nothing is claimed on a first visit', (await readSince(fv.p)).hidden, true);
+  await fv.p.reload();
+  await fv.p.waitForTimeout(350);
+  check('returning visitor: nothing is claimed when the data has not changed',
+        (await readSince(fv.p)).hidden, true);
+
+  // Chromium denies localStorage to opaque file:// origins unless it is launched with
+  // --allow-file-access-from-files. The deployed site is https, so this only affects the
+  // local run, but a skip has to be loud, or an untested feature reads as a passing one.
+  const wrote = await fv.p.evaluate(() => {
+    try { window.localStorage.setItem('radar.lastSeen', '2020-01-01T00:00:00+08:00'); return 'ok'; }
+    catch (e) { return 'unavailable: ' + e.name; }
+  });
+  if (wrote !== 'ok') {
+    console.log(`  [SKIP] returning visitor: backdated stamp — localStorage is ${wrote} on file://`);
+    console.log('         The banner is therefore untested locally. Verify it on the deployed https site.');
+  } else {
+    await fv.p.reload();
+    await fv.p.waitForTimeout(350);
+    const since = await readSince(fv.p);
+    check('returning visitor: the banner appears when the data is newer', since.hidden, false);
+    check('returning visitor: the banner links to the change history', since.link, 'history.html');
+    check('returning visitor: the banner states how many changes were recorded',
+          /\d+\s+change/.test(since.text), true);
+  }
+  await fv.c.close();
 
   // ---- no runtime errors ----
   check('no page errors', errors.length + offerErrs.length, 0);

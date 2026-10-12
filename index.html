@@ -78,6 +78,16 @@ body{
 .chip.ext{background:rgba(123,167,204,.16);color:var(--blue)}
 .chip.exp{background:rgba(224,108,90,.16);color:var(--red)}
 .chip.dead{background:var(--bg4);color:var(--tx3)}
+/* A rail item that concerns exactly one offer links to that offer's page. The item itself
+   is the anchor, so it has to become a block to keep its padding and the absolutely
+   positioned dot. The arrow appears on hover and focus only: the rail is a change log
+   first, and a permanent arrow on every linked line reads as noise. */
+a.ev{display:block;cursor:pointer;color:inherit;text-decoration:none}
+a.ev .n::after{content:' →';color:var(--tx3);font-weight:400;opacity:0;transition:opacity .14s ease}
+a.ev:hover .n,a.ev:focus-visible .n{color:var(--amber)}
+a.ev:hover .n::after,a.ev:focus-visible .n::after{opacity:1;color:var(--amber)}
+a.ev:hover::before{transform:scale(1.4)}
+a.ev:focus-visible{outline:2px solid var(--amber);outline-offset:2px}
 
 /* ---------- main ---------- */
 .main{padding:0 0 60px;min-width:0}
@@ -93,6 +103,18 @@ body{
 .live i{width:6px;height:6px;border-radius:50%;background:var(--green);display:block;
   animation:pulse 2.4s ease-in-out infinite}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
+
+/* Returning-visitor banner. Rendered only when the data is newer than the stamp this
+   reader last saw, so a first-time visitor never sees it and never gets a false claim. */
+.since{
+  display:flex;align-items:flex-start;gap:10px;padding:11px 30px;
+  background:rgba(232,163,61,.07);border-bottom:1px solid var(--line2);
+  font-size:12.5px;color:var(--tx2);line-height:1.5;
+}
+.since[hidden]{display:none}
+.since .dot{flex-shrink:0;width:6px;height:6px;border-radius:50%;background:var(--amber);margin-top:6px}
+.since b{color:var(--amber);font-weight:700}
+.since a{color:var(--amber);font-weight:700;white-space:nowrap}
 
 .strip{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);
   border-bottom:1px solid var(--line)}
@@ -362,6 +384,7 @@ footer b{color:var(--tx2)}
 @media(max-width:700px){
   .top{padding:18px 16px 14px;gap:12px}
   .top h1{font-size:22px}
+  .since{padding:10px 16px;font-size:12px}
   .strip{grid-template-columns:repeat(2,1fr)}
   .mc{padding:13px 16px}
   .mc .v{font-size:24px}
@@ -427,6 +450,8 @@ footer b{color:var(--tx2)}
       <div class="live"><i></i> Auto-refreshed daily</div>
     </div>
 
+    <div class="since" id="since" hidden></div>
+
     <div class="strip" id="strip"></div>
 
     <div class="tabs" id="tabs" role="tablist" aria-label="Offer sets">
@@ -491,6 +516,8 @@ footer b{color:var(--tx2)}
       <br><br>
       <b>Refreshed daily.</b> Data lives in <span style="font-family:var(--mono)">data.js</span>; this page is the stable view. Every run appends to
       <span style="font-family:var(--mono)">CHANGELOG.md</span> and archives a dated snapshot under <span style="font-family:var(--mono)">archive/</span>.
+      The whole record is readable at <a href="history.html" style="color:var(--amber)">Change history</a>: what moved, when, and what it was
+      checked against.
       <br><br>
       <b>Verification.</b> Base URLs, model IDs and limits are read from each provider's own documentation or console. Promotional terms change without notice —
       several have live countdowns rather than published dates. Confirm on the provider's page before relying on any figure.
@@ -610,14 +637,21 @@ if (typeof RADAR === 'undefined') {
       'including which programmes prohibit public posting and which only pay on paid conversions.';
   }
 
-  /* ---------- sidebar ---------- */
+  /* ---------- sidebar ----------
+     An item that concerns exactly one offer carries a `ref` and links to that offer's page.
+     Items that span the whole list ("no deadline changes this run") have no single target
+     and stay plain text, because a link to an arbitrary offer would be worse than none. */
+  const RAIL_CHIP = { new:'new', ext:'extended', exp:'expiring', dead:'closed' };
   document.getElementById('rail').innerHTML = RAIL.map(g => `
     <div class="tl-day ${g.d==='today'?'today':''}">
       <div class="day">${g.label}</div>
-      ${g.items.map(i=>`<div class="ev ${i.c}">
-        <span class="n"><span class="chip ${i.c}">${i.c==='new'?'new':i.c==='ext'?'extended':i.c==='exp'?'expiring':'closed'}</span>${i.n}</span>
-        <span class="d">${i.t}</span>
-      </div>`).join('')}
+      ${g.items.map(i=>{
+        const body = `<span class="n"><span class="chip ${i.c}">${RAIL_CHIP[i.c]||i.c}</span>${i.n}</span>
+        <span class="d">${i.t}</span>`;
+        return i.ref
+          ? `<a class="ev ${i.c}" href="offers/${i.ref}.html">${body}</a>`
+          : `<div class="ev ${i.c}">${body}</div>`;
+      }).join('')}
     </div>`).join('');
 
   /* ---------- meta ---------- */
@@ -626,6 +660,36 @@ if (typeof RADAR === 'undefined') {
     hour:'2-digit',minute:'2-digit',timeZone:'Asia/Shanghai'});
   document.getElementById('meta').textContent =
     `Last refresh ${fmt} GMT+8 · ${D.length} offers tracked`;
+
+  /* ---------- returning visitors ----------
+     A dashboard earns a daily visit by answering "what changed since I was last here",
+     which is a different question from "what changed today". We store the `updated` stamp
+     this reader last saw and compare against it. A first-time reader is told nothing,
+     because there is nothing to compare against and a guess would be a lie.
+     localStorage throws in Safari private mode and when the quota is full, so every access
+     is guarded, because the page has to work with storage unavailable. */
+  const LASTSEEN = 'radar.lastSeen';
+  const readSeen  = () => { try { return window.localStorage.getItem(LASTSEEN); } catch(e){ return null; } };
+  const writeSeen = v  => { try { window.localStorage.setItem(LASTSEEN, v); } catch(e){} };
+  (function returningVisitor(){
+    const prev = readSeen();
+    writeSeen(RADAR.updated);
+    if (!prev) return;                                       // first visit, nothing to compare
+    const prevAt = Date.parse(prev);
+    if (isNaN(prevAt) || prevAt >= upd.getTime()) return;    // same run, or an unreadable stamp
+    const todayGroup = RAIL.find(g => g.d === 'today');
+    const n = todayGroup ? todayGroup.items.length : 0;
+    const when = new Date(prevAt).toLocaleString('en-GB',
+      {day:'2-digit',month:'short',hour:'2-digit',minute:'2-digit',timeZone:'Asia/Shanghai'});
+    const el = document.getElementById('since');
+    el.innerHTML = '<span class="dot"></span><span>The radar was refreshed since your last ' +
+      'visit on <b>' + when + ' GMT+8</b>. ' +
+      (n ? '<b>' + n + ' change' + (n === 1 ? '' : 's') + '</b> recorded in the latest run: ' +
+           'they are the newest entries in the freshness rail.'
+         : 'No changes were recorded in the latest run.') +
+      ' <a href="history.html">Full change history →</a></span>';
+    el.hidden = false;
+  })();
 
   /* ---------- tabs ----------
      The China-only offers need a mainland account, phone number or real-name ID,

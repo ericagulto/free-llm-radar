@@ -15,7 +15,9 @@ manual update, or a one-off fix. `README.md` explains the design; this file tell
 # 3. Archive then rewrite ONLY free-llm-radar/data.js   → see "How to update the data"
 #    If you ADDED an offer, also add its content.js entry → see "The editorial layer".
 #    Do NOT rewrite content.js for offers that already have one.
-# 4. Regenerate the offer pages   → node free-llm-radar/build-pages.js
+# 4. Regenerate the offer pages and the change history
+node free-llm-radar/build-pages.js
+node free-llm-radar/build-history.js
 # 5. Validate — must exit 0
 node free-llm-radar/validate.js
 # 6. Publish data + site + verify — one command
@@ -28,7 +30,10 @@ If validation fails, **restore `data.js` from `free-llm-radar/archive/` and repo
 Never leave broken data in place.
 
 Step 4 is not optional. The offer pages quote limits and deadlines; publishing new data without
-regenerating them leaves indexed pages stating numbers the dashboard no longer shows.
+regenerating them leaves indexed pages stating numbers the dashboard no longer shows. The same
+applies to `history.html`, which is generated from `CHANGELOG.md`: prepend an entry and skip
+`build-history.js` and the published page quietly omits the newest run. `validate.js` fails on that
+drift, so it will not go unnoticed.
 
 Step 5 will fail if you added an offer without a `content.js` entry. That is intentional — it stops
 a blank page from shipping. Add the entry rather than deleting the offer.
@@ -44,9 +49,12 @@ a blank page from shipping. Add the entry rather than deleting the offer.
 | Data (the file you rewrite) | `<root>\free-llm-radar\data.js` |
 | Generated offer pages | `<root>\free-llm-radar\offers\` — output, never hand-edit |
 | Page generator | `<root>\free-llm-radar\build-pages.js` |
+| Change-history page | `<root>\free-llm-radar\history.html` (generated output, never hand-edit) |
+| History generator | `<root>\free-llm-radar\build-history.js` (renders `CHANGELOG.md`) |
 | Local data repo clone | `<root>\deploy\data-repo` |
 | Local site repo clone | `<root>\deploy\site-repo` |
 | Live dashboard | https://ericagulto.github.io/free-llm-radar/ |
+| Live change history | https://ericagulto.github.io/free-llm-radar/history.html |
 | Live offer index | https://ericagulto.github.io/free-llm-radar/offers/ |
 | Live data | https://ericagulto.github.io/free-llm-radar-data/data.js |
 
@@ -190,6 +198,13 @@ Neither models free tiers, which is exactly what this list is about. Do not re-a
   the child process was never starting at all (the sandbox refuses to spawn `node.exe`; the spawn
   failed `EBUSY` and every case looked like a pass). It now runs `validate.js` in-process with a
   stubbed `process.exit`, and asserts a **clean copy passes first**. Always check the baseline.
+- **A test that fails for the wrong reason is nearly as bad.** `test-ui.js` asserted name-sort order
+  by comparing the whole `.nm` cell, which concatenates the offer name with its subtitle. "OpenCode"
+  + "New-model previews" then sorts against "OpenCode Zen" + "Free model gateway" as
+  `OpenCodeN…` vs `OpenCode Z…`, and the space makes the *longer* name come first, so the test
+  reported a failure against a table that was sorted correctly. It now compares `.nml`, which is the
+  key the sort actually uses. The failure was confirmed identical on the previously published build
+  before being called pre-existing, rather than assumed to be pre-existing.
 
 ---
 
@@ -213,8 +228,20 @@ The full field list is in the header comment of the file itself — read it. The
 | `link` | Direct key-creation URL, **not** the marketing homepage |
 | `test` | A command that actually runs, not a placeholder |
 
-Rail groups: `{ d: 'today'|'yesterday'|'week'|'closed', label, items: [{ c, n, t }] }`
+Rail groups: `{ d: 'today'|'yesterday'|'week'|'closed', label, items: [{ c, n, t, ref? }] }`
 where `c` is one of `new` \| `ext` \| `exp` \| `dead`.
+
+**`ref` is optional and you should carry it forward.** It holds an offer `id`, and the dashboard
+turns the rail item into a link to `offers/<id>.html`. Without it the rail is a dead end: it reports
+that something changed and gives the reader nowhere to go.
+
+- Set `ref` when the item concerns **exactly one** offer.
+- Omit it when the item spans the list ("no deadline changes: every published end date re-verified
+  unchanged") or covers several offers at once. A link to an arbitrary one of them is worse than no
+  link.
+- `validate.js` fails if a `ref` does not match a real offer `id`, so a typo cannot ship a 404.
+- When you roll the rail forward, **copy `ref` along with the item.** Dropping it is silent: the
+  text still reads correctly and only the link disappears.
 
 ### Idempotency rules
 
@@ -343,6 +370,18 @@ entry, so a stale one will be caught rather than lingering silently.
 `offers/` holds one static HTML page per offer, plus an index. They are **generated output** —
 `build-pages.js` writes them from `data.js` + `referrals.js`, and `validate.js` checks them.
 
+`history.html` is generated the same way, by `build-history.js`, from `CHANGELOG.md`. It renders the
+whole run log as a readable page, newest first, so the site's track record is visible to a reader
+rather than only to someone with the repository open. It reads the changelog and invents nothing.
+
+**Why not build it from `archive/`.** A dated snapshot per run looks like the obvious source, and it
+does not work. Measured 2026-10-12: rail headlines repeat across runs (102 rail items, only 71
+distinct headlines, because "no deadline changes" is the same headline eight days running), three
+snapshots share a `today` label while carrying different item counts, and the filenames do not sort
+into run order (`data-2026-10-12-midday.js` sorts before `data-2026-10-12.js` but was archived
+after it). Reconstructing "what changed when" from that means guessing, and a history page that
+guesses is worse than none. `CHANGELOG.md` is already authoritative and append-only.
+
 **Why static files rather than a client-side detail view.** A single page that renders details from
 a query string is one URL to a search engine, so none of it ranks. Real files mean each offer can
 rank for its own query ("groq free tier", "amd token factory limits").
@@ -362,7 +401,8 @@ Rules:
 To check a change before publishing:
 
 ```bash
-node free-llm-radar/build-pages.js     # regenerate
+node free-llm-radar/build-pages.js     # regenerate the offer pages
+node free-llm-radar/build-history.js   # regenerate history.html from CHANGELOG.md
 node free-llm-radar/validate.js        # schema + generated-output checks
 node free-llm-radar/test-validate.js   # proves the validator actually fails on breakage
 ```

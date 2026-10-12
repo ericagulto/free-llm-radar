@@ -186,6 +186,20 @@ const CASES = [
   ['a page loses its free-forever verdict', () => {
     const f = path.join(TMP, 'offers', 'groq.html');
     fs.writeFileSync(f, fs.readFileSync(f, 'utf8').replace('Is it free forever?', 'Something else'));
+  }],
+  // history.html is generated from CHANGELOG.md. A run that prepends an entry and skips
+  // build-history.js leaves the published page quietly missing its newest run.
+  // The anchor is the first DATED heading, found by pattern rather than hardcoded: a
+  // hardcoded heading stops being the newest one as soon as the next entry is prepended,
+  // and the case then silently tests nothing. The `## YYYY-MM-DD` template is deliberately
+  // not matched, since it sits inside a fence and the parser skips fenced content.
+  ['history.html does not contain the newest changelog entry', () => {
+    const f = path.join(TMP, 'CHANGELOG.md');
+    const d = fs.readFileSync(f, 'utf8');
+    const m = /^## \d{4}-\d{2}-\d{2}/m.exec(d);
+    if (!m) throw new Error('no dated "## " heading found in CHANGELOG.md');
+    fs.writeFileSync(f, d.slice(0, m.index) +
+      '## 2026-10-13 · a run that was never rendered\n\n- **Test entry.**\n\n---\n\n' + d.slice(m.index));
   }]
 ];
 

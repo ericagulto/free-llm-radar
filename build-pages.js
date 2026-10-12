@@ -672,7 +672,7 @@ for (const f of fs.readdirSync(OUT_OFFERS)) {
 }
 
 // ---------- sitemap + robots ----------
-const urls = [`${SITE}/`, `${SITE}/offers/`, ...written.map(id => `${SITE}/offers/${id}.html`)];
+const urls = [`${SITE}/`, `${SITE}/history.html`, `${SITE}/offers/`, ...written.map(id => `${SITE}/offers/${id}.html`)];
 fs.writeFileSync(path.join(DIR, 'sitemap.xml'),
 `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">

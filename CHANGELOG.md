@@ -13,6 +13,60 @@ Format per entry:
 
 ---
 
+## 2026-10-12 · site work (no data change)
+
+**NOT a refresh.** No offer was added, removed or edited. All 51 offers and every published `end`
+date are exactly as verified at 11:00. `data.js` changed in one way only: rail items gained an
+optional `ref` field (below). Nothing else in the dataset moved.
+
+Five changes to the presentation layer, all made by hand with full operator approval:
+
+- **The freshness rail is no longer a dead end.** Rail items now carry an optional `ref` offer id and
+  render as links to `offers/<id>.html`. Before this, the rail reported that something changed and
+  gave the reader nowhere to go: items were plain `<div class="ev">` with `cursor:default`, no
+  handler, and no target field in the schema. 23 of the 32 rail items now link. The 9 that do not are
+  the ones that span the whole list ("no deadline changes: every published end date re-verified
+  unchanged") or cover several offers at once; linking those to an arbitrary offer would be worse
+  than leaving them plain. `validate.js` now fails if a `ref` does not match a real offer id, so a
+  typo cannot ship a 404. **The next run must carry `ref` forward when it rolls the rail**, or the
+  links silently disappear while the text still reads correctly.
+- **A returning-visitor banner.** The dashboard stores the `updated` stamp you last saw and, when the
+  published data is newer, says so at the top: how long ago you last looked, how many changes the
+  latest run recorded, and a link to the full history. A first-time reader is told nothing, because
+  there is nothing to compare against and a guess would be a false claim. Every `localStorage`
+  access is wrapped: it throws in Safari private mode and when the quota is full, and the page has to
+  work with storage unavailable.
+- **`history.html`, generated from this file.** `build-history.js` renders the whole run log as a
+  readable page, newest first, with the two most recent runs open and the rest collapsed. This makes
+  the track record visible to a reader rather than only to someone with the repository open, and it
+  is the thing that justifies trusting the numbers.
+- **The obvious source for that page was tested and rejected.** Building it from `archive/*.js`
+  looks right and does not work. Measured today: 102 rail items collapse to only **71 distinct
+  headlines**, because "no deadline changes" is the same headline eight days running, so headline is
+  not a key for "one change". Three snapshots share a `today` label while carrying **different item
+  counts** (9 and 10 under `Today · 29 Sep`; 7 and 8 under `Today · 2 Oct`). And the filenames do not
+  sort into run order: `data-2026-10-12-midday.js` sorts before `data-2026-10-12.js` but was
+  archived **after** it. Reconstructing "what changed when" from that means guessing. This file is
+  already authoritative, dated and append-only, so the generator reads it and invents nothing.
+- **A test was failing for the wrong reason and is fixed.** `test-ui.js` asserted name-sort order by
+  comparing the whole `.nm` cell, which concatenates the offer name with its subtitle. "OpenCode" +
+  "New-model previews" then sorts against "OpenCode Zen" + "Free model gateway" as `OpenCodeN…` vs
+  `OpenCode Z…`, and the space makes the longer name come first, so the test failed against a table
+  that was correctly sorted. It now compares `.nml`, the key the sort actually uses. Confirmed
+  identical on the previously published build before calling it pre-existing rather than assuming so.
+
+**Verified:** `validate.js` exit 0 (51 offers, 51 pages, sitemap 54 urls, `history.html` newest entry
+2026-10-12) · `test-validate.js` **20/20** (one new case: a changelog entry that `history.html` does
+not contain) · `test-ui.js` **106/106** (eight new assertions: rail links resolve to files that
+exist, whole-list items stay unlinked, and the banner is absent on a first visit, absent when the
+data has not changed, and present with a change count and a history link when it has).
+
+**Next run must handle:** carry `ref` forward on every rail item you keep · run `build-history.js`
+alongside `build-pages.js` · Ling 3.1 Flash **13 Oct** · Doubao ~**17 Oct** · Hunyuan + WorkBuddy
+**31 Oct** · AI21 contested (**twelfth check, do not flip**).
+
+---
+
 ## 2026-10-12 · mid-day correction (second refresh, same day)
 
 - **NO DEADLINE CHANGES.** Every published `end` date is exactly as verified at 09:56 this morning.

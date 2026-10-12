@@ -1674,17 +1674,20 @@ window.RADAR = {
       {
         "c": "dead",
         "n": "NVIDIA NIM: z-ai/glm-5.2 has left the catalogue",
-        "t": "Found by sweeping a vendor endpoint that needs no API key, <b>integrate.api.nvidia.com/v1/models</b>, which returns <b>80 model ids</b>. <b>z-ai/glm-5.2</b>, which this row listed, is <b>absent</b>; <b>z-ai/glm-5.3</b> has replaced it. <b>moonshotai/kimi-k3</b> added. This endpoint is the authoritative answer to what a key can actually call, so it is now recorded on the row and is worth sweeping every run."
+        "t": "Found by sweeping a vendor endpoint that needs no API key, <b>integrate.api.nvidia.com/v1/models</b>, which returns <b>80 model ids</b>. <b>z-ai/glm-5.2</b>, which this row listed, is <b>absent</b>; <b>z-ai/glm-5.3</b> has replaced it. <b>moonshotai/kimi-k3</b> added. This endpoint is the authoritative answer to what a key can actually call, so it is now recorded on the row and is worth sweeping every run.",
+        "ref": "nvidia",
       },
       {
         "c": "ext",
         "n": "SambaNova: model list was stale and wrong in case",
-        "t": "Read from <b>api.sambanova.ai/v1/models</b>, also keyless, which returns <b>6 model ids</b>. This row listed <b>deepseek-v3-2-preview</b> and <b>minimax-m2-7</b>, neither of which is live; <b>DeepSeek-V3.2</b> and <b>MiniMax-M3</b> replaced them, and <b>Meta-Llama-3.3-70B-Instruct</b> and <b>gpt-oss-120b</b> joined. The row now matches the endpoint exactly, casing included."
+        "t": "Read from <b>api.sambanova.ai/v1/models</b>, also keyless, which returns <b>6 model ids</b>. This row listed <b>deepseek-v3-2-preview</b> and <b>minimax-m2-7</b>, neither of which is live; <b>DeepSeek-V3.2</b> and <b>MiniMax-M3</b> replaced them, and <b>Meta-Llama-3.3-70B-Instruct</b> and <b>gpt-oss-120b</b> joined. The row now matches the endpoint exactly, casing included.",
+        "ref": "sambanova",
       },
       {
         "c": "ext",
         "n": "OpenCode Zen free roster rotated: Muse Spark 1.2 out, MiMo-V2.5 in",
-        "t": "Zen's own docs pricing table (<b>opencode.ai/docs/zen</b>) loaded this run after failing on 9 Oct, and it lists <b>13 free models</b>, unchanged in count. The set moved again: <b>muse-spark-1.2-contributor-free</b> has dropped off and <b>mimo-v2.5-free</b> has joined. The row model list is corrected, and the warning now records that <b>Step 5 Preview Free</b> is a zero-retention provider too. Caution: the endpoint <b>opencode.ai/zen/v1/models</b> now lags the docs page and still shows the old set, so read the pricing table rather than the endpoint."
+        "t": "Zen's own docs pricing table (<b>opencode.ai/docs/zen</b>) loaded this run after failing on 9 Oct, and it lists <b>13 free models</b>, unchanged in count. The set moved again: <b>muse-spark-1.2-contributor-free</b> has dropped off and <b>mimo-v2.5-free</b> has joined. The row model list is corrected, and the warning now records that <b>Step 5 Preview Free</b> is a zero-retention provider too. Caution: the endpoint <b>opencode.ai/zen/v1/models</b> now lags the docs page and still shows the old set, so read the pricing table rather than the endpoint.",
+        "ref": "opencodezen",
       },
       {
         "c": "exp",
@@ -1694,17 +1697,20 @@ window.RADAR = {
       {
         "c": "exp",
         "n": "AI21 $10 credit: length still contested (eleventh check)",
-        "t": "ai21.com/pricing still says the $10 credit is good for 7 days; docs.ai21.com still says three months. Unresolved and deliberately not flipped. The date on the row is a placeholder either way, since the clock runs from your own signup, not a shared deadline."
+        "t": "ai21.com/pricing still says the $10 credit is good for 7 days; docs.ai21.com still says three months. Unresolved and deliberately not flipped. The date on the row is a placeholder either way, since the clock runs from your own signup, not a shared deadline.",
+        "ref": "ai21",
       },
       {
         "c": "exp",
         "n": "Ling 3.1 Flash: free to 13 Oct (tomorrow)",
-        "t": "Vercel gateway re-read: promotional pricing ends 13 October. Use the -free model ID, which stops serving at the end rather than billing you. Also free on OpenRouter and in Kilo Code."
+        "t": "Vercel gateway re-read: promotional pricing ends 13 October. Use the -free model ID, which stops serving at the end rather than billing you. Also free on OpenRouter and in Kilo Code.",
+        "ref": "ling31",
       },
       {
         "c": "exp",
         "n": "Doubao Standard plan: about 17 Oct",
-        "t": "ByteDance 30-day Standard-plan grant is still reported to run to about 17 October. Multi-source only: the vendor own campaign page was not read directly, so treat the date as approximate."
+        "t": "ByteDance 30-day Standard-plan grant is still reported to run to about 17 October. Multi-source only: the vendor own campaign page was not read directly, so treat the date as approximate.",
+        "ref": "doubao",
       },
       {
         "c": "exp",
@@ -1720,7 +1726,8 @@ window.RADAR = {
       {
         "c": "ext",
         "n": "OpenRouter free roster rotated: ling-3.0-flash-fin has left the free list",
-        "t": "Read from the vendor own model API (openrouter.ai/api/v1/models) this morning: <b>19 models</b> price at $0. <b>inclusionai/ling-3.0-flash-fin</b>, which this row listed as free, is no longer free: it now bills $0.042/M input and $0.123/M output. Two joined the free list, <b>inclusionai/ling-3.1-flash</b> (the same Ling 3.1 Flash that is free on Vercel to 13 Oct) and <b>apodex/apodex-1.1-mini:free</b>. The row model list is corrected; the 50 req/day free limit is unchanged."
+        "t": "Read from the vendor own model API (openrouter.ai/api/v1/models) this morning: <b>19 models</b> price at $0. <b>inclusionai/ling-3.0-flash-fin</b>, which this row listed as free, is no longer free: it now bills $0.042/M input and $0.123/M output. Two joined the free list, <b>inclusionai/ling-3.1-flash</b> (the same Ling 3.1 Flash that is free on Vercel to 13 Oct) and <b>apodex/apodex-1.1-mini:free</b>. The row model list is corrected; the 50 req/day free limit is unchanged.",
+        "ref": "openrouter",
       },
       {
         "c": "exp",
@@ -1730,22 +1737,26 @@ window.RADAR = {
       {
         "c": "exp",
         "n": "Hunyuan Hy4 new-user window closed on 10 Oct",
-        "t": "The 14-day new-user quota needed a first Hy4 conversation by 10 October 23:59, and that window has now passed. Still live: the existing-user night-free window (23:00-08:00) and the Hy3 限免, both extended to 31 October. The row note is corrected to say so."
+        "t": "The 14-day new-user quota needed a first Hy4 conversation by 10 October 23:59, and that window has now passed. Still live: the existing-user night-free window (23:00-08:00) and the Hy3 限免, both extended to 31 October. The row note is corrected to say so.",
+        "ref": "hunyuan",
       },
       {
         "c": "exp",
         "n": "AI21 $10 credit: length still contested (tenth check)",
-        "t": "ai21.com/pricing still says the $10 credit is good for 7 days; docs.ai21.com still says three months. Unresolved and deliberately not flipped. The date on the row is a placeholder either way, since the clock runs from your own signup, not a shared deadline."
+        "t": "ai21.com/pricing still says the $10 credit is good for 7 days; docs.ai21.com still says three months. Unresolved and deliberately not flipped. The date on the row is a placeholder either way, since the clock runs from your own signup, not a shared deadline.",
+        "ref": "ai21",
       },
       {
         "c": "exp",
         "n": "Ling 3.1 Flash: free to 13 Oct (2 days)",
-        "t": "Vercel gateway re-read: promotional pricing ends 13 October. Use the -free model ID, which stops serving at the end rather than billing you. Also free on OpenRouter and in Kilo Code."
+        "t": "Vercel gateway re-read: promotional pricing ends 13 October. Use the -free model ID, which stops serving at the end rather than billing you. Also free on OpenRouter and in Kilo Code.",
+        "ref": "ling31",
       },
       {
         "c": "exp",
         "n": "Doubao Standard plan: about 17 Oct",
-        "t": "ByteDance 30-day Standard-plan grant is still reported to run to about 17 October. Multi-source only: the vendor own campaign page was not read directly, so treat the date as approximate."
+        "t": "ByteDance 30-day Standard-plan grant is still reported to run to about 17 October. Multi-source only: the vendor own campaign page was not read directly, so treat the date as approximate.",
+        "ref": "doubao",
       },
       {
         "c": "exp",
@@ -1761,7 +1772,8 @@ window.RADAR = {
       {
         "c": "ext",
         "n": "OpenCode Zen free roster rotated — still 13 models, two swapped",
-        "t": "Read from Zen's own live model list (<b>opencode.ai/zen/v1/models</b>) because the docs page would not load today. The count is unchanged at <b>13 free models</b>, but the set moved: <b>Fledge Alpha Free</b> and <b>MiMo-V2.5 Free</b> are gone, and <b>Step 5 Preview Free</b> (step-5-preview-free) and <b>Muse Spark 1.2 Contributor Free</b> (muse-spark-1.2-contributor-free) are new. No free model publishes an end date."
+        "t": "Read from Zen's own live model list (<b>opencode.ai/zen/v1/models</b>) because the docs page would not load today. The count is unchanged at <b>13 free models</b>, but the set moved: <b>Fledge Alpha Free</b> and <b>MiMo-V2.5 Free</b> are gone, and <b>Step 5 Preview Free</b> (step-5-preview-free) and <b>Muse Spark 1.2 Contributor Free</b> (muse-spark-1.2-contributor-free) are new. No free model publishes an end date.",
+        "ref": "opencodezen",
       },
       {
         "c": "exp",
@@ -1771,22 +1783,26 @@ window.RADAR = {
       {
         "c": "exp",
         "n": "AI21 $10 credit — length still contested (ninth check)",
-        "t": "docs.ai21.com still says the $10 trial is good for three months; ai21.com/pricing still says 7 days. Unresolved and deliberately not flipped — the date on the row is a placeholder either way, since the clock runs from your own signup, not a shared deadline."
+        "t": "docs.ai21.com still says the $10 trial is good for three months; ai21.com/pricing still says 7 days. Unresolved and deliberately not flipped — the date on the row is a placeholder either way, since the clock runs from your own signup, not a shared deadline.",
+        "ref": "ai21",
       },
       {
         "c": "exp",
         "n": "Hunyuan Hy4 new users — first conversation by 10 Oct (tomorrow)",
-        "t": "The 31 Oct night-free extension is unchanged; a user who has never opened Hy4 must start their first conversation by 10 October 23:59 to trigger the 14-day daily quota. Tomorrow is the last day to start the clock."
+        "t": "The 31 Oct night-free extension is unchanged; a user who has never opened Hy4 must start their first conversation by 10 October 23:59 to trigger the 14-day daily quota. Tomorrow is the last day to start the clock.",
+        "ref": "hunyuan",
       },
       {
         "c": "exp",
         "n": "Ling 3.1 Flash — free to 13 Oct (4 days)",
-        "t": "Vercel gateway re-read: promotional pricing ends 13 October. Use the -free model ID — it stops serving at the end rather than billing you. Also carried free in Kilo Code and OpenCode Zen."
+        "t": "Vercel gateway re-read: promotional pricing ends 13 October. Use the -free model ID — it stops serving at the end rather than billing you. Also carried free in Kilo Code and OpenCode Zen.",
+        "ref": "ling31",
       },
       {
         "c": "exp",
         "n": "Doubao Standard plan — ~17 Oct",
-        "t": "ByteDance's 30-day Standard-plan grant is still reported to run to about 17 October. Multi-source only: the vendor's own campaign page was not read directly, so treat the date as approximate."
+        "t": "ByteDance's 30-day Standard-plan grant is still reported to run to about 17 October. Multi-source only: the vendor's own campaign page was not read directly, so treat the date as approximate.",
+        "ref": "doubao",
       },
       {
         "c": "exp",
@@ -1802,32 +1818,38 @@ window.RADAR = {
       {
         "c": "dead",
         "n": "ZCode Trust Build (GLM-5.3-Flash)",
-        "t": "Claim window 28 Sep - 7 Oct, ended as scheduled with no extension. ~100M tokens per claim, ~100,000 allocations, first-come. Tokens landed late and expired the next midnight, so the usable window was roughly one evening."
+        "t": "Claim window 28 Sep - 7 Oct, ended as scheduled with no extension. ~100M tokens per claim, ~100,000 allocations, first-come. Tokens landed late and expired the next midnight, so the usable window was roughly one evening.",
+        "ref": "zcode-trust",
       },
       {
         "c": "dead",
         "n": "MiniMax Code double check-in credits",
-        "t": "28 Sep - 7 Oct. Doubled the normal daily check-in credits for M3.1-Flash-Preview. Ended with no extension published."
+        "t": "28 Sep - 7 Oct. Doubled the normal daily check-in credits for M3.1-Flash-Preview. Ended with no extension published.",
+        "ref": "minimaxcode",
       },
       {
         "c": "dead",
         "n": "Z.AI GLM Coding Plan night-free",
-        "t": "3 Sep - 7 Oct (already extended once from 20 Sep). GLM-5.3-Flash free 23:00-09:00 Beijing time for paid Coding Plan subscribers via ZCode 3.10+ or AutoClaw. The vendor notice publishes no new end date, so it is closed rather than assumed extended."
+        "t": "3 Sep - 7 Oct (already extended once from 20 Sep). GLM-5.3-Flash free 23:00-09:00 Beijing time for paid Coding Plan subscribers via ZCode 3.10+ or AutoClaw. The vendor notice publishes no new end date, so it is closed rather than assumed extended.",
+        "ref": "glmnight",
       },
       {
         "c": "dead",
         "n": "Space Bunny Alpha (Kilo Code)",
-        "t": "Retired 5 October, exactly as the vendor's free-model page scheduled. Gone from the Kilo free catalog and from OpenCode Zen's reported window. The rotating catalog backfilled the slot."
+        "t": "Retired 5 October, exactly as the vendor's free-model page scheduled. Gone from the Kilo free catalog and from OpenCode Zen's reported window. The rotating catalog backfilled the slot.",
+        "ref": "kilo",
       },
       {
         "c": "dead",
         "n": "Baidu Wenxin 4.0 (client)",
-        "t": "Free access to the Wenxin 4.0 line ended 30 Sep and reverted to paid on 1 Oct. The Hunyuan Hy3 overflow option on that row was extended to 31 Oct instead."
+        "t": "Free access to the Wenxin 4.0 line ended 30 Sep and reverted to paid on 1 Oct. The Hunyuan Hy3 overflow option on that row was extended to 31 Oct instead.",
+        "ref": "wenxin",
       },
       {
         "c": "dead",
         "n": "GMI Cloud Hy Image 3.5",
-        "t": "Free week ran 25 Sep → 1 Oct."
+        "t": "Free week ran 25 Sep → 1 Oct.",
+        "ref": "gmi",
       },
       {
         "c": "dead",
@@ -1847,7 +1869,8 @@ window.RADAR = {
       {
         "c": "dead",
         "n": "WorkBuddy DeepSeek V4.1 discount",
-        "t": "Ended 23 Sep."
+        "t": "Ended 23 Sep.",
+        "ref": "workbuddy",
       }
     ]
   }
