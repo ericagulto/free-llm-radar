@@ -92,6 +92,16 @@ site rather than the local build. Two tooling defects surfaced and were fixed:
   case. Under a 120 second foreground budget it dies at case 18 of 20 with a truncated log and exit
   1, which reads like a broken test and is not one: run it in the background. The two cases it was
   dying on were confirmed separately with `deploy/_probe-lastcases.js`. **20/20 in 134s.**
+- **The publish path was broken and is fixed.** `sync-site.sh` cleared `offers/` and `assets/` with
+  `rm -rf` before copying. A sandbox bulk-delete guard rejects a delete of 50 or more paths, and the
+  tree is now 53 files, so the site step aborted **after** the data origin had already been pushed:
+  the publish half-completed and exited 1 with the site untouched. It now removes only the files
+  genuinely absent from the source, which keeps the no-stale-pages guarantee (tested by planting
+  `offers/zzz-orphan-test.html` and confirming it was reported and removed) and touches nothing on a
+  normal run. A first attempt used `trap 'rm -rf "$TMP"' EXIT`, which tripped the same guard as
+  `SAFE_DELETE_INVALID_PATH` and killed the exit code after an otherwise successful push; the temp
+  files are gone and the comparison uses process substitution instead. **`publish.sh` now runs all
+  five steps through to exit 0, ending with 53/53 live verification.**
 
 **Live re-check** by cache-busted `curl` against the origin, not the local files: `index.html` 200,
 55,909 bytes, carrying `id="since"`, the `a.ev` rules and the `radar.lastSeen` key · `history.html`

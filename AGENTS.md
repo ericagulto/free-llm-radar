@@ -450,6 +450,14 @@ specific jobs:
 | `deploy/sync-data.sh` | pushes `data.js` to the data origin only | emergency data-only fix, site already current |
 | `deploy/sync-site.sh` | regenerate → validate → push the site only | you changed `index.html` or a doc |
 
+**Do not use `rm -rf <dir>` in these scripts.** A sandbox bulk-delete guard rejects a delete of 50
+or more paths, and it fires *after* the data origin has already been pushed, so the publish
+half-completes and exits 1. `sync-site.sh` used to clear `offers/` and `assets/` that way and started
+failing the moment the tree passed 50 files. It now removes only the files genuinely absent from the
+source (`sync_tree`), which still stops a stale page from lingering. A `trap 'rm -rf "$TMP"' EXIT`
+trips the same guard as `SAFE_DELETE_INVALID_PATH` and destroys the exit code *after* a successful
+push, so keep temp cleanup off `rm -rf` as well.
+
 Two origins are in play, and that is deliberate:
 
 - **The site** (`free-llm-radar`) serves the dashboard and the offer pages.
