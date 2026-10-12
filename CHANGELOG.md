@@ -13,6 +13,62 @@ Format per entry:
 
 ---
 
+## 2026-10-12
+
+- **NO DEADLINE CHANGES.** Every published `end` date re-verified and unchanged. 51 offers in,
+  51 out (no additions, no removals), 51 pages.
+- **CHANGED: `opencodezen`.** Zen's own docs pricing table (`opencode.ai/docs/zen`) **loaded this
+  run**, after failing on 9 Oct and forcing the fallback to the models endpoint. It lists
+  **13 free models**, unchanged in count, but the set rotated again:
+  **`muse-spark-1.2-contributor-free` has dropped off** and **`mimo-v2.5-free` has joined**. The
+  `models` array is corrected. `added` NOT bumped (rotating roster, the same call as runs 7-12).
+- **CHANGED: `opencodezen` warning.** The zero-retention list on this row had gone stale. Zen's
+  docs now mark **Step 5 Preview Free** as a zero-retention provider alongside Space Bunny and
+  LongCat 2.5, so "only Space Bunny and LongCat 2.5 are zero-retention" is corrected. Most of the
+  other free models still use free-period data to improve the model.
+- **Source note for the next run.** The endpoint **`opencode.ai/zen/v1/models` now lags the docs
+  page**: it still lists `muse-spark-1.2-contributor-free` and omits `exo-free`,
+  `ling-3.0-flash-fin-free`, `nemotron-3-ultra-free` and `mimo-v2.5-free`. Run 11 preferred the
+  endpoint because the docs page would not load. **Prefer the docs page and use the endpoint only
+  as a fallback.** The `opencode.asia` and `open-code.ai` mirrors remain stale (4 free models).
+- **Verified:** `docs.bigmodel.cn/cn/coding-plan/notice/event-glm-5.3-flash` (campaign still reads
+  2026-09-03 to 2026-10-07, no extension, stays CLOSED) · `docs.qoder.com/events/flashoffer`
+  (Qwen3.8-Flash still free, end date still to be announced) · `workbuddy.cn/events/invite`
+  (即日起至 2026年10月31日, invitee 2,000 积分 截止 2026年10月31日, tiers 50/+100/+500) ·
+  `vercel.com/ai-gateway/models/ling-3.1-flash-free` (promotional pricing ends 13 October) ·
+  `kilo.ai/landing/free-models` (still five free models) · `openrouter.ai/api/v1/models` (still
+  19 models at $0) · `inference-docs.cerebras.ai/support/rate-limits` ($5 trial, 30 days from the
+  grant, card required, no auto-renewing tier; the 2 Oct correction holds) ·
+  `console.groq.com/docs/rate-limits` (free plan 30 RPM / 1K RPD / 8K TPM / 200K TPD) ·
+  `ai21.com/pricing` (still 7 days; **eleventh** check against `docs.ai21.com`'s three months, NOT
+  flipped) · `docs.z.ai/devpack/credit-campaign-rules` (paid-first-order plus 3-referral payout
+  threshold; last updated 2026-03-15, unchanged).
+- **Multi-source only, not vendor-read:** Hunyuan Hy3 限免 plus Hy4 preview night-free 23:00-08:00 to
+  31 Oct; Doubao Standard plan 30 days to about 17 Oct (Sohu / Sina / Baidu Aiqicha coverage of the
+  24 Sep announcement).
+- **Considered and NOT added.** **StepFun Step 5 Preview free-week** via OpenCode Zen / Cline /
+  Kilo Code / Nous Research from 8 Oct: already represented by the `opencodezen` row's
+  `step-5-preview-free` entry (vendor-verified), and the window length is contradictory across
+  trackers (one week vs two weeks). **Atria Dawn Preview** (100M tokens): `atria-asi.ai` is a JS-only
+  console that returns a title and nothing else, so it is not vendor-verifiable.
+  **Xiaomi MiMo open platform**: the vendor publishes no fixed new-user credit amount.
+  **DeepSeek 5M new-user tokens**: `api-docs.deepseek.com/quick_start/pricing` still mentions only a
+  "granted balance" and no amount.
+- **Tracker claim checked and rejected:** `igetoken.com/deals` lists `allam-2-7b` as free on Groq's
+  free plan. Groq's own rate-limit page does not list it. Vendor wins; no change.
+- **Referral terms:** `referrals.js` **NOT touched**. `docs.z.ai/devpack/credit-campaign-rules`
+  re-read (10% base reward, 3-referral payout threshold, 30-invite tier bonus; unchanged). Two known
+  stale items stand, **reported not edited**: the `workbuddy` programme note says the event runs to
+  30 September; `qoderwork_cn`'s terms page is titled 【7月30日截止】.
+- **Next run must handle:** Ling 3.1 Flash **13 Oct** (tomorrow) · Doubao ~**17 Oct** · Hunyuan +
+  WorkBuddy **31 Oct**. AI21 contested (**twelfth check, do not flip**). **`content.js`'s `wenxin`
+  entry still says "Both halves close 30 September" — 13th run flagged**, will never self-heal
+  (a refresh cannot write `content.js`). `oci`/`azure`/`ai21` dates are activation-relative
+  placeholders, never report as deadlines. `deploy/verify-live.js` still needs its China-tab switch
+  before the featured-block step.
+
+---
+
 ## 2026-10-11
 
 - **NO DEADLINE CHANGES.** Every published `end` date re-verified and unchanged. 51 offers in,

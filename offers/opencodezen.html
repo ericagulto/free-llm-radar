@@ -22,7 +22,7 @@
 
 <div class="bar">
   <a href="../index.html">← Free LLM Radar</a>
-  <span class="sp">Verified 2026-10-11</span>
+  <span class="sp">Verified 2026-10-12</span>
 </div>
 
 <main>
@@ -60,9 +60,9 @@
     <span title="A payment method is needed to activate. Set a budget alert before you start — these grants convert to pay-as-you-go when they expire.">Card required</span><span title="The provider does not publish a numeric allowance, so this page cannot quote one. Check the provider's own page for current limits.">No published figure</span>
   </div>
 
-  <div class="callout warn"><div class="h">Watch out</div><b>Billing details are collected at signup</b>, and auto-reload will top the account up by $20 whenever the balance drops below $5. Disable auto-reload unless you intend to pay. Also check each model: most of the free ones <b>train on your prompts</b>; only Space Bunny and LongCat 2.5 are zero-retention.</div>
+  <div class="callout warn"><div class="h">Watch out</div><b>Billing details are collected at signup</b>, and auto-reload will top the account up by $20 whenever the balance drops below $5. Disable auto-reload unless you intend to pay. Also check each model: most of the free ones <b>train on your prompts</b>; only Space Bunny, LongCat 2.5 and Step 5 Preview are zero-retention.</div>
 
-  <div class="callout note"><div class="h">Worth knowing</div>Unlike a client-bound list, Zen issues a <b>portable key</b> — the free models can be wired into any OpenAI-compatible tool, not just OpenCode. The count held at <b>13 free models</b> this check but the <b>set rotated</b>: <b>Fledge Alpha Free</b> and <b>MiMo-V2.5 Free</b> dropped off, and <b>Step 5 Preview Free</b> and <b>Muse Spark 1.2 Contributor Free</b> joined. Verified 9 Oct 2026 against Zen's own live model list, <b>opencode.ai/zen/v1/models</b> — read the endpoint directly, because the docs page itself would not load this run. None publish an end date — all are 'limited time', and Zen's own docs deliberately omit firm deadlines even where, as with <b>LongCat 2.5 preview</b>, trackers report one of about <b>10 October</b>. Treat any date as approximate and read the live model list before relying on it.</div>
+  <div class="callout note"><div class="h">Worth knowing</div>Unlike a client-bound list, Zen issues a <b>portable key</b>, so the free models can be wired into any OpenAI-compatible tool, not just OpenCode. The count held at <b>13 free models</b> this check but the <b>set rotated again</b>: <b>Muse Spark 1.2 Contributor Free</b> dropped off and <b>MiMo-V2.5 Free</b> joined. Verified 12 Oct 2026 against Zen's own docs pricing table at <b>opencode.ai/docs/zen</b>, which loaded this run after failing on 9 Oct. Note that the endpoint <b>opencode.ai/zen/v1/models</b> now lags the docs page: it still lists muse-spark-1.2-contributor-free and omits exo-free, ling-3.0-flash-fin-free, nemotron-3-ultra-free and mimo-v2.5-free, so prefer the docs page. None publish an end date. All are 'limited time', and Zen's own docs deliberately omit firm deadlines even where, as with <b>LongCat 2.5 preview</b>, trackers report one of about <b>10 October</b>. Treat any date as approximate and read the live pricing table before relying on it.</div>
 
   <h2>What this is</h2>
   <p>OpenCode Zen is a model gateway from the OpenCode project that lists ten models at zero cost for input and output. Unlike the client-bound coding tools here, it issues a key you can point other software at.</p>
@@ -103,7 +103,7 @@
   <table>
     <tr><th>Base URL</th><td class="mono">https://opencode.ai/zen/v1</td></tr>
     <tr><th>Auth</th><td>Authorization: Bearer</td></tr>
-    <tr><th>Models</th><td class="mono">big-pickle<br>exo-free<br>jev-1.13-free<br>ling-3.0-flash-fin-free<br>ling-3.1-flash-free<br>longcat-2.5-preview-free<br>mimo-v2.6-flash-free<br>muse-spark-1.2-contributor-free<br>muse-spark-1.3-contributor-free<br>nemotron-3.5-lightning-free<br>nemotron-3-ultra-free<br>space-bunny-free<br>step-5-preview-free</td></tr>
+    <tr><th>Models</th><td class="mono">big-pickle<br>exo-free<br>jev-1.13-free<br>ling-3.0-flash-fin-free<br>ling-3.1-flash-free<br>longcat-2.5-preview-free<br>mimo-v2.6-flash-free<br>mimo-v2.5-free<br>muse-spark-1.3-contributor-free<br>nemotron-3.5-lightning-free<br>nemotron-3-ultra-free<br>space-bunny-free<br>step-5-preview-free</td></tr>
   </table>
 
   <h2>Set it up</h2>
@@ -139,7 +139,7 @@
 </main>
 
 <footer>
-  <p><b>Verified 2026-10-11.</b>
+  <p><b>Verified 2026-10-12.</b>
   Free tiers change without notice — re-check the provider's own page before you build on this.
   This page was generated from the radar's dataset; the offer <code>id</code> is
   <code>opencodezen</code>.</p>
