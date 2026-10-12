@@ -194,6 +194,17 @@ Neither models free tiers, which is exactly what this list is about. Do not re-a
   merge their numbers.
 - **The `.tag.port` CSS bug** — see `CHANGELOG.md`. Lesson: a CSS class that never matches fails
   silently.
+- **`verify-live.js` must measure the referral layer on the China-only tab.** The only live referral
+  link is on a cn-only offer (`workbuddy`), and the featured block and that row's green CTA are both
+  scoped to the active tab. Five checks asserted them against the main tab, where the referral layer
+  is correctly absent, so the verifier reported a false failure on every deploy for four runs while
+  the "needs its China-tab switch" note was carried forward unfixed. Two more assertions had the same
+  root cause: the offers index and `sitemap.xml` cover the **whole** dataset, not the main tab, so
+  they compare against `rows + cnRows`. When a check fails on a tab-scoped surface, ask which tab it
+  belongs on before assuming the page is wrong.
+- **A note carried forward is not a fix.** "Flagged as outstanding on runs 16 to 19" appeared in four
+  consecutive changelog entries. The cost was not the missing switch, it was that the deploy was
+  unverified for four days while looking as if it had been checked.
 - **A test that cannot fail proves nothing.** `test-validate.js` first "caught" 9/9 breakages while
   the child process was never starting at all (the sandbox refuses to spawn `node.exe`; the spawn
   failed `EBUSY` and every case looked like a pass). It now runs `validate.js` in-process with a

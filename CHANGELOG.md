@@ -54,12 +54,27 @@ Five changes to the presentation layer, all made by hand with full operator appr
   `OpenCode Z…`, and the space makes the longer name come first, so the test failed against a table
   that was correctly sorted. It now compares `.nml`, the key the sort actually uses. Confirmed
   identical on the previously published build before calling it pre-existing rather than assuming so.
+- **`deploy/verify-live.js` is fixed, and the deploy is verified for the first time.** Runs 16 to 19
+  each logged that the live verifier "still needs its China-tab switch before the featured-block
+  step" and carried it forward without fixing it. It was worse than a hang: **five checks** were
+  asserting the referral layer against the main tab, where it is correctly absent, so the verifier
+  had been reporting a false failure on every deploy. The only live referral link is on a cn-only
+  offer (`workbuddy`), and both the featured block and that row's green CTA are tab-scoped. The
+  referral checks now run on the China-only tab and are asserted in both directions: no sponsored
+  link on the main tab, exactly two on the China tab (the featured card plus its table row), and
+  every other provider link unmarked. Two further assertions were wrong for the same reason: the
+  offers index and the sitemap cover the **whole** dataset, not the main tab, so they are compared
+  against `rows + cnRows`. The verifier also now checks `history.html` against the **live**
+  `CHANGELOG.md` rather than a hardcoded date, which is what catches a stale history page.
+  **Result: 53/53, up from a run that could not complete.**
 
 **Verified:** `validate.js` exit 0 (51 offers, 51 pages, sitemap 54 urls, `history.html` newest entry
 2026-10-12) · `test-validate.js` **20/20** (one new case: a changelog entry that `history.html` does
 not contain) · `test-ui.js` **106/106** (eight new assertions: rail links resolve to files that
 exist, whole-list items stay unlinked, and the banner is absent on a first visit, absent when the
-data has not changed, and present with a change count and a history link when it has).
+data has not changed, and present with a change count and a history link when it has) ·
+`deploy/verify-live.js` **53/53** against the deployed site · live `data.js` serves 23 `ref` fields,
+live `history.html` serves 20 runs.
 
 **Next run must handle:** carry `ref` forward on every rail item you keep · run `build-history.js`
 alongside `build-pages.js` · Ling 3.1 Flash **13 Oct** · Doubao ~**17 Oct** · Hunyuan + WorkBuddy
