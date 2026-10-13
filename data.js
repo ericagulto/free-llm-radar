@@ -46,8 +46,8 @@
    ============================================================ */
 
 window.RADAR = {
-  updated: '2026-10-12T11:00:00+08:00',
-  verifiedBy: 'Run of 2026-10-12, mid-day correction, prompted by a discovery-surface review. NO DEADLINE CHANGES; every published end date still as verified at 09:56 this morning. TWO ROSTER CORRECTIONS, both found by sweeping vendor model-list endpoints that are reachable without an API key. nvidia: read integrate.api.nvidia.com/v1/models directly, 80 model ids; z-ai/glm-5.2, which this row listed, is ABSENT from the live catalogue and has been replaced by z-ai/glm-5.3; moonshotai/kimi-k3 added. sambanova: read api.sambanova.ai/v1/models directly, 6 model ids; this row listed deepseek-v3-2-preview and minimax-m2-7, neither of which is in the live list (DeepSeek-V3.2 and MiniMax-M3 replaced them), and the ids were wrong in case. Both rows now carry the endpoint URL in a note so the staleness cannot recur silently. A discovery-surface review also found the tracker table in AGENTS.md to be roughly a third dead: china-ai-arbitrage.xyz now redirects to an online casino, aipromonow.com does not resolve, allagent.wiki returns 403, and the table omits igetoken.com/deals plus its working RSS feed, where the two best leads of the day came from. Runbook and skill updated. Everything else is as recorded at 09:56 this morning.',
+  updated: '2026-10-13T09:05:00+08:00',
+  verifiedBy: 'Run of 2026-10-13. NO DEADLINE CHANGES: every published end date re-verified unchanged. One correction, subtractive. mistral: this row has carried "$10/month in API credits on the Free plan" since 7 October, read at mistral.ai/pricing. That figure is no longer on the page. Read again today, both as server-rendered HTML and through a browser render, the Free plan card lists Vibe access, Studio access, limited messages/searches/coding sessions, basic image generation and 100+ connectors, with no API credit amount; the only "in API credits" figures on the page are $25.5/month (Pro) and $15/month (Education), and Mistral\'s own docs state that paid plans add "included monthly usage". The row now says the vendor publishes no figure rather than asserting one. All five keyless model-list endpoints swept: openrouter.ai/api/v1/models (459 models, 19 at $0, unchanged), integrate.api.nvidia.com/v1/models (80, unchanged), api.sambanova.ai/v1/models (6, unchanged), index-translate.bilibili.com/v1/models (1, unchanged), opencode.ai/zen/v1/models (83, 9 free, docs page 404s). Vendor pages read directly: vercel.com/ai-gateway/models/ling-3.1-flash-free (promotional pricing ends 13 October), kilo.ai/landing/free-models (still five), docs.qoder.com and docs.qoder.cn (Qwen3.8-Flash still free, end date still TBA), workbuddy.cn/events/invite (即日起至 2026年10月31日, invitee 2,000 积分 截止 31 October, tiers 50/+100/+500), inference-docs.cerebras.ai ($5 / 30-day trial, card required), console.groq.com/docs/rate-limits (30 RPM / 1K RPD / 8K TPM / 200K TPD), docs.z.ai/devpack/credit-campaign-rules (paid-first-order plus 3-referral threshold, unchanged). No offers added: every tracker lead this run was either gated, a reseller, or unreadable at the vendor.',
   offers: [
   {
     "id": "amd",
@@ -292,16 +292,16 @@ window.RADAR = {
     "sub": "Experiment mode",
     "kind": "portable",
     "budget": 0,
-    "unit": "$10/month",
+    "unit": "unpublished",
     "end": null,
-    "added": "2026-10-07",
+    "added": "2026-10-13",
     "status": "active",
     "card": false,
     "china": false,
     "reach": "global",
     "link": "https://console.mistral.ai",
     "linkLabel": "Get key",
-    "budgetNote": "<b>$10/month in API credits</b> on the Free plan · shared across Studio, the API and Vibe · Mistral no longer publishes token-level free-tier limits",
+    "budgetNote": "Free plan includes API access, but Mistral <b>publishes no credit amount</b> for it · paid plans publish <b>$15–25.5/month</b> in API credits · no token-level free-tier limits published",
     "models": [
       "mistral-medium-3-5-128b",
       "open-mistral-7b",
@@ -316,7 +316,7 @@ window.RADAR = {
     ],
     "test": "curl https://api.mistral.ai/v1/chat/completions \\\n  -H \"Authorization: Bearer $MISTRAL_API_KEY\" \\\n  -H \"Content-Type: application/json\" \\\n  -d '{\"model\":\"mistral-medium-3-5-128b\",\"messages\":[{\"role\":\"user\",\"content\":\"Hello\"}]}'",
     "warn": "Experiment-mode traffic <b>may be used for training</b>. Treat it like the Gemini free tier — not for confidential material.",
-    "note": "Mistral's Free plan now publishes a figure: <b>$10/month in API credits</b>, usable across Mistral Studio, the API and Vibe — read directly at <b>mistral.ai/pricing</b> on 7 October 2026. Earlier checks recorded Mistral as no longer publishing free-tier numbers; that is no longer true, so the row now carries the published figure instead of 'unpublished'. Email and phone verification are required and no card is needed. Free-plan traffic is not opt-out of training — see the warning."
+    "note": "<b>CORRECTION, 13 October 2026.</b> This row carried <b>$10/month in API credits</b> for the Free plan from 7 October, read at <b>mistral.ai/pricing</b>. That figure is <b>no longer on the page</b>. Read again today, as server-rendered HTML and through a browser render, the Free plan card lists Vibe access, Studio access, limited messages, searches and coding sessions, basic image generation and 100+ connectors, with <b>no API credit amount</b>. The only \"in API credits\" figures on the page are <b>$25.5/month</b> (Pro) and <b>$15/month</b> (Education), and Mistral's own docs say paid plans add \"included monthly usage\". Recorded as a correction, not as a claim that the credit was withdrawn: the page may simply have been restructured. The row now states what the vendor publishes today. Email and phone verification are required and no card is needed. Free-plan traffic is not opt-out of training — see the warning."
   },
   {
     "id": "cohere",
@@ -1669,7 +1669,47 @@ window.RADAR = {
   rail: [
   {
     "d": "today",
-    "label": "Today · 12 Oct",
+    "label": "Today · 13 Oct",
+    "items": [
+      {
+        "c": "ext",
+        "n": "Mistral: the $10/month free-plan figure is gone from the pricing page",
+        "t": "This row carried <b>$10/month in API credits</b> for the Free plan since 7 October. Read again today at <b>mistral.ai/pricing</b>, as server-rendered HTML and through a browser render, the Free plan card lists Vibe access, Studio access, limited messages, searches and coding sessions, basic image generation and 100+ connectors, and <b>no API credit amount</b>. The only credit figures on the page are <b>$25.5/month</b> (Pro) and <b>$15/month</b> (Education), and Mistral's docs say paid plans add \"included monthly usage\". The row now states what the vendor publishes rather than asserting a figure it no longer carries. Recorded as a correction, not as a claim that the credit was withdrawn.",
+        "ref": "mistral",
+      },
+      {
+        "c": "exp",
+        "n": "No deadline changes: every published end date re-verified unchanged",
+        "t": "Vendor pages read directly: GLM night-free still 3 Sep to 7 Oct with no extension, WorkBuddy invite still 即日起至 2026年10月31日 with the invitee 2,000 积分 截止 2026年10月31日, Qoder Qwen3.8-Flash still free with the end date still to be announced (docs.qoder.com <b>and</b> docs.qoder.cn), Ling 3.1 Flash still free through 13 October (vercel.com/ai-gateway/models/ling-3.1-flash-free), Cerebras still a $5/30-day card-backed trial (inference-docs.cerebras.ai), Groq free-plan limits unchanged (console.groq.com/docs/rate-limits), Kilo still five free models, OpenRouter still 19 models at $0 (openrouter.ai/api/v1/models), Z.ai invite terms unchanged. Nothing moved."
+      },
+      {
+        "c": "exp",
+        "n": "AI21 $10 credit: length still contested (twelfth check)",
+        "t": "docs.ai21.com still says the $10 credit is good for <b>three months</b>. ai21.com/pricing, which says <b>7 days</b>, could not be read today — it is now behind a Cloudflare challenge. Unresolved and deliberately not flipped. The date on the row is a placeholder either way, since the clock runs from your own signup, not a shared deadline.",
+        "ref": "ai21",
+      },
+      {
+        "c": "exp",
+        "n": "Ling 3.1 Flash: free to 13 Oct — today is the last day",
+        "t": "Vercel gateway re-read: promotional pricing ends <b>13 October</b>. Use the <b>-free</b> model ID, which stops serving at the end rather than billing you. The plain ID starts billing. Also free on OpenRouter and in Kilo Code.",
+        "ref": "ling31"
+      },
+      {
+        "c": "exp",
+        "n": "Doubao Standard plan: about 17 Oct",
+        "t": "ByteDance's 30-day Standard-plan grant is still reported to run to about <b>17 October</b>, re-confirmed by four independent write-ups today. Multi-source only: the vendor's own campaign page was not read directly, so treat the date as approximate.",
+        "ref": "doubao"
+      },
+      {
+        "c": "exp",
+        "n": "Hunyuan Hy3 限免 + Hy4 night-free + WorkBuddy invite: 31 Oct",
+        "t": "All three still end <b>31 October</b>, re-confirmed today: the 30 September joint WorkBuddy/Hunyuan announcement for Hunyuan (IT之家, 腾讯新闻, 搜狐) and workbuddy.cn/events/invite read directly for the invite. Hunyuan is cn-only and points-metered; the WorkBuddy reward structure (50 / +100 / +500) is unchanged on the live page."
+      }
+    ]
+  },
+  {
+    "d": "yesterday",
+    "label": "Yesterday · 12 Oct",
     "items": [
       {
         "c": "dead",
@@ -1720,8 +1760,8 @@ window.RADAR = {
     ]
   },
   {
-    "d": "yesterday",
-    "label": "Yesterday · 11 Oct",
+    "d": "week",
+    "label": "Earlier this week · 11 Oct",
     "items": [
       {
         "c": "ext",
@@ -1761,52 +1801,6 @@ window.RADAR = {
       {
         "c": "exp",
         "n": "Hunyuan Hy3 限免 + Hy4 night-free + WorkBuddy invite: 31 Oct",
-        "t": "All three still end 31 October. Hunyuan is cn-only and points-metered; the WorkBuddy invite reward structure (50 / +100 / +500) is unchanged on the live page."
-      }
-    ]
-  },
-  {
-    "d": "week",
-    "label": "Earlier this week · 9 Oct",
-    "items": [
-      {
-        "c": "ext",
-        "n": "OpenCode Zen free roster rotated — still 13 models, two swapped",
-        "t": "Read from Zen's own live model list (<b>opencode.ai/zen/v1/models</b>) because the docs page would not load today. The count is unchanged at <b>13 free models</b>, but the set moved: <b>Fledge Alpha Free</b> and <b>MiMo-V2.5 Free</b> are gone, and <b>Step 5 Preview Free</b> (step-5-preview-free) and <b>Muse Spark 1.2 Contributor Free</b> (muse-spark-1.2-contributor-free) are new. No free model publishes an end date.",
-        "ref": "opencodezen",
-      },
-      {
-        "c": "exp",
-        "n": "No deadline changes — every published end date re-verified unchanged",
-        "t": "Vendor pages read directly this morning: GLM night-free still 3 Sep → 7 Oct with no extension (docs.bigmodel.cn), WorkBuddy invite still 即日起至 2026年10月31日 with the invitee 2,000 积分 截止 2026年10月31日, Qoder Qwen3.8-Flash still free with the end date still to be announced (both docs.qoder.com and docs.qoder.cn), Ling 3.1 Flash still free through 13 October (Vercel), Kilo still five free models, Z.ai invite terms unchanged. Nothing moved."
-      },
-      {
-        "c": "exp",
-        "n": "AI21 $10 credit — length still contested (ninth check)",
-        "t": "docs.ai21.com still says the $10 trial is good for three months; ai21.com/pricing still says 7 days. Unresolved and deliberately not flipped — the date on the row is a placeholder either way, since the clock runs from your own signup, not a shared deadline.",
-        "ref": "ai21",
-      },
-      {
-        "c": "exp",
-        "n": "Hunyuan Hy4 new users — first conversation by 10 Oct (tomorrow)",
-        "t": "The 31 Oct night-free extension is unchanged; a user who has never opened Hy4 must start their first conversation by 10 October 23:59 to trigger the 14-day daily quota. Tomorrow is the last day to start the clock.",
-        "ref": "hunyuan",
-      },
-      {
-        "c": "exp",
-        "n": "Ling 3.1 Flash — free to 13 Oct (4 days)",
-        "t": "Vercel gateway re-read: promotional pricing ends 13 October. Use the -free model ID — it stops serving at the end rather than billing you. Also carried free in Kilo Code and OpenCode Zen.",
-        "ref": "ling31",
-      },
-      {
-        "c": "exp",
-        "n": "Doubao Standard plan — ~17 Oct",
-        "t": "ByteDance's 30-day Standard-plan grant is still reported to run to about 17 October. Multi-source only: the vendor's own campaign page was not read directly, so treat the date as approximate.",
-        "ref": "doubao",
-      },
-      {
-        "c": "exp",
-        "n": "Hunyuan Hy3 限免 + Hy4 night-free + WorkBuddy invite — 31 Oct",
         "t": "All three still end 31 October. Hunyuan is cn-only and points-metered; the WorkBuddy invite reward structure (50 / +100 / +500) is unchanged on the live page."
       }
     ]

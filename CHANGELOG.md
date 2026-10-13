@@ -13,6 +13,79 @@ Format per entry:
 
 ---
 
+## 2026-10-13
+
+- **CORRECTION (subtractive) — `mistral` — the `$10/month` free-plan figure is gone from the vendor's
+  pricing page.** This row has carried `unit: "$10/month"` and the claim "the Free plan includes
+  $10/month in API credits, usable across Studio, the API and Vibe" since 7 October 2026, read at
+  `mistral.ai/pricing`. Read again today, **twice** (server-rendered HTML via curl, and a Chromium
+  render), the Free plan card lists Vibe access, Studio access, limited messages, searches and coding
+  sessions, basic image generation and 100+ connectors, and **no API credit amount**. The string
+  `$10` does not appear anywhere in the page source. The only "in API credits" figures are
+  **`$25.5 /mo`** (Pro) and **`$15 /mo`** (Education), and Mistral's own docs state plainly that
+  "paid plans add seats, features, and included monthly usage" while "Free mode is the default state
+  for new accounts". `unit` is now `unpublished`, `budgetNote` and `note` are rewritten, `added` moved
+  to 2026-10-13.
+  **Deliberately framed as a correction, not a closure.** The row now states what the vendor
+  publishes today; it does not assert that the credit was withdrawn. The page may simply have been
+  restructured (the plan cards and the FAQ were both rewritten). A human may want to re-read it in a
+  week and, if `$10/month` has returned, restore it.
+  Sources: `mistral.ai/pricing` (read directly, twice), `docs.mistral.ai/admin/billing-usage/subscriptions`.
+  Wayback could not settle the history: the archived snapshots for 7 and 12 October are pre-hydration
+  JS shells with no pricing text in them.
+- **NO DEADLINE CHANGES.** Every published `end` date re-verified unchanged. Vendor pages read
+  directly: `vercel.com/ai-gateway/models/ling-3.1-flash-free` (promotional pricing ends
+  **13 October**, unchanged), `kilo.ai/landing/free-models` (still **five** free models: Ling 3.1
+  Flash, Dots3-Note Preview, Laguna S 2.1, Nemotron 3 Ultra, Nemotron 3 Super),
+  `docs.qoder.com/events/flashoffer` **and** `docs.qoder.cn/events/flashoffer` (Qwen3.8-Flash still
+  free, end date still "announced on this page in advance" — both locales agree),
+  `workbuddy.cn/events/invite` (即日起至 **2026年10月31日**, invitee 2,000 积分 截止 31 October,
+  tiers 50 / +100 / +500 — matches `referrals.js` exactly),
+  `inference-docs.cerebras.ai/support/rate-limits` ($5 credit, 30 days from grant, card required,
+  "no permanently free tier" — the 2 October correction holds),
+  `console.groq.com/docs/rate-limits` (30 RPM / 1K RPD / 8K TPM / 200K TPD per model),
+  `docs.z.ai/devpack/credit-campaign-rules` (paid-first-order plus 3-referral payout threshold,
+  unchanged).
+- **Keyless endpoints swept first, as the runbook now requires.** All five unchanged:
+  `openrouter.ai/api/v1/models` (459 models, **19** at $0 — same count and same set),
+  `integrate.api.nvidia.com/v1/models` (**80**), `api.sambanova.ai/v1/models` (**6**),
+  `index-translate.bilibili.com/v1/models` (**1**), `opencode.ai/zen/v1/models` (83 total, 9 free).
+- **`opencode.ai/docs/zen` now returns 404.** The site has shipped "OpenCode v2" and the docs page
+  that carried Zen's pricing table is gone from the sitemap; the site's own navigation still links to
+  `/docs/zen/#pricing`, so this looks like a mid-migration gap rather than a deliberate removal.
+  **The `opencodezen` roster was therefore left untouched** — the endpoint is the only reachable
+  vendor source and it is the source the runbook says *lags* the docs page. The endpoint currently
+  shows a smaller, different set (it still lists `muse-spark-1.2-contributor-free` and omits
+  `exo-free`, `ling-3.0-flash-fin-free`, `nemotron-3-ultra-free` and `mimo-v2.5-free`). Rewriting the
+  roster on the lagging source would be a fresh-but-wrong edit. **Next run: retry the docs page
+  first.** The row's `link` still points at `/docs/zen`; if the 404 persists, that button is broken
+  and needs a decision from the operator.
+- **NO OFFERS ADDED.** Every tracker lead this run was gated, a reseller, or unreadable at the
+  vendor. Rejected explicitly: **Verdent AI** (GLM-5.3-Flash + DeepSeek V4.1-Flash free in its Free
+  mode) — tracker-only, `aipromonow.com` and CSDN, no vendor page read; **BazaarLink** (DeepSeek V4
+  Flash, "10 RPM / 150 a day free") — its own page says 按量付费 with no markup, i.e. a reseller
+  gateway, not a vendor grant; **Agnes AI**, **腾讯 Marvis**, **美团 catpaw**, **MonkeyCode**,
+  **TeleAgent**, **华为云码道**, **LobsterAI**, **点点 AI**, **书生·端砚 墨点计划**, **Google
+  Antigravity** — all tracker-only this run. **Carried forward as standing candidates:** SenseNova
+  (商汤 Token Plan), 小米 MiMo, Atria Dawn Preview, and now Verdent AI.
+- **Tracker claim REJECTED again (third run).** `token-fbi.com` states Qoder CN Qwen3.8-Flash is
+  "限免至 10 月 31 日". Qoder's own CN page says only "结束时间将提前在本页公告". Vendor wins;
+  `qoder` keeps `end: null`.
+- **`content.js`'s `wenxin` entry still needs a human hand edit** — it says "Both halves close
+  30 September". **Fourteenth run flagged.** A refresh cannot write `content.js`, so it will never
+  self-heal.
+- **Referral terms:** `referrals.js` **NOT touched**. WorkBuddy's live reward structure
+  (50 / +100 / +500, 2,000 invitee, 31 October) still matches the file exactly. Two known stale items
+  stand, **reported not edited**: the `workbuddy` programme note says the event runs to 30 September,
+  and `qoderwork_cn`'s terms page is still titled 【7月30日截止】.
+- **Notes for the next run:** Ling 3.1 Flash's gateway window closes **today (13 Oct)** and should
+  move to the `closed` rail. Doubao ~17 Oct. Hunyuan Hy3 限免 + Hy4 night-free + WorkBuddy invite
+  31 Oct. AI21 is contested for a twelfth time (pricing page now Cloudflare-blocked) — **do not flip**.
+  `oci` / `azure` / `ai21` dates are activation-relative placeholders — never report as deadlines.
+  Run `build-history.js` alongside `build-pages.js`; the rail `ref` field must be carried forward.
+
+---
+
 ## 2026-10-12 · site work (no data change)
 
 **NOT a refresh.** No offer was added, removed or edited. All 51 offers and every published `end`
