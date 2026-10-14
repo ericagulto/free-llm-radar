@@ -13,6 +13,89 @@ Format per entry:
 
 ---
 
+## 2026-10-14
+
+- **CHANGED, `ling31`: the Vercel AI Gateway promo closed on schedule, 13 October.** No extension and
+  no replacement. Checked today three ways: `vercel.com/ai-gateway/models/ling-3.1-flash-free` now
+  returns **404**; `openrouter.ai/api/v1/models` has moved `inclusionai/ling-3.1-flash` to **paid**
+  pricing ($0.075/M input, $0.225/M output); and Kilo Code has dropped it from its free catalog.
+  The row is kept with a past `end` and a `warn` recording the closure, per the established
+  convention (the `status` enum has no `closed` value), and it is now on the `closed` rail.
+  The durable lesson is the **two-ID design**: the standard ID began billing the moment the promo
+  ended, while the `-free` ID simply stopped serving. Prefer the `-free` ID on any gateway promo,
+  so expiry is a failed request rather than a surprise charge.
+- **CHANGED, `openrouter`: the free list shrank from 19 models to 17.** Read from the vendor's own
+  API, `openrouter.ai/api/v1/models`, which now returns 462 models with **17 at $0**. Two of the four
+  IDs this row carried three days ago are gone: `inclusionai/ling-3.1-flash` now bills, and
+  `apodex/apodex-1.1-mini:free` has **left the catalogue entirely**. `models` is corrected and the
+  `warn` now uses this reversal as its own example, since it is the sharpest illustration of the
+  point that warning already made. `added` NOT bumped (rotating roster).
+- **CHANGED, `kilo`: free catalog fell from five models to four.** The vendor's own counter at
+  `kilo.ai/landing/free-models` now reads **FOUR**, and the page was re-rendered in a browser today
+  (`dateModified: 2026-10-14`). `inclusionai/ling-3-1-flash` has dropped off, consistent with its
+  gateway promo ending on 13 October. The remaining four are Nemotron 3 Super, Nemotron 3 Ultra,
+  Dots3-Note Preview and Laguna S 2.1. The count has now gone **six, five, four** across three
+  consecutive checks. `models` corrected, `warn`/`note` re-dated; `added` NOT bumped.
+- **CHANGED, `opencodezen`: free roster grew from 13 models to 14.** Zen's own docs pricing table at
+  `opencode.ai/docs/zen` **loaded this run** after returning 404 on 13 October, and it lists
+  **14 free models**: `cat-jam-free` has joined. `budgetNote` count corrected 13 to 14 and the
+  `models` array extended. The endpoint `opencode.ai/zen/v1/models` still **lags** and now omits
+  five of the fourteen (`big-pickle`, `exo-free`, `ling-3.0-flash-fin-free`, `nemotron-3-ultra-free`,
+  `mimo-v2.5-free`) while still carrying `muse-spark-1.2-contributor-free`, which the docs dropped.
+  **Prefer the docs page; the endpoint is a fallback only.** `added` NOT bumped.
+- **CORRECTION, `nvidia`: the row's `test` command named a model that had already left.** Sweeping
+  `integrate.api.nvidia.com/v1/models` (80 ids, no key) showed the catalogue holds `z-ai/glm-5.3` and
+  `z-ai/glm-5.3-flash` and no `glm-5.2`. The 12 October correction fixed this row's `models` array but
+  **missed its `test` command**, which still called `z-ai/glm-5.2` and would have failed for anyone
+  who copy-pasted it. It now names `z-ai/glm-5.3`. Worth checking the `test` field whenever a model id
+  changes, not just `models`.
+- **NO DEADLINE CHANGES.** Every published `end` date re-verified unchanged. Vendor pages read
+  directly: `workbuddy.cn/events/invite` (即日起至 **2026年10月31日**, invitee 2,000 积分 截止
+  31 October, tiers 50 / +100 / +500; the page is now client-side, so it was rendered in Chromium
+  rather than curled), `docs.qoder.com/events/flashoffer` **and** `docs.qoder.cn/events/flashoffer`
+  (Qwen3.8-Flash still free, end date still "announced on this page in advance", both locales agree),
+  `inference-docs.cerebras.ai/support/rate-limits` ($5 credit, 30 days from grant, card required,
+  the 2 October correction holds), `console.groq.com/docs/rate-limits` (30 RPM / 1K RPD / 8K TPM /
+  200K TPD per model, read from the rendered Free Plan table),
+  `docs.z.ai/devpack/credit-campaign-rules` (paid-first-order plus 3-referral payout threshold,
+  unchanged, last updated 15 March 2026), `mistral.ai/pricing` (**the Free plan still carries no API
+  credit figure, so the 13 October correction holds**).
+- **Keyless endpoints swept first, as the runbook requires.** `openrouter.ai/api/v1/models`
+  (462 models, **17** at $0, CHANGED), `integrate.api.nvidia.com/v1/models` (**80**, unchanged),
+  `api.sambanova.ai/v1/models` (**6**, unchanged), `index-translate.bilibili.com/v1/models` (**1**,
+  unchanged), `opencode.ai/zen/v1/models` (86 total, 10 free, but it lags the docs page).
+- **NO OFFERS ADDED.** The best working tracker has published nothing newer than **9 October**
+  (`igetoken.com/rss.xml`, 87 items; the `deals` page's newest dated entries are 9 and 10 October),
+  and `token-fbi.com`'s newest is 13 October with nothing new in it. Every candidate this run was
+  either already represented, gated, a reseller, or unreadable at the vendor. Still standing
+  candidates pending a readable vendor page: **SenseNova (商汤 Token Plan)**, **Xiaomi MiMo open
+  platform**, **Atria Dawn Preview**, **Verdent AI**. `platform.sensenova.cn`,
+  `platform.xiaomimimo.com` and `atria-asi.ai` all still return JS-only shells.
+- **Not verifiable this run, left untouched:** `minimaxplat` (`end: 2026-11-07`, "free trial access
+  to M3 and M2"). MiniMax's own docs (`platform.minimax.io/docs/token-plan/faq` and
+  `/docs/token-plan/intro`) publish nothing about a free trial or an end date today, so the row was
+  left exactly as it was rather than guessed at. Flagged for the operator.
+- **Referral terms:** `referrals.js` **NOT touched**. `docs.z.ai/devpack/credit-campaign-rules`
+  re-read and unchanged. Two known stale items stand, **reported not edited**: the `workbuddy`
+  programme note still says the event runs to 30 September, and `qoderwork_cn` is still titled
+  【7月30日截止】.
+- **Idempotency: eighth consecutive clean run, no stale `status: 'new'`.** Rail rolled: 14 Oct today,
+  13 Oct yesterday, 12 Oct week; the 11 Oct group dropped. All `ref` fields carried forward, and
+  `validate.js` fails on a dangling `ref` anyway.
+- **Tooling:** `deploy/publish.sh` ran escalation-approved; the sandbox bulk-delete guard did not
+  fire. **The automation prompt still says `bash deploy/sync-data.sh` is "the only step needed"**,
+  which is wrong for this project: the generated `offers/` pages and `history.html` only reach the
+  site via `publish.sh`/`sync-site.sh`. Reported to Eric again, not edited (automations are his call).
+
+- **Next run must handle:** Doubao ~**17 Oct** · Hunyuan Hy3 限免 + Hy4 night-free + WorkBuddy invite
+  **31 Oct** · MiniMax Platform **7 Nov** · Volcano Ark **8 Nov**. AI21 contested
+  (**fourteenth check, do not flip**). `oci` / `azure` / `ai21` dates are activation-relative
+  placeholders, never report them as deadlines. `content.js`'s `wenxin` entry still says "Both halves
+  close 30 September" (**15th run flagged**; a refresh cannot write `content.js`, so it will never
+  self-heal). OpenCode Zen: prefer the docs page. `minimaxplat`'s `end` needs a vendor source.
+
+---
+
 ## 2026-10-13
 
 - **CORRECTION (subtractive) — `mistral` — the `$10/month` free-plan figure is gone from the vendor's
