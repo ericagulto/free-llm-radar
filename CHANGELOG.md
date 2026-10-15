@@ -13,6 +13,83 @@ Format per entry:
 
 ---
 
+## 2026-10-15
+
+- **NO DEADLINE CHANGES.** Every published `end` date re-verified unchanged. Vendor pages read
+  directly: `workbuddy.cn/events/invite` (即日起至 **2026年10月31日**, invitee 2,000 积分 截止
+  31 October, tiers 50 / +100 / +500; still client-side, so rendered in Chromium) **and**
+  `workbuddy.cn/pricing` (体验版 still 限时免费 at 500 积分/month), `docs.qoder.com/events/flashoffer`
+  **and** `docs.qoder.cn/events/flashoffer` (Qwen3.8-Flash still free, end date still "announced on
+  this page in advance", both locales agree), `kilo.ai/landing/free-models` (still **FOUR**),
+  `console.groq.com/docs/rate-limits` (30 RPM / 1K RPD / 8K TPM / 200K TPD), `inference-docs.cerebras.ai`
+  ($5 / 30-day trial, card required, no auto-renewing free tier), `developers.cloudflare.com/workers-ai/platform/pricing/`
+  (10,000 Neurons/day), `mistral.ai/pricing` (**still no** API credit figure on the Free plan, so the
+  13 October correction holds), `docs.z.ai/devpack/credit-campaign-rules` (paid-first-order plus a
+  3-referral payout threshold, unchanged), `ai21.com/pricing` (still **7 days** vs the docs' three
+  months, unresolved, not flipped). Doubao (~17 October) and Hunyuan Hy3 限免 + Hy4 night-free
+  (31 October) re-confirmed **multi-source only**.
+- **CHANGED, `opencodezen`: free roster fell from 14 models to 12.** Zen's own docs pricing table at
+  `opencode.ai/docs/zen` loaded this run and lists **12 free models**, down from 14. Both Ling entries
+  have dropped off: `ling-3.0-flash-fin-free` and `ling-3.1-flash-free`. The second is the expected
+  follow-through from the Ling 3.1 Flash Vercel AI Gateway promo that ended on 13 October; the first
+  was never separately announced. `budgetNote` count corrected 14 to 12 and the `models` array
+  trimmed. The endpoint `opencode.ai/zen/v1/models` still **lags**: it omits `exo-free`,
+  `nemotron-3-ultra-free` and `mimo-v2.5-free`, and still carries `muse-spark-1.2-contributor-free`,
+  which the docs dropped. **Prefer the docs page; the endpoint is a fallback only.** `added` NOT
+  bumped (rotating roster, same call as runs 7 to 15).
+- **CHANGED, `stepfun`: the product line moved under this row, and the free-days grant could not be
+  re-confirmed.** StepFun's own docs and landing page, read today, now describe Step Plan as a
+  **paid monthly Credit subscription (Token Plan) only**; the historical **Coding Plan is
+  已停止新购** (discontinued for new purchase); the Step Plan landing page advertises paid tiers
+  (Mini ¥49, Plus ¥99, Pro ¥199, **all shown as 已售罄**) and **no free trial is documented anywhere
+  in the docs index** (`platform.stepfun.com/docs/llms.txt`). From **15 October 00:00 Beijing time**,
+  Step 5 Preview inside Step Plan also deducts Credits at **2× during weekday peak hours**
+  (09:00–12:00 and 14:00–18:00) — `docs/zh/announcements/step-plan-usage-adjustment`. The row is left
+  **`active`** with `end: null` rather than closed, because a discontinued product line is **not**
+  proof that the signup grant has ended, and the runbook says an offer that looks closed but cannot be
+  confirmed stays active and gets flagged. `note` rewritten with what the vendor publishes; `added`
+  bumped to 2026-10-15 (material change). **Operator decision wanted:** if the free days are in fact
+  gone, this row should be moved to the `closed` rail; a refresh cannot settle it.
+- **All five keyless model-list endpoints swept**, all reachable and unauthenticated:
+  `openrouter.ai/api/v1/models` (462 models, **17 at $0**, unchanged), `integrate.api.nvidia.com/v1/models`
+  (80, unchanged), `api.sambanova.ai/v1/models` (6, unchanged), `index-translate.bilibili.com/v1/models`
+  (1, unchanged), `opencode.ai/zen/v1/models` (85, lags the docs page).
+- **NO OFFERS ADDED.** The best working tracker (`igetoken.com/rss.xml`, 87 items; `igetoken.com/deals`,
+  build `v2026-10-09`) has published **nothing newer than 9 October**. Considered and deliberately not
+  added: **Zhipu AutoClaw** — its new-user gift (200M tokens / ¥120, countdown-only, no calendar date)
+  is on the vendor's own page in both locales, but the two locales label the grant differently
+  (intl says "200M tokens"; the CN page says 2亿 **积分** and the intl floating banner says 2,300
+  points), and a countdown-only offer with a contested unit does not belong in a dataset whose whole
+  point is honest numbers; **联通云 Coding Plan** (¥0/month Lite and Pro, 18k / 90k calls per month,
+  12,000 slots) — tracker-only this run and gated behind 实名认证. Carried forward as standing
+  candidates, still unreadable at the vendor: SenseNova, Xiaomi MiMo, Atria Dawn, Verdent AI,
+  plus AutoClaw and 联通云.
+- **Flagged, not changed:** `minimaxplat` (`end: 2026-11-07`) — MiniMax's own docs publish nothing
+  about a free trial or an end date, so the row was left as-is rather than guessed at. `volcano`
+  (`end: 2026-11-08`) — a ¥9.9/month **discount**, not a free tier, tracker-only. `zcode-weekend`
+  (300M tokens/weekend) — a CN tracker now describes ZCode as **8M tokens/day plus a weekend bonus**,
+  which does not match this row; no vendor source could be read, so it was left alone. `oci`/`azure`
+  `2026-10-29` remain activation-relative placeholders, never deadlines.
+- **Idempotency: ninth consecutive clean run — no stale `status: 'new'`.** Rail rolled: 15 Oct today
+  (6 items), 14 Oct → yesterday (9), 13 Oct → week (6); the 12 Oct group dropped. All `ref` fields
+  carried forward; `validate.js` fails on a dangling ref and it passed.
+- **Referral terms:** `referrals.js` **NOT touched**. Z.ai terms re-read (`docs.z.ai/devpack/credit-campaign-rules`),
+  unchanged: paid first order plus a 3-referral payout threshold. The live WorkBuddy reward structure
+  (50 / +100 / +500, 2,000 invitee, 31 October) still matches the file exactly. Two known stale items
+  stand, **reported not edited**: the `workbuddy` programme note says the event runs to 30 September;
+  `qoderwork_cn`'s terms page is still titled 【7月30日截止】.
+- **Carried forward:** `content.js`'s `wenxin` entry still says "Both halves close 30 September" —
+  **16th run flagged**, and it will never self-heal because a refresh is forbidden from writing
+  `content.js`. The `test-validate.js` / `validate.js` date-collision defect is still owed. The
+  automation prompt still says `bash deploy/sync-data.sh` is "the only step needed" — still wrong,
+  since the generated `offers/` pages and `history.html` only reach the site via `publish.sh`.
+- **Next run must handle:** Doubao ~**17 Oct** · Hunyuan Hy3 限免 + Hy4 night-free + WorkBuddy invite
+  **31 Oct** · MiniMax Platform **7 Nov** · Volcano Ark **8 Nov**. AI21 contested (**sixteenth check —
+  do not flip**). Re-check `platform.stepfun.com` to see whether the free days reappear. OpenCode Zen:
+  **prefer the docs page**.
+
+---
+
 ## 2026-10-14
 
 - **CHANGED, `ling31`: the Vercel AI Gateway promo closed on schedule, 13 October.** No extension and
