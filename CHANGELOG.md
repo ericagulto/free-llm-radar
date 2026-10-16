@@ -13,6 +13,104 @@ Format per entry:
 
 ---
 
+## 2026-10-16
+
+- **NO DEADLINE CHANGES.** Every published `end` date re-verified unchanged. Vendor pages read
+  directly: `workbuddy.cn/events/invite` (即日起至 **2026年10月31日**, invitee 2,000 积分 截止
+  31 October, tiers 50 / +100 / +500; still client-side, so rendered in Chromium) **and**
+  `workbuddy.cn/pricing` (体验版 still 限时免费), `docs.qoder.com/events/flashoffer` **and**
+  `docs.qoder.cn/events/flashoffer` (Qwen3.8-Flash still free, end date still "announced on this page
+  in advance", both locales agree), `kilo.ai/landing/free-models` (still **FOUR**),
+  `console.groq.com/docs/rate-limits` (30 RPM / 1K RPD / 8K TPM / 200K TPD, read from the rendered
+  Free Plan table), `inference-docs.cerebras.ai` ($5 / 30-day trial, card required, no auto-renewing
+  free tier), `developers.cloudflare.com/workers-ai/platform/pricing/` (10,000 Neurons/day, page
+  updated 15 October), `mistral.ai/pricing` (**still no** API credit figure on the Free plan, so the
+  13 October correction holds), `docs.z.ai/devpack/credit-campaign-rules` (paid-first-order plus a
+  3-referral payout threshold, unchanged), `ai21.com/pricing` (readable again after a Cloudflare
+  block on 14 October, and still **7 days** against the docs' three months, unresolved, not flipped).
+  Doubao (about 17 October) and Hunyuan Hy3 限免 + Hy4 night-free (31 October) re-confirmed
+  **multi-source only**.
+- **CHANGED, `opencodezen`: free roster back up to 13.** Zen's own docs pricing table at
+  `opencode.ai/docs/zen` lists **13 free models**, up from 12. Two joined: **`deepseek-v4.1-flash-free`**
+  (1M context, multimodal, and the first Zen free model whose provider the docs describe as running a
+  zero-retention policy) and **`nemotron-3.5-super-vl-free`**. One left: **`step-5-preview-free`**, the
+  Step 5 Preview slot that arrived with the 8 October rollout. `budgetNote` count corrected 12 to 13,
+  `models` updated, and the `warn` zero-retention list now names DeepSeek V4.1 Flash Free instead of
+  the departed Step 5 Preview. The endpoint `opencode.ai/zen/v1/models` still **lags**: it carries
+  neither new id and still lists `muse-spark-1.2-contributor-free`, which the docs dropped. **Prefer
+  the docs page; the endpoint is a fallback only.** `added` NOT bumped (rotating roster, same call as
+  runs 7 to 16).
+- **CHANGED, `nvidia`: `moonshotai/kimi-k3` has left the catalogue.** Sweeping
+  `integrate.api.nvidia.com/v1/models` (no key needed) returns **81 ids**, up from 80, and kimi-k3 is
+  no longer among them: **`moonshotai/kimi-k2.6`** is the only Moonshot entry left. The row's `models`
+  array carried kimi-k3 and has been corrected to `deepseek-ai/deepseek-v4.1-flash`. New ids on the
+  endpoint include `google/diffusiongemma-26b-a4b-it`, `meta/muse-glimmer-30b`,
+  `nvidia/nemotron-3-embed-1b`, `nvidia/nemotron-parse-2.0` and
+  `nvidia/nemotron-3.5-super-vl-120b-a12b`. `z-ai/glm-5.3` is still served, so the row's `test`
+  command remains valid. `added` NOT bumped. **This is the second consecutive correction this one
+  endpoint has produced**, which is the argument for sweeping it first every run.
+- **CHANGED, `openrouter`: free list back up to 18 models at $0.** Read from the vendor's own API,
+  `openrouter.ai/api/v1/models`: 465 models, **18 at $0**, up from 17 on 15 October. Notable free ids
+  now present include `cohere/north-mini-code:free`, the `thinkingmachines/inkling` pair,
+  `nvidia/nemotron-3-nano-omni-30b-a3b-reasoning:free` and `nvidia/nemotron-3.5-super-vl:free`. The
+  `warn` count was corrected from seventeen to eighteen. `added` NOT bumped.
+- **CHANGED, `orcarouter`: a fifth free id appeared, and it is a verification model.** The vendor's
+  own public endpoint, `GET https://api.orcarouter.ai/api/free-package/public`, now returns
+  **`orca/orcaverify-text1.0-free`** (its own 5 rpm / 50 rpd) alongside the four generation ids. It
+  shadows a verification model rather than a text generator, so it is recorded in the row's `note`
+  rather than added to `models`. The endpoint still reports `claim_end: 0` and `active: true`, and the
+  router alias `orcarouter/free` is still documented at `docs.orcarouter.ai/routing/free-models` even
+  though the free-package endpoint does not return it. `added` NOT bumped.
+- **CHANGED, `doubao`: flagged `expiring`.** Its 30-day Standard-plan window is reported to close
+  about **17 October**, tomorrow. `status` moved `active` to `expiring`; the date is still
+  multi-source only, since ByteDance's own campaign page was not read directly.
+- **RE-CHECKED, nothing changed: `stepfun` and `zcode-weekend`.** `platform.stepfun.com` still
+  documents Step Plan as a paid Token Plan only, with four paid tiers (Mini ¥49, Plus ¥99, Pro ¥199,
+  Max ¥699) plus top-up packs, **no free tier and no trial** in the docs index, so the row stays
+  `active` and flagged. One CN tracker continues to advertise 15 signup days plus a 400M-Credit
+  monthly free tier, but the vendor publishes neither, so nothing was changed on it. For
+  `zcode-weekend`, `zcode.z.ai/en` publishes **no free-tier figures at all**, so the 300M-per-weekend
+  figure could not be re-confirmed; a CN tracker now describes ZCode differently (8M tokens/day plus a
+  probabilistic 100M weekend bonus), which does not match this row and has no vendor source either.
+  The row is left as-is rather than rewritten on tracker evidence.
+- **All five keyless model-list endpoints swept**, all reachable and unauthenticated:
+  `openrouter.ai/api/v1/models` (465, **18 at $0**, CHANGED), `integrate.api.nvidia.com/v1/models`
+  (81, CHANGED), `api.sambanova.ai/v1/models` (6, unchanged), `index-translate.bilibili.com/v1/models`
+  (1, unchanged), `opencode.ai/zen/v1/models` (86, lags the docs page).
+- **NO OFFERS ADDED.** No candidate could be confirmed against a vendor page. The trackers' newest
+  entries (15 October, `igetoken.com/rss.xml`, 89 items) describe either something already on the
+  list or something tracker-only. Considered and rejected this run: **WorkBuddy CN x Step 5 Preview**
+  (two trackers agree on a 10/12 to 10/25 free window, but `workbuddy.cn` publishes no page for it and
+  the tracker claim is the only source), **智谱 AutoClaw weekly login credits** (daily-resetting,
+  tracker-only), **联通云 Coding Plan** (¥0/month Lite and Pro, but 实名认证-gated and tracker-only),
+  **MonkeyCode (长亭)**, **天翼云息壤**, **UOS AI**, **Loomy**, **千问办公 QwenWork**. Standing
+  candidates unchanged: SenseNova, Xiaomi MiMo, Atria Dawn, Verdent AI, AutoClaw, 联通云.
+- **Tracker claims REJECTED, vendor wins.** `token-fbi.com` states Qoder CN Qwen3.8-Flash is 限免至
+  10 月 31 日 (Qoder's own page says the end date will be announced there), that Kilo Code has
+  **16** free models (the vendor's own counter reads **FOUR**), and that StepFun still grants 15
+  signup days (the vendor documents no trial). None of the three was written to `data.js`.
+- **Idempotency: tenth consecutive clean run, no stale `status: 'new'`.** Rail rolled: 16 Oct today
+  (8 items) / 15 Oct yesterday (6) / 14 Oct week (9); the 13 Oct group dropped. All `ref` fields
+  carried forward with their items; 23 of 34 rail items now carry one, up from 21, and `validate.js`
+  passed, so there are no dangling refs.
+- **Referral terms:** `referrals.js` **NOT touched**. WorkBuddy's live reward structure (50 / +100 /
+  +500, invitee 2,000 积分, 截止 2026年10月31日) still matches the file exactly. Two known stale items
+  stand, **reported not edited**: the `workbuddy` programme note still says the event runs to
+  30 September; the `qoderwork_cn` terms page is still titled 【7月30日截止】.
+- **PROMPT ERROR (reported again).** The automation prompt still says "Publish: `bash deploy/sync-data.sh`.
+  This is the only step needed." That is wrong: the generated `offers/` pages and `history.html` only
+  reach the site via `publish.sh`. This run used `deploy/publish.sh` (data + site). Reported to Eric;
+  not edited (automations are his call).
+- **Carried forward for the next run:** the `test-validate.js` / `validate.js` date-collision defect is
+  still owed (a harness date that collides with a date `history.html` already renders is MISSED).
+  `content.js`'s `wenxin` entry still says "Both halves close 30 September" (17th run flagged; a
+  refresh cannot write `content.js`). `oci`/`azure`/`ai21` `end` values are activation-relative
+  placeholders and must never be reported as deadlines. `minimaxplat` (7 November) still has no vendor
+  source. `volcano` (8 November) is a discount, tracker-only. When a model id changes, **check the
+  `test` field too**.
+
+---
+
 ## 2026-10-15
 
 - **NO DEADLINE CHANGES.** Every published `end` date re-verified unchanged. Vendor pages read
