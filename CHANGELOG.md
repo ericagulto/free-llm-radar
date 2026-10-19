@@ -13,6 +13,67 @@ Format per entry:
 
 ---
 
+## 2026-10-20
+
+- **ONE EXPIRY, NO OTHER DEADLINE CHANGES.** The Doubao 30-day Standard grant reached its published
+  **17 October** end date and no extension had surfaced by 20 October, so that row now reads
+  **CLOSED** rather than late. Verification stays **multi-source**: ByteDance never published a
+  readable campaign page, and the 17 October date was always approximate. The row is kept on the
+  list as a record, the same convention used for Wenxin and Ling 3.1. Every remaining published
+  `end` date re-verified unchanged: `workbuddy.cn/events/invite` (即日起至 **2026年10月31日**,
+  invitee 2,000 积分 截止 31 October, tiers 50 / +100 / +500), `workbuddy.cn/pricing` (体验版 still
+  限时免费 at 500 积分/month), `docs.qoder.com/events/flashoffer` (Qwen3.8-Flash still free, end
+  date still "announced on this page in advance"), `console.groq.com/docs/rate-limits` (30 RPM /
+  1K RPD / 8K TPM / 200K TPD), `developers.cloudflare.com/workers-ai/platform/pricing/`
+  (10,000 Neurons/day, page updated 19 October), `ai21.com/pricing` (still **7 days** against the
+  docs' three months, **eighteenth check, not flipped**), `docs.z.ai/devpack/credit-campaign-rules`
+  (10% of first order, 3-referral payout threshold, last updated 15 March 2026). Hunyuan Hy3 限免
+  + Hy4 night-free still **31 October**, multi-source only.
+- **CHANGED, `opencodezen`: 13 → 14 free models.** Read at `opencode.ai/docs/zen`. Four joined:
+  **`glm-5.3-flash-free`** (reported 16 October), **`minimax-m3.1-flash-free`** (19 October),
+  **`beam-free`** and **`ll-alpha-free`**. Three left: **`cat-jam-free`**,
+  **`muse-spark-1.3-contributor-free`** and **`space-bunny-free`**. The last is a rename, not a
+  withdrawal: Space Bunny was the anonymous slot, and MiniMax has now formally claimed it as
+  M3.1 Flash, which is exactly what the 19 October tracker entry says. The `warn` zero-retention
+  list was rewritten to name the four ZDR models (DeepSeek V4.1 Flash Free, GLM-5.3-Flash Free,
+  MiniMax M3.1 Flash Free, LongCat 2.5 Preview Free) and to state that Beam Free does not train
+  but retains prompts for 30 days and is geo-blocked in mainland China and Hong Kong. The endpoint
+  `opencode.ai/zen/v1/models` returns 85 ids and still lags: it omits `exo-free`, `ll-alpha-free`,
+  `mimo-v2.5-free` and `nemotron-3-ultra-free`. **Prefer the docs page.**
+- **CHANGED, `kilo`: free counter back up to FIVE.** `kilo.ai/landing/free-models` now reads
+  **5**, up from four, after **Nemotron 3.5 Super VL** was catalogued on 16 October. First rise
+  in this count: it went six, five, four across September and early October. Row `models` gained
+  `nvidia/nemotron-3.5-super-vl:free`; the warning and note were both corrected, and the note no
+  longer implies the direction is one-way.
+- **CHANGED, `openrouter`: 18 → 20 ids at $0.** `openrouter.ai/api/v1/models` returns **470**
+  models. New free ids include `google/gemma-4-26b-a4b-it:free`, `google/gemma-4-31b-it:free`,
+  `minimax/minimax-m3.1-flash:free`, `liquid/lfm-2.5-2.6b:free`, `poolside/laguna-s-2.1:free`,
+  `thinkingmachines/inkling-small:free` and `xingchen-agi/xing4.0-29b-a4b:free`. Two of the
+  twenty are Lyria 3 music models, not text, so the text count is 18. `added` NOT bumped.
+- **Unchanged after a direct sweep:** `integrate.api.nvidia.com/v1/models` 81 ids,
+  `api.sambanova.ai/v1/models` 6, `index-translate.bilibili.com/v1/models` 1.
+- **NO OFFERS ADDED.** The only live candidate is **WorkBuddy CN x Step 5 Preview** (12 to 25
+  October, 600B MoE), which igetoken reports and no `workbuddy.cn` page documents: the invite and
+  pricing pages were both read and neither mentions it. Tracker-only, so not added. Standing
+  candidates unchanged: SenseNova, Xiaomi MiMo, Atria Dawn, Verdent AI, AutoClaw, 联通云.
+- **Idempotency: eleventh consecutive clean run, no stale `status:'new'`.** Rail rolled to
+  **20 Oct today (5) / 16 Oct last run (8) / 15 Oct earlier (6)**, and the 14 Oct group dropped.
+  Labels were changed from "Yesterday"/"Earlier this week" to dated labels because the previous run
+  was four days ago and calling 16 October "yesterday" would be false. Refs 23 → 20, no dangling
+  refs (`validate.js` passed).
+- **Referral terms:** `referrals.js` **NOT touched**. WorkBuddy live structure (50/+100/+500,
+  2,000 invitee, 31 October) still matches the file, re-read today. Z.ai terms unchanged. Two known
+  stale items stand, **reported not edited**: the `workbuddy` row note says 30 September;
+  `qoderwork_cn` is titled 【7月30日截止】.
+- **Notes for the next run:** the 17 to 19 October runs did not happen, so this entry covers four
+  days. `content.js`'s `wenxin` entry still says "Both halves close 30 September" (18th run
+  flagged). `minimaxplat`'s `end` still has no vendor source: the Token Plan FAQ documents only
+  paid plans. `oci`/`azure`/`ai21` dates remain activation-relative placeholders. The
+  `test-validate.js` date-collision defect is still owed. Render `workbuddy.cn/events/invite` in a
+  browser; it does not curl.
+
+---
+
 ## 2026-10-16
 
 - **NO DEADLINE CHANGES.** Every published `end` date re-verified unchanged. Vendor pages read

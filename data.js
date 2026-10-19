@@ -46,8 +46,8 @@
    ============================================================ */
 
 window.RADAR = {
-  updated: '2026-10-16T08:20:00+08:00',
-  verifiedBy: 'Run of 2026-10-16. NO DEADLINE CHANGES to any published end date. All five keyless model-list endpoints swept: openrouter.ai/api/v1/models (465 models, 18 at $0, up from 17), integrate.api.nvidia.com/v1/models (81, up from 80), api.sambanova.ai/v1/models (6, unchanged), index-translate.bilibili.com/v1/models (1, unchanged), opencode.ai/zen/v1/models (86, and it still lags the docs page). Three roster corrections, all vendor-primary. opencode.ai/docs/zen now lists 13 free models, up from 12: deepseek-v4.1-flash-free and nemotron-3.5-super-vl-free have joined, and step-5-preview-free has dropped off. NVIDIA NIM has lost moonshotai/kimi-k3, leaving moonshotai/kimi-k2.6 as the only Moonshot entry, so that row model list was corrected. And OrcaRouter own public free-package endpoint now returns orca/orcaverify-text1.0-free alongside the four generation ids. Vendor pages read directly: workbuddy.cn/events/invite (rendered in Chromium because the page is client-side: 即日起至 2026年10月31日, invitee 2,000 积分 截止 31 October, tiers 50/+100/+500, unchanged) and workbuddy.cn/pricing (体验版 限时免费, unchanged), docs.qoder.com and docs.qoder.cn/events/flashoffer (Qwen3.8-Flash still free, end date still to be announced on the page, both locales agree), kilo.ai/landing/free-models (still FOUR free models), console.groq.com/docs/rate-limits (30 RPM / 1K RPD / 8K TPM / 200K TPD, read from the rendered Free Plan table), inference-docs.cerebras.ai ($5 / 30-day trial, card required, no auto-renewing free tier), developers.cloudflare.com (10,000 Neurons/day, page updated 15 October), mistral.ai/pricing (still NO API credit figure on the Free plan, so the 13 October correction holds), docs.z.ai/devpack/credit-campaign-rules (paid-first-order plus 3-referral payout threshold, unchanged), ai21.com/pricing (readable again after a Cloudflare block on 14 October, and still 7 days against the docs three months, unresolved, not flipped). platform.stepfun.com re-read: Step Plan is still documented as a paid Token Plan with no free trial anywhere in the docs index, so the StepFun row stays active and flagged. Doubao (about 17 October, now flagged expiring) and Hunyuan Hy3 限免 + Hy4 night-free (31 October) re-confirmed multi-source only. No offers added: no candidate could be confirmed against a vendor page, and the trackers newest entries (15 October) either describe an offer already on the list or are tracker-only.',
+  updated: '2026-10-20T01:40:00+08:00',
+  verifiedBy: 'Run of 2026-10-20. NO DEADLINE CHANGES to any published end date. One expiry recorded: the Doubao 30-day Standard grant reached its published 17 October date with no extension found, and that row now says so. All five keyless model-list endpoints swept: openrouter.ai/api/v1/models (470 models, 20 at $0, up from 18), integrate.api.nvidia.com/v1/models (81, unchanged), api.sambanova.ai/v1/models (6, unchanged), index-translate.bilibili.com/v1/models (1, unchanged), opencode.ai/zen/v1/models (85, and it still lags the docs page). Three roster corrections, all vendor-primary. opencode.ai/docs/zen now lists 14 free models, up from 13: glm-5.3-flash-free, minimax-m3.1-flash-free, beam-free and ll-alpha-free have joined, while cat-jam-free, muse-spark-1.3-contributor-free and space-bunny-free have gone. Space Bunny was formally claimed as MiniMax M3.1 Flash, which is the 19 October tracker entry. Kilo Code own counter has risen from FOUR free models to FIVE, with Nemotron 3.5 Super VL added on 16 October. OpenRouter is at 20 free ids. Vendor pages read directly: workbuddy.cn/events/invite (rendered in Chromium: 即日起至 2026年10月31日, invitee 2,000 积分 截止 31 October, tiers 50/+100/+500, unchanged) and workbuddy.cn/pricing (体验版 限时免费, 500 积分/month, unchanged), docs.qoder.com/events/flashoffer (Qwen3.8-Flash still free, end date still to be announced on the page), kilo.ai/landing/free-models (now FIVE), console.groq.com/docs/rate-limits (30 RPM / 1K RPD / 8K TPM / 200K TPD, unchanged), developers.cloudflare.com/workers-ai/platform/pricing/ (10,000 Neurons/day, page updated 19 October), ai21.com/pricing (still 7 days against the docs three months, unresolved, not flipped), docs.z.ai/devpack/credit-campaign-rules (10% of first order, 3-referral payout threshold, last updated 15 March 2026, unchanged). Hunyuan Hy3 限免 + Hy4 night-free re-confirmed multi-source only at 31 October. No offers added: the only live candidate, WorkBuddy CN x Step 5 Preview (12 to 25 October), is tracker-only with no workbuddy.cn page documenting it, and a new offer cannot ship without a content.js entry.',
   offers: [
   {
     "id": "amd",
@@ -190,7 +190,7 @@ window.RADAR = {
       "Optional but significant: buy <b>$10 of credit once</b>. It is a lifetime condition, not a balance — the 20× daily limit increase is permanent even after you spend it."
     ],
     "test": "# list what is free right now — do this instead of hardcoding\ncurl https://openrouter.ai/api/v1/models \\\n  -H \"Authorization: Bearer $OPENROUTER_API_KEY\" | grep -o '\"[^\"]*:free\"' | sort -u",
-    "warn": "The free roster rotates weekly, so the list on this row is a snapshot, not a contract. <b>Read model IDs from the API at runtime</b> rather than hardcoding them, or your app breaks on someone else's pricing decision. Concrete proof, checked 14 October 2026 against the vendor's own API: <b>inclusionai/ling-3.1-flash</b>, which was free when it joined this list on 11 October, now bills $0.075/M in and $0.225/M out, and <b>apodex/apodex-1.1-mini:free</b> has left the catalogue altogether. Two of the four IDs this row carried three days ago are gone. <b>Eighteen models currently price at $0</b>, up from seventeen on 15 October, and the set has moved on six of the last seven checks."
+    "warn": "The free roster rotates weekly, so the list on this row is a snapshot, not a contract. <b>Read model IDs from the API at runtime</b> rather than hardcoding them, or your app breaks on someone else's pricing decision. Concrete proof, checked 14 October 2026 against the vendor's own API: <b>inclusionai/ling-3.1-flash</b>, which was free when it joined this list on 11 October, now bills $0.075/M in and $0.225/M out, and <b>apodex/apodex-1.1-mini:free</b> has left the catalogue altogether. Two of the four IDs this row carried three days ago are gone. <b>Twenty models currently price at $0</b>, up from eighteen on 16 October, out of 470 in the catalogue, and the set has moved on seven of the last eight checks."
   },
   {
     "id": "inception",
@@ -677,6 +677,7 @@ window.RADAR = {
       "kilo-auto/free",
       "nvidia/nemotron-3-super-120b-a12b:free",
       "nvidia/nemotron-3-ultra-550b-a55b:free",
+      "nvidia/nemotron-3.5-super-vl:free",
       "poolside/laguna-s-2-1:free",
       "dots-studio/dots-3-note-preview-free"
     ],
@@ -689,8 +690,8 @@ window.RADAR = {
       "Work. Switch to a paid, local or BYOK model whenever your task changes."
     ],
     "test": "— free models are client-bound. Kilo accepts external keys if you want portable capacity.",
-    "warn": "Free hosted inference is <b>not</b> the same as free-to-download weights. The free catalog updates live and a listing can disappear the moment the upstream provider changes its pricing. The free list is a rotating promotion, not a standing commitment. <b>Space Bunny Alpha retired 5 October</b>, and <b>Ling 3.1 Flash has now aged out too</b>; the vendor page's own counter has fallen from <b>six free models to four</b>, and the rotating catalog is what decides which.",
-    "note": "Open source (MIT) and model-agnostic: the same client can run free hosted models, your own AMD or Groq key, or a local Ollama model. Roster re-read 14 Oct 2026 at <b>kilo.ai/landing/free-models</b>, whose own counter now reads <b>FOUR</b> models at $0 input and $0 output: Nemotron 3 Super, Nemotron 3 Ultra, Dots3-Note Preview and Laguna S 2.1. All four are in this row's model list. <b>Ling 3.1 Flash has dropped off</b>, consistent with its Vercel AI Gateway promo ending on 13 October. The count has now gone six, five, four across three consecutive checks, which is exactly the churn a rotating catalog produces. The vendor page publishes no rate limit for the free tier."
+    "warn": "Free hosted inference is <b>not</b> the same as free-to-download weights. The free catalog updates live and a listing can disappear the moment the upstream provider changes its pricing. The free list is a rotating promotion, not a standing commitment. <b>Space Bunny Alpha retired 5 October</b>, and <b>Ling 3.1 Flash has now aged out too</b>; the vendor page's own counter fell from six free models to four across September and October, then climbed back to <b>five</b> on 16 October when <b>Nemotron 3.5 Super VL</b> joined. The rotating catalog is what decides which, in both directions.",
+    "note": "Open source (MIT) and model-agnostic: the same client can run free hosted models, your own AMD or Groq key, or a local Ollama model. Roster re-read 20 Oct 2026 at <b>kilo.ai/landing/free-models</b>, whose own counter now reads <b>FIVE</b> models at $0 input and $0 output: Nemotron 3 Super, Nemotron 3 Ultra, Nemotron 3.5 Super VL (newest, catalogued 16 October), Dots3-Note Preview and Laguna S 2.1. All five are in this row's model list. The count went six, five, four across three consecutive checks in September and early October, and has now turned back up to five, which is exactly the churn a rotating catalog produces in both directions. The vendor page publishes no rate limit for the free tier."
   },
   {
     "id": "stepfun",
@@ -740,21 +741,22 @@ window.RADAR = {
     "reach": "global",
     "link": "https://opencode.ai/docs/zen",
     "linkLabel": "Get key",
-    "budgetNote": "<b>13 models at $0</b> input and output · no per-token charge · an OpenCode Zen API key is required",
+    "budgetNote": "<b>14 models at $0</b> input and output · no per-token charge · an OpenCode Zen API key is required",
     "models": [
+      "beam-free",
       "big-pickle",
-      "cat-jam-free",
       "deepseek-v4.1-flash-free",
       "exo-free",
+      "glm-5.3-flash-free",
       "jev-1.13-free",
+      "ll-alpha-free",
       "longcat-2.5-preview-free",
       "mimo-v2.6-flash-free",
       "mimo-v2.5-free",
-      "muse-spark-1.3-contributor-free",
+      "minimax-m3.1-flash-free",
       "nemotron-3.5-lightning-free",
       "nemotron-3.5-super-vl-free",
-      "nemotron-3-ultra-free",
-      "space-bunny-free"
+      "nemotron-3-ultra-free"
     ],
     "base": "https://opencode.ai/zen/v1",
     "auth": "Authorization: Bearer",
@@ -765,8 +767,8 @@ window.RADAR = {
       "Select any <b>free</b> model from the list."
     ],
     "test": "curl https://opencode.ai/zen/v1/chat/completions \\\n  -H \"Authorization: Bearer $OPENCODE_ZEN_KEY\" \\\n  -H \"Content-Type: application/json\" \\\n  -d '{\"model\":\"nemotron-3-ultra-free\",\"messages\":[{\"role\":\"user\",\"content\":\"Hello\"}]}'",
-    "warn": "<b>Billing details are collected at signup</b>, and auto-reload will top the account up by $20 whenever the balance drops below $5. Disable auto-reload unless you intend to pay. Also check each model: most of the free ones <b>train on your prompts</b>; only <b>DeepSeek V4.1 Flash Free</b>, <b>Space Bunny</b> and <b>LongCat 2.5</b> are zero-retention.",
-    "note": "Unlike a client-bound list, Zen issues a <b>portable key</b>, so the free models can be wired into any OpenAI-compatible tool, not just OpenCode. Verified 16 Oct 2026 against Zen's own docs pricing table at <b>opencode.ai/docs/zen</b>, which lists <b>13 free models</b>, up from 12. Two joined, <b>deepseek-v4.1-flash-free</b> (the follow-through from the 15 October addition the trackers reported) and <b>nemotron-3.5-super-vl-free</b>; one left, <b>step-5-preview-free</b>, the Step 5 Preview slot that arrived with the 8 October rollout. DeepSeek V4.1 Flash Free is the first Zen free model whose provider the docs describe as running a zero-retention policy, which is why the warning above now names it. The endpoint <b>opencode.ai/zen/v1/models</b> still lags the docs page: it carries neither new id and still lists muse-spark-1.2-contributor-free, which the docs have dropped. Prefer the docs page and treat the endpoint as a fallback only. None publish an end date. All are 'limited time', and Zen's own docs deliberately omit firm deadlines even where, as with <b>LongCat 2.5 preview</b>, trackers report one. Treat any date as approximate and read the live pricing table before relying on it."
+    "warn": "<b>Billing details are collected at signup</b>, and auto-reload will top the account up by $20 whenever the balance drops below $5. Disable auto-reload unless you intend to pay. Also check each model: most of the free ones <b>train on your prompts</b>. Only <b>DeepSeek V4.1 Flash Free</b>, <b>GLM-5.3-Flash Free</b>, <b>MiniMax M3.1 Flash Free</b> and <b>LongCat 2.5 Preview Free</b> are zero-retention. <b>Beam Free</b> does not train on your data but retains prompts for 30 days, and it is geo-blocked in mainland China, Hong Kong, Macau and a long list of sanctioned regions.",
+    "note": "Unlike a client-bound list, Zen issues a <b>portable key</b>, so the free models can be wired into any OpenAI-compatible tool, not just OpenCode. Verified 20 Oct 2026 against Zen's own docs pricing table at <b>opencode.ai/docs/zen</b>, which lists <b>14 free models</b>, up from 13. Four joined: <b>glm-5.3-flash-free</b> (reported 16 October), <b>minimax-m3.1-flash-free</b> (19 October, and it is the model the anonymous Space Bunny slot turned out to be, now formally claimed by MiniMax), <b>beam-free</b> and <b>ll-alpha-free</b>, the last two being partner or stealth slots. Three left: <b>cat-jam-free</b>, <b>muse-spark-1.3-contributor-free</b> and <b>space-bunny-free</b>, that slot having been renamed rather than withdrawn. Four of the fourteen are zero-retention, which is what the warning above now names. The endpoint <b>opencode.ai/zen/v1/models</b> still lags the docs page: it returns 85 ids but omits <b>exo-free</b>, <b>ll-alpha-free</b>, <b>mimo-v2.5-free</b> and <b>nemotron-3-ultra-free</b>, all four of which the docs still list as free. Prefer the docs page and treat the endpoint as a fallback only. None publish an end date. All are 'limited time', and Zen's own docs deliberately omit firm deadlines even where, as with <b>LongCat 2.5 preview</b>, trackers report one. Treat any date as approximate and read the live pricing table before relying on it."
   },
   {
     "id": "zcode-trust",
@@ -1060,7 +1062,7 @@ window.RADAR = {
     "reach": "cn-only",
     "link": "https://www.doubao.com/",
     "linkLabel": "Open",
-    "budgetNote": "30 days of the <b>Standard</b> plan free · every user qualifies, free and paying alike · claimed by downloading or upgrading the desktop client · campaign reported to run to <b>17 October 2026</b>",
+    "budgetNote": "30 days of the <b>Standard</b> plan free · every user qualified, free and paying alike · claimed by downloading or upgrading the desktop client · campaign reported to run to <b>17 October 2026 (CLOSED)</b>",
     "models": [
       "Doubao Seed series"
     ],
@@ -1073,7 +1075,7 @@ window.RADAR = {
       "Already claimed the previous round? The next 30 days are granted as the current one expires — no action needed."
     ],
     "test": "— client-bound.",
-    "warn": "<b>Thirty days from claim, not a tier.</b> The Standard plan reverts to paid when the entitlement lapses. This is ByteDance's consumer assistant, not the Volcano Ark API platform — <b>there is no key here</b> and nothing on this row can be wired into your own stack. Verification level: <b>multi-source</b> — ByteDance's 24 September announcement as carried by Tencent News, Sohu, Chinaz and others; the vendor's own campaign page was not read directly, so treat 17 October as approximate.",
+    "warn": "<b>CLOSED 17 October 2026.</b> The published campaign window ran to 17 October and no extension had surfaced by 20 October, so treat this as finished rather than late. <b>Thirty days from claim, not a tier:</b> the Standard plan reverted to paid when each entitlement lapsed. This is ByteDance's consumer assistant, not the Volcano Ark API platform — <b>there is no key here</b> and nothing on this row can be wired into your own stack. Verification level: <b>multi-source</b> — ByteDance's 24 September announcement as carried by Tencent News, Sohu, Chinaz and others; the vendor's own campaign page was never readable, so the 17 October date was always approximate. Kept on the list as a record.",
     "note": "Paid subscribers are not downgraded — their existing term is extended instead, and they keep peak-hour priority. This is the second round in a month: an identical 30-day grant ran from 25 August."
   },
   {
@@ -1669,7 +1671,42 @@ window.RADAR = {
   rail:   [
     {
       "d": "today",
-      "label": "Today · 16 Oct",
+      "label": "Today · 20 Oct",
+      "items": [
+        {
+          "c": "ext",
+          "n": "OpenCode Zen: 14 free models, four in and three out",
+          "t": "Zen own docs pricing table (<b>opencode.ai/docs/zen</b>) now lists <b>14 free models</b>, up from 13. Four joined: <b>glm-5.3-flash-free</b> (reported 16 October), <b>minimax-m3.1-flash-free</b> (19 October), <b>beam-free</b> and <b>ll-alpha-free</b>. Three left the table, and one of those is not a loss: <b>space-bunny-free</b> was the anonymous slot MiniMax has now formally claimed as M3.1 Flash. <b>cat-jam-free</b> and <b>muse-spark-1.3-contributor-free</b> are simply gone. Still no published end date on any of them, and the endpoint still lags the docs page.",
+          "ref": "opencodezen"
+        },
+        {
+          "c": "ext",
+          "n": "Kilo Code: free catalog back up to five models",
+          "t": "The vendor counter at <b>kilo.ai/landing/free-models</b> now reads <b>FIVE</b>, up from four, after <b>Nemotron 3.5 Super VL</b> was catalogued on 16 October. That is the first time this count has risen: it went six, five, four across September and early October, which is what a rotating catalog does in both directions. The row model list and its warning were both corrected.",
+          "ref": "kilo"
+        },
+        {
+          "c": "ext",
+          "n": "OpenRouter: 20 ids at $0, up from 18",
+          "t": "<b>openrouter.ai/api/v1/models</b> returns 470 models, <b>20 at $0</b>. New free ids include <b>google/gemma-4-26b-a4b-it:free</b>, <b>google/gemma-4-31b-it:free</b>, <b>minimax/minimax-m3.1-flash:free</b>, <b>liquid/lfm-2.5-2.6b:free</b>, <b>poolside/laguna-s-2.1:free</b>, <b>thinkingmachines/inkling-small:free</b> and <b>xingchen-agi/xing4.0-29b-a4b:free</b>. Two of the twenty are music models (Lyria 3), not text, so the text count is 18. The row warning already tells readers to read the list at runtime, which remains the only way to track this.",
+          "ref": "openrouter"
+        },
+        {
+          "c": "exp",
+          "n": "Doubao Standard plan: closed on 17 October",
+          "t": "The 30-day Standard grant reached its published <b>17 October</b> end date and <b>no extension surfaced</b> in the four days since, so the row now reads CLOSED rather than late. Verification stays multi-source: ByteDance never published a readable campaign page. This follows the same convention as Wenxin and Ling 3.1, which stay on the list as records rather than being deleted.",
+          "ref": "doubao"
+        },
+        {
+          "c": "exp",
+          "n": "No other deadline changes: every remaining end date re-verified unchanged",
+          "t": "Vendor pages read directly: <b>workbuddy.cn/events/invite</b> still reads 即日起至 2026年10月31日 with the invitee 2,000 积分 截止 2026年10月31日 and the 50 / +100 / +500 tiers; <b>workbuddy.cn/pricing</b> still shows 体验版 限时免费 at 500 积分/month; Qoder Qwen3.8-Flash still free with the end date still to be announced (<b>docs.qoder.com/events/flashoffer</b>); Groq free plan unchanged at 30 RPM / 1K RPD / 8K TPM / 200K TPD; Cloudflare still 10,000 Neurons/day (page updated 19 October); AI21 still 7 days against the docs three months, unresolved and not flipped; Z.ai invite terms unchanged at 10% of first order with a 3-referral payout threshold, last updated 15 March 2026. Hunyuan Hy3 限免 + Hy4 night-free still 31 October, multi-source only. Nothing moved."
+        }
+      ]
+    },
+    {
+      "d": "yesterday",
+      "label": "Last run · 16 Oct",
       "items": [
         {
           "c": "ext",
@@ -1720,8 +1757,8 @@ window.RADAR = {
       ]
     },
     {
-      "d": "yesterday",
-      "label": "Yesterday · 15 Oct",
+      "d": "week",
+      "label": "Earlier · 15 Oct",
       "items": [
         {
           "c": "ext",
@@ -1754,64 +1791,6 @@ window.RADAR = {
           "c": "exp",
           "n": "Hunyuan Hy3 限免 + Hy4 night-free + WorkBuddy invite: 31 Oct",
           "t": "All three still end <b>31 October</b>. Hunyuan re-confirmed via the tracker entry quoting the official announcement: night-free <b>23:00-08:00</b> for existing users, extended to 31 October, with the new-user 14-day quota still requiring a first conversation by 10 October 23:59 and therefore closed. Hunyuan is cn-only and points-metered. WorkBuddy was read directly and its reward structure is unchanged."
-        }
-      ]
-    },
-    {
-      "d": "week",
-      "label": "Earlier this week · 14 Oct",
-      "items": [
-        {
-          "c": "dead",
-          "n": "Ling 3.1 Flash: gateway promo closed on schedule, 13 October",
-          "t": "The Vercel AI Gateway free window ended exactly when the vendor said it would. Checked today: the gateway's <b>-free</b> model page now returns <b>404</b>, OpenRouter has moved <b>inclusionai/ling-3.1-flash</b> to paid pricing ($0.075/M in, $0.225/M out), and <b>Kilo Code has dropped it from its free catalog</b>. No extension, no replacement. The row is kept as a record; the two-ID design is the part worth remembering, since the <b>-free</b> ID stopped serving rather than silently billing.",
-          "ref": "ling31"
-        },
-        {
-          "c": "ext",
-          "n": "OpenRouter: free list shrank from 19 models to 17",
-          "t": "Read from the vendor's own API, <b>openrouter.ai/api/v1/models</b>, which now returns 462 models with <b>17 at $0</b>. Two of the four IDs this row carried three days ago are gone: <b>inclusionai/ling-3.1-flash</b> now bills $0.075/M in and $0.225/M out, and <b>apodex/apodex-1.1-mini:free</b> has left the catalogue altogether. Still free and now listed: <b>thinkingmachines/inkling:free</b> and <b>nvidia/nemotron-3.5-lightning:free</b>. The row's warning is the honest lesson here, so it now names this reversal as its example.",
-          "ref": "openrouter"
-        },
-        {
-          "c": "ext",
-          "n": "Kilo Code: free catalog fell from five models to four",
-          "t": "The vendor's own counter at <b>kilo.ai/landing/free-models</b> now reads <b>FOUR</b>, and the page was re-rendered today. <b>Ling 3.1 Flash has dropped off</b>, consistent with its gateway promo ending on 13 October. The remaining four are Nemotron 3 Super, Nemotron 3 Ultra, Dots3-Note Preview and Laguna S 2.1. The count has now gone six, five, four across three consecutive checks.",
-          "ref": "kilo"
-        },
-        {
-          "c": "ext",
-          "n": "OpenCode Zen: free roster grew to 14, Cat Jam Free added",
-          "t": "Zen's own docs pricing table (<b>opencode.ai/docs/zen</b>) loaded this run after returning <b>404 on 13 October</b>, and it lists <b>14 free models</b>, up from 13. <b>cat-jam-free</b> has joined. The endpoint <b>opencode.ai/zen/v1/models</b> still lags and is now missing five of the fourteen, so the docs page is the one to read. Still no published end date on any of them.",
-          "ref": "opencodezen"
-        },
-        {
-          "c": "ext",
-          "n": "NVIDIA NIM: the row's test command named a model that had already left",
-          "t": "Sweeping <b>integrate.api.nvidia.com/v1/models</b> (80 ids, no key) showed the catalogue still holds <b>z-ai/glm-5.3</b> and <b>z-ai/glm-5.3-flash</b> and no glm-5.2. The 12 October correction fixed this row's model list but missed its <b>test</b> command, which still called <b>z-ai/glm-5.2</b> and would have failed for anyone who copy-pasted it. It now names glm-5.3.",
-          "ref": "nvidia"
-        },
-        {
-          "c": "exp",
-          "n": "No deadline changes: every published end date re-verified unchanged",
-          "t": "Vendor pages read directly: <b>workbuddy.cn/events/invite</b> still reads 即日起至 2026年10月31日 with the invitee 2,000 积分 截止 2026年10月31日 and the 50 / +100 / +500 tiers, rendered in a browser because the page is client-side; Qoder Qwen3.8-Flash still free with the end date still to be announced (<b>docs.qoder.com</b> and <b>docs.qoder.cn</b>, both read); Cerebras still a $5 / 30-day card-backed trial (<b>inference-docs.cerebras.ai</b>); Groq free-plan limits unchanged at 30 RPM / 1K RPD / 8K TPM / 200K TPD (<b>console.groq.com/docs/rate-limits</b>); GLM night-free still 3 Sep to 7 Oct with no extension; Z.ai invite terms unchanged (paid first order plus a 3-referral payout threshold, last updated 15 March 2026); mistral.ai/pricing still carries <b>no</b> API credit figure on the Free plan, so the 13 October correction holds. Nothing moved."
-        },
-        {
-          "c": "exp",
-          "n": "AI21 $10 credit: length still contested (thirteenth check)",
-          "t": "Both pages read directly today, and they still disagree: <b>ai21.com/pricing</b> says the $10 credit is good for <b>7 days</b>, <b>docs.ai21.com</b> says <b>three months</b>. Unresolved and deliberately not flipped, because the change would turn an expiring row into a non-expiring one on evidence that contradicts itself. The date on the row is a placeholder either way, since the clock runs from your own signup rather than a shared deadline.",
-          "ref": "ai21"
-        },
-        {
-          "c": "exp",
-          "n": "Doubao Standard plan: about 17 Oct",
-          "t": "ByteDance's 30-day Standard-plan grant is still reported to run to about <b>17 October</b>. Multi-source only: the vendor's own campaign page was not read directly, and a CN write-up published today argues the 17th is the <b>registration</b> deadline rather than the expiry, which the row already implies by calling the date approximate.",
-          "ref": "doubao"
-        },
-        {
-          "c": "exp",
-          "n": "Hunyuan Hy3 限免 + Hy4 night-free + WorkBuddy invite: 31 Oct",
-          "t": "All three still end <b>31 October</b>. Hunyuan re-confirmed via the tracker entry quoting the official announcement: night-free 23:00-08:00 for existing users, extended to 31 October, with the new-user 14-day quota still requiring a first conversation by 10 October 23:59 and therefore closed. Hunyuan is cn-only and points-metered; WorkBuddy was read directly and its reward structure is unchanged."
         }
       ]
     },
