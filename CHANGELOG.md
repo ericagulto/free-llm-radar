@@ -13,6 +13,45 @@ Format per entry:
 
 ---
 
+## 2026-10-20 (08:35 pass)
+
+- **NO DEADLINE CHANGES.** A second pass seven hours after the morning run. Every published `end`
+  date re-read and every one was where the morning run left it: `workbuddy.cn/events/invite`
+  (即日起至 **2026年10月31日**, invitee 2,000 积分 截止 31 October, tiers 50 / +100 / +500, rendered
+  in Chromium), `workbuddy.cn/pricing` (体验版 still 限时免费 at 500 积分/month),
+  `docs.qoder.com/events/flashoffer` (Qwen3.8-Flash still free, end date still announced in
+  advance), `console.groq.com/docs/rate-limits` (30 RPM / 1K RPD / 8K TPM / 200K TPD),
+  `developers.cloudflare.com/workers-ai/platform/pricing/` (10,000 Neurons/day, page updated
+  19 October), `ai21.com/pricing` (still **7 days** against the docs' three months,
+  **nineteenth check, not flipped**), `docs.z.ai/devpack/credit-campaign-rules` (10% of first
+  order, 3-referral payout threshold, last updated 15 March 2026). Hunyuan Hy3 限免 + Hy4
+  night-free still **31 October**, multi-source only.
+- **CHANGED, `kilo`: free counter five → SIX.** `kilo.ai/landing/free-models` now reads **6**
+  free models after **MiniMax M3.1 Flash** was catalogued on 19 October. Row `models` gained
+  **`minimax/minimax-m3.1-flash:free`** (id confirmed from the model page's own markup, not
+  guessed), and `warn` plus `note` were rewritten. `added` moved to 2026-10-20 as a material
+  change. The count has now gone six, five, four, five, six across five consecutive checks,
+  which is the churn this rotating catalog produces in both directions.
+- **RE-CHECKED, unchanged:** `opencode.ai/docs/zen` still lists the same **14** free models with
+  no published end date; the Zen endpoint still lags at 85 ids; OpenRouter 470 models with
+  **20 at $0** and the same ids as the morning run; NVIDIA 81; SambaNova 6; bilibili 1.
+  `platform.minimax.io/docs/token-plan/faq` still covers paid plans only, so the `minimaxplat`
+  row's 7 November date remains **unsourced** and was left alone.
+- **NO OFFERS ADDED.** `igetoken.com/rss.xml` has nothing newer than its 19 October entry.
+  WorkBuddy CN × Step 5 Preview (12–25 October) is still tracker-and-press only: the invite and
+  pricing pages were both rendered and neither mentions it. A new offer cannot ship without a
+  `content.js` entry, and a refresh must not write that file.
+- **Referral terms:** `referrals.js` **NOT touched**. Z.ai terms re-read, unchanged. Two known
+  stale items stand, **reported not edited**: the `workbuddy` note says 30 Sep, and
+  `qoderwork_cn` is titled 【7月30日截止】.
+- **Rail:** the existing `Today · 20 Oct` group was updated in place rather than a second group
+  with the same label being prepended. `d` still obeys the today/yesterday/week enum.
+- **Notes for next run:** nothing expires within 7 days; the next date is **31 October**
+  (Hunyuan, WorkBuddy). `content.js`'s `wenxin` entry still says "Both halves close 30
+  September" — **nineteenth run flagged**, and a refresh cannot fix it.
+
+---
+
 ## 2026-10-20
 
 - **ONE EXPIRY, NO OTHER DEADLINE CHANGES.** The Doubao 30-day Standard grant reached its published

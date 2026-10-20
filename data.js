@@ -46,8 +46,8 @@
    ============================================================ */
 
 window.RADAR = {
-  updated: '2026-10-20T01:40:00+08:00',
-  verifiedBy: 'Run of 2026-10-20. NO DEADLINE CHANGES to any published end date. One expiry recorded: the Doubao 30-day Standard grant reached its published 17 October date with no extension found, and that row now says so. All five keyless model-list endpoints swept: openrouter.ai/api/v1/models (470 models, 20 at $0, up from 18), integrate.api.nvidia.com/v1/models (81, unchanged), api.sambanova.ai/v1/models (6, unchanged), index-translate.bilibili.com/v1/models (1, unchanged), opencode.ai/zen/v1/models (85, and it still lags the docs page). Three roster corrections, all vendor-primary. opencode.ai/docs/zen now lists 14 free models, up from 13: glm-5.3-flash-free, minimax-m3.1-flash-free, beam-free and ll-alpha-free have joined, while cat-jam-free, muse-spark-1.3-contributor-free and space-bunny-free have gone. Space Bunny was formally claimed as MiniMax M3.1 Flash, which is the 19 October tracker entry. Kilo Code own counter has risen from FOUR free models to FIVE, with Nemotron 3.5 Super VL added on 16 October. OpenRouter is at 20 free ids. Vendor pages read directly: workbuddy.cn/events/invite (rendered in Chromium: 即日起至 2026年10月31日, invitee 2,000 积分 截止 31 October, tiers 50/+100/+500, unchanged) and workbuddy.cn/pricing (体验版 限时免费, 500 积分/month, unchanged), docs.qoder.com/events/flashoffer (Qwen3.8-Flash still free, end date still to be announced on the page), kilo.ai/landing/free-models (now FIVE), console.groq.com/docs/rate-limits (30 RPM / 1K RPD / 8K TPM / 200K TPD, unchanged), developers.cloudflare.com/workers-ai/platform/pricing/ (10,000 Neurons/day, page updated 19 October), ai21.com/pricing (still 7 days against the docs three months, unresolved, not flipped), docs.z.ai/devpack/credit-campaign-rules (10% of first order, 3-referral payout threshold, last updated 15 March 2026, unchanged). Hunyuan Hy3 限免 + Hy4 night-free re-confirmed multi-source only at 31 October. No offers added: the only live candidate, WorkBuddy CN x Step 5 Preview (12 to 25 October), is tracker-only with no workbuddy.cn page documenting it, and a new offer cannot ship without a content.js entry.',
+  updated: '2026-10-20T08:45:00+08:00',
+  verifiedBy: 'Second pass of 2026-10-20, 08:35 local, seven hours after the first. NO DEADLINE CHANGES: every published end date was re-read and every one was where the morning run left it. One roster change, vendor-primary: kilo.ai/landing/free-models now reads SIX free models, up from five, after MiniMax M3.1 Flash was catalogued on 19 October. All five keyless model-list endpoints swept again: openrouter.ai/api/v1/models (470 models, 20 at $0, unchanged, the same ids the morning run recorded), integrate.api.nvidia.com/v1/models (81, unchanged), api.sambanova.ai/v1/models (6, unchanged), index-translate.bilibili.com/v1/models (1, unchanged), opencode.ai/zen/v1/models (85, still lagging the docs page). opencode.ai/docs/zen still lists the same 14 free models and still publishes no end date for any of them. Vendor pages read directly and unchanged: workbuddy.cn/events/invite and workbuddy.cn/pricing (both rendered in Chromium; 即日起至 2026年10月31日, invitee 2,000 积分 截止 31 October, tiers 50/+100/+500, 体验版 限时免费 at 500 积分/month), docs.qoder.com/events/flashoffer (Qwen3.8-Flash still free, end date still to be announced), console.groq.com/docs/rate-limits (30 RPM / 1K RPD / 8K TPM / 200K TPD), developers.cloudflare.com/workers-ai/platform/pricing/ (10,000 Neurons/day, page updated 19 October), ai21.com/pricing (still 7 days against the docs three months, nineteenth check, not flipped), platform.minimax.io/docs/token-plan/faq (still paid plans only, no trial, so the 7 November row date remains unsourced), docs.z.ai/devpack/credit-campaign-rules (10% of first order, 3-referral payout threshold, last updated 15 March 2026). igetoken.com/rss.xml has nothing newer than its 19 October entry. No offers added: WorkBuddy CN x Step 5 Preview (12 to 25 October) is still tracker-and-press only, with no workbuddy.cn page documenting it, and a new offer cannot ship without a content.js entry.',
   offers: [
   {
     "id": "amd",
@@ -665,7 +665,7 @@ window.RADAR = {
     "budget": 0,
     "unit": "unspecified",
     "end": null,
-    "added": "2026-09-30",
+    "added": "2026-10-20",
     "status": "active",
     "card": false,
     "china": false,
@@ -679,6 +679,7 @@ window.RADAR = {
       "nvidia/nemotron-3-ultra-550b-a55b:free",
       "nvidia/nemotron-3.5-super-vl:free",
       "poolside/laguna-s-2-1:free",
+      "minimax/minimax-m3.1-flash:free",
       "dots-studio/dots-3-note-preview-free"
     ],
     "base": "— client-bound, no public Kilo API",
@@ -690,8 +691,8 @@ window.RADAR = {
       "Work. Switch to a paid, local or BYOK model whenever your task changes."
     ],
     "test": "— free models are client-bound. Kilo accepts external keys if you want portable capacity.",
-    "warn": "Free hosted inference is <b>not</b> the same as free-to-download weights. The free catalog updates live and a listing can disappear the moment the upstream provider changes its pricing. The free list is a rotating promotion, not a standing commitment. <b>Space Bunny Alpha retired 5 October</b>, and <b>Ling 3.1 Flash has now aged out too</b>; the vendor page's own counter fell from six free models to four across September and October, then climbed back to <b>five</b> on 16 October when <b>Nemotron 3.5 Super VL</b> joined. The rotating catalog is what decides which, in both directions.",
-    "note": "Open source (MIT) and model-agnostic: the same client can run free hosted models, your own AMD or Groq key, or a local Ollama model. Roster re-read 20 Oct 2026 at <b>kilo.ai/landing/free-models</b>, whose own counter now reads <b>FIVE</b> models at $0 input and $0 output: Nemotron 3 Super, Nemotron 3 Ultra, Nemotron 3.5 Super VL (newest, catalogued 16 October), Dots3-Note Preview and Laguna S 2.1. All five are in this row's model list. The count went six, five, four across three consecutive checks in September and early October, and has now turned back up to five, which is exactly the churn a rotating catalog produces in both directions. The vendor page publishes no rate limit for the free tier."
+    "warn": "Free hosted inference is <b>not</b> the same as free-to-download weights. The free catalog updates live and a listing can disappear the moment the upstream provider changes its pricing. The free list is a rotating promotion, not a standing commitment. <b>Space Bunny Alpha retired 5 October</b>, and <b>Ling 3.1 Flash has now aged out too</b>; the vendor page's own counter fell from six free models to four across September and October, then climbed back to <b>five</b> on 16 October when <b>Nemotron 3.5 Super VL</b> joined, and to <b>six</b> on 19 October when <b>MiniMax M3.1 Flash</b> arrived. The rotating catalog is what decides which, in both directions.",
+    "note": "Open source (MIT) and model-agnostic: the same client can run free hosted models, your own AMD or Groq key, or a local Ollama model. Roster re-read 20 Oct 2026 at <b>kilo.ai/landing/free-models</b>, whose own counter now reads <b>SIX</b> models at $0 input and $0 output: Nemotron 3 Super, Nemotron 3 Ultra, Nemotron 3.5 Super VL, <b>MiniMax M3.1 Flash</b> (newest, catalogued 19 October), Dots3-Note Preview and Laguna S 2.1. All six are in this row's model list. The count went six, five, four across three consecutive checks in September and early October, then back up to five on 16 October and to six on 19 October, which is exactly the churn a rotating catalog produces in both directions. The vendor page publishes no rate limit for the free tier."
   },
   {
     "id": "stepfun",
@@ -1681,8 +1682,8 @@ window.RADAR = {
         },
         {
           "c": "ext",
-          "n": "Kilo Code: free catalog back up to five models",
-          "t": "The vendor counter at <b>kilo.ai/landing/free-models</b> now reads <b>FIVE</b>, up from four, after <b>Nemotron 3.5 Super VL</b> was catalogued on 16 October. That is the first time this count has risen: it went six, five, four across September and early October, which is what a rotating catalog does in both directions. The row model list and its warning were both corrected.",
+          "n": "Kilo Code: free catalog up to six models",
+          "t": "The vendor counter at <b>kilo.ai/landing/free-models</b> now reads <b>SIX</b>, up from five, after <b>MiniMax M3.1 Flash</b> was catalogued on 19 October. Second rise in a week: the count went six, five, four, then five on 16 October, then six. The row model list, its warning and its note were all corrected.",
           "ref": "kilo"
         },
         {
@@ -1700,7 +1701,7 @@ window.RADAR = {
         {
           "c": "exp",
           "n": "No other deadline changes: every remaining end date re-verified unchanged",
-          "t": "Vendor pages read directly: <b>workbuddy.cn/events/invite</b> still reads 即日起至 2026年10月31日 with the invitee 2,000 积分 截止 2026年10月31日 and the 50 / +100 / +500 tiers; <b>workbuddy.cn/pricing</b> still shows 体验版 限时免费 at 500 积分/month; Qoder Qwen3.8-Flash still free with the end date still to be announced (<b>docs.qoder.com/events/flashoffer</b>); Groq free plan unchanged at 30 RPM / 1K RPD / 8K TPM / 200K TPD; Cloudflare still 10,000 Neurons/day (page updated 19 October); AI21 still 7 days against the docs three months, unresolved and not flipped; Z.ai invite terms unchanged at 10% of first order with a 3-referral payout threshold, last updated 15 March 2026. Hunyuan Hy3 限免 + Hy4 night-free still 31 October, multi-source only. Nothing moved."
+          "t": "Vendor pages read directly: <b>workbuddy.cn/events/invite</b> still reads 即日起至 2026年10月31日 with the invitee 2,000 积分 截止 2026年10月31日 and the 50 / +100 / +500 tiers; <b>workbuddy.cn/pricing</b> still shows 体验版 限时免费 at 500 积分/month; Qoder Qwen3.8-Flash still free with the end date still to be announced (<b>docs.qoder.com/events/flashoffer</b>); Groq free plan unchanged at 30 RPM / 1K RPD / 8K TPM / 200K TPD; Cloudflare still 10,000 Neurons/day (page updated 19 October); AI21 still 7 days against the docs three months, unresolved and not flipped; Z.ai invite terms unchanged at 10% of first order with a 3-referral payout threshold, last updated 15 March 2026. Hunyuan Hy3 限免 + Hy4 night-free still 31 October, multi-source only. Nothing moved. Re-read again at <b>08:35</b> on the same day, and still nothing had moved."
         }
       ]
     },
