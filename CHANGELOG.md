@@ -13,6 +13,68 @@ Format per entry:
 
 ---
 
+## 2026-10-21
+
+- **NO DEADLINE CHANGES.** Every published `end` date re-read and every one was where the 20 October
+  run left it: `workbuddy.cn/events/invite` (即日起至 **2026年10月31日**, invitee 2,000 积分 截止
+  31 October, tiers 50 / +100 / +500, rendered in Chromium because the page is client-side),
+  `workbuddy.cn/pricing` (体验版 still 限时免费 at 500 积分/month), `docs.qoder.com/events/flashoffer`
+  **and** `docs.qoder.cn/events/flashoffer` (Qwen3.8-Flash still free, end date still to be announced,
+  both locales agreeing), `console.groq.com/docs/rate-limits` (30 RPM / 1K RPD / 8K TPM / 200K TPD),
+  `developers.cloudflare.com/workers-ai/platform/pricing/` (10,000 Neurons/day, page updated
+  **20 October**), `ai21.com/pricing` (still **7 days** against the docs' three months, **twentieth
+  check, not flipped**), `docs.z.ai/devpack/credit-campaign-rules` (10% of first order, 3-referral
+  payout threshold, last updated 15 March 2026), `kilo.ai/landing/free-models` (counter still **6**),
+  `opencode.ai/docs/zen` (still **14** free models, still no end dates). Hunyuan Hy3 限免 + Hy4
+  night-free still **31 October**, multi-source only: the Tencent billing doc read today covers the
+  1M-token API resource pack, not the WorkBuddy night-free window.
+- **CHANGED, `nvidia`: 81 → 83 ids.** `integrate.api.nvidia.com/v1/models`, keyless, now returns
+  **83**. All four ids on the row (`z-ai/glm-5.3`, `z-ai/glm-5.3-flash`, `moonshotai/kimi-k2.6`,
+  `deepseek-ai/deepseek-v4.1-flash`) are still served, so the row and its test command stand. The
+  endpoint stamps every entry with the same placeholder `created` value, so the two additions cannot
+  be named from the payload: the count is the finding, and the `note` says so rather than guessing.
+  Third consecutive sweep to produce a correction here.
+- **CHANGED, `indextranslate`: one model id → SEVEN.** The keyless endpoint
+  `index-translate.bilibili.com/v1/models` returns **Index-Translate-35B-A3B** plus **-9B**, **-2B**,
+  **Index-Nailong-9B**, **Index-Nailong-2B**, **Index-Homura-9B**, **Index-Homura-2B**, all 24,576
+  context and all described by the vendor as translation models. The row's `budgetNote`, `models`,
+  `warn` and `note` were rewritten. Only 35B-A3B is documented on the public site, so the other six
+  are recorded as served-but-undocumented. No rate limit and no end date published anywhere.
+- **CHANGED, `cloudflare`: `@cf/qwen/qwen1.5-7b-chat` has left the model directory.** Its model page
+  now redirects to the Workers AI directory with an `unavailable` marker and the id is absent from
+  the listing, so the row carries **`@cf/qwen/qwen3-30b-a3b-fp8`** in its place. Allowance itself is
+  unchanged at 10,000 Neurons/day. The pricing page rewritten on 20 October adds a new trap, now in
+  `warn`: **seven models on that page require a paid billing method** (`@cf/moonshotai/kimi-k2.6`,
+  `@cf/zai-org/glm-5.2`, `glm-5.3`, `@cf/deepseek-ai/deepseek-v4-flash-0731`,
+  `deepseek-v4.1-flash-1017`, `deepseek-v4-pro-0813`), so the free allocation does not reach them.
+- **CHANGED, `openrouter`: catalogue 470 → 468, still 20 at $0.** All four ids the row names survived
+  the trim. Count steady over a shrinking catalogue is the rotation working underneath a number that
+  looks stable, which is the argument the row's `warn` already makes.
+- **Endpoints swept:** openrouter 468 / 20 at $0 · nvidia 83 (changed) · sambanova 6 (unchanged) ·
+  bilibili 7 (changed) · zen endpoint 86 (still lags the docs page).
+- **Tracker claims rejected, vendor wins:** token-fbi's "Qoder CN Qwen3.8-Flash 限免至 10月31日" (the
+  vendor page publishes no date and says the end will be announced in advance), "Kilo Code 16 free
+  models" (vendor counter reads 6), "OpenCode Zen 15 free models" (vendor docs table reads 14).
+  None written to `data.js`.
+- **NO OFFERS ADDED, none removed.** `igetoken.com/rss.xml` has nothing newer than 19 October. Two
+  new candidates were seen and **left out because neither has a vendor page that was read**: 智谱
+  AutoClaw login credits (10/20–10/25, 500 Credits/day, plus a 2亿-token v2.1.0 grant to 10/21) and
+  云知声 U2-Flash (free and unlimited during the campaign). Both are third-party only today. A new
+  offer also cannot ship without a `content.js` entry, and a refresh must not write that file.
+- **Referral terms:** `referrals.js` **NOT touched**. Z.ai terms re-read, unchanged. Two known stale
+  items stand, **reported not edited**: the `workbuddy` note says 30 Sep, and `qoderwork_cn` is
+  titled 【7月30日截止】.
+- **Rail:** new `Today · 21 Oct` group (6 items), previous `Today · 20 Oct` became `Last run · 20 Oct`
+  (5), `Last run · 16 Oct` became `Earlier · 16 Oct` (8), the 15 Oct group dropped, `closed`
+  unchanged (11). Item counts asserted before writing, and every `ref` carried forward.
+- **Notes for next run:** nothing expires within 7 days. Nearest dated rows are **31 October**
+  (Hunyuan, WorkBuddy), then **7 November** (`minimaxplat`, still unsourced) and **8 November**
+  (`volcano`). `oci` / `azure` (29 October) and `ai21` are activation-relative placeholders, never
+  report them as deadlines. `content.js`'s `wenxin` entry still says "Both halves close 30
+  September" — **twentieth run flagged**, and a refresh cannot fix it.
+
+---
+
 ## 2026-10-20 (08:35 pass)
 
 - **NO DEADLINE CHANGES.** A second pass seven hours after the morning run. Every published `end`
