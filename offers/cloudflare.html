@@ -22,7 +22,7 @@
 
 <div class="bar">
   <a href="../index.html">← Free LLM Radar</a>
-  <span class="sp">Verified 2026-10-21</span>
+  <span class="sp">Verified 2026-10-22</span>
 </div>
 
 <main>
@@ -42,7 +42,7 @@
     <div><dt>Allowance</dt><dd class="bad">Not published</dd></div>
     <div><dt>Metered in</dt><dd class="mono">10K</dd></div>
     <div><dt>Promotion</dt><dd class="ok">Ongoing — no published end date</dd></div>
-    <div><dt>Last changed</dt><dd class="mono">2026-10-21</dd></div>
+    <div><dt>Last changed</dt><dd class="mono">2026-10-22</dd></div>
   </dl>
 
   <p class="lead">10,000 Neurons/day shared across all models · then $0.011 per 1,000 Neurons</p>
@@ -60,9 +60,9 @@
     <span title="The provider does not publish a numeric allowance, so this page cannot quote one. Check the provider's own page for current limits.">No published figure</span>
   </div>
 
-  <div class="callout warn"><div class="h">Watch out</div>The quota is in Neurons, a normalised compute unit — not tokens. The effective allowance depends heavily on which model you pick, so budget by testing rather than calculating. Second trap, new since the pricing rewrite: some models now require a <b>paid billing method</b> even though they appear on the same page: @cf/moonshotai/kimi-k2.6, @cf/zai-org/glm-5.2 and glm-5.3, @cf/deepseek-ai/deepseek-v4-flash-0731, deepseek-v4.1-flash-1017 and deepseek-v4-pro-0813. Pick a model from the free allocation and the 10,000 Neurons still apply.</div>
+  <div class="callout warn"><div class="h">Watch out</div>The quota is in Neurons, a normalised compute unit — not tokens. The effective allowance depends heavily on which model you pick, so budget by testing rather than calculating. Second trap, new since the pricing rewrite and <b>growing</b>: <b>eight</b> models now require a <b>paid billing method</b> even though they sit on the same pricing page as the free allocation: @cf/moonshotai/kimi-k2.6, @cf/moonshotai/kimi-k2.7-code, @cf/zai-org/glm-5.2, glm-5.3, glm-5.3-flash, @cf/deepseek-ai/deepseek-v4-flash-0731, deepseek-v4.1-flash-1017 and deepseek-v4-pro-0813. <b>glm-5.3-flash is the one to watch</b>: the name reads like a cheap free-tier candidate and it is not one. Pick a model from the free allocation and the 10,000 Neurons still apply.</div>
 
-  <div class="callout note"><div class="h">Worth knowing</div>Verified 21 Oct 2026 at <b>developers.cloudflare.com/workers-ai/platform/pricing/</b>, page updated 20 October: still <b>10,000 Neurons per day</b> on the Workers Free plan, resetting 00:00 UTC, then $0.011 per 1,000 Neurons on Workers Paid. One model correction this run: <b>@cf/qwen/qwen1.5-7b-chat</b> is no longer in the Workers AI model directory (its page now redirects to the directory with an unavailable marker), so the row carries <b>@cf/qwen/qwen3-30b-a3b-fp8</b> in its place. The other two ids are still listed and still priced on the free allocation.</div>
+  <div class="callout note"><div class="h">Worth knowing</div>Verified 21 Oct 2026 at <b>developers.cloudflare.com/workers-ai/platform/pricing/</b>, page updated 20 October: still <b>10,000 Neurons per day</b> on the Workers Free plan, resetting 00:00 UTC, then $0.011 per 1,000 Neurons on Workers Paid. One model correction this run: <b>@cf/qwen/qwen1.5-7b-chat</b> is no longer in the Workers AI model directory (its page now redirects to the directory with an unavailable marker), so the row carries <b>@cf/qwen/qwen3-30b-a3b-fp8</b> in its place. The other two ids are still listed and still priced on the free allocation. Re-read 22 Oct 2026: the allowance and the three model ids are unchanged, and the paid-billing-method list on that same page has grown from six ids to <b>eight</b>, adding <b>@cf/moonshotai/kimi-k2.7-code</b> and <b>@cf/zai-org/glm-5.3-flash</b>. The warning above now names all eight, because the failure mode is silent: the model appears on the pricing page, you pick it expecting the free allocation, and you get a billing prompt.</div>
 
   <h2>What this is</h2>
   <p>Workers AI bundles a free daily inference allowance into Cloudflare's developer platform, metered in &quot;Neurons&quot; — a normalised compute unit — rather than tokens. The model catalogue skews small and open-weight.</p>
@@ -138,7 +138,7 @@
 </main>
 
 <footer>
-  <p><b>Verified 2026-10-21.</b>
+  <p><b>Verified 2026-10-22.</b>
   Free tiers change without notice — re-check the provider's own page before you build on this.
   This page was generated from the radar's dataset; the offer <code>id</code> is
   <code>cloudflare</code>.</p>

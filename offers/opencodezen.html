@@ -22,7 +22,7 @@
 
 <div class="bar">
   <a href="../index.html">← Free LLM Radar</a>
-  <span class="sp">Verified 2026-10-21</span>
+  <span class="sp">Verified 2026-10-22</span>
 </div>
 
 <main>
@@ -42,7 +42,7 @@
     <div><dt>Allowance</dt><dd class="bad">Not published</dd></div>
     <div><dt>Metered in</dt><dd class="mono">free</dd></div>
     <div><dt>Promotion</dt><dd class="ok">Ongoing — no published end date</dd></div>
-    <div><dt>Last changed</dt><dd class="mono">2026-09-30</dd></div>
+    <div><dt>Last changed</dt><dd class="mono">2026-10-22</dd></div>
   </dl>
 
   <p class="lead"><b>14 models at $0</b> input and output · no per-token charge · an OpenCode Zen API key is required</p>
@@ -60,9 +60,9 @@
     <span title="A payment method is needed to activate. Set a budget alert before you start — these grants convert to pay-as-you-go when they expire.">Card required</span><span title="The provider does not publish a numeric allowance, so this page cannot quote one. Check the provider's own page for current limits.">No published figure</span>
   </div>
 
-  <div class="callout warn"><div class="h">Watch out</div><b>Billing details are collected at signup</b>, and auto-reload will top the account up by $20 whenever the balance drops below $5. Disable auto-reload unless you intend to pay. Also check each model: most of the free ones <b>train on your prompts</b>. Only <b>DeepSeek V4.1 Flash Free</b>, <b>GLM-5.3-Flash Free</b>, <b>MiniMax M3.1 Flash Free</b> and <b>LongCat 2.5 Preview Free</b> are zero-retention. <b>Beam Free</b> does not train on your data but retains prompts for 30 days, and it is geo-blocked in mainland China, Hong Kong, Macau and a long list of sanctioned regions.</div>
+  <div class="callout warn"><div class="h">Watch out</div><b>Billing details are collected at signup</b>, and auto-reload will top the account up by $20 whenever the balance drops below $5. Disable auto-reload unless you intend to pay. Also check each model: most of the free ones <b>train on your prompts</b>. Only <b>DeepSeek V4.1 Flash Free</b>, <b>GLM-5.3-Flash Free</b>, <b>MiniMax M3.1 Flash Free</b> and <b>LongCat 2.5 Preview Free</b> are zero-retention. <b>Beam Free</b> does not train on your data but retains prompts for 30 days, and it is geo-blocked in mainland China, Hong Kong, Macau and a long list of sanctioned regions. <b>Flint 40B Free</b> is not zero-retention either: its provider may use prompts to improve the model and retains them for 30 days.</div>
 
-  <div class="callout note"><div class="h">Worth knowing</div>Unlike a client-bound list, Zen issues a <b>portable key</b>, so the free models can be wired into any OpenAI-compatible tool, not just OpenCode. Verified 20 Oct 2026 against Zen's own docs pricing table at <b>opencode.ai/docs/zen</b>, which lists <b>14 free models</b>, up from 13. Four joined: <b>glm-5.3-flash-free</b> (reported 16 October), <b>minimax-m3.1-flash-free</b> (19 October, and it is the model the anonymous Space Bunny slot turned out to be, now formally claimed by MiniMax), <b>beam-free</b> and <b>ll-alpha-free</b>, the last two being partner or stealth slots. Three left: <b>cat-jam-free</b>, <b>muse-spark-1.3-contributor-free</b> and <b>space-bunny-free</b>, that slot having been renamed rather than withdrawn. Four of the fourteen are zero-retention, which is what the warning above now names. The endpoint <b>opencode.ai/zen/v1/models</b> still lags the docs page: it returns 85 ids but omits <b>exo-free</b>, <b>ll-alpha-free</b>, <b>mimo-v2.5-free</b> and <b>nemotron-3-ultra-free</b>, all four of which the docs still list as free. Prefer the docs page and treat the endpoint as a fallback only. None publish an end date. All are 'limited time', and Zen's own docs deliberately omit firm deadlines even where, as with <b>LongCat 2.5 preview</b>, trackers report one. Treat any date as approximate and read the live pricing table before relying on it.</div>
+  <div class="callout note"><div class="h">Worth knowing</div>Unlike a client-bound list, Zen issues a <b>portable key</b>, so the free models can be wired into any OpenAI-compatible tool, not just OpenCode. Re-verified 22 Oct 2026 against Zen's own docs pricing table at <b>opencode.ai/docs/zen</b>, which still lists <b>14 free models</b> but not the same fourteen as yesterday: <b>ll-alpha-free</b> has gone and <b>flint-40b-free</b> has replaced it, the 40B Flint model that appeared on OpenRouter's free tier on 21 October. That is the fifth consecutive check where the count stayed put while the membership moved, which is the whole argument for reading the table rather than a headline number. Four of the fourteen are zero-retention, which is what the warning above now names; Flint is not one of them. The endpoint <b>opencode.ai/zen/v1/models</b> now returns <b>86</b> ids and does carry <b>flint-40b-free</b>, but it still omits <b>exo-free</b>, <b>mimo-v2.5-free</b> and <b>nemotron-3-ultra-free</b>, all three of which the docs list as free. Prefer the docs page and treat the endpoint as a fallback only. None publish an end date. All are 'limited time', and Zen's own docs deliberately omit firm deadlines even where, as with <b>LongCat 2.5 preview</b>, trackers report one. Treat any date as approximate and read the live pricing table before relying on it.</div>
 
   <h2>What this is</h2>
   <p>OpenCode Zen is a model gateway from the OpenCode project that lists ten models at zero cost for input and output. Unlike the client-bound coding tools here, it issues a key you can point other software at.</p>
@@ -103,7 +103,7 @@
   <table>
     <tr><th>Base URL</th><td class="mono">https://opencode.ai/zen/v1</td></tr>
     <tr><th>Auth</th><td>Authorization: Bearer</td></tr>
-    <tr><th>Models</th><td class="mono">beam-free<br>big-pickle<br>deepseek-v4.1-flash-free<br>exo-free<br>glm-5.3-flash-free<br>jev-1.13-free<br>ll-alpha-free<br>longcat-2.5-preview-free<br>mimo-v2.6-flash-free<br>mimo-v2.5-free<br>minimax-m3.1-flash-free<br>nemotron-3.5-lightning-free<br>nemotron-3.5-super-vl-free<br>nemotron-3-ultra-free</td></tr>
+    <tr><th>Models</th><td class="mono">beam-free<br>big-pickle<br>deepseek-v4.1-flash-free<br>exo-free<br>flint-40b-free<br>glm-5.3-flash-free<br>jev-1.13-free<br>longcat-2.5-preview-free<br>mimo-v2.6-flash-free<br>mimo-v2.5-free<br>minimax-m3.1-flash-free<br>nemotron-3.5-lightning-free<br>nemotron-3.5-super-vl-free<br>nemotron-3-ultra-free</td></tr>
   </table>
 
   <h2>Set it up</h2>
@@ -139,7 +139,7 @@
 </main>
 
 <footer>
-  <p><b>Verified 2026-10-21.</b>
+  <p><b>Verified 2026-10-22.</b>
   Free tiers change without notice — re-check the provider's own page before you build on this.
   This page was generated from the radar's dataset; the offer <code>id</code> is
   <code>opencodezen</code>.</p>

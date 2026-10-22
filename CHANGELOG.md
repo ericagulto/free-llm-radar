@@ -13,6 +13,63 @@ Format per entry:
 
 ---
 
+## 2026-10-22
+
+- **NO DEADLINE CHANGES.** Every published `end` date re-read and every one was where the 21 October
+  run left it: `workbuddy.cn/events/invite` (即日起至 **2026年10月31日**, invitee 2,000 积分 截止
+  31 October, tiers 50 / +100 / +500, rendered in Chromium), `workbuddy.cn/pricing` (体验版 still
+  限时免费), `docs.qoder.com/events/flashoffer` **and** `docs.qoder.cn/events/flashoffer`
+  (Qwen3.8-Flash still free, end date still to be announced, both locales agreeing),
+  `console.groq.com/docs/rate-limits` (30 RPM / 1K RPD / 8K TPM / 200K TPD),
+  `developers.cloudflare.com/workers-ai/platform/pricing/` (10,000 Neurons/day, page updated
+  **20 October**), `ai21.com/pricing` (still **7 days** against the docs' three months,
+  **twenty-first check, not flipped**), `docs.z.ai/devpack/credit-campaign-rules` (unchanged, last
+  updated 15 March 2026), `kilo.ai/landing/free-models` (counter still **6**, and the same six ids),
+  `opencode.ai/docs/zen` (**14** free models, membership changed). Hunyuan Hy3 限免 + Hy4 night-free
+  still **31 October**, still multi-source only.
+- **CHANGED, `opencodezen`: the count held at 14, the membership did not.** `ll-alpha-free` has left
+  Zen's pricing table and **`flint-40b-free`** has replaced it. `models` and `note` rewritten, and
+  `warn` now states that Flint is **not** zero-retention (prompts may be used for training, retained
+  30 days). Fifth consecutive check where the headline number stayed put while the roster moved.
+  The endpoint `opencode.ai/zen/v1/models` returns **86** ids and does carry `flint-40b-free`, but
+  still omits `exo-free`, `mimo-v2.5-free` and `nemotron-3-ultra-free`, so the docs page stays
+  primary.
+- **CHANGED, `openrouter`: 20 → 21 ids at $0.** `openrouter.ai/api/v1/models` returns **468** models,
+  unchanged for two days, with **21 at $0**. The addition is **`recursive/flint-v1.0:free`**,
+  `created` 21 October — the same model Zen added today as Flint 40B Free. Two independent vendor
+  catalogues listing it within a day is a stronger signal than either alone. Two of the 21 are Lyria 3
+  music models, so the text count is 19. All four ids the row names survived.
+- **CHANGED, `cloudflare`: the paid-billing-method list grew from six ids to eight.**
+  `@cf/moonshotai/kimi-k2.7-code` and `@cf/zai-org/glm-5.3-flash` now require a paid billing method
+  or prepaid AI Gateway credits. `warn` and `note` rewritten to name all eight. `glm-5.3-flash` is
+  the trap: the name reads like a free-tier pick and it prompts for a card. Allowance and the row's
+  three model ids unchanged.
+- **RE-SWEPT, no change:** `nvidia` 83 ids (first quiet sweep in five), `sambanova` 6,
+  `indextranslate` 7. `note` on `nvidia` records the quiet sweep rather than leaving it ambiguous.
+- **TRACKER CLAIMS REJECTED, vendor wins (three).** Qoder CN "DeepSeek-V4.1-Flash-1017 限免至
+  10月24日" (igetoken: 25 October 00:00) and "Qwen3.8-Flash 限免至 10月31日": Qoder publishes
+  **neither date** on either locale, its event page states the free offer covers Qwen3.8-Flash only,
+  and no DeepSeek event page exists at any URL probed. Kilo "16 free models" (vendor **6**), Zen
+  "15 free models" (vendor **14**). None written to `data.js`.
+- **NO OFFERS ADDED.** Candidates seen and not shipped: 云知声 U2-Flash (Unisound MaaS, activity-period
+  0元 unlimited, third-party only) and Inception Labs Mercury 3 (100M tokens per new account). Both
+  are blocked by the same rule as every prior run: a new offer needs a `content.js` entry and a
+  refresh must not write that file. WorkBuddy CN × Step 5 Preview (to 25 October) remains
+  tracker-and-press only.
+- **RAIL:** new `Today · 22 Oct` group (5 items), 21 Oct shifted to `Last run · 21 Oct` (6), 20 Oct to
+  `Earlier · 20 Oct` (5), 16 Oct group dropped, `closed` kept (11). The separate AI21 item was folded
+  into the no-deadline-changes item rather than repeated as its own line.
+- **Referral terms:** `referrals.js` **NOT touched**. Z.ai terms re-read, unchanged. Two known stale
+  items stand, **reported not edited**: `workbuddy` note says 30 Sep; `qoderwork_cn` titled
+  【7月30日截止】.
+- **Notes:** `publish.sh` used again, not `sync-data.sh` — `offers/` and `history.html` only reach the
+  site via the site push, so the automation prompt's "sync-data.sh is the only step needed" remains
+  wrong. `content.js`'s `wenxin` entry still says "Both halves close 30 September" — **21st run
+  flagged**, and it will never self-heal. `oci`/`azure` (29 Oct) and `ai21` dates are
+  activation-relative placeholders, never deadlines.
+
+---
+
 ## 2026-10-21
 
 - **NO DEADLINE CHANGES.** Every published `end` date re-read and every one was where the 20 October
