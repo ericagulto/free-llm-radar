@@ -36,7 +36,7 @@ Format per entry:
   primary.
 - **CHANGED, `openrouter`: 20 → 21 ids at $0.** `openrouter.ai/api/v1/models` returns **468** models,
   unchanged for two days, with **21 at $0**. The addition is **`recursive/flint-v1.0:free`**,
-  `created` 21 October — the same model Zen added today as Flint 40B Free. Two independent vendor
+  `created` 21 October, the same model Zen added today as Flint 40B Free. Two independent vendor
   catalogues listing it within a day is a stronger signal than either alone. Two of the 21 are Lyria 3
   music models, so the text count is 19. All four ids the row names survived.
 - **CHANGED, `cloudflare`: the paid-billing-method list grew from six ids to eight.**
@@ -62,9 +62,9 @@ Format per entry:
 - **Referral terms:** `referrals.js` **NOT touched**. Z.ai terms re-read, unchanged. Two known stale
   items stand, **reported not edited**: `workbuddy` note says 30 Sep; `qoderwork_cn` titled
   【7月30日截止】.
-- **Notes:** `publish.sh` used again, not `sync-data.sh` — `offers/` and `history.html` only reach the
+- **Notes:** `publish.sh` used again, not `sync-data.sh`, because `offers/` and `history.html` only reach the
   site via the site push, so the automation prompt's "sync-data.sh is the only step needed" remains
-  wrong. `content.js`'s `wenxin` entry still says "Both halves close 30 September" — **21st run
+  wrong. `content.js`'s `wenxin` entry still says "Both halves close 30 September", **21st run
   flagged**, and it will never self-heal. `oci`/`azure` (29 Oct) and `ai21` dates are
   activation-relative placeholders, never deadlines.
 
