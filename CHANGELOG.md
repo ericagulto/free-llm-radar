@@ -13,6 +13,62 @@ Format per entry:
 
 ---
 
+## 2026-10-23
+
+- **NO DEADLINE CHANGES.** Every published `end` date re-read and every one was where the 22 October
+  run left it: `workbuddy.cn/events/invite` (即日起至 **2026年10月31日**, invitee 2,000 积分 截止
+  31 October, tiers 50 / +100 / +500, rendered in Chromium), `workbuddy.cn/pricing` (体验版 still
+  限时免费 at 500 积分/month), `docs.qoder.com/events/flashoffer` **and**
+  `docs.qoder.cn/events/flashoffer` (Qwen3.8-Flash still free, end date still to be announced, both
+  locales agreeing), `console.groq.com/docs/rate-limits` (30 RPM / 1K RPD / 8K TPM / 200K TPD),
+  `developers.cloudflare.com/workers-ai/platform/pricing/` (10,000 Neurons/day, same **eight**
+  paid-billing ids, page updated 20 October), `ai21.com/pricing` (still **7 days** against the docs'
+  three months, **twenty-second check, not flipped**), `docs.z.ai/devpack/credit-campaign-rules`
+  (unchanged, last updated 15 March 2026). Hunyuan Hy3 限免 + Hy4 night-free still **31 October**,
+  still multi-source only.
+- **CHANGED, one event across three catalogues: MiniMax M3.1 Flash left the free tier.**
+  **`kilo`** 6 → **5** (`kilo.ai/landing/free-models` counter reads 5 and the model is absent from the
+  page markup entirely, not re-priced). **`opencodezen`** 14 → **13** (`minimax-m3.1-flash-free` gone
+  from the pricing table; MiniMax's paid M2.1/M2.5/M2.7/M3 ids remain). **`openrouter`** 21 → **20**
+  at $0 of 468 (`minimax/minimax-m3.1-flash:free` gone, base id now bills $0.15/M in, $0.60/M out).
+  The model was catalogued 19 October and lasted four days. Three vendor catalogues agreeing on the
+  same removal is the strongest corroboration this project has had for a roster change.
+- **CHANGED, `opencodezen`: zero-retention count 4 → 3.** With MiniMax gone, only DeepSeek V4.1
+  Flash, GLM-5.3-Flash and LongCat 2.5 Preview are zero-retention. `warn`, `budgetNote` and `note`
+  rewritten. The docs page now redirects to **`opencode.ai/v2/docs/console/models/`**; the old
+  `/docs/zen` URL still resolves, so no link change. Endpoint 86 → 85, still lagging the docs.
+- **CHANGED, `nvidia`: 83 → 84 ids.** `integrate.api.nvidia.com/v1/models`, no key. All four row ids
+  still served. The payload stamps every entry with the same placeholder timestamp, so the single
+  addition cannot be named from it. Count recorded, nothing guessed.
+- **CHANGED, `indextranslate`: 7 → 11 ids.** Four additions are **speech**-translation models, not
+  chat: `Index-Echo-S2TT-2B`, `Index-Echo-S2TT-9B`, `Index-Echo-S2ST-2B`, `Index-Echo-S2ST-9B`.
+  Also corrected a stale claim this row had been carrying since 21 October: context is **not**
+  uniform at 24K. Measured today: 24K on 35B-A3B, 32K on Translate 2B/9B and both Homura ids, 229K
+  on Nailong 9B, 262K on Nailong 2B. `budgetNote`, `models`, one `steps` line and `note` rewritten.
+- **RE-SWEPT, no change:** `sambanova` 6 ids.
+- **TRACKER CLAIMS REJECTED, vendor wins.** Qoder CN "DeepSeek-V4.1-Flash-1017 限免至 10月24日"
+  (igetoken: 25 October 00:00) and "Qwen3.8-Flash 限免至 10月31日" — Qoder publishes **neither
+  date** on either locale, its flashoffer page states the free offer covers Qwen3.8-Flash only, and
+  four more DeepSeek event URLs probed today all 404. **This is the third run to reject it, and the
+  claimed window closes tomorrow, so if it was real it is now moot.** Kilo "16 free" (vendor 5), Zen
+  "15 free" (vendor 13). Nothing written to `data.js`.
+- **NO OFFERS ADDED.** `igetoken.com/rss.xml` has nothing newer than 21 October. A new offer needs a
+  `content.js` entry and a refresh must not write that file, so candidates remain unshipped.
+- **RAIL:** new `Today · 23 Oct` group (7 items), 22 Oct shifted to `Last run · 22 Oct` (5), 21 Oct
+  to `Earlier · 21 Oct` (6), the 20 Oct group dropped, `closed` kept (11). AI21 folded into the
+  no-deadline item rather than repeated as its own line.
+- **Referral terms:** `referrals.js` **NOT touched**. Z.ai terms re-read, unchanged. Two known stale
+  items stand, **reported not edited**: `workbuddy` note says 30 Sep; `qoderwork_cn` titled
+  【7月30日截止】.
+- **Notes:** `publish.sh` used, not `sync-data.sh`, because `offers/` and `history.html` only reach
+  the site via the site push. `content.js`'s `wenxin` entry still says "Both halves close 30
+  September", **22nd run flagged**. `oci`/`azure` (29 Oct) and `ai21` dates are activation-relative
+  placeholders, never deadlines. Patch applied by asserted exact-match replacement (23 targets, each
+  required to match exactly once, abort-on-miss), which caught one malformed replacement before
+  write; the file failed to parse, was fixed, and was re-parsed before anything downstream ran.
+
+---
+
 ## 2026-10-22
 
 - **NO DEADLINE CHANGES.** Every published `end` date re-read and every one was where the 21 October
