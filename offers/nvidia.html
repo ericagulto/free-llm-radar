@@ -22,7 +22,7 @@
 
 <div class="bar">
   <a href="../index.html">← Free LLM Radar</a>
-  <span class="sp">Verified 2026-10-23</span>
+  <span class="sp">Verified 2026-10-24</span>
 </div>
 
 <main>
@@ -42,7 +42,7 @@
     <div><dt>Allowance</dt><dd class="bad">Not published</dd></div>
     <div><dt>Metered in</dt><dd class="mono">~40</dd></div>
     <div><dt>Promotion</dt><dd class="ok">Ongoing — no published end date</dd></div>
-    <div><dt>Last changed</dt><dd class="mono">2026-10-23</dd></div>
+    <div><dt>Last changed</dt><dd class="mono">2026-10-24</dd></div>
   </dl>
 
   <p class="lead">Up to ~40 req/min, model-specific · phone verification, not a card</p>
@@ -62,7 +62,7 @@
 
   <div class="callout warn"><div class="h">Watch out</div>Community reports are mixed — multiple developers describe hitting <b>429 rate limits</b> and occasional unresponsiveness under load. Great catalogue for trying models; do not build a production path on it.</div>
 
-  <div class="callout note"><div class="h">Worth knowing</div>Read 16 Oct 2026 and re-swept 21 Oct 2026 from the vendor's own public endpoint, <b>integrate.api.nvidia.com/v1/models</b>, which needs <b>no API key</b> and returns <b>83 model ids</b>. That endpoint is the authoritative answer to <i>what a key can actually call</i>, so prefer it over counting models on the build.nvidia.com page. This sweep confirmed that <b>moonshotai/kimi-k3 has left the catalogue</b>: <b>moonshotai/kimi-k2.6</b> is now the only Moonshot entry, and the row has been corrected accordingly. It also confirmed that <b>z-ai/glm-5.3</b>, <b>z-ai/glm-5.3-flash</b>, <b>deepseek-ai/deepseek-v4.1-flash</b>, the Nemotron 3 line and <b>poolside/laguna-xs-2.1</b> are all still served, so the test command on this row remains valid. Sweep this endpoint on every run: it is the cheapest stale-roster detector in the project, and it has now produced a correction on three consecutive sweeps. Re-swept 21 October 2026: 83 ids, up from 81. All four models on this row are still served, so the row and its test command stand, but the payload dates every entry to the same placeholder timestamp, so the two additions cannot be named from the endpoint alone. Count them, do not guess at them. Re-swept again 22 October 2026: <b>still 83</b>, nothing in and nothing out, all four row ids present. First sweep in five to produce no correction, which is recorded precisely because this endpoint has been the project's best stale-roster detector and a quiet day is evidence of stability, not of a skipped check. Re-swept 23 October 2026: <b>84 ids</b>, up from 83, and all four row ids are still served. As on every previous up-sweep the payload stamps every entry with the same placeholder creation timestamp, so the single addition cannot be named from the endpoint alone. Count it, do not guess at it.</div>
+  <div class="callout note"><div class="h">Worth knowing</div>Read 16 Oct 2026 and re-swept 21 Oct 2026 from the vendor's own public endpoint, <b>integrate.api.nvidia.com/v1/models</b>, which needs <b>no API key</b> and returns <b>83 model ids</b>. That endpoint is the authoritative answer to <i>what a key can actually call</i>, so prefer it over counting models on the build.nvidia.com page. This sweep confirmed that <b>moonshotai/kimi-k3 has left the catalogue</b>: <b>moonshotai/kimi-k2.6</b> is now the only Moonshot entry, and the row has been corrected accordingly. It also confirmed that <b>z-ai/glm-5.3</b>, <b>z-ai/glm-5.3-flash</b>, <b>deepseek-ai/deepseek-v4.1-flash</b>, the Nemotron 3 line and <b>poolside/laguna-xs-2.1</b> are all still served, so the test command on this row remains valid. Sweep this endpoint on every run: it is the cheapest stale-roster detector in the project, and it has now produced a correction on three consecutive sweeps. Re-swept 21 October 2026: 83 ids, up from 81. All four models on this row are still served, so the row and its test command stand, but the payload dates every entry to the same placeholder timestamp, so the two additions cannot be named from the endpoint alone. Count them, do not guess at them. Re-swept again 22 October 2026: <b>still 83</b>, nothing in and nothing out, all four row ids present. First sweep in five to produce no correction, which is recorded precisely because this endpoint has been the project's best stale-roster detector and a quiet day is evidence of stability, not of a skipped check. Re-swept 23 October 2026: <b>84 ids</b>, up from 83, and all four row ids are still served. As on every previous up-sweep the payload stamps every entry with the same placeholder creation timestamp, so the single addition cannot be named from the endpoint alone. Count it, do not guess at it. Re-swept 24 October 2026: <b>85 ids</b>, up from 84, and all four row ids are still served. Same placeholder timestamp, so the addition cannot be named. Second consecutive up-sweep, and the fourth correction this endpoint has produced in six days.</div>
 
   <h2>What this is</h2>
   <p>NIM provides free hosted access to a large catalogue — 132 models — behind an OpenAI-compatible endpoint, gated on phone verification rather than a credit card. It is NVIDIA's developer-relations platform, not a commercial service.</p>
@@ -138,7 +138,7 @@
 </main>
 
 <footer>
-  <p><b>Verified 2026-10-23.</b>
+  <p><b>Verified 2026-10-24.</b>
   Free tiers change without notice — re-check the provider's own page before you build on this.
   This page was generated from the radar's dataset; the offer <code>id</code> is
   <code>nvidia</code>.</p>

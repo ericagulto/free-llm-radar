@@ -13,6 +13,65 @@ Format per entry:
 
 ---
 
+## 2026-10-24
+
+- **NO DEADLINE CHANGES.** Every published `end` date re-read and every one was where the 23 October
+  run left it: `workbuddy.cn/events/invite` (即日起至 **2026年10月31日**, invitee 2,000 积分 截止
+  31 October, tiers 50 / +100 / +500, rendered in Chromium), `workbuddy.cn/pricing` (体验版 still
+  限时免费 at 500 积分/month), `docs.qoder.com/events/flashoffer` (Qwen3.8-Flash still free, end date
+  still to be announced), `console.groq.com/docs/rate-limits` (30 RPM / 1K RPD / 8K TPM / 200K TPD),
+  `developers.cloudflare.com/workers-ai/platform/pricing/` (10,000 Neurons/day, same **eight**
+  paid-billing ids, page updated 20 October), `ai21.com/pricing` (still **7 days** against the docs'
+  three months, **twenty-third check, not flipped**), `docs.z.ai/devpack/credit-campaign-rules`
+  (unchanged, last updated 15 March 2026), `kilo.ai/landing/free-models` (counter still **FIVE**).
+  Hunyuan Hy3 限免 + Hy4 night-free still **31 October**, still multi-source only.
+- **CHANGED, `opencodezen`: 13 → 11 free models.** **`exo-free`** and **`mimo-v2.5-free`** have left
+  the pricing table at `opencode.ai/v2/docs/console/models/`. Neither id appears anywhere in the page
+  source, and the phrase "limited time" now occurs **exactly eleven times**, once per remaining free
+  model, which is an independent count that does not depend on reading the table structure. This is a
+  removal, not a re-price. The **zero-retention count is unchanged at three** (DeepSeek V4.1 Flash,
+  GLM-5.3-Flash, LongCat 2.5 Preview) because neither departing model was zero-retention.
+- **CHANGED, `sambanova`: 6 → 5 ids.** `api.sambanova.ai/v1/models` no longer serves **MiniMax-M3**.
+  Remaining: DeepSeek-V3.1, DeepSeek-V3.2, Meta-Llama-3.3-70B-Instruct, gemma-4-31B-it, gpt-oss-120b.
+  MiniMax's M3 is still catalogued as a **paid** id at OpenCode Zen, so this is SambaNova dropping a
+  free slot, not a model retirement. The 20 req/day cap is unchanged.
+- **CHANGED, `nvidia`: 84 → 85 ids.** All four row ids still served. Same placeholder creation
+  timestamp on every entry, so the addition cannot be named. Second consecutive up-sweep, and the
+  fourth correction this endpoint has produced in six days.
+- **CHANGED, `openrouter`: catalogue 468 → 469, free count held at 20.** The single addition is
+  **`moonshotai/kimi-k3.1-pro`**, `created` 23 October, and it is **paid**, so the free count held
+  while the catalogue grew. All four row ids still at $0. Two of the twenty are Lyria 3 music models,
+  so the text count is 18. `warn` rewritten to say this rather than repeat yesterday's removal.
+- **RE-SWEPT, no change:** `indextranslate` 11 ids · `kilo` 5 free · `cloudflare` same eight
+  paid-billing ids · `opencode.ai/zen/v1/models` 85 (unchanged, still lags the docs and now omits
+  four of the eleven docs-free ids, two of which have left the free table altogether).
+- **TRACKER CLAIMS REJECTED, vendor wins, fourth run.** Qoder CN "DeepSeek-V4.1-Flash-1017 限免至
+  10月25日 00:00" — no Qoder page on either locale has ever published it and its flashoffer page says
+  the free offer covers Qwen3.8-Flash only. Kilo "16 free" (vendor 5). Zen "15 free" (vendor 11, so
+  the tracker gap has widened to four). Nothing written to `data.js`.
+- **NO OFFERS ADDED.** `igetoken.com/rss.xml` and `igetoken.com/deals` both still have **nothing newer
+  than 21 October**, checked twice. A new offer needs a `content.js` entry and a refresh must not
+  write that file.
+- **RAIL:** new `Today · 24 Oct` group (6 items), 23 Oct shifted to `Last run · 23 Oct` (7), 22 Oct to
+  `Earlier · 22 Oct` (5), the 21 Oct group dropped, `closed` kept (11). `ref` carried forward on every
+  item that has one; the two tracker/claims items stay link-free because they span several offers.
+- **Referral terms:** `referrals.js` **NOT touched**. QoderWork CN terms re-read at
+  `help.aliyun.com/zh/lingma/qoderwork-cn-new-user-credits-claim-and-referral-reward-program-terms-and-conditions`:
+  body unchanged (200 Credits per successful referral, 200 / 40,000 Credits lifetime cap, 14-day
+  first-conversation trigger, page updated 2026-08-11), but the page **title still reads
+  【7月30日截止】** while the body says the campaign has run since 1 June with no end date. Z.ai terms
+  unchanged. Both known stale items reported, not edited.
+- **Notes for the next run:** WorkBuddy + Hunyuan **31 October** (7 days). `oci` / `azure` **29 Oct**
+  are activation-relative placeholders, never deadlines. AI21 contested (**23rd check**).
+  **`content.js` wenxin still says "Both halves close 30 September" — 23rd run flagged.**
+- **Tooling:** `publish.sh` used, not `sync-data.sh`, because `offers/` and `history.html` need the
+  site push. The patch script's exact-match guard caught nothing this time, but the **post-write parse
+  did**: an unescaped double quote inside the new `opencodezen` note broke the file, the parse aborted
+  before `build-pages` ran, and `data.js` was restored from `archive/` and re-patched. The guard checks
+  match counts, not syntax, so the re-parse is the check that matters.
+
+---
+
 ## 2026-10-23
 
 - **NO DEADLINE CHANGES.** Every published `end` date re-read and every one was where the 22 October
