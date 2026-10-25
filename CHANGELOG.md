@@ -13,6 +13,57 @@ Format per entry:
 
 ---
 
+## 2026-10-25
+
+- **NO DEADLINE CHANGES.** Every published `end` date re-read and every one was where the 24 October
+  run left it: `workbuddy.cn/events/invite` (即日起至 **2026年10月31日**, invitee 2,000 积分 截止
+  2026年10月31日, tiers 50 / +100 / +500, rendered in Chromium), `workbuddy.cn/pricing` (体验版
+  still 限时免费 at 500 积分/month), `docs.qoder.com` and `docs.qoder.cn` events/flashoffer
+  (Qwen3.8-Flash still free, end date still to be announced, both pages still scope the offer to
+  Qwen3.8-Flash only), `console.groq.com/docs/rate-limits` (30 RPM / 1K RPD / 8K TPM / 200K TPD),
+  `developers.cloudflare.com/workers-ai/platform/pricing/` (10,000 Neurons/day, same **eight**
+  paid-billing ids, page still dated 20 October), `ai21.com/pricing` (still **7 days** against the
+  docs' three months, **twenty-fourth check, not flipped**), `docs.z.ai/devpack/credit-campaign-rules`
+  (unchanged, last updated 15 March 2026), `kilo.ai/landing/free-models` (counter still **FIVE**),
+  `opencode.ai/v2/docs/console/models/` (still **eleven** free models). Hunyuan Hy3 限免 + Hy4
+  night-free still **31 October**, still multi-source only.
+- **CHANGED, `sambanova`: the endpoint is back to six ids, and the sixth is not a chat model.**
+  `api.sambanova.ai/v1/models` now also returns **`spec-prefill-8b`**: 4,096-token context, `$0`
+  input and output. It is a speculative-prefill helper, not a model you can hold a conversation with.
+  Counting it would have taken this row to six models and overstated the free tier, so the roster
+  stays at **five** usable ids (DeepSeek-V3.1, DeepSeek-V3.2, Meta-Llama-3.3-70B-Instruct,
+  gemma-4-31B-it, gpt-oss-120b) and `note` records the sixth and why it is excluded. `added`
+  **not** bumped: no roster change, only a correction to what the endpoint serves.
+- **CHANGED, `openrouter`: catalogue 469 → 467, free count held at 20.** Two **paid** ids left; no
+  free model moved, and all four ids named on the row are still at `$0`. `warn` left alone because
+  nothing in it changed.
+- **RE-SWEPT, no change:** `nvidia` 85 · `indextranslate` 11 · `kilo` 5 · Zen docs 11 free ·
+  `opencode.ai/zen/v1/models` 85 (still lags the docs, still the fallback rather than the source).
+- **TRACKER CLAIMS REJECTED, fifth run, and both dated claims now lapse.** Qoder CN
+  "DeepSeek-V4.1-Flash-1017 限免至 10月25日 00:00" — no Qoder page on either locale has ever
+  published it, and its own claimed window closed at midnight today, so the question is **moot** and
+  should not be reopened. WorkBuddy "Step 5 Preview 10/12–10/25" — never mentioned on the invite or
+  pricing page, both re-rendered today; its window also closes today. Kilo "16 free" (vendor 5) and
+  Zen "15 free" (vendor 11) rejected again. Nothing written to `data.js`.
+- **NO OFFERS ADDED.** `igetoken.com/rss.xml` and `igetoken.com/deals` both still have **nothing
+  newer than 21 October**. `token-fbi.com` carries the same two 25 October claims and nothing new.
+  A new offer needs a `content.js` entry and a refresh must not write that file.
+- **RAIL:** new `Today · 25 Oct` group (4 items), 24 Oct shifted to `Last run · 24 Oct` (6), 23 Oct to
+  `Earlier · 23 Oct` (7), the 22 Oct group dropped, `closed` kept (11). `ref` carried forward on every
+  item that has one; the two tracker/claims items stay link-free because they span several offers.
+- **Referral terms:** `referrals.js` **NOT touched**. Two known stale items still stand, reported not
+  edited: the `workbuddy` note says 30 Sep, and `qoderwork_cn`'s page title still reads 【7月30日截止】
+  against a body unchanged since 2026-08-11 (200 Credits, 40,000 lifetime cap, 14-day trigger).
+- **PROCESS:** `publish.sh`, not `sync-data.sh` — `offers/` and `history.html` only reach the site via
+  the site push. The automation prompt still claims `sync-data.sh` "is the only step needed", which
+  is still wrong and is now reported for the sixth run. Write → re-parse → build, in that order.
+
+**Next run must handle:** WorkBuddy + Hunyuan **31 Oct** (6 days) · minimaxplat 7 Nov (still
+unsourced) · volcano 8 Nov. Within 7 days only `oci`/`azure` **29 Oct**, both activation-relative
+placeholders, not deadlines. AI21 contested (**25th check**). **`content.js` wenxin still says
+"Both halves close 30 September" — 24th run flagged.** OpenCode Zen: docs table is primary, endpoint
+lags. Render workbuddy.cn pages in Chromium; they do not curl.
+
 ## 2026-10-24
 
 - **NO DEADLINE CHANGES.** Every published `end` date re-read and every one was where the 23 October
