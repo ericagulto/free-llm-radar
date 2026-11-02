@@ -13,6 +13,39 @@ Format per entry:
 
 ---
 
+## 2026-11-03
+
+- **CORRECTED, `sambanova`: free chat tier appears retired.** The vendor endpoint
+  `api.sambanova.ai/v1/models` now returns non-zero pricing for all five chat models this row listed
+  as free (DeepSeek-V3.1/3.2, Meta-Llama-3.3-70B-Instruct, gemma-4-31B-it, gpt-oss-120b). Only the
+  `spec-prefill-8b` prefill helper remains $0, and it is not a chat model. Row set to budget 0 / "no
+  free chat tier" / status `expiring` with a warn. Treated as a Cerebras-class correction; **flagged
+  for operator confirmation** — the endpoint is the documented primary source, but no second source
+  was found.
+- **EXTENDED (vendor-confirmed, different model), `hunyuan`: Hy3 free → 2026-11-15.** Tencent Cloud
+  (2026-11-02) confirms the **Hy3** all-day free tier's 5th extension to 11-15. The `hunyuan` row
+  tracks **Hy4 preview night-free**, which ended 2026-10-31 with **no confirmed extension**, so it was
+  left at its last-verified value and flagged (status `expiring`; warn + note updated).
+- **CHANGED, `workbuddy`: invite-bonus deadline 2026-10-31 passed, unconfirmed.** Hy3 free continues
+  to 11-15 (Tencent Cloud) but the 2,000-point invite bonus and ¥0 tiers have no confirmed new
+  deadline. Row left flagged, status `expiring`.
+- **VERIFIED, `volcano`: discount activity confirmed to 2026-11-08** via `volcengine.com/docs`
+  (updated 5 days ago: "至2026年11月8日23:59:59活动期间"). Row unchanged.
+- **CHANGED, `openrouter`: free count 20 → 17.** `poolside/laguna-s-2.1:free` dropped from the sample
+  model list; the count is not displayed, so no visible change beyond the sample.
+- **NOT changed — flagged: 9 rows already past their last-verified `end` date** (wenxin 9-30, gmi
+  10-01, ai21 10-06, dsharness 10-06, zcode-trust 10-07, minimaxcode 10-07, glmnight 10-07, ling31
+  10-13, doubao 10-17) plus the `oci`/`azure` 10-29 activation-relative placeholders. No
+  primary-source confirmation of extension was reachable (several vendor pages are JS-rendered and
+  could not be re-read); left intact per "stale-but-correct beats fresh-but-wrong".
+- Verified: SambaNova endpoint, Tencent Cloud article (2026-11-02), volcengine.com docs, OpenRouter
+  endpoint sweep, all five keyless endpoints. `minimaxplat` 11-07 remains **unsourced**.
+- Notes: first run in 8 days (last 26 Oct). Next run must re-read `sambanova` against a second source
+  to confirm or roll back the free-tier retirement; re-read WorkBuddy CN invite/pricing (Chromium)
+  for the invite-bonus extension; `hunyuan` Hy4 night-free status still unresolved. The `content.js`
+  `wenxin` entry still says "Both halves close 30 September" (needs a human hand edit); a refresh may
+  not write `content.js`.
+
 ## 2026-10-26
 
 - **NO DEADLINE CHANGES.** Every published `end` date re-read and every one was where the 25 October

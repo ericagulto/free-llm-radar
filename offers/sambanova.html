@@ -5,11 +5,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%2312100d'/%3E%3Ccircle cx='16' cy='16' r='9.5' fill='none' stroke='%23e8a33d' stroke-width='2.2'/%3E%3Ccircle cx='16' cy='16' r='3' fill='%23e8a33d'/%3E%3Cpath d='M16 16 L25 9' stroke='%23e8a33d' stroke-width='2.2' stroke-linecap='round'/%3E%3C/svg%3E">
 <title>SambaNova free tier — limits, base URL and setup | Free LLM Radar</title>
-<meta name="description" content="SambaNova free tier: Standing free tier · 200K tokens/day · no card required. 20 req/min · 20 req/day · 200K tokens/day">
+<meta name="description" content="SambaNova free tier: Standing free tier · no card required. Free chat tier ended ~early Nov 2026 — vendor endpoint now prices all five chat models; only…">
 <link rel="canonical" href="https://ericagulto.github.io/free-llm-radar/offers/sambanova.html">
 <meta property="og:type" content="article">
 <meta property="og:title" content="SambaNova free tier — limits, base URL and setup">
-<meta property="og:description" content="SambaNova free tier: Standing free tier · 200K tokens/day · no card required. 20 req/min · 20 req/day · 200K tokens/day">
+<meta property="og:description" content="SambaNova free tier: Standing free tier · no card required. Free chat tier ended ~early Nov 2026 — vendor endpoint now prices all five chat models; only…">
 <meta property="og:url" content="https://ericagulto.github.io/free-llm-radar/offers/sambanova.html">
 <meta name="twitter:card" content="summary">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -22,7 +22,7 @@
 
 <div class="bar">
   <a href="../index.html">← Free LLM Radar</a>
-  <span class="sp">Verified 2026-10-26</span>
+  <span class="sp">Verified 2026-11-03</span>
 </div>
 
 <main>
@@ -32,20 +32,20 @@
   <p class="sub">DeepSeek hosting</p>
   <div class="tags">
     <span class="tag portable">Portable API key</span>
-    
+    <span class="tag expiring">expiring</span>
     <span class="tag">No card</span>
     
     
   </div>
 
   <dl class="facts">
-    <div><dt>Allowance</dt><dd class="mono">200K tokens/day</dd></div>
-    <div><dt>Metered in</dt><dd class="mono">tokens/day</dd></div>
+    <div><dt>Allowance</dt><dd class="bad">Not published</dd></div>
+    <div><dt>Metered in</dt><dd class="mono">no</dd></div>
     <div><dt>Promotion</dt><dd class="ok">Ongoing — no published end date</dd></div>
     <div><dt>Last changed</dt><dd class="mono">2026-10-24</dd></div>
   </dl>
 
-  <p class="lead">20 req/min · <b>20 req/day</b> · 200K tokens/day</p>
+  <p class="lead">Free chat tier ended ~early Nov 2026 — vendor endpoint now prices all five chat models; only spec-prefill-8b (prefill helper) remains $0</p>
   <p>You get a real API key you can point any OpenAI-compatible client at.</p>
 
   <div class="verdict ok">
@@ -56,10 +56,13 @@
   <a class="cta" href="https://cloud.sambanova.ai" target="_blank" rel="noopener">Get key →</a>
 
 
+  <div class="preflight">
+    <span title="The provider does not publish a numeric allowance, so this page cannot quote one. Check the provider's own page for current limits.">No published figure</span>
+  </div>
 
-  <div class="callout warn"><div class="h">Watch out</div><b>20 requests per day</b> is very tight. Useful as an occasional high-capability fallback, not as a primary.</div>
+  <div class="callout warn"><div class="h">Watch out</div><b>Free chat tier ended.</b> The vendor endpoint (api.sambanova.ai/v1/models) now returns non-zero pricing for every model this row previously listed as free. Only the spec-prefill-8b speculative-prefill helper remains at $0, and it is not a chat model. Treat SambaNova as paid until reconfirmed.</div>
 
-  <div class="callout note"><div class="h">Worth knowing</div>Read 12 Oct 2026 from the vendor's own public endpoint, <b>api.sambanova.ai/v1/models</b>, which needs <b>no API key</b> and returned the exact casing of every id. This row previously listed <b>deepseek-v3-2-preview</b> and <b>minimax-m2-7</b>, neither of which is in the live list, and all three of its ids were wrong in case. <b>MiniMax-M3</b> left on 24 Oct 2026, taking the usable roster to five: DeepSeek-V3.1, DeepSeek-V3.2, Meta-Llama-3.3-70B-Instruct, gemma-4-31B-it and gpt-oss-120b. Re-swept 25 Oct 2026 and the endpoint returns <b>six</b> ids again, but the sixth is <b>spec-prefill-8b</b>: 4,096-token context, $0 input and output, and a speculative-prefill helper rather than a model you can hold a conversation with. It is excluded from the roster on purpose, so this row still lists five usable chat models. Sweep this endpoint every run, and check what a new id actually is before counting it.</div>
+  <div class="callout note"><div class="h">Worth knowing</div>Read 12 Oct 2026 from the vendor's own public endpoint, <b>api.sambanova.ai/v1/models</b>, which needs <b>no API key</b> and returned the exact casing of every id. This row previously listed <b>deepseek-v3-2-preview</b> and <b>minimax-m2-7</b>, neither of which is in the live list, and all three of its ids were wrong in case. <b>MiniMax-M3</b> left on 24 Oct 2026, taking the usable roster to five: DeepSeek-V3.1, DeepSeek-V3.2, Meta-Llama-3.3-70B-Instruct, gemma-4-31B-it and gpt-oss-120b. Re-swept 25 Oct 2026 and the endpoint returns <b>six</b> ids again, but the sixth is <b>spec-prefill-8b</b>: 4,096-token context, $0 input and output, and a speculative-prefill helper rather than a model you can hold a conversation with. It is excluded from the roster on purpose, so this row still lists five usable chat models. Sweep this endpoint every run, and check what a new id actually is before counting it. CORRECTION (3 Nov 2026): api.sambanova.ai/v1/models now returns all five chat models with non-zero pricing. The free chat tier appears retired; only spec-prefill-8b stays $0. Flagged for operator confirmation — see CHANGELOG.</div>
 
   <h2>What this is</h2>
   <p>A free daily allowance on SambaNova's inference platform, hosting DeepSeek and MiniMax models on custom silicon.</p>
@@ -132,7 +135,7 @@
 </main>
 
 <footer>
-  <p><b>Verified 2026-10-26.</b>
+  <p><b>Verified 2026-11-03.</b>
   Free tiers change without notice — re-check the provider's own page before you build on this.
   This page was generated from the radar's dataset; the offer <code>id</code> is
   <code>sambanova</code>.</p>
