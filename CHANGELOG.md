@@ -13,6 +13,16 @@ Format per entry:
 
 ---
 
+## 2026-11-24
+
+- **CORRECTION, `workbuddy`: the published 31 Oct deadline is gone.** The official invite page now lists both reward tiers and the 2,000-point invitee gift with **no end date**, and the pricing page still shows 体验版 限时免费. Row set to `end: null`, status `active`. This is a withdrawal of the old date, not a confirmed extension to a new one.
+- **EXTENDED, `hunyuan`: Hy4 flash free to 30 Nov.** Tencent's official 16 Nov release confirms free WorkBuddy usage through 2026-11-30. The old Hy4 preview night-free window ended 31 Oct and Hy3 all-day free ran to 15 Nov. Client-bound, no portable key. Row now tracks the live flash window.
+- **CHANGED, `opencodezen`: 10 free models to 11.** Docs and keyless endpoint agree. `hy4-flash-free` joined; `glm-5.3-flash-free` and `nemotron-3-ultra-free` left, so the test command changed. Zero-retention pair is now DeepSeek V4.1 Flash and Hy4 Flash.
+- **CONFIRMED, `sambanova`: free chat tier retired.** Second endpoint sweep returns four ids, all priced above $0; even `spec-prefill-8b` is gone. Added to the rail under closed with a dead chip.
+- **CHANGED, `nvidia`: catalogue 85 to 32 ids** on two sweeps including a cache-busted request. Two stale sample ids replaced. `openrouter` 473 ids with 15 at $0 (twelve chat); `kilo` counter 5 to 3; both sample lists corrected.
+- **NOT changed, flagged:** `volcano` (11-08), `minimaxplat` (11-07), and `qoder` (old flashoffer page 404, new pricing docs silent). No primary-source extension found. AI21 still contradicts itself (7 days on pricing, three months on docs), 27th check, not flipped. `oci`/`azure` dates remain activation-relative placeholders.
+- Verified: WorkBuddy invite + pricing, Tencent official release, Zen docs + endpoint, SambaNova, NVIDIA, Kilo, OpenRouter, Groq, Cloudflare, AI21, Z.ai, QoderWork CN, MiniMax FAQ, five keyless endpoints, igetoken RSS (newest items 17 Nov, all tracker-only leads).
+- Notes: no new offer added. Ling-3.2-flash free window ended about 20 Nov (tracker-only); Hy4 flash is covered by two existing rows, so no `content.js` entry was needed. `referrals.js` untouched. MiniMax's termsUrl now resolves to an M Plan FAQ with no referral section, and the WorkBuddy programme note still says 30 September: reported for the operator, not edited.
 ## 2026-11-03
 
 - **CORRECTED, `sambanova`: free chat tier appears retired.** The vendor endpoint

@@ -46,8 +46,8 @@
    ============================================================ */
 
 window.RADAR = {
-  "updated": "2026-11-03T00:40:00+08:00",
-  "verifiedBy": "Refresh of 2026-11-03, 00:40 local. First run in 8 days (last 26 Oct). End dates re-checked; several vendor pages are JS-rendered (WorkBuddy CN) and could not be re-read directly, so those rows are left at their last-verified values and flagged. Vendor-primary changes confirmed: (1) SambaNova free chat tier appears retired — api.sambanova.ai/v1/models now prices all five previously-free chat models (DeepSeek-V3.1/3.2, Meta-Llama-3.3-70B, gemma-4-31B, gpt-oss-120b); only spec-prefill-8b stays $0. Treated as a Cerebras-class correction, flagged for operator confirmation. (2) Tencent Cloud (2026-11-02) confirms Hy3 all-day free extended to 2026-11-15; the hunyuan row tracks Hy4 preview night-free (ended 10-31, unconfirmed for extension) and was left as-is. (3) Volcano Ark Agent Plan discount activity confirmed to 2026-11-08 via volcengine.com/docs (updated 5 days ago). (4) OpenRouter free count 20 -> 17; dropped poolside/laguna-s-2.1:free from the sample list. MiniMax Platform 11-07 still unsourced. The 9 rows already past their last-verified end date (wenxin, gmi, ai21, dsharness, zcode-trust, minimaxcode, glmnight, ling31, doubao) and oci/azure 10-29 placeholders were NOT changed: no primary-source confirmation of extension was reachable, and a stale-but-correct row beats a fresh-but-wrong one.",
+  "updated": "2026-11-24T23:12:00+08:00",
+  "verifiedBy": "Refresh of 2026-11-24, 23:12 local. Deadlines re-read first. Vendor-primary confirmations: WorkBuddy invite and pricing pages (old 31 Oct deadline no longer published, both reward tiers still live); Tencent official 16 Nov release (Hy4 flash free in WorkBuddy to 30 Nov); Zen docs table and keyless endpoint (11 zero-cost ids, GLM-5.3-Flash and Nemotron 3 Ultra Free gone, Hy4 Flash in); SambaNova endpoint (four ids, all paid, second confirmation of retirement); NVIDIA endpoint twice (32 ids, down from 85); Kilo counter (3, down from 5); OpenRouter endpoint (473 ids, 15 zero-priced); Groq rate limits, Cloudflare pricing (updated 18 Nov), AI21 pricing and docs (7 days vs three months still contradictory), Z.ai rules, QoderWork CN terms, WorkBuddy and MiniMax referral pages. Five keyless endpoints and igetoken RSS swept. Volcano 8 Nov, MiniMax Platform 7 Nov and Qoder flashoffer have no primary confirmation and were left flagged. Referrals.js was not edited.",
   "offers": [
     {
       "id": "amd",
@@ -168,7 +168,7 @@ window.RADAR = {
       "budget": 0,
       "unit": "req/day",
       "end": null,
-      "added": "2026-10-24",
+      "added": "2026-11-24",
       "status": "active",
       "card": false,
       "china": false,
@@ -189,7 +189,13 @@ window.RADAR = {
         "Optional but significant: buy <b>$10 of credit once</b>. It is a lifetime condition, not a balance — the 20× daily limit increase is permanent even after you spend it."
       ],
       "test": "# list what is free right now — do this instead of hardcoding\ncurl https://openrouter.ai/api/v1/models \\\n  -H \"Authorization: Bearer $OPENROUTER_API_KEY\" | grep -o '\"[^\"]*:free\"' | sort -u",
-      "warn": "The free roster rotates weekly, so the list on this row is a snapshot, not a contract. <b>Read model IDs from the API at runtime</b> rather than hardcoding them, or your app breaks on someone else's pricing decision. Concrete proof, checked 14 October 2026 against the vendor's own API: <b>inclusionai/ling-3.1-flash</b>, which was free when it joined this list on 11 October, now bills $0.075/M in and $0.225/M out, and <b>apodex/apodex-1.1-mini:free</b> has left the catalogue altogether. Two of the four IDs this row carried three days ago are gone. <b>Twenty models price at $0</b> on 24 October, the same count as yesterday, out of a catalogue that has grown to <b>469</b> from 468. The one addition is <b>moonshotai/kimi-k3.1-pro</b>, created 23 October, and it is paid, so the free count held while the catalogue grew. On 23 October the count fell from twenty-one to twenty when <b>minimax/minimax-m3.1-flash:free</b> left: no <b>:free</b> variant remains, the base id bills $0.15/M in and $0.60/M out, and Kilo Code and OpenCode Zen dropped the same model the same day, so three vendor catalogues agreed. All four ids on this row survived again, but a free count that holds while the catalogue grows underneath it is exactly why the list has to be read at runtime."
+      "warn": "The free roster rotates weekly, so the list on this row is a snapshot, not a contract. <b>Read model IDs from the API at runtime</b> rather than hardcoding them, or your app breaks on someone else's pricing decision. Concrete proof, checked 14 October 2026 against the vendor's own API: <b>inclusionai/ling-3.1-flash</b>, which was free when it joined this list on 11 October, now bills $0.075/M in and $0.225/M out, and <b>apodex/apodex-1.1-mini:free</b> has left the catalogue altogether. Two of the four IDs this row carried three days ago are gone. <b>Twenty models price at $0</b> on 24 October, the same count as yesterday, out of a catalogue that has grown to <b>469</b> from 468. The one addition is <b>moonshotai/kimi-k3.1-pro</b>, created 23 October, and it is paid, so the free count held while the catalogue grew. On 23 October the count fell from twenty-one to twenty when <b>minimax/minimax-m3.1-flash:free</b> left: no <b>:free</b> variant remains, the base id bills $0.15/M in and $0.60/M out, and Kilo Code and OpenCode Zen dropped the same model the same day, so three vendor catalogues agreed. All four ids on this row survived again, but a free count that holds while the catalogue grows underneath it is exactly why the list has to be read at runtime.",
+      "free": [
+        "nvidia/nemotron-3-ultra-550b-a55b:free",
+        "google/gemma-4-31b-it:free",
+        "inclusionai/ling-3.2-flash:free"
+      ],
+      "note": "Re-swept 24 Nov 2026 from <b>openrouter.ai/api/v1/models</b>: <b>473 catalogue ids, 15 zero-priced</b>, down from 17 on 3 Nov. Two of the fifteen are Lyria 3 audio models and one is the generic <b>openrouter/free</b> route, so the chat-model count is twelve. The three ids named on this row are all currently $0; <b>thinkingmachines/inkling:free</b> and <b>cohere/north-mini-code:free</b> are no longer free and were replaced. Earlier in October the same sweep read 467 to 469 ids with 20 free. The roster rotates weekly, so read pricing at runtime rather than hardcoding."
     },
     {
       "id": "inception",
@@ -223,12 +229,12 @@ window.RADAR = {
     {
       "id": "nvidia",
       "name": "NVIDIA NIM",
-      "sub": "132 model catalogue",
+      "sub": "32 model catalogue",
       "kind": "portable",
       "budget": 0,
       "unit": "~40 req/min",
       "end": null,
-      "added": "2026-10-24",
+      "added": "2026-11-24",
       "status": "active",
       "card": false,
       "china": false,
@@ -239,8 +245,8 @@ window.RADAR = {
       "models": [
         "z-ai/glm-5.3",
         "z-ai/glm-5.3-flash",
-        "moonshotai/kimi-k2.6",
-        "deepseek-ai/deepseek-v4.1-flash"
+        "moonshotai/kimi-k3.1-pro",
+        "stepfun-ai/step-5-preview"
       ],
       "base": "https://integrate.api.nvidia.com/v1",
       "auth": "Authorization: Bearer (nvapi- prefix)",
@@ -251,7 +257,7 @@ window.RADAR = {
       ],
       "test": "curl https://integrate.api.nvidia.com/v1/chat/completions \\\n  -H \"Authorization: Bearer $NVIDIA_API_KEY\" \\\n  -H \"Content-Type: application/json\" \\\n  -d '{\"model\":\"z-ai/glm-5.3\",\"messages\":[{\"role\":\"user\",\"content\":\"Hello\"}]}'",
       "warn": "Community reports are mixed — multiple developers describe hitting <b>429 rate limits</b> and occasional unresponsiveness under load. Great catalogue for trying models; do not build a production path on it.",
-      "note": "Read 16 Oct 2026 and re-swept 21 Oct 2026 from the vendor's own public endpoint, <b>integrate.api.nvidia.com/v1/models</b>, which needs <b>no API key</b> and returns <b>83 model ids</b>. That endpoint is the authoritative answer to <i>what a key can actually call</i>, so prefer it over counting models on the build.nvidia.com page. This sweep confirmed that <b>moonshotai/kimi-k3 has left the catalogue</b>: <b>moonshotai/kimi-k2.6</b> is now the only Moonshot entry, and the row has been corrected accordingly. It also confirmed that <b>z-ai/glm-5.3</b>, <b>z-ai/glm-5.3-flash</b>, <b>deepseek-ai/deepseek-v4.1-flash</b>, the Nemotron 3 line and <b>poolside/laguna-xs-2.1</b> are all still served, so the test command on this row remains valid. Sweep this endpoint on every run: it is the cheapest stale-roster detector in the project, and it has now produced a correction on three consecutive sweeps. Re-swept 21 October 2026: 83 ids, up from 81. All four models on this row are still served, so the row and its test command stand, but the payload dates every entry to the same placeholder timestamp, so the two additions cannot be named from the endpoint alone. Count them, do not guess at them. Re-swept again 22 October 2026: <b>still 83</b>, nothing in and nothing out, all four row ids present. First sweep in five to produce no correction, which is recorded precisely because this endpoint has been the project's best stale-roster detector and a quiet day is evidence of stability, not of a skipped check. Re-swept 23 October 2026: <b>84 ids</b>, up from 83, and all four row ids are still served. As on every previous up-sweep the payload stamps every entry with the same placeholder creation timestamp, so the single addition cannot be named from the endpoint alone. Count it, do not guess at it. Re-swept 24 October 2026: <b>85 ids</b>, up from 84, and all four row ids are still served. Same placeholder timestamp, so the addition cannot be named. Second consecutive up-sweep, and the fourth correction this endpoint has produced in six days."
+      "note": "Read from the vendor's own keyless endpoint <b>integrate.api.nvidia.com/v1/models</b>. Re-swept 24 Nov 2026 and the catalogue is down to <b>32 ids</b> from 85 on 3 Nov, confirmed twice including a cache-busted request. <b>moonshotai/kimi-k2.6</b> and <b>deepseek-ai/deepseek-v4.1-flash</b> are no longer served, so the sample list now names four ids that are actually present. The test command still targets <b>z-ai/glm-5.3</b>, which is served. Earlier sweeps on 21-24 October counted 83, 84 and 85 ids; this is a genuine contraction, not a stale cache."
     },
     {
       "id": "cloudflare",
@@ -472,8 +478,8 @@ window.RADAR = {
         "Create an API key in the console."
       ],
       "test": "curl https://api.sambanova.ai/v1/chat/completions \\\n  -H \"Authorization: Bearer $SAMBANOVA_API_KEY\" \\\n  -H \"Content-Type: application/json\" \\\n  -d '{\"model\":\"DeepSeek-V3.1\",\"messages\":[{\"role\":\"user\",\"content\":\"Hello\"}]}'",
-      "warn": "<b>Free chat tier ended.</b> The vendor endpoint (api.sambanova.ai/v1/models) now returns non-zero pricing for every model this row previously listed as free. Only the spec-prefill-8b speculative-prefill helper remains at $0, and it is not a chat model. Treat SambaNova as paid until reconfirmed.",
-      "note": "Read 12 Oct 2026 from the vendor's own public endpoint, <b>api.sambanova.ai/v1/models</b>, which needs <b>no API key</b> and returned the exact casing of every id. This row previously listed <b>deepseek-v3-2-preview</b> and <b>minimax-m2-7</b>, neither of which is in the live list, and all three of its ids were wrong in case. <b>MiniMax-M3</b> left on 24 Oct 2026, taking the usable roster to five: DeepSeek-V3.1, DeepSeek-V3.2, Meta-Llama-3.3-70B-Instruct, gemma-4-31B-it and gpt-oss-120b. Re-swept 25 Oct 2026 and the endpoint returns <b>six</b> ids again, but the sixth is <b>spec-prefill-8b</b>: 4,096-token context, $0 input and output, and a speculative-prefill helper rather than a model you can hold a conversation with. It is excluded from the roster on purpose, so this row still lists five usable chat models. Sweep this endpoint every run, and check what a new id actually is before counting it. CORRECTION (3 Nov 2026): api.sambanova.ai/v1/models now returns all five chat models with non-zero pricing. The free chat tier appears retired; only spec-prefill-8b stays $0. Flagged for operator confirmation — see CHANGELOG."
+      "warn": "<b>Free chat tier ended, confirmed twice.</b> The vendor endpoint <b>api.sambanova.ai/v1/models</b> now returns only four ids (GLM-5.3, MiniMax-M3.1-Flash, gemma-4-31B-it, gpt-oss-120b), all with non-zero input and output prices. The old five chat ids are paid and spec-prefill-8b is gone too. Treat SambaNova as paid until a vendor page says otherwise.",
+      "note": "Read 12 Oct 2026 from the vendor's own public endpoint, <b>api.sambanova.ai/v1/models</b>, which needs <b>no API key</b> and returned the exact casing of every id. This row previously listed <b>deepseek-v3-2-preview</b> and <b>minimax-m2-7</b>, neither of which is in the live list, and all three of its ids were wrong in case. <b>MiniMax-M3</b> left on 24 Oct 2026, taking the usable roster to five: DeepSeek-V3.1, DeepSeek-V3.2, Meta-Llama-3.3-70B-Instruct, gemma-4-31B-it and gpt-oss-120b. Re-swept 25 Oct 2026 and the endpoint returns <b>six</b> ids again, but the sixth is <b>spec-prefill-8b</b>: 4,096-token context, $0 input and output, and a speculative-prefill helper rather than a model you can hold a conversation with. It is excluded from the roster on purpose, so this row still lists five usable chat models. Sweep this endpoint every run, and check what a new id actually is before counting it. CORRECTION (3 Nov 2026): api.sambanova.ai/v1/models now returns all five chat models with non-zero pricing. The free chat tier appears retired; only spec-prefill-8b stays $0. Flagged for operator confirmation — see CHANGELOG. Re-confirmed 24 Nov 2026: the endpoint returns <b>four</b> ids and none is free, so the 3 Nov correction stands and is no longer a single-source finding."
     },
     {
       "id": "cerebras",
@@ -654,7 +660,8 @@ window.RADAR = {
         "Separately, claim the <b>100 daily Credits</b> from the activities page. These are not consumed by Qwen3.8-Flash, so they stay available for other models."
       ],
       "test": "— no API endpoint. Client-bound usage only.",
-      "note": "<b>Extended.</b> Originally ending 30 September, Qoder has extended this — Qwen3.8-Flash stays free from 1 October onward. No action needed. The new end date will be announced on their event page in advance."
+      "note": "<b>Extended.</b> Originally ending 30 September, Qoder has extended this — Qwen3.8-Flash stays free from 1 October onward. No action needed. The new end date will be announced on their event page in advance. Flagged 24 Nov 2026: the docs estate was restructured, the old flashoffer page now 404s on both locales, and the current pricing page does not mention Qwen3.8-Flash. No primary source confirms the offer is still free, so the row is left intact rather than guessed.",
+      "warn": "<b>Not re-confirmed on 24 Nov 2026.</b> Qoder's old flashoffer page is gone and the new pricing docs do not list Qwen3.8-Flash. Check the client model selector before relying on a zero-Credit call."
     },
     {
       "id": "kilo",
@@ -664,7 +671,7 @@ window.RADAR = {
       "budget": 0,
       "unit": "unspecified",
       "end": null,
-      "added": "2026-10-23",
+      "added": "2026-11-24",
       "status": "active",
       "card": false,
       "china": false,
@@ -690,7 +697,12 @@ window.RADAR = {
       ],
       "test": "— free models are client-bound. Kilo accepts external keys if you want portable capacity.",
       "warn": "Free hosted inference is <b>not</b> the same as free-to-download weights. The free catalog updates live and a listing can disappear the moment the upstream provider changes its pricing. The free list is a rotating promotion, not a standing commitment. <b>Space Bunny Alpha retired 5 October</b>, and <b>Ling 3.1 Flash has now aged out too</b>; the vendor page's own counter fell from six free models to four across September and October, then climbed back to <b>five</b> on 16 October when <b>Nemotron 3.5 Super VL</b> joined, to <b>six</b> on 19 October when <b>MiniMax M3.1 Flash</b> arrived, and back down to <b>five</b> on 23 October when it left again. The rotating catalog decides which, in both directions, and a model can now come and go inside four days.",
-      "note": "Open source (MIT) and model-agnostic: the same client can run free hosted models, your own AMD or Groq key, or a local Ollama model. Roster re-read 23 Oct 2026 at <b>kilo.ai/landing/free-models</b>, whose own counter now reads <b>FIVE</b> models at $0 input and $0 output: Nemotron 3 Super, Nemotron 3 Ultra, Nemotron 3.5 Super VL, Dots3-Note Preview and Laguna S 2.1. The count went six, five, four across three consecutive checks in September and early October, then back up to five on 16 October and six on 19 October, then down to <b>five again on 23 October</b> when <b>MiniMax M3.1 Flash</b> left. The model is not in the page markup at all, so this is a removal, not a re-price. It lasted four days. That is the rotating catalog in both directions, and it is why this row quotes the counter with a date. The vendor page publishes no rate limit for the free tier."
+      "note": "Open source (MIT) and model-agnostic: the same client can run free hosted models, your own AMD or Groq key, or a local Ollama model. Re-read 24 Nov 2026 at <b>kilo.ai/landing/free-models</b>: the vendor's own counter now reads <b>THREE</b> free models, down from five on 23 October. <b>Nemotron 3 Super</b> and <b>Laguna S 2.1</b> have left; Nemotron 3.5 Super VL, Dots3-Note Preview and Nemotron 3 Ultra remain. The page updates every 60 seconds and publishes no rate limit.",
+      "free": [
+        "nvidia/nemotron-3.5-super-vl:free",
+        "dots-studio/dots-3-note-preview-free",
+        "nvidia/nemotron-3-ultra-550b-a55b:free"
+      ]
     },
     {
       "id": "stepfun",
@@ -733,7 +745,7 @@ window.RADAR = {
       "budget": 0,
       "unit": "free models",
       "end": null,
-      "added": "2026-10-26",
+      "added": "2026-11-24",
       "status": "active",
       "card": true,
       "china": false,
@@ -761,9 +773,22 @@ window.RADAR = {
         "In the OpenCode TUI run <b>/connect</b>, select <b>OpenCode Zen</b>, and paste the key.",
         "Select any <b>free</b> model from the list."
       ],
-      "test": "curl https://opencode.ai/zen/v1/chat/completions \\\n  -H \"Authorization: Bearer $OPENCODE_ZEN_KEY\" \\\n  -H \"Content-Type: application/json\" \\\n  -d '{\"model\":\"nemotron-3-ultra-free\",\"messages\":[{\"role\":\"user\",\"content\":\"Hello\"}]}'",
-      "warn": "<b>Billing details are collected at signup</b>, and auto-reload will top the account up by $20 whenever the balance drops below $5. Disable auto-reload unless you intend to pay. Also check each model: most of the free ones <b>train on your prompts</b>. Only <b>DeepSeek V4.1 Flash Free</b> and <b>GLM-5.3-Flash Free</b> are zero-retention. <b>Beam Free</b> does not train on your data but retains prompts for 30 days, and it is geo-blocked in mainland China, Hong Kong, Macau and a long list of sanctioned regions. <b>Flint 40B Free</b> is not zero-retention either: its provider may use prompts to improve the model and retains them for 30 days.",
-      "note": "Unlike a client-bound list, Zen issues a <b>portable key</b>, so the free models can be wired into any OpenAI-compatible tool, not just OpenCode. Re-verified 26 Oct 2026 against Zen's own pricing table at <b>opencode.ai/v2/docs/console/models/</b> (the old /docs/zen URL still redirects there): <b>10 free models</b>, down from 11. <b>longcat-2.5-preview-free</b> has left: the id appears nowhere in the page source, and the phrase 'limited time' now appears exactly ten times, once per remaining free model, which is the cheapest independent count available. The keyless endpoint <b>opencode.ai/zen/v1/models</b> is missing it too, so the two sources agree. The zero-retention count falls to <b>two</b> (DeepSeek V4.1 Flash, GLM-5.3-Flash), because LongCat was one of the three and Zen's privacy section no longer lists it. The endpoint returns <b>85</b> ids and still lags the docs: it omits <b>nemotron-3-ultra-free</b> and <b>big-pickle</b>, both of which the docs list as free, so the docs page stays primary. None of the ten publishes an end date: all are 'limited time', and Zen's docs deliberately omit firm deadlines. Treat any date as approximate and read the live table before relying on it."
+      "test": "curl https://opencode.ai/zen/v1/chat/completions \\\n  -H \"Authorization: Bearer $OPENCODE_ZEN_KEY\" \\\n  -H \"Content-Type: application/json\" \\\n  -d '{\"model\":\"hy4-flash-free\",\"messages\":[{\"role\":\"user\",\"content\":\"Hello\"}]}'",
+      "warn": "<b>Billing details are collected at signup</b> and auto-reload tops up by $20 below a $5 balance; disable it unless you intend to pay. Only <b>DeepSeek V4.1 Flash Free</b> and <b>Hy4 Flash Free</b> are stated as zero-retention in the current docs. Beam Free retains prompts for 30 days and is geo-blocked in mainland China, Hong Kong, Macau and several sanctioned regions; Flint 40B Free may use prompts to improve the model and retains for 30 days.",
+      "note": "Zen issues a <b>portable key</b>, so the free models can be wired into any OpenAI-compatible tool. Re-verified 24 Nov 2026 against Zen's own pricing table at <b>opencode.ai/v2/docs/console/models/</b> and its keyless endpoint. Both now show <b>11 zero-cost ids</b>: the endpoint returns 108 models with 11 at cost 0, and the docs list 11 free entries. <b>hy4-flash-free</b> (Tencent Hy4 flash, 1M context, image input) joined; <b>glm-5.3-flash-free</b> and <b>nemotron-3-ultra-free</b> left, so the old test id is retired. No free model publishes an end date, all are limited time.",
+      "free": [
+        "beam-free",
+        "big-pickle",
+        "deepseek-v4.1-flash-free",
+        "flint-40b-free",
+        "hy4-flash-free",
+        "iceman-free",
+        "jev-1.13-free",
+        "mimo-v2.6-flash-free",
+        "nemotron-3.5-lightning-free",
+        "nemotron-3.5-super-vl-free",
+        "tidepool-alpha-free"
+      ]
     },
     {
       "id": "zcode-trust",
@@ -1075,36 +1100,35 @@ window.RADAR = {
     },
     {
       "id": "hunyuan",
-      "name": "Tencent Hunyuan Hy4",
-      "sub": "Preview",
+      "name": "Tencent Hunyuan Hy4 flash",
+      "sub": "WorkBuddy free window",
       "kind": "client",
       "budget": 0,
-      "unit": "14 days daily",
-      "end": "2026-10-31",
-      "added": "2026-11-03",
-      "status": "expiring",
+      "unit": "client quota - not tokens",
+      "end": "2026-11-30",
+      "added": "2026-11-24",
+      "status": "extended",
       "card": false,
       "china": true,
       "reach": "cn-only",
       "link": "https://console.cloud.tencent.com/hunyuan",
       "linkLabel": "Open",
-      "budgetNote": "New or never-tried users: <b>14 days of daily free quota from first use</b>, but the first-conversation window <b>closed on 10 October</b>, so this is no longer claimable · existing users: free <b>23:00–08:00</b> nightly, <b>extended to 31 October</b> · Hunyuan Hy3 限免 likewise extended to 31 October",
+      "budgetNote": "Hy4 flash free inside WorkBuddy 16-30 Nov 2026 (usage does not consume points) · client-bound, no portable API key",
       "models": [
-        "Hunyuan Hy4 preview",
-        "Hunyuan Hy3"
+        "Hunyuan Hy4 flash",
+        "Hunyuan Hy4 preview"
       ],
       "base": "— switch inside WorkBuddy / CodeBuddy",
       "auth": "—",
       "steps": [
-        "Open WorkBuddy or CodeBuddy.",
-        "Switch to <b>Hunyuan Hy4 preview</b> in the model menu — no API wiring needed.",
-        "Never used it? That new-user window has <b>closed</b> — a first Hy4 conversation had to start by 10 October, so the 14-day quota is no longer claimable.",
-        "Already tried it? Night-time usage is free at <b>23:00–08:00</b> — extended to <b>31 October</b>. Outside those hours usage consumes points normally.",
-        "Hy3 (限免) is free to switch to inside the same client, also extended to <b>31 October</b>."
+        "Open WorkBuddy (China or international edition).",
+        "Switch to <b>Hy4 flash</b> in the model menu. No API wiring and no card needed for the client.",
+        "Use it before <b>30 November 2026</b>. After that, calls consume points at the published rate.",
+        "For a portable key, use <b>hy4-flash-free</b> on OpenCode Zen instead. WorkBuddy credit cannot be exported."
       ],
       "test": "— client-bound.",
-      "note": "770B MoE with 1M context. <b>Text-only</b> — image and video tasks route to other models and bill normally. <b>Extended:</b> a joint WorkBuddy/Hunyuan announcement on 30 September pushed both the Hy3 限免 window and the Hy4 preview night-free window from 30 September to <b>31 October</b>. The new-user 14-day quota is the exception: its 10 October last-start date has now passed (checked 11 October), so only the existing-user night-free window and the Hy3 限免 are still live. Tencent Cloud TokenHub also gives new users 1M tokens for the Hy4 preview API if you want the API route. Re-checked 3 Nov 2026: Tencent Cloud (2026-11-02) confirms Hy3 all-day free extended to 2026-11-15 (5th extension). The Hy4 preview night-free window this row tracks has no confirmed extension past 2026-10-31 and was left at its last-verified value.",
-      "warn": "<b>Hy4 preview night-free window ended 31 Oct — unconfirmed for extension.</b> Tencent Cloud (2 Nov 2026) confirms the Hy3 all-day free tier continues to 2026-11-15, but that is a different model. Verify before relying on Hy4 here."
+      "note": "770B Hy4 preview with 1M context was the original subject of this row. Its night-free window ended 31 October with no confirmed extension, and Hy3 all-day free ran to 15 November per Tencent Cloud (2 Nov). <b>Changed 24 Nov:</b> Tencent's official 16 November release confirms the new <b>Hy4 flash</b> (224B total, 12B active, 1M context, multimodal) is free inside WorkBuddy through <b>30 November 2026</b>. This is the live free window this row now tracks. TonHub API access to Hy4 flash is a separate paid channel at half price until the same date.",
+      "warn": "<b>Client-bound, not an API key.</b> The 16-30 November free window is WorkBuddy usage only. The old Hy4 preview night-free window ended 31 October and Hy3 all-day free ended 15 November. OpenCode Zen's hy4-flash-free is a separate gateway allocation."
     },
     {
       "id": "glmnight",
@@ -1162,7 +1186,8 @@ window.RADAR = {
         "Register at the MiniMax open platform.",
         "Free trial access applies to M3 and M2."
       ],
-      "test": "— consult the console for the current endpoint."
+      "test": "— consult the console for the current endpoint.",
+      "warn": "<b>Last verified end date 7 Nov has passed and this row was never primary-source verified.</b> Left intact deliberately; check the platform console before relying on a free trial."
     },
     {
       "id": "volcano",
@@ -1191,7 +1216,8 @@ window.RADAR = {
         "Medium tier carries a similar ~2.5× discount."
       ],
       "test": "— consult the console.",
-      "note": "A <b>discount</b>, not a free tier — included here because it is the cheapest way onto Doubao."
+      "note": "A <b>discount</b>, not a free tier — included here because it is the cheapest way onto Doubao. The 8 November 2026 window has passed. No primary-source extension was found on 24 Nov, so the last-verified date is retained and flagged rather than pushed forward.",
+      "warn": "<b>Last verified end date 8 Nov has passed.</b> No vendor confirmation of an extension was reachable on 24 Nov; verify in the console before subscribing."
     },
     {
       "id": "bailian",
@@ -1506,9 +1532,9 @@ window.RADAR = {
       "kind": "client",
       "budget": 0,
       "unit": "points · not tokens",
-      "end": "2026-10-31",
-      "added": "2026-11-03",
-      "status": "expiring",
+      "end": null,
+      "added": "2026-11-24",
+      "status": "active",
       "card": false,
       "china": true,
       "reach": "cn-only",
@@ -1529,8 +1555,8 @@ window.RADAR = {
         "Registered via the link on this page? The 2,000 new-user points should land on signup — the bonus now runs <b>to 31 October 2026</b>."
       ],
       "test": "— client-bound.",
-      "warn": "<b>Invite bonus deadline 31 Oct passed — unconfirmed for extension.</b> Tencent Cloud (2 Nov) confirms the Hy3 all-day free tier continues to 2026-11-15, but the 2,000-point invite bonus and the 500/month 限时免费 tier have no confirmed new deadline. Re-check the live invite page before relying on the bonus.",
-      "note": "Points are WorkBuddy's internal unit, <b>not tokens</b> — a task costs points depending on model and length, so there is no honest token figure to quote. That is why this row shows no token allowance. Included here because the free tier is genuinely ¥0 and the invite bonus is real, not because it ranks well. Re-checked 3 Nov 2026: no primary-source confirmation that the 2,000-point invite bonus or the ¥0 tiers were extended past 2026-10-31. Hy3 free continues to 11-15 per Tencent Cloud, but that does not renew the invite bonus."
+      "warn": "<b>Published 31 Oct deadline is gone from the official invite page (checked 24 Nov), but no replacement date was announced.</b> Rewards are still listed, so the row is open-ended until the vendor publishes a new end date. Platform points, not cash and not an API key.",
+      "note": "Points are WorkBuddy's internal unit, <b>not tokens</b> - a task costs points depending on model and length, so there is no honest token figure to quote. That is why this row shows no token allowance. Re-checked 24 Nov 2026 on the vendor's own pages: the invite page no longer prints the old 31 October end date and still lists both reward tiers (50 points on first use, +100 after 3 active days, +500 on paid upgrade, 2,000 points to the invitee), and the pricing page still shows 体验版 限时免费 at 500 积分/month. The previously published 31 October deadline is therefore treated as withdrawn rather than as a confirmed extension to a new date."
     },
     {
       "id": "ling31",
@@ -1677,7 +1703,54 @@ window.RADAR = {
   "rail": [
     {
       "d": "today",
-      "label": "Today · 3 Nov",
+      "label": "Today · 24 Nov",
+      "items": [
+        {
+          "c": "exp",
+          "n": "WorkBuddy: the 31 Oct invite deadline disappeared",
+          "t": "The official invite page read on 24 Nov no longer prints an end date, and both reward tiers plus the 2,000-point invitee gift are still listed. The pricing page still shows 体验版 限时免费. The row is now open-ended, not a confirmed extension to a new date.",
+          "ref": "workbuddy"
+        },
+        {
+          "c": "ext",
+          "n": "Hunyuan: Hy4 flash free to 30 Nov",
+          "t": "Tencent's official 16 Nov release confirms Hy4 flash is free inside WorkBuddy through 30 November 2026. It replaces the old Hy4 preview night-free window that ended 31 October and the Hy3 all-day window that ran to 15 November. Client-bound, no API key.",
+          "ref": "hunyuan"
+        },
+        {
+          "c": "ext",
+          "n": "OpenCode Zen: 10 free models to 11, new zero-retention pair",
+          "t": "Docs and the keyless endpoint agree on 11 zero-cost ids. Hy4 flash joined; GLM-5.3-Flash and Nemotron 3 Ultra Free left, so the test command now targets hy4-flash-free. Zero-retention is now DeepSeek V4.1 Flash and Hy4 Flash.",
+          "ref": "opencodezen"
+        },
+        {
+          "c": "dead",
+          "n": "SambaNova free chat tier confirmed retired",
+          "t": "The vendor endpoint now returns four paid ids and nothing at $0, including the end of spec-prefill-8b. The 3 Nov correction is confirmed by a second primary-source sweep.",
+          "ref": "sambanova"
+        },
+        {
+          "c": "exp",
+          "n": "NVIDIA catalogue collapses from 85 to 32 ids",
+          "t": "Two sweeps of integrate.api.nvidia.com/v1/models, one cache-busted, both return 32 ids. Two sample ids on the row are no longer served and were replaced.",
+          "ref": "nvidia"
+        },
+        {
+          "c": "exp",
+          "n": "Kilo free models 5 to 3; OpenRouter free 17 to 15",
+          "t": "Kilo's own counter now reads three after Nemotron 3 Super and Laguna S 2.1 left. OpenRouter has 473 ids with 15 at $0, of which twelve are chat models.",
+          "ref": "kilo"
+        },
+        {
+          "c": "exp",
+          "n": "Past windows left flagged, not pushed forward",
+          "t": "Volcano 8 Nov, MiniMax Platform 7 Nov and the old Qoder flashoffer page have no primary-source confirmation of a new date. Stale but correct beats fresh but wrong."
+        }
+      ]
+    },
+    {
+      "d": "yesterday",
+      "label": "Last run · 3 Nov",
       "items": [
         {
           "c": "exp",
@@ -1711,8 +1784,8 @@ window.RADAR = {
       ]
     },
     {
-      "d": "yesterday",
-      "label": "Last run · 26 Oct",
+      "d": "week",
+      "label": "Earlier · 26 Oct",
       "items": [
         {
           "c": "exp",
@@ -1738,36 +1811,15 @@ window.RADAR = {
       ]
     },
     {
-      "d": "week",
-      "label": "Earlier · 25 Oct",
-      "items": [
-        {
-          "c": "exp",
-          "n": "No deadline changes: every published end date re-verified unchanged",
-          "t": "Vendor pages read directly on 25 October: <b>workbuddy.cn/events/invite</b> still reads 即日起至 2026年10月31日 with the invitee 2,000 积分 截止 2026年10月31日 and the 50 / +100 / +500 tiers, and <b>workbuddy.cn/pricing</b> still shows 体验版 限时免费 at 500 积分/month, both rendered in Chromium because they are client-side; Qoder Qwen3.8-Flash still free on both locales with the end date still to be announced, and both pages still scope the offer to Qwen3.8-Flash only; Groq unchanged at 30 RPM / 1K RPD / 8K TPM / 200K TPD; Cloudflare still 10,000 Neurons/day with the same eight paid-billing ids, page still dated 20 October; AI21 still 7 days against the docs three months, twenty-fourth check, unresolved and not flipped; Z.ai invite terms unchanged, last updated 15 March 2026; Kilo Code counter still reads FIVE; Zen docs still list eleven free models. Hunyuan Hy3 限免 + Hy4 night-free still 31 October, multi-source only. Nothing moved. <b>Two rows expire inside seven days</b>: WorkBuddy and Hunyuan, both 31 October. <b>oci</b> and <b>azure</b> carry a 29 October date that is activation-relative, not a deadline anyone can miss."
-        },
-        {
-          "c": "ext",
-          "n": "SambaNova: a sixth endpoint id, and it is not a chat model",
-          "t": "<b>api.sambanova.ai/v1/models</b> returns <b>six</b> ids where it returned five yesterday, but the addition is <b>spec-prefill-8b</b>: 4,096-token context, $0 input and output, and a speculative-prefill helper rather than something you can talk to. Counting it would have pushed this row to six models and overstated the free tier, so the roster stays at <b>five</b> usable chat models and the note says why. The 20 requests/day cap is unchanged.",
-          "ref": "sambanova"
-        },
-        {
-          "c": "exp",
-          "n": "Endpoint sweep: OpenRouter 467, NVIDIA 85, bilibili 11, Zen 85",
-          "t": "<b>openrouter.ai/api/v1/models</b> is down to <b>467</b> models from 469 while the <b>$0 count held at 20</b>, so two paid ids went and no free one did; all four ids named on this row are still at $0. <b>integrate.api.nvidia.com/v1/models</b> is unchanged at <b>85</b> and still serves all four row ids. <b>index-translate.bilibili.com/v1/models</b> unchanged at <b>11</b>. The Zen endpoint is unchanged at <b>85</b> and still lags its own docs page, which stays the primary source."
-        },
-        {
-          "c": "exp",
-          "n": "Both 25 October tracker windows close today, neither ever confirmed",
-          "t": "Two third-party claims were dated to 25 October and both lapse today without a vendor page behind either: Qoder CN <b>DeepSeek-V4.1-Flash-1017 限免至 10月25日 00:00</b> (fifth run, no Qoder page on either locale has ever published it, and the flashoffer page still scopes its free offer to Qwen3.8-Flash only) and <b>WorkBuddy Step 5 Preview 10/12-10/25</b> (never mentioned on the invite or pricing page, both re-rendered today). Neither was ever written to this dataset, so nothing is being removed. Kilo 16 (vendor 5) and Zen 15 (vendor 11) were rejected again."
-        }
-      ]
-    },
-    {
       "d": "closed",
       "label": "Closed this week",
       "items": [
+        {
+          "c": "dead",
+          "n": "SambaNova free chat tier",
+          "t": "Confirmed ended 24 Nov: the vendor endpoint serves four ids, all priced above $0.",
+          "ref": "sambanova"
+        },
         {
           "c": "exp",
           "n": "No deadline changes: every published end date re-verified unchanged",
